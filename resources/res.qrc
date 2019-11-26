@@ -1,0 +1,15 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>qt.png</file>
+        <file>littlevgl_logo.png</file>
+    </qresource>
+    <qresource prefix="/icons">
+        <file>add.png</file>
+        <file>delete.png</file>
+        <file>disk.png</file>
+        <file>document.png</file>
+        <file>folder.png</file>
+        <file>lvgl.ico</file>
+        <file>start.png</file>
+    </qresource>
+</RCC>
