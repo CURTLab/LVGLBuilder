@@ -12,7 +12,7 @@ Tested on Windows 10 with MSVC 2017 & Qt 5.13.1
 
 ### Build
 Building with console:
-* Move the cloned LVGLBuild director
+* Move to the cloned LVGLBuild directory
 * Run ```qmake LVGLBuilder.pro```
 * For gcc (Mac/Linux): ```make```
 * For mingw: ```mingw32-make```
