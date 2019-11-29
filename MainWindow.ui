@@ -372,6 +372,9 @@
    </property>
   </action>
   <action name="action_run">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="resources/res.qrc">
      <normaloff>:/icons/start.png</normaloff>:/icons/start.png</iconset>

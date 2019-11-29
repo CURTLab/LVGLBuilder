@@ -34,10 +34,10 @@ private slots:
 	void on_action_save_triggered();
 	void on_combo_style_currentIndexChanged(int index);
 	void on_list_images_customContextMenuRequested(const QPoint &pos);
-	void on_action_run_triggered();
 	void on_action_export_c_triggered();
 	void on_button_add_clicked();
 	void on_button_remove_clicked();
+	void on_action_run_toggled(bool arg1);
 
 private:
 	void updateImages();

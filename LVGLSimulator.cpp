@@ -369,62 +369,69 @@ void LVGLSimulator::clear()
 	lvgl.removeAllImages();
 }
 
+void LVGLSimulator::setMouseEnable(bool enable)
+{
+	m_mouseEnabled = enable;
+}
+
 void LVGLSimulator::mousePressEvent(QMouseEvent *event)
 {
 	const QPoint pos = mapToScene(event->pos()).toPoint();
-	if (event->button() == Qt::RightButton) {
-		auto obj = selectObject(objectsUnderCoords(pos, true), false);
-		QAction *sel = nullptr;
-		QAction *scolor = nullptr;
-		if (obj) {
-			// LVGL right click menu
-			bool locked = obj->isLocked();
-			QMenu menu(obj->name(), this);
-			QAction *lock = menu.addAction(locked ? "Unlock" : "Lock");
-			QAction *remove = menu.addAction("Remove");
-			QAction *mfore = menu.addAction("Move foreground");
-			QAction *mback = menu.addAction("Move background");
-			scolor = menu.addAction("Set screen color ...");
-			sel = menu.exec(mapToGlobal(event->pos()));
-			if ((sel == lock) && locked) {
-				obj->setLocked(false);
-			} else if ((sel == lock) && !locked) {
-				obj->setLocked(true);
-				if (obj == m_selectedObject)
-					setSelectedObject(nullptr);
-			} else if (sel == remove) {
-				if (obj == m_selectedObject)
-					setSelectedObject(nullptr);
-				lvgl.removeObject(obj);
-			} else if (sel == mfore) {
-				lv_obj_move_foreground(obj->obj());
-			} else if (sel == mback) {
-				lv_obj_move_background(obj->obj());
-			}
-		} else {
-			QMenu menu(this);
-			scolor = menu.addAction("Set screen color ...");
-			sel = menu.exec(mapToGlobal(event->pos()));
-		}
-
-		if (sel == scolor) {
-			QColorDialog dialog(this);
-			dialog.setCurrentColor(lvgl.screenColor());
-			if (dialog.exec() == QDialog::Accepted)
-				lvgl.setScreenColor(dialog.selectedColor());
-		}
-	} else if (event->button() == Qt::LeftButton) {
-		if (!m_item->isManipolating())
-			setSelectedObject(selectObject(objectsUnderCoords(pos, false), false));
-	}
-	if (m_mouseEnabled)
+	if (m_mouseEnabled) {
 		lvgl.send_mouse_event(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
+	} else {
+		if (event->button() == Qt::RightButton) {
+			auto obj = selectObject(objectsUnderCoords(pos, true), false);
+			QAction *sel = nullptr;
+			QAction *scolor = nullptr;
+			if (obj) {
+				// LVGL right click menu
+				bool locked = obj->isLocked();
+				QMenu menu(obj->name(), this);
+				QAction *lock = menu.addAction(locked ? "Unlock" : "Lock");
+				QAction *remove = menu.addAction("Remove");
+				QAction *mfore = menu.addAction("Move foreground");
+				QAction *mback = menu.addAction("Move background");
+				scolor = menu.addAction("Set screen color ...");
+				sel = menu.exec(mapToGlobal(event->pos()));
+				if ((sel == lock) && locked) {
+					obj->setLocked(false);
+				} else if ((sel == lock) && !locked) {
+					obj->setLocked(true);
+					if (obj == m_selectedObject)
+						setSelectedObject(nullptr);
+				} else if (sel == remove) {
+					if (obj == m_selectedObject)
+						setSelectedObject(nullptr);
+					lvgl.removeObject(obj);
+				} else if (sel == mfore) {
+					lv_obj_move_foreground(obj->obj());
+				} else if (sel == mback) {
+					lv_obj_move_background(obj->obj());
+				}
+			} else {
+				QMenu menu(this);
+				scolor = menu.addAction("Set screen color ...");
+				sel = menu.exec(mapToGlobal(event->pos()));
+			}
+
+			if (sel == scolor) {
+				QColorDialog dialog(this);
+				dialog.setCurrentColor(lvgl.screenColor());
+				if (dialog.exec() == QDialog::Accepted)
+					lvgl.setScreenColor(dialog.selectedColor());
+			}
+		} else if (event->button() == Qt::LeftButton) {
+			if (!m_item->isManipolating())
+				setSelectedObject(selectObject(objectsUnderCoords(pos, false), false));
+		}
+	}
 	QGraphicsView::mousePressEvent(event);
 }
 
 void LVGLSimulator::mouseDoubleClickEvent(QMouseEvent *event)
 {
-	if (!m_item->isManipolating()) {
+	if (!m_item->isManipolating() && !m_mouseEnabled) {
 		const QPoint pos = mapToScene(event->pos()).toPoint();
 		auto obj = selectObject(objectsUnderCoords(pos, false), true);
 		if (obj == nullptr)
@@ -448,13 +455,16 @@ void LVGLSimulator::mouseMoveEvent(QMouseEvent *event)
 {
 	if (m_mouseEnabled) {
 		const QPoint pos = mapToScene(event->pos()).toPoint();
-		lvgl.send_mouse_event(pos.x(), pos.y(), false);
+		lvgl.send_mouse_event(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
 	}
 	QGraphicsView::mouseMoveEvent(event);
 }
 
 void LVGLSimulator::dropEvent(QDropEvent *event)
 {
+	if (m_mouseEnabled)
+		return;
+
 	m_scene->setHoverObject(nullptr);
 
 	union {
@@ -505,6 +515,9 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 
 void LVGLSimulator::dragMoveEvent(QDragMoveEvent *event)
 {
+	if (m_mouseEnabled)
+		return;
+
 	const QPoint pos = mapToScene(event->pos()).toPoint();
 	auto sel = selectObject(objectsUnderCoords(pos, true), false);
 	m_scene->setHoverObject(sel);
@@ -514,6 +527,9 @@ void LVGLSimulator::dragMoveEvent(QDragMoveEvent *event)
 
 void LVGLSimulator::dragEnterEvent(QDragEnterEvent *event)
 {
+	if (m_mouseEnabled)
+		return;
+
 	event->acceptProposedAction();
 }
 

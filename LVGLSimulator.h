@@ -53,6 +53,7 @@ public slots:
 	void setSelectedObject(LVGLObject *obj);
 	void setZoomLevel(int level);
 	void clear();
+	void setMouseEnable(bool enable);
 
 signals:
 	void objectSelected(LVGLObject *obj);

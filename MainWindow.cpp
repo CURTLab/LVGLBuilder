@@ -293,12 +293,6 @@ void MainWindow::on_list_images_customContextMenuRequested(const QPoint &pos)
 	}
 }
 
-void MainWindow::on_action_run_triggered()
-{
-	LVGLDialog dialog(this);
-	dialog.exec();
-}
-
 void MainWindow::on_action_export_c_triggered()
 {
 	QString path = QFileDialog::getExistingDirectory(this, "Export C files");
@@ -341,4 +335,10 @@ void MainWindow::on_button_remove_clicked()
 
 	if (lvgl.removeImage(cast.ptr))
 		m_ui->list_images->takeItem(row);
+}
+
+void MainWindow::on_action_run_toggled(bool arg1)
+{
+	m_ui->simulation->setMouseEnable(arg1);
+	m_ui->simulation->setSelectedObject(nullptr);
 }
