@@ -1,16 +1,18 @@
 # LVGLBuilder
- GUI Builder for littlevgl written in C++ and using LVGL for preview of the created GUI and Qt for the higher level user interface. 
+ GUI Builder for littlevgl written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
+
+![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview.png)
 
 ### Prerequisites
 * [Qt 5.11+](https://www.qt.io/) - The Qt framework
 * C++11
-* LVGL 6.1 (included in source since a view adaptions are applied)
+* LVGL 6.1 (included in source since a few adaptions are applied)
 
 Tested on Windows 10 with MSVC 2017 & Qt 5.13.1
 
 ### Build
 Building with console:
-* Move the cloned LVGLBuild director
+* Move to the cloned LVGLBuild directory
 * Run ```qmake LVGLBuilder.pro```
 * For gcc (Mac/Linux): ```make```
 * For mingw: ```mingw32-make```
