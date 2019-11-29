@@ -33,9 +33,10 @@ Building with QtCreator:
 - [ ] Default values for widgets
 - [ ] Preview for widgets
 - [ ] Icons for widgets
-- [ ] Support different display formats
+- [ ] Support different display formats (Default screens like ili9341 or OLED screens)
 - [ ] Support multiple screens
 - [ ] Fix object inspector (insertion and deletion of widgets)
+- [ ] Dialog for changing keyboard layout
 
 ### ToDo Widgets
 - [ ] Arc (lv_arc)
