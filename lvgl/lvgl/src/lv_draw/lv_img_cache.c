@@ -13,6 +13,8 @@
 #include "../lv_hal/lv_hal_tick.h"
 #include "../lv_misc/lv_gc.h"
 
+#include <stdio.h>
+
 #if defined(LV_GC_INCLUDE)
 #include LV_GC_INCLUDE
 #endif /* LV_ENABLE_GC */
@@ -85,7 +87,7 @@ lv_img_cache_entry_t * lv_img_cache_open(const void * src, const lv_style_t * st
         bool match = false;
         lv_img_src_t src_type = lv_img_src_get_type(cache[i].dec_dsc.src);
         if(src_type == LV_IMG_SRC_VARIABLE) {
-            if(cache[i].dec_dsc.src == src) match = true;
+            if(cache[i].dec_dsc.src == src && cache[i].dec_dsc.style == style) match = true;
         } else if(src_type == LV_IMG_SRC_FILE) {
             if(strcmp(cache[i].dec_dsc.src, src) == 0) match = true;
         }

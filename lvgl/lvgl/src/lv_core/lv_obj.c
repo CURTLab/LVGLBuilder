@@ -52,6 +52,7 @@ static void refresh_children_position(lv_obj_t * obj, lv_coord_t x_diff, lv_coor
 static void report_style_mod_core(void * style_p, lv_obj_t * obj);
 static void refresh_children_style(lv_obj_t * obj);
 static void delete_children(lv_obj_t * obj);
+static void base_dir_refr_children(lv_obj_t * obj);
 static void lv_event_mark_deleted(lv_obj_t * obj);
 static void lv_obj_del_async_cb(void * obj);
 static bool lv_obj_design(lv_obj_t * obj, const lv_area_t * mask_p, lv_design_mode_t mode);
@@ -151,6 +152,11 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         new_obj->par = NULL; /*Screens has no a parent*/
         lv_ll_init(&(new_obj->child_ll), sizeof(lv_obj_t));
 
+        /*Set the callbacks*/
+        new_obj->signal_cb = lv_obj_signal;
+        new_obj->design_cb = lv_obj_design;
+        new_obj->event_cb = NULL;
+
         /*Set coordinates to full screen size*/
         new_obj->coords.x1    = 0;
         new_obj->coords.y1    = 0;
@@ -183,10 +189,6 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         } else {
             new_obj->style_p = &lv_style_scr;
         }
-        /*Set the callbacks*/
-        new_obj->signal_cb = lv_obj_signal;
-        new_obj->design_cb =  lv_obj_design;
-        new_obj->event_cb = NULL;
 
         /*Init. user date*/
 #if LV_USE_USER_DATA
@@ -207,6 +209,12 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         new_obj->opa_scale_en = 0;
         new_obj->opa_scale    = LV_OPA_COVER;
         new_obj->parent_event = 0;
+#if LV_USE_BIDI
+        new_obj->base_dir     = LV_BIDI_BASE_DIR_DEF;
+#else
+        new_obj->base_dir     = LV_BIDI_DIR_LTR;
+#endif
+
         new_obj->reserved     = 0;
 
         new_obj->ext_attr = NULL;
@@ -225,11 +233,27 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         new_obj->par = parent; /*Set the parent*/
         lv_ll_init(&(new_obj->child_ll), sizeof(lv_obj_t));
 
+        /*Set the callbacks*/
+        new_obj->signal_cb = lv_obj_signal;
+        new_obj->design_cb = lv_obj_design;
+        new_obj->event_cb = NULL;
+
+#if LV_USE_BIDI
+        new_obj->base_dir     = LV_BIDI_DIR_INHERIT;
+#else
+        new_obj->base_dir     = LV_BIDI_DIR_LTR;
+#endif
+
         /*Set coordinates left top corner of parent*/
-        new_obj->coords.x1    = parent->coords.x1;
         new_obj->coords.y1    = parent->coords.y1;
-        new_obj->coords.x2    = parent->coords.x1 + LV_OBJ_DEF_WIDTH;
         new_obj->coords.y2    = parent->coords.y1 + LV_OBJ_DEF_HEIGHT;
+        if(lv_obj_get_base_dir(new_obj) == LV_BIDI_DIR_RTL) {
+            new_obj->coords.x2    = parent->coords.x2;
+            new_obj->coords.x1    = parent->coords.x2 - LV_OBJ_DEF_WIDTH;
+        } else {
+            new_obj->coords.x1    = parent->coords.x1;
+            new_obj->coords.x2    = parent->coords.x1 + LV_OBJ_DEF_WIDTH;
+        }
         new_obj->ext_draw_pad = 0;
 
 #if LV_USE_EXT_CLICK_AREA == LV_EXT_CLICK_AREA_FULL
@@ -256,11 +280,6 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         } else {
             new_obj->style_p = &lv_style_plain_color;
         }
-
-        /*Set the callbacks*/
-        new_obj->signal_cb = lv_obj_signal;
-        new_obj->design_cb = lv_obj_design;
-        new_obj->event_cb = NULL;
 
 #if LV_USE_EXT_CLICK_AREA == LV_EXT_CLICK_AREA_FULL
         memset(&new_obj->ext_click_pad, 0, sizeof(new_obj->ext_click_pad));
@@ -292,6 +311,7 @@ lv_obj_t * lv_obj_create(lv_obj_t * parent, const lv_obj_t * copy)
         new_obj->opa_scale    = LV_OPA_COVER;
         new_obj->opa_scale_en = 0;
         new_obj->parent_event = 0;
+        new_obj->reserved     = 0;
 
         new_obj->ext_attr = NULL;
     }
@@ -725,8 +745,12 @@ void lv_obj_set_size(lv_obj_t * obj, lv_coord_t w, lv_coord_t h)
     lv_obj_get_coords(obj, &ori);
 
     /*Set the length and height*/
-    obj->coords.x2 = obj->coords.x1 + w - 1;
     obj->coords.y2 = obj->coords.y1 + h - 1;
+    if(lv_obj_get_base_dir(obj) == LV_BIDI_DIR_RTL) {
+        obj->coords.x1 = obj->coords.x2 - w + 1;
+    } else {
+        obj->coords.x2 = obj->coords.x1 + w - 1;
+    }
 
     /*Send a signal to the object with its new coordinates*/
     obj->signal_cb(obj, LV_SIGNAL_CORD_CHG, &ori);
@@ -1168,7 +1192,7 @@ void lv_obj_set_style(lv_obj_t * obj, const lv_style_t * style)
     refresh_children_style(obj);
 
     /*Notify the object about the style change too*/
-	 lv_obj_refresh_style(obj);
+    lv_obj_refresh_style(obj);
 }
 
 /**
@@ -1319,6 +1343,23 @@ void lv_obj_set_parent_event(lv_obj_t * obj, bool en)
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
     obj->parent_event = (en == true ? 1 : 0);
+}
+
+void lv_obj_set_base_dir(lv_obj_t * obj, lv_bidi_dir_t dir)
+{
+    if(dir != LV_BIDI_DIR_LTR && dir != LV_BIDI_DIR_RTL &&
+       dir != LV_BIDI_DIR_AUTO && dir != LV_BIDI_DIR_INHERIT) {
+
+        LV_LOG_WARN("lv_obj_set_base_dir: invalid base dir");
+        return;
+    }
+
+    obj->base_dir = dir;
+    lv_signal_send(obj, LV_SIGNAL_BASE_DIR_CHG, NULL);
+
+    /* Notify the children about the parent base dir has changed.
+     * (The children might have `LV_BIDI_DIR_INHERIT`)*/
+    base_dir_refr_children(obj);
 }
 
 /**
@@ -1742,8 +1783,11 @@ lv_coord_t lv_obj_get_x(const lv_obj_t * obj)
 
     lv_coord_t rel_x;
     lv_obj_t * parent = lv_obj_get_parent(obj);
-    rel_x             = obj->coords.x1 - parent->coords.x1;
-
+    if(parent) {
+        rel_x             = obj->coords.x1 - parent->coords.x1;
+    } else {
+        rel_x = obj->coords.x1;
+    }
     return rel_x;
 }
 
@@ -1758,8 +1802,11 @@ lv_coord_t lv_obj_get_y(const lv_obj_t * obj)
 
     lv_coord_t rel_y;
     lv_obj_t * parent = lv_obj_get_parent(obj);
-    rel_y             = obj->coords.y1 - parent->coords.y1;
-
+   if(parent) {
+       rel_y             = obj->coords.y1 - parent->coords.y1;
+   } else {
+       rel_y = obj->coords.y1;
+   }
     return rel_y;
 }
 
@@ -1792,7 +1839,7 @@ lv_coord_t lv_obj_get_height(const lv_obj_t * obj)
  * @param obj pointer to an object
  * @return the width which still fits into the container
  */
-lv_coord_t lv_obj_get_width_fit(lv_obj_t * obj)
+lv_coord_t lv_obj_get_width_fit(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
@@ -1806,7 +1853,7 @@ lv_coord_t lv_obj_get_width_fit(lv_obj_t * obj)
  * @param obj pointer to an object
  * @return the height which still fits into the container
  */
-lv_coord_t lv_obj_get_height_fit(lv_obj_t * obj)
+lv_coord_t lv_obj_get_height_fit(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
@@ -1820,7 +1867,7 @@ lv_coord_t lv_obj_get_height_fit(lv_obj_t * obj)
  * @param obj pointer to an object
  * @return  true: auto realign is enabled; false: auto realign is disabled
  */
-bool lv_obj_get_auto_realign(lv_obj_t * obj)
+bool lv_obj_get_auto_realign(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
@@ -2068,6 +2115,26 @@ bool lv_obj_get_parent_event(const lv_obj_t * obj)
     return obj->parent_event == 0 ? false : true;
 }
 
+
+lv_bidi_dir_t lv_obj_get_base_dir(const lv_obj_t * obj)
+{
+#if LV_USE_BIDI
+    const lv_obj_t * parent = obj;
+
+    while(parent) {
+        if(parent->base_dir != LV_BIDI_DIR_INHERIT) return parent->base_dir;
+
+        parent = lv_obj_get_parent(parent);
+    }
+
+    return LV_BIDI_BASE_DIR_DEF;
+#else
+    (void) obj;  /*Unused*/
+    return LV_BIDI_DIR_LTR;
+#endif
+}
+
+
 /**
  * Get the opa scale enable parameter
  * @param obj pointer to an object
@@ -2183,7 +2250,7 @@ void * lv_obj_get_ext_attr(const lv_obj_t * obj)
  * @param obj pointer to an object which type should be get
  * @param buf pointer to an `lv_obj_type_t` buffer to store the types
  */
-void lv_obj_get_type(lv_obj_t * obj, lv_obj_type_t * buf)
+void lv_obj_get_type(const lv_obj_t * obj, lv_obj_type_t * buf)
 {
     LV_ASSERT_NULL(buf);
     LV_ASSERT_NULL(obj);
@@ -2193,7 +2260,7 @@ void lv_obj_get_type(lv_obj_t * obj, lv_obj_type_t * buf)
     memset(buf, 0, sizeof(lv_obj_type_t));
     memset(&tmp, 0, sizeof(lv_obj_type_t));
 
-    obj->signal_cb(obj, LV_SIGNAL_GET_TYPE, &tmp);
+    obj->signal_cb((lv_obj_t *)obj, LV_SIGNAL_GET_TYPE, &tmp);
 
     uint8_t cnt;
     for(cnt = 0; cnt < LV_MAX_ANCESTOR_NUM; cnt++) {
@@ -2214,7 +2281,7 @@ void lv_obj_get_type(lv_obj_t * obj, lv_obj_type_t * buf)
  * @param obj pointer to an object
  * @return user data
  */
-lv_obj_user_data_t lv_obj_get_user_data(lv_obj_t * obj)
+lv_obj_user_data_t lv_obj_get_user_data(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
@@ -2226,11 +2293,11 @@ lv_obj_user_data_t lv_obj_get_user_data(lv_obj_t * obj)
  * @param obj pointer to an object
  * @return pointer to the user data
  */
-lv_obj_user_data_t * lv_obj_get_user_data_ptr(lv_obj_t * obj)
+lv_obj_user_data_t * lv_obj_get_user_data_ptr(const lv_obj_t * obj)
 {
     LV_ASSERT_OBJ(obj, LV_OBJX_NAME);
 
-    return &obj->user_data;
+    return (lv_obj_user_data_t *)&obj->user_data;
 }
 
 /**
@@ -2284,8 +2351,8 @@ bool lv_obj_is_focused(const lv_obj_t * obj)
 /**
  * Used in the signal callback to handle `LV_SIGNAL_GET_TYPE` signal
  * @param obj pointer to an object
- * @param buf pointer to `lv_obj_type_t`. (`param` i nteh signal callback)
- * @param name name of the object. E.g. "lv_btn". (Only teh pointer is saved)
+ * @param buf pointer to `lv_obj_type_t`. (`param` in the signal callback)
+ * @param name name of the object. E.g. "lv_btn". (Only the pointer is saved)
  * @return LV_RES_OK
  */
 lv_res_t lv_obj_handle_get_type_signal(lv_obj_type_t * buf, const char * name)
@@ -2511,6 +2578,22 @@ static void delete_children(lv_obj_t * obj)
     if(obj->ext_attr != NULL) lv_mem_free(obj->ext_attr);
     lv_mem_free(obj); /*Free the object itself*/
 }
+
+static void base_dir_refr_children(lv_obj_t * obj)
+{
+    lv_obj_t * child;
+    child = lv_obj_get_child(obj, NULL);
+
+    while(child) {
+        if(child->base_dir == LV_BIDI_DIR_INHERIT) {
+            lv_signal_send(child, LV_SIGNAL_BASE_DIR_CHG, NULL);
+            base_dir_refr_children(child);
+        }
+
+        child = lv_obj_get_child(obj, child);
+    }
+}
+
 
 static void lv_event_mark_deleted(lv_obj_t * obj)
 {

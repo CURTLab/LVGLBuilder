@@ -109,9 +109,6 @@ SOURCES += \
     $$PWD/lvgl/src/lv_draw/lv_img_decoder.c \
     $$PWD/lvgl/src/lv_font/lv_font.c \
     $$PWD/lvgl/src/lv_font/lv_font_fmt_txt.c \
-    $$PWD/lvgl/src/lv_font/lv_font_freesan_16.c \
-    $$PWD/lvgl/src/lv_font/lv_font_freesan_60.c \
-    $$PWD/lvgl/src/lv_font/lv_font_kobani_24.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_12.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_16.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_22.c \

@@ -25,6 +25,7 @@ extern "C" {
 
 #include "src/lv_core/lv_obj.h"
 #include "src/lv_core/lv_group.h"
+#include "src/lv_core/lv_indev.h"
 
 #include "src/lv_core/lv_refr.h"
 #include "src/lv_core/lv_disp.h"
@@ -34,11 +35,12 @@ extern "C" {
 
 #include "src/lv_font/lv_font.h"
 #include "src/lv_font/lv_font_fmt_txt.h"
+#include "src/lv_misc/lv_bidi.h"
+#include "src/lv_misc/lv_printf.h"
 
 #include "src/lv_objx/lv_btn.h"
 #include "src/lv_objx/lv_imgbtn.h"
 #include "src/lv_objx/lv_imgslider.h"
-#include "src/lv_objx/lv_imgbar.h"
 #include "src/lv_objx/lv_img.h"
 #include "src/lv_objx/lv_label.h"
 #include "src/lv_objx/lv_line.h"

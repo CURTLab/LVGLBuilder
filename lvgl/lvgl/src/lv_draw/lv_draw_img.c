@@ -11,6 +11,8 @@
 #include "../lv_misc/lv_log.h"
 #include "../lv_misc/lv_mem.h"
 
+#include <stdio.h>
+
 /*********************
  *      DEFINES
  *********************/
@@ -51,7 +53,7 @@ void lv_draw_img(const lv_area_t * coords, const lv_area_t * mask, const void * 
     if(src == NULL) {
         LV_LOG_WARN("Image draw: src is NULL");
         lv_draw_rect(coords, mask, &lv_style_plain, LV_OPA_COVER);
-        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL, NULL, NULL);
+        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL, NULL, NULL, LV_BIDI_DIR_LTR);
         return;
     }
 
@@ -61,7 +63,7 @@ void lv_draw_img(const lv_area_t * coords, const lv_area_t * mask, const void * 
     if(res == LV_RES_INV) {
         LV_LOG_WARN("Image draw error");
         lv_draw_rect(coords, mask, &lv_style_plain, LV_OPA_COVER);
-        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL,  NULL, NULL);
+        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, "No\ndata", LV_TXT_FLAG_NONE, NULL,  NULL, NULL, LV_BIDI_DIR_LTR);
         return;
     }
 }
@@ -79,7 +81,7 @@ void lv_draw_img(const lv_area_t * coords, const lv_area_t * mask, const void * 
 lv_color_t lv_img_buf_get_px_color(lv_img_dsc_t * dsc, lv_coord_t x, lv_coord_t y, const lv_style_t * style)
 {
     lv_color_t p_color = LV_COLOR_BLACK;
-    if(x >= dsc->header.w) {
+    if(x >= (lv_coord_t)dsc->header.w) {
         x = dsc->header.w - 1;
         LV_LOG_WARN("lv_canvas_get_px: x is too large (out of canvas)");
     } else if(x < 0) {
@@ -87,7 +89,7 @@ lv_color_t lv_img_buf_get_px_color(lv_img_dsc_t * dsc, lv_coord_t x, lv_coord_t 
         LV_LOG_WARN("lv_canvas_get_px: x is < 0 (out of canvas)");
     }
 
-    if(y >= dsc->header.h) {
+    if(y >= (lv_coord_t)dsc->header.h) {
         y = dsc->header.h - 1;
         LV_LOG_WARN("lv_canvas_get_px: y is too large (out of canvas)");
     } else if(y < 0) {
@@ -158,7 +160,7 @@ lv_color_t lv_img_buf_get_px_color(lv_img_dsc_t * dsc, lv_coord_t x, lv_coord_t 
  */
 lv_opa_t lv_img_buf_get_px_alpha(lv_img_dsc_t * dsc, lv_coord_t x, lv_coord_t y)
 {
-    if(x >= dsc->header.w) {
+    if(x >= (lv_coord_t)dsc->header.w) {
         x = dsc->header.w - 1;
         LV_LOG_WARN("lv_canvas_get_px: x is too large (out of canvas)");
     } else if(x < 0) {
@@ -166,7 +168,7 @@ lv_opa_t lv_img_buf_get_px_alpha(lv_img_dsc_t * dsc, lv_coord_t x, lv_coord_t y)
         LV_LOG_WARN("lv_canvas_get_px: x is < 0 (out of canvas)");
     }
 
-    if(y >= dsc->header.h) {
+    if(y >= (lv_coord_t)dsc->header.h) {
         y = dsc->header.h - 1;
         LV_LOG_WARN("lv_canvas_get_px: y is too large (out of canvas)");
     } else if(y < 0) {
@@ -562,7 +564,7 @@ static lv_res_t lv_img_draw_core(const lv_area_t * coords, const lv_area_t * mas
     if(cdsc->dec_dsc.error_msg != NULL) {
         LV_LOG_WARN("Image draw error");
         lv_draw_rect(coords, mask, &lv_style_plain, LV_OPA_COVER);
-        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, cdsc->dec_dsc.error_msg, LV_TXT_FLAG_NONE, NULL, NULL, NULL);
+        lv_draw_label(coords, mask, &lv_style_plain, LV_OPA_COVER, cdsc->dec_dsc.error_msg, LV_TXT_FLAG_NONE, NULL, NULL, NULL, LV_BIDI_DIR_LTR);
     }
     /* The decoder open could open the image and gave the entire uncompressed image.
      * Just draw it!*/
@@ -572,29 +574,41 @@ static lv_res_t lv_img_draw_core(const lv_area_t * coords, const lv_area_t * mas
     }
     /* The whole uncompressed image is not available. Try to read it line-by-line*/
     else {
-        lv_coord_t width = lv_area_get_width(&mask_com);
+        char tmp[100];
 
-        uint8_t  * buf = lv_draw_get_buf(lv_area_get_width(&mask_com) * LV_IMG_PX_SIZE_ALPHA_BYTE);  /*space for the possible alpha byte*/
+        uint32_t t_start = lv_tick_get();
+
+        lv_coord_t width = lv_area_get_width(&mask_com);
+        lv_coord_t height = lv_area_get_height(&mask_com);
+
+        const uint8_t px_size = lv_img_color_format_get_px_size(cdsc->dec_dsc.header.cf);
+        const lv_coord_t h = 1;
+        const lv_coord_t size =  width * h * px_size;
+
+        uint8_t *buf = lv_draw_get_buf(size);
 
         lv_area_t line;
         lv_area_copy(&line, &mask_com);
-        lv_area_set_height(&line, 1);
+        lv_area_set_height(&line, h);
         lv_coord_t x = mask_com.x1 - coords->x1;
         lv_coord_t y = mask_com.y1 - coords->y1;
         lv_coord_t row;
         lv_res_t read_res;
-        for(row = mask_com.y1; row <= mask_com.y2; row++) {
-            read_res = lv_img_decoder_read_line(&cdsc->dec_dsc, x, y, width, buf);
+        for(row = mask_com.y1; row <= mask_com.y2; row += h) {
+            read_res = lv_img_decoder_read_line(&cdsc->dec_dsc, x, y, width * h, buf);
             if(read_res != LV_RES_OK) {
                 lv_img_decoder_close(&cdsc->dec_dsc);
                 LV_LOG_WARN("Image draw can't read the line");
                 return LV_RES_INV;
             }
             lv_draw_map(&line, mask, buf, opa, chroma_keyed, alpha_byte, style->image.color, style->image.intense);
-            line.y1++;
-            line.y2++;
-            y++;
+            line.y1 += h;
+            line.y2 += h;
+            y += h;
         }
+
+        snprintf(tmp, 100, "Time (%d x %d): %ul ms", width, height, lv_tick_elaps(t_start));
+        LV_LOG_WARN(tmp);
     }
 
     return LV_RES_OK;

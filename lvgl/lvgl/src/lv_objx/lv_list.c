@@ -218,7 +218,8 @@ lv_obj_t * lv_list_add_btn(lv_obj_t * list, const void * img_src, const char * t
         lv_label_set_text(label, txt);
         lv_obj_set_click(label, false);
         lv_label_set_long_mode(label, LV_LABEL_LONG_SROLL_CIRC);
-        lv_obj_set_width(label, liste->coords.x2 - label->coords.x1 - btn_hor_pad);
+        if(lv_obj_get_base_dir(liste) == LV_BIDI_DIR_RTL) lv_obj_set_width(label, label->coords.x2 - liste->coords.x1 - btn_hor_pad);
+        else  lv_obj_set_width(label, liste->coords.x2 - label->coords.x1 - btn_hor_pad);
         if(label_signal == NULL) label_signal = lv_obj_get_signal_cb(label);
     }
 #if LV_USE_GROUP
@@ -318,7 +319,7 @@ void lv_list_set_btn_selected(lv_obj_t * list, lv_obj_t * btn)
         else if(s == LV_BTN_STATE_TGL_REL)
             lv_btn_set_state(ext->selected_btn, LV_BTN_STATE_TGL_PR);
 
-        lv_page_focus(list, ext->selected_btn, lv_list_get_anim_time(list));
+        lv_page_focus(list, ext->selected_btn, LV_ANIM_ON);
     }
 }
 

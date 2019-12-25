@@ -254,7 +254,7 @@ void lv_canvas_copy_buf(lv_obj_t * canvas, const void * to_copy, lv_coord_t x, l
     LV_ASSERT_NULL(to_copy);
 
     lv_canvas_ext_t * ext = lv_obj_get_ext_attr(canvas);
-    if(x + w >= ext->dsc.header.w || y + h >= ext->dsc.header.h) {
+    if(x + w >= (lv_coord_t)ext->dsc.header.w || y + h >= (lv_coord_t)ext->dsc.header.h) {
         LV_LOG_WARN("lv_canvas_copy_buf: x or y out of the canvas");
         return;
     }
@@ -585,7 +585,7 @@ void lv_canvas_draw_text(lv_obj_t * canvas, lv_coord_t x, lv_coord_t y, lv_coord
         default: flag = LV_TXT_FLAG_NONE; break;
     }
 
-    lv_draw_label(&coords, &mask, style, LV_OPA_COVER, txt, flag, NULL,  NULL, NULL);
+    lv_draw_label(&coords, &mask, style, LV_OPA_COVER, txt, flag, NULL,  NULL, NULL, lv_obj_get_base_dir(canvas));
 
     lv_refr_set_disp_refreshing(refr_ori);
 }

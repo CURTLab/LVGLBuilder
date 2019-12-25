@@ -97,7 +97,7 @@ lv_obj_t * lv_spinbox_create(lv_obj_t * par, const lv_obj_t * copy)
         lv_spinbox_ext_t * copy_ext = lv_obj_get_ext_attr(copy);
 
         lv_spinbox_set_value(new_spinbox, copy_ext->value);
-        lv_spinbox_set_digit_format(new_spinbox, copy_ext->digit_count, copy_ext->dec_point_pos);
+        lv_spinbox_set_digit_format(new_spinbox, (uint8_t)copy_ext->digit_count, (uint8_t)copy_ext->dec_point_pos);
         lv_spinbox_set_range(new_spinbox, copy_ext->range_min, copy_ext->range_max);
         lv_spinbox_set_step(new_spinbox, copy_ext->step);
 
@@ -330,8 +330,6 @@ void lv_spinbox_decrement(lv_obj_t * spinbox)
 static lv_res_t lv_spinbox_signal(lv_obj_t * spinbox, lv_signal_t sign, void * param)
 {
 
-    lv_spinbox_ext_t * ext = lv_obj_get_ext_attr(spinbox);
-
     lv_res_t res = LV_RES_OK;
 
     /* Include the ancient signal function */
@@ -341,6 +339,8 @@ static lv_res_t lv_spinbox_signal(lv_obj_t * spinbox, lv_signal_t sign, void * p
     }
     if(sign == LV_SIGNAL_GET_TYPE) return lv_obj_handle_get_type_signal(param, LV_OBJX_NAME);
 
+
+    lv_spinbox_ext_t * ext = lv_obj_get_ext_attr(spinbox);
     if(sign == LV_SIGNAL_CLEANUP) {
         /*Nothing to cleanup. (No dynamically allocated memory in 'ext')*/
     } else if(sign == LV_SIGNAL_GET_TYPE) {
@@ -405,14 +405,18 @@ static void lv_spinbox_updatevalue(lv_obj_t * spinbox)
     char buf[LV_SPINBOX_MAX_DIGIT_COUNT + 8];
     memset(buf, 0, sizeof(buf));
     char * buf_p = buf;
+    uint8_t cur_shift_left = 0;
 
     if (ext->range_min < 0) { // hide sign if there are only positive values
         /*Add the sign*/
         (*buf_p) = ext->value >= 0 ? '+' : '-';
         buf_p++;
+    } else {
+    	/*Cursor need shift to left*/
+    	cur_shift_left++;
     }
 
-    int i;
+    int32_t i;
     /*padding left*/
     for(i = 0; i < ext->digit_padding_left; i++) {
         (*buf_p) = ' ';
@@ -426,7 +430,7 @@ static void lv_spinbox_updatevalue(lv_obj_t * spinbox)
     /*Add leading zeros*/
     int lz_cnt = ext->digit_count - (int)strlen(digits);
     if(lz_cnt > 0) {
-        for(i = strlen(digits); i >= 0; i--) {
+        for(i = (uint16_t)strlen(digits); i >= 0; i--) {
             digits[i + lz_cnt] = digits[i];
         }
         for(i = 0; i < lz_cnt; i++) {
@@ -459,7 +463,7 @@ static void lv_spinbox_updatevalue(lv_obj_t * spinbox)
 
     /*Set the cursor position*/
     int32_t step    = ext->step;
-    uint8_t cur_pos = ext->digit_count;
+    uint8_t cur_pos = (uint8_t)ext->digit_count;
     while(step >= 10) {
         step /= 10;
         cur_pos--;
@@ -467,7 +471,7 @@ static void lv_spinbox_updatevalue(lv_obj_t * spinbox)
 
     if(cur_pos > intDigits) cur_pos++; /*Skip teh decimal point*/
 
-    cur_pos += ext->digit_padding_left;
+    cur_pos += (ext->digit_padding_left - cur_shift_left);
 
     lv_ta_set_cursor_pos(spinbox, cur_pos);
 }

@@ -138,7 +138,7 @@ lv_obj_t * lv_btn_create(lv_obj_t * par, const lv_obj_t * copy)
         ext->ink_wait_time = copy_ext->ink_wait_time;
         ext->ink_out_time  = copy_ext->ink_out_time;
 #endif
-        memcpy(ext->styles, copy_ext->styles, sizeof(ext->styles));
+        memcpy((void*) ext->styles, copy_ext->styles, sizeof(ext->styles));
 
         /*Refresh the style with new signal function*/
         lv_obj_refresh_style(new_btn);
@@ -284,7 +284,7 @@ void lv_btn_set_style(lv_obj_t * btn, lv_btn_style_t type, const lv_style_t * st
 
     /*Refresh the object with the new style*/
     lv_obj_set_style(btn, ext->styles[ext->state]);
-}
+	}
 
 /*=====================
  * Getter functions
