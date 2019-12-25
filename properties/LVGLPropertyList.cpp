@@ -13,7 +13,7 @@
 
 #include "LVGLObject.h"
 #include "LVGLImageData.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 class LVGLPropertyListDelegate : public QStyledItemDelegate
 {
@@ -29,6 +29,7 @@ public:
 			QComboBox *editor = new QComboBox(parent);
 			editor->addItem("None");
 			editor->addItems(lvgl.imageNames());
+			editor->addItems(lvgl.symbolNames());
 			return editor;
 		}
 
@@ -127,8 +128,11 @@ QList<LVGLListItem> LVGLPropertyListDialog::listItems() const
 	for (int i = 0; i < m_list->topLevelItemCount(); ++i) {
 		QTreeWidgetItem *item = m_list->topLevelItem(i);
 		void *img_src = nullptr;
-		if (item->text(1) != "None")
+		if (item->text(1) != "None") {
 			img_src = lvgl.image(item->text(1));
+			if (img_src == nullptr)
+				img_src = const_cast<char *>(lvgl.symbol(item->text(1)));
+		}
 		ret << LVGLListItem{item->text(0), img_src};
 	}
 	return ret;

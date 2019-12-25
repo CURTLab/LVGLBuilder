@@ -9,7 +9,7 @@
 #include <QListWidget>
 #include <QVBoxLayout>
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLStyleModel::LVGLStyleModel(QObject *parent)
 	: QAbstractItemModel(parent)

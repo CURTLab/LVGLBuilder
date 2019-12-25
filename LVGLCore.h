@@ -1,5 +1,5 @@
-#ifndef LVGL_HPP
-#define LVGL_HPP
+#ifndef LVGLCORE_HPP
+#define LVGLCORE_HPP
 
 #include <lvgl/lvgl.h>
 
@@ -42,6 +42,9 @@ public:
 	LVGLImageData *imageByDesc(const lv_img_dsc_t *img_dsc) const;
 	bool removeImage(LVGLImageData *img);
 	void removeAllImages();
+
+	QStringList symbolNames() const;
+	const char *symbol(const QString &name) const;
 
 	void poll();
 	void send_mouse_event(int x, int y, bool pressed);
@@ -106,4 +109,4 @@ private:
 
 extern QLVGL lvgl;
 
-#endif // LVGL_HPP
+#endif // LVGLCORE_HPP

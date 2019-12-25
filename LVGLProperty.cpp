@@ -1,6 +1,6 @@
 #include "LVGLProperty.h"
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 #include <QComboBox>
 #include <QLineEdit>

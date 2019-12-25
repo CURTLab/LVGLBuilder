@@ -7,7 +7,7 @@
 #include <QLineEdit>
 #include <QJsonObject>
 #include <QDebug>
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLPropertyColor::LVGLPropertyColor(LVGLProperty *parent)
 	: LVGLProperty(parent)

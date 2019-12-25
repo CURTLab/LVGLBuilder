@@ -2,7 +2,7 @@
 #define LVGLOBJECTMODEL_H
 
 #include <QAbstractItemModel>
-#include "LVGL.h"
+#include "LVGLCore.h"
 #include "LVGLObject.h"
 
 class LVGLObjectModel : public QAbstractItemModel

@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 
 #include <QApplication>
-#include "LVGL.h"
+#include "LVGLCore.h"
 #include "LVGLSimulator.h"
 #include <QDebug>
 

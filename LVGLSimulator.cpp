@@ -17,7 +17,7 @@
 #include <QClipboard>
 
 #include "widgets/LVGLWidget.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 #include "properties/LVGLPropertyGeometry.h"
 
 #define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
@@ -214,7 +214,8 @@ bool LVGLSimulator::exportCode(const QString &path, const LVGLProject *project)
 	stream << " *       WIDGETS\n";
 	stream << " **********************/\n";
 	for (LVGLObject *o:objects) {
-		assert(!LVGLObject::doesNameExists(o->name(), o));
+		QString name = o->name();
+		assert(!LVGLObject::doesNameExists(name, o));
 		if (o->isAccessible())
 			stream << "extern lv_obj_t *" << o->codeName() << ";\n";
 	}
@@ -639,6 +640,8 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event)
 		if (clipboard->mimeData()->hasText()) {
 			QJsonDocument doc = QJsonDocument::fromJson(clipboard->text().toLatin1());
 			LVGLObject *newObj = LVGLObject::parse(doc.object(), m_sim->selectedObject());
+			if (newObj == nullptr)
+				return false;
 			connect(newObj, &LVGLObject::positionChanged,
 					  m_sim->item(), &LVGLItem::updateGeometry
 					  );

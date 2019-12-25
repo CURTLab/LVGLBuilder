@@ -2,7 +2,7 @@
 
 #include <QComboBox>
 #include "LVGLObject.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLPropertyImage::LVGLPropertyImage(LVGLProperty *parent)
 	: LVGLProperty(parent)

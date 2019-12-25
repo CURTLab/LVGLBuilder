@@ -1,6 +1,6 @@
 #include "LVGLObject.h"
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 #include <QJsonArray>
 
@@ -668,12 +668,13 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent)
 	const LVGLWidget *widgetClass = lvgl.widget(className);
 	if (widgetClass) {
 		LVGLObject *newObj;
+		QString name = object["name"].toString();
 		if (parent)
-			newObj = new LVGLObject(widgetClass, object["name"].toString(), parent);
+			newObj = new LVGLObject(widgetClass, name, parent);
 		else
-			newObj = new LVGLObject(widgetClass, object["name"].toString(), lv_scr_act());
+			newObj = new LVGLObject(widgetClass, name, lv_scr_act());
 		// generate name if nessessary
-		if (newObj->name().isEmpty())
+		if (newObj->name().isEmpty() || doesNameExists(name, newObj))
 			newObj->generateName();
 		lvgl.addObject(newObj);
 

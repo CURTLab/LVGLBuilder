@@ -4,7 +4,7 @@
 #include <QDataStream>
 
 #include "widgets/LVGLWidget.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLWidgetModel::LVGLWidgetModel(QObject *parent)
 	: QAbstractListModel(parent)

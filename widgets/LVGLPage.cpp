@@ -19,7 +19,7 @@ public:
 	}
 
 protected:
-	int get(LVGLObject *obj) const { return lv_page_get_sb_mode(obj->obj()); }
+	int get(LVGLObject *obj) const { return lv_page_get_sb_mode(obj->obj()) & 0x03; }
 	void set(LVGLObject *obj, int index) { lv_page_set_sb_mode(obj->obj(), index & 0xff); }
 
 	QStringList m_values;
@@ -47,11 +47,41 @@ public:
 
 };
 
+class LVGLPropertyPageEdgeFlash : public LVGLPropertyBool
+{
+public:
+	QString name() const { return "Edge flash"; }
+
+	QStringList function(LVGLObject *obj) const {
+		return QStringList() << QString("lv_page_set_edge_flash(%1, %2);").arg(obj->codeName()).arg(QVariant(get(obj)).toString());
+	}
+
+protected:
+	bool get(LVGLObject *obj) const { return lv_page_get_edge_flash(obj->obj()); }
+	void set(LVGLObject *obj, bool boolean) { lv_page_set_edge_flash(obj->obj(), boolean); }
+};
+
+class LVGLPropertyPageScrollPropagation : public LVGLPropertyBool
+{
+public:
+	QString name() const { return "Scroll propagation"; }
+
+	QStringList function(LVGLObject *obj) const {
+		return QStringList() << QString("lv_page_set_scroll_propagation(%1, %2);").arg(obj->codeName()).arg(QVariant(get(obj)).toString());
+	}
+
+protected:
+	bool get(LVGLObject *obj) const { return lv_page_get_scroll_propagation(obj->obj()); }
+	void set(LVGLObject *obj, bool boolean) { lv_page_set_scroll_propagation(obj->obj(), boolean); }
+};
+
 LVGLPage::LVGLPage()
 {
 	m_properties << new LVGLPropertyPageScrollbars;
 	m_properties << new LVGLPropertyPageWidth;
 	m_properties << new LVGLPropertyPageHeight;
+	m_properties << new LVGLPropertyPageEdgeFlash;
+	m_properties << new LVGLPropertyPageScrollPropagation;
 
 	m_editableStyles << LVGL::Body; // LV_PAGE_STYLE_BG
 	m_editableStyles << LVGL::Body; // LV_PAGE_STYLE_SCRL

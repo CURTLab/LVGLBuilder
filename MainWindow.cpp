@@ -275,9 +275,19 @@ void MainWindow::on_list_images_customContextMenuRequested(const QPoint &pos)
 
 		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
 
-		QString fileName = QFileDialog::getSaveFileName(this, "Save image as c file", "", "C Code (*.c)");
-		if (!fileName.isEmpty())
-			cast.ptr->saveAsCode(fileName);
+		QStringList options({"C Code (*.c)", "Binary (*.bin)"});
+		QString selected;
+		QString fileName = QFileDialog::getSaveFileName(this, "Save image as c file", cast.ptr->codeName(), options.join(";;"), &selected);
+		if (fileName.isEmpty())
+			return;
+		bool ok = false;
+		if (selected == options.at(0))
+			ok = cast.ptr->saveAsCode(fileName);
+		else if (selected == options.at(1))
+			ok = cast.ptr->saveAsBin(fileName);
+		if (!ok) {
+			QMessageBox::critical(this, "Error", tr("Could not save image '%1'").arg(fileName));
+		}
 	} else if (sel == color) {
 		union {
 			LVGLImageData *ptr;
@@ -298,7 +308,8 @@ void MainWindow::on_action_export_c_triggered()
 	QString path = QFileDialog::getExistingDirectory(this, "Export C files");
 	if (path.isEmpty())
 		return;
-	m_ui->simulation->exportCode(path, &m_project);
+	if (m_ui->simulation->exportCode(path, &m_project))
+		QMessageBox::information(this, "Export", "C project exported!");
 }
 
 void MainWindow::on_button_add_clicked()

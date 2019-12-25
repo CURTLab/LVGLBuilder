@@ -44,7 +44,7 @@ RCC_DIR = build/rcc
 UI_DIR = build/ui
 
 SOURCES += \
-    LVGL.cpp \
+    LVGLCore.cpp \
     LVGLDialog.cpp \
     LVGLImageData.cpp \
     LVGLObject.cpp \
@@ -97,7 +97,7 @@ SOURCES += \
     MainWindow.cpp
 
 HEADERS += \
-    LVGL.h \
+    LVGLCore.h \
     LVGLDialog.h \
     LVGLImageData.h \
     LVGLObject.h \

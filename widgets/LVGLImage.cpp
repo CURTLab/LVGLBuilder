@@ -5,7 +5,7 @@
 
 #include "properties/LVGLPropertyImage.h"
 #include "LVGLObject.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 class LVGLPropertyImgOffsetX : public LVGLPropertyCoord
 {

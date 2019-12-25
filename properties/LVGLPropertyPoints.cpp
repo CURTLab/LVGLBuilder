@@ -9,7 +9,7 @@
 #include <QJsonObject>
 #include <QDebug>
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLPropertyPointsDialog::LVGLPropertyPointsDialog(QWidget *parent)
 	: QDialog(parent)

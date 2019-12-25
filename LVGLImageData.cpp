@@ -6,7 +6,7 @@
 #include <QTextStream>
 #include <QDebug>
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLImageData::LVGLImageData()
 	: m_size(0)
@@ -142,7 +142,7 @@ static QString hex(uint8_t h) {
 
 QString LVGLImageData::codeName() const
 {
-	return m_name.toLower().replace(' ', '_');
+	return m_name.toLower().replace(' ', '_').replace("-", "_");
 }
 
 LVGLImageData::ColorFormat LVGLImageData::colorFormat() const
@@ -225,5 +225,42 @@ bool LVGLImageData::saveAsCode(const QString &fileName)
 
 	file.close();
 
+	return true;
+}
+
+bool LVGLImageData::saveAsBin(const QString &fileName)
+{
+	if ((m_colorFormat != LV_COLOR_32Bit) && (m_colorFormat != LV_COLOR_24Bit))
+		return false;
+
+	QFile file(fileName);
+	if (!file.open(QIODevice::WriteOnly))
+		return false;
+	lv_img_header_t header;
+	memset(&header, 0, sizeof(lv_img_header_t));
+	header.w = m_img_dsc.header.w;
+	header.h = m_img_dsc.header.h;
+	header.cf = (m_colorFormat == LV_COLOR_32Bit ? LV_IMG_CF_TRUE_COLOR_ALPHA : LV_IMG_CF_TRUE_COLOR);
+
+	file.write(reinterpret_cast<const char*>(&header), sizeof(lv_img_header_t));
+
+	if (m_colorFormat == LV_COLOR_32Bit) {
+		file.write(reinterpret_cast<const char*>(m_img_dsc.data), m_img_dsc.data_size);
+	} else if (m_colorFormat == LV_COLOR_24Bit) {
+		union conv_32_to_24 {
+			uint32_t rgba;
+			struct {
+				uint8_t rgb[3];
+				uint8_t a;
+			} b24;
+		};
+
+		conv_32_to_24 *ptr = reinterpret_cast<conv_32_to_24*>(m_data);
+		const uint32_t n = m_img_dsc.header.h * m_img_dsc.header.w;
+		for (uint32_t i = 0; i < n; ++i, ++ptr)
+			file.write(reinterpret_cast<const char*>(ptr->b24.rgb), 3);
+	}
+
+	file.close();
 	return true;
 }

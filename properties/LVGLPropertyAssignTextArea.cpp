@@ -2,7 +2,7 @@
 
 #include <QComboBox>
 #include "LVGLObject.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLPropertyAssignTextArea::LVGLPropertyAssignTextArea(LVGLProperty *parent)
 	: LVGLProperty(parent)

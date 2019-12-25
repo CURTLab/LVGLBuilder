@@ -6,7 +6,7 @@
 #include <QCursor>
 #include <QtMath>
 #include <QDebug>
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLItem::LVGLItem(QGraphicsItem *parent)
 	: QGraphicsItem(parent)

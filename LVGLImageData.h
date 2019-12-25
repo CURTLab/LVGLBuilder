@@ -37,6 +37,7 @@ public:
 
 	QString codeName() const;
 	bool saveAsCode(const QString &fileName);
+	bool saveAsBin(const QString &fileName);
 
 	ColorFormat colorFormat() const;
 	void setColorFormat(const ColorFormat &colorFormat);

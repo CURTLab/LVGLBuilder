@@ -1,4 +1,4 @@
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 #include <QPainter>
 #include <QDebug>
@@ -122,6 +122,26 @@ void QLVGL::init(int width, int height)
 	m_fonts.append(&lv_font_kobani_24);
 	m_fontNames << "Kobani 24";
 	m_fontCodeNames << "lv_font_kobani_24";
+#endif
+#if LV_FONT_HELVETICA_BOLD_17
+	m_fonts.append(&lv_font_helvetica_bold_17);
+	m_fontNames << "Helvetica Bold 17";
+	m_fontCodeNames << "lv_font_helvetica_bold_17";
+#endif
+#if LV_FONT_HELVETICA_BOLD_20
+	m_fonts.append(&lv_font_helvetica_bold_20);
+	m_fontNames << "Helvetica Bold 20";
+	m_fontCodeNames << "lv_font_helvetica_bold_20";
+#endif
+#if LV_FONT_HELVETICA_17
+	m_fonts.append(&lv_font_helvetica_17);
+	m_fontNames << "Helvetica 17";
+	m_fontCodeNames << "lv_font_helvetica_17";
+#endif
+#if LV_FONT_HELVETICA_14
+	m_fonts.append(&lv_font_helvetica_14);
+	m_fontNames << "Helvetica 14";
+	m_fontCodeNames << "lv_font_helvetica_14";
 #endif
 
 	addWidget(new LVGLBar);
@@ -299,6 +319,129 @@ void QLVGL::removeAllImages()
 {
 	qDeleteAll(m_images);
 	m_images.clear();
+}
+
+QStringList QLVGL::symbolNames() const
+{
+  return QStringList() << "LV_SYMBOL_AUDIO"
+							  << "LV_SYMBOL_VIDEO"
+							  << "LV_SYMBOL_LIST"
+							  << "LV_SYMBOL_OK"
+							  << "LV_SYMBOL_CLOSE"
+							  << "LV_SYMBOL_POWER"
+							  << "LV_SYMBOL_SETTINGS"
+							  << "LV_SYMBOL_HOME"
+							  << "LV_SYMBOL_DOWNLOAD"
+							  << "LV_SYMBOL_DRIVE"
+							  << "LV_SYMBOL_REFRESH"
+							  << "LV_SYMBOL_MUTE"
+							  << "LV_SYMBOL_VOLUME_MID"
+							  << "LV_SYMBOL_VOLUME_MAX"
+							  << "LV_SYMBOL_IMAGE"
+							  << "LV_SYMBOL_EDIT"
+							  << "LV_SYMBOL_PREV"
+							  << "LV_SYMBOL_PLAY"
+							  << "LV_SYMBOL_PAUSE"
+							  << "LV_SYMBOL_STOP"
+							  << "LV_SYMBOL_NEXT"
+							  << "LV_SYMBOL_EJECT"
+							  << "LV_SYMBOL_LEFT"
+							  << "LV_SYMBOL_RIGHT"
+							  << "LV_SYMBOL_PLUS"
+							  << "LV_SYMBOL_MINUS"
+							  << "LV_SYMBOL_EYE_OPEN"
+							  << "LV_SYMBOL_EYE_CLOSE"
+							  << "LV_SYMBOL_WARNING"
+							  << "LV_SYMBOL_SHUFFLE"
+							  << "LV_SYMBOL_UP"
+							  << "LV_SYMBOL_DOWN"
+							  << "LV_SYMBOL_LOOP"
+							  << "LV_SYMBOL_DIRECTORY"
+							  << "LV_SYMBOL_UPLOAD"
+							  << "LV_SYMBOL_CALL"
+							  << "LV_SYMBOL_CUT"
+							  << "LV_SYMBOL_COPY"
+							  << "LV_SYMBOL_SAVE"
+							  << "LV_SYMBOL_CHARGE"
+							  << "LV_SYMBOL_PASTE"
+							  << "LV_SYMBOL_BELL"
+							  << "LV_SYMBOL_KEYBOARD"
+							  << "LV_SYMBOL_GPS"
+							  << "LV_SYMBOL_FILE"
+							  << "LV_SYMBOL_WIFI"
+							  << "LV_SYMBOL_BATTERY_FULL"
+							  << "LV_SYMBOL_BATTERY_3"
+							  << "LV_SYMBOL_BATTERY_2"
+							  << "LV_SYMBOL_BATTERY_1"
+							  << "LV_SYMBOL_BATTERY_EMPTY"
+							  << "LV_SYMBOL_USB"
+							  << "LV_SYMBOL_BLUETOOTH"
+							  << "LV_SYMBOL_TRASH"
+							  << "LV_SYMBOL_BACKSPACE"
+							  << "LV_SYMBOL_SD_CARD"
+							  << "LV_SYMBOL_NEW_LINE";
+}
+
+const char *QLVGL::symbol(const QString &name) const
+{
+	if (name == "LV_SYMBOL_AUDIO") return LV_SYMBOL_AUDIO;
+	else if (name == "LV_SYMBOL_VIDEO") return LV_SYMBOL_VIDEO;
+	else if (name == "LV_SYMBOL_LIST") return LV_SYMBOL_LIST;
+	else if (name == "LV_SYMBOL_OK") return LV_SYMBOL_OK;
+	else if (name == "LV_SYMBOL_CLOSE") return LV_SYMBOL_CLOSE;
+	else if (name == "LV_SYMBOL_POWER") return LV_SYMBOL_POWER;
+	else if (name == "LV_SYMBOL_SETTINGS") return LV_SYMBOL_SETTINGS;
+	else if (name == "LV_SYMBOL_HOME") return LV_SYMBOL_HOME;
+	else if (name == "LV_SYMBOL_DOWNLOAD") return LV_SYMBOL_DOWNLOAD;
+	else if (name == "LV_SYMBOL_DRIVE") return LV_SYMBOL_DRIVE;
+	else if (name == "LV_SYMBOL_REFRESH") return LV_SYMBOL_REFRESH;
+	else if (name == "LV_SYMBOL_MUTE") return LV_SYMBOL_MUTE;
+	else if (name == "LV_SYMBOL_VOLUME_MID") return LV_SYMBOL_VOLUME_MID;
+	else if (name == "LV_SYMBOL_VOLUME_MAX") return LV_SYMBOL_VOLUME_MAX;
+	else if (name == "LV_SYMBOL_IMAGE") return LV_SYMBOL_IMAGE;
+	else if (name == "LV_SYMBOL_EDIT") return LV_SYMBOL_EDIT;
+	else if (name == "LV_SYMBOL_PREV") return LV_SYMBOL_PREV;
+	else if (name == "LV_SYMBOL_PLAY") return LV_SYMBOL_PLAY;
+	else if (name == "LV_SYMBOL_PAUSE") return LV_SYMBOL_PAUSE;
+	else if (name == "LV_SYMBOL_STOP") return LV_SYMBOL_STOP;
+	else if (name == "LV_SYMBOL_NEXT") return LV_SYMBOL_NEXT;
+	else if (name == "LV_SYMBOL_EJECT") return LV_SYMBOL_EJECT;
+	else if (name == "LV_SYMBOL_LEFT") return LV_SYMBOL_LEFT;
+	else if (name == "LV_SYMBOL_RIGHT") return LV_SYMBOL_RIGHT;
+	else if (name == "LV_SYMBOL_PLUS") return LV_SYMBOL_PLUS;
+	else if (name == "LV_SYMBOL_MINUS") return LV_SYMBOL_MINUS;
+	else if (name == "LV_SYMBOL_EYE_OPEN") return LV_SYMBOL_EYE_OPEN;
+	else if (name == "LV_SYMBOL_EYE_CLOSE") return LV_SYMBOL_EYE_CLOSE;
+	else if (name == "LV_SYMBOL_WARNING") return LV_SYMBOL_WARNING;
+	else if (name == "LV_SYMBOL_SHUFFLE") return LV_SYMBOL_SHUFFLE;
+	else if (name == "LV_SYMBOL_UP") return LV_SYMBOL_UP;
+	else if (name == "LV_SYMBOL_DOWN") return LV_SYMBOL_DOWN;
+	else if (name == "LV_SYMBOL_LOOP") return LV_SYMBOL_LOOP;
+	else if (name == "LV_SYMBOL_DIRECTORY") return LV_SYMBOL_DIRECTORY;
+	else if (name == "LV_SYMBOL_UPLOAD") return LV_SYMBOL_UPLOAD;
+	else if (name == "LV_SYMBOL_CALL") return LV_SYMBOL_CALL;
+	else if (name == "LV_SYMBOL_CUT") return LV_SYMBOL_CUT;
+	else if (name == "LV_SYMBOL_COPY") return LV_SYMBOL_COPY;
+	else if (name == "LV_SYMBOL_SAVE") return LV_SYMBOL_SAVE;
+	else if (name == "LV_SYMBOL_CHARGE") return LV_SYMBOL_CHARGE;
+	else if (name == "LV_SYMBOL_PASTE") return LV_SYMBOL_PASTE;
+	else if (name == "LV_SYMBOL_BELL") return LV_SYMBOL_BELL;
+	else if (name == "LV_SYMBOL_KEYBOARD") return LV_SYMBOL_KEYBOARD;
+	else if (name == "LV_SYMBOL_GPS") return LV_SYMBOL_GPS;
+	else if (name == "LV_SYMBOL_FILE") return LV_SYMBOL_FILE;
+	else if (name == "LV_SYMBOL_WIFI") return LV_SYMBOL_WIFI;
+	else if (name == "LV_SYMBOL_BATTERY_FULL") return LV_SYMBOL_BATTERY_FULL;
+	else if (name == "LV_SYMBOL_BATTERY_3") return LV_SYMBOL_BATTERY_3;
+	else if (name == "LV_SYMBOL_BATTERY_2") return LV_SYMBOL_BATTERY_2;
+	else if (name == "LV_SYMBOL_BATTERY_1") return LV_SYMBOL_BATTERY_1;
+	else if (name == "LV_SYMBOL_BATTERY_EMPTY") return LV_SYMBOL_BATTERY_EMPTY;
+	else if (name == "LV_SYMBOL_USB") return LV_SYMBOL_USB;
+	else if (name == "LV_SYMBOL_BLUETOOTH") return LV_SYMBOL_BLUETOOTH;
+	else if (name == "LV_SYMBOL_TRASH") return LV_SYMBOL_TRASH;
+	else if (name == "LV_SYMBOL_BACKSPACE") return LV_SYMBOL_BACKSPACE;
+	else if (name == "LV_SYMBOL_SD_CARD") return LV_SYMBOL_SD_CARD;
+	else if (name == "LV_SYMBOL_NEW_LINE") return LV_SYMBOL_NEW_LINE;
+	else return nullptr;
 }
 
 void QLVGL::poll()

@@ -146,7 +146,7 @@ public:
 	QString name() const { return "Scrollbars"; }
 
 protected:
-	int get(LVGLObject *obj) const { return lv_ta_get_sb_mode(lv_ta_get_label(obj->obj()));  }
+	int get(LVGLObject *obj) const { return lv_ta_get_sb_mode(lv_ta_get_label(obj->obj())) & 0x3;  }
 	void set(LVGLObject *obj, int index) { lv_ta_set_sb_mode(obj->obj(), index & 0xff); }
 };
 

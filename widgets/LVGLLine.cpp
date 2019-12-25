@@ -37,7 +37,7 @@ public:
 		for (uint16_t i = 0; i < ext->point_num; ++i)
 			ret << "\t{" + QString::number(ext->point_array[i].x) + "," + QString::number(ext->point_array[i].y) + "},";
 		ret << "\t};";
-		ret << QString("lv_line_set_points(%1, &%2, %3);").arg(obj->codeName()).arg(var).arg(ext->point_num);
+		ret << QString("lv_line_set_points(%1, %2, %3);").arg(obj->codeName()).arg(var).arg(ext->point_num);
 		return ret;
 	}
 

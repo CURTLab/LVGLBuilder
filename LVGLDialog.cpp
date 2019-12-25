@@ -1,6 +1,6 @@
 #include "LVGLDialog.h"
 
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLDialog::LVGLDialog(QWidget *parent) : QDialog(parent)
 {

@@ -1,7 +1,7 @@
 #include "LVGLStyle.h"
 
 #include <QColor>
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 LVGLStyleItem::LVGLStyleItem(QString name, LVGL::StylePart stylePart, LVGLStyleItem *parent)
 	: m_name(name)

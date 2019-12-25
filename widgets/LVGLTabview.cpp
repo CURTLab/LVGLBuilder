@@ -4,7 +4,7 @@
 
 #include "LVGLObject.h"
 #include "properties/LVGLPropertyTextList.h"
-#include "LVGL.h"
+#include "LVGLCore.h"
 
 class LVGLPropertyTabBtnPos : public LVGLPropertyEnum
 {

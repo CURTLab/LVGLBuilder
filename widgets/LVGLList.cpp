@@ -56,11 +56,11 @@ LVGLList::LVGLList()
 	m_editableStyles << LVGL::Body; // LV_LIST_STYLE_BG
 	m_editableStyles << LVGL::Body; // LV_LIST_STYLE_SCRL
 	m_editableStyles << LVGL::Body; // LV_LIST_STYLE_SB
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_LIST_STYLE_BTN_REL
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_LIST_STYLE_BTN_PR
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_LIST_STYLE_BTN_TGL_REL
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_LIST_STYLE_BTN_TGL_PR
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_LIST_STYLE_BTN_INA
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Image); // LV_LIST_STYLE_BTN_REL
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Image); // LV_LIST_STYLE_BTN_PR
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Image); // LV_LIST_STYLE_BTN_TGL_REL
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Image); // LV_LIST_STYLE_BTN_TGL_PR
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Image); // LV_LIST_STYLE_BTN_INA
 }
 
 QString LVGLList::name() const
