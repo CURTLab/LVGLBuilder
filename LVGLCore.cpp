@@ -103,45 +103,10 @@ void QLVGL::init(int width, int height)
 	m_fontNames << "Roboto 28";
 	m_fontCodeNames << "lv_font_roboto_28";
 #endif
-#if LV_FONT_FREESAN_16
-	m_fonts.append(&lv_font_freesan_16);
-	m_fontNames << "FreeSan 16";
-	m_fontCodeNames << "lv_font_freesan_16";
-#endif
-#if LV_FONT_FREESAN_60
-	m_fonts.append(&lv_font_freesan_60);
-	m_fontNames << "FreeSan 60";
-	m_fontCodeNames << "lv_font_freesan_60";
-#endif
 #if LV_FONT_UNSCII_8
 	m_fonts.append(&lv_font_unscii_8);
 	m_fontNames << "UNSCII 8";
 	m_fontCodeNames << "lv_font_unscii_8";
-#endif
-#if LV_FONT_KOBANI_24
-	m_fonts.append(&lv_font_kobani_24);
-	m_fontNames << "Kobani 24";
-	m_fontCodeNames << "lv_font_kobani_24";
-#endif
-#if LV_FONT_HELVETICA_BOLD_17
-	m_fonts.append(&lv_font_helvetica_bold_17);
-	m_fontNames << "Helvetica Bold 17";
-	m_fontCodeNames << "lv_font_helvetica_bold_17";
-#endif
-#if LV_FONT_HELVETICA_BOLD_20
-	m_fonts.append(&lv_font_helvetica_bold_20);
-	m_fontNames << "Helvetica Bold 20";
-	m_fontCodeNames << "lv_font_helvetica_bold_20";
-#endif
-#if LV_FONT_HELVETICA_17
-	m_fonts.append(&lv_font_helvetica_17);
-	m_fontNames << "Helvetica 17";
-	m_fontCodeNames << "lv_font_helvetica_17";
-#endif
-#if LV_FONT_HELVETICA_14
-	m_fonts.append(&lv_font_helvetica_14);
-	m_fontNames << "Helvetica 14";
-	m_fontCodeNames << "lv_font_helvetica_14";
 #endif
 
 	addWidget(new LVGLBar);
