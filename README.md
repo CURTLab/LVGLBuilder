@@ -25,6 +25,16 @@ Building with QtCreator:
 * Click build project
 * There are no special requironments, therefor it should build with QtCreator out of the box. 
 
+### Usage
+ * Create a new project (only 320x480 resolution supported at the moment)
+ * Simply drag and drop widgets from the list into the canvas
+ * Widgets can be moved with the arrow keys or by dragging
+ * Lock widgets to prevent editing (Unlock via right click context menu)
+ * Drop a widget into another widget to set the parent
+ * Save and load a project as json file using the menu or tool buttons
+ * Mark widgets within the property editor as accessable via the c header
+ * Export the project as c code using the menu (File -> Export -> C Project ...)
+
 ### ToDo General
 - [x] Saving GUI as JSON
 - [x] Loading GUI as JSON
@@ -33,9 +43,11 @@ Building with QtCreator:
 - [ ] Default values for widgets
 - [ ] Preview for widgets
 - [ ] Icons for widgets
-- [ ] Support different display formats
+- [ ] Support different display formats (Default screens like ili9341 or OLED screens)
 - [ ] Support multiple screens
 - [ ] Fix object inspector (insertion and deletion of widgets)
+- [ ] Dialog for changing keyboard layout
+- [ ] Undo and redo
 
 ### ToDo Widgets
 - [ ] Arc (lv_arc)
