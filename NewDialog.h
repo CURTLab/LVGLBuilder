@@ -19,6 +19,7 @@ public:
 
 private:
 	Ui::NewDialog *m_ui;
+
 };
 
 #endif // NEWDIALOG_H

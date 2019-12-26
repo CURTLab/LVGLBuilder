@@ -38,6 +38,7 @@ private slots:
 	void on_button_add_clicked();
 	void on_button_remove_clicked();
 	void on_action_run_toggled(bool arg1);
+	void on_button_add_font_clicked();
 
 private:
 	void updateImages();

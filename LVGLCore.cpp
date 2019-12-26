@@ -3,7 +3,11 @@
 #include <QPainter>
 #include <QDebug>
 
+#include <ft2build.h>
+#include FT_FREETYPE_H
+
 #include "widgets/LVGLWidgets.h"
+#include "LVGLFont.h"
 
 static lv_color_t *disp_framebuffer;
 static lv_disp_buf_t disp_buf;
@@ -23,7 +27,7 @@ bool my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t * data)
 	data->point.x = disp_mouse.point.x;
 	data->point.y = disp_mouse.point.y;
 
-	 return false; /*Return `false` because we are not buffering and no more data to read*/
+	return false; /*Return `false` because we are not buffering and no more data to read*/
 }
 
 void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
@@ -40,12 +44,16 @@ void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color
 
 QLVGL::QLVGL(QObject *parent) : QObject(parent)
 {
+	FT_Init_FreeType(&m_ft);
 }
 
 QLVGL::~QLVGL()
 {
+	FT_Init_FreeType(&m_ft);
+
 	qDeleteAll(m_images);
 	qDeleteAll(m_widgets);
+	qDeleteAll(m_fonts);
 }
 
 void lvgl_print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *dsc)
@@ -54,7 +62,8 @@ void lvgl_print_cb(lv_log_level_t level, const char *file, uint32_t line, const 
 }
 
 void QLVGL::init(int width, int height)
-{	lv_init();
+{
+	lv_init();
 
 	const uint32_t n = static_cast<uint32_t>(width * height);
 	disp_framebuffer = new lv_color_t[n];
@@ -84,29 +93,19 @@ void QLVGL::init(int width, int height)
 	lv_style_copy(&m_screen_style, &lv_style_scr);
 
 #if LV_FONT_ROBOTO_12
-	m_fonts.append(&lv_font_roboto_12);
-	m_fontNames << "Roboto 12";
-	m_fontCodeNames << "lv_font_roboto_12";
+	m_fonts << new LVGLFont("Roboto 12", "lv_font_roboto_12", &lv_font_roboto_12);
 #endif
 #if LV_FONT_ROBOTO_16
-	m_fonts.append(&lv_font_roboto_16);
-	m_fontNames << "Roboto 16";
-	m_fontCodeNames << "lv_font_roboto_16";
+	m_fonts << new LVGLFont("Roboto 16", "lv_font_roboto_16", &lv_font_roboto_16);
 #endif
 #if LV_FONT_ROBOTO_22
-	m_fonts.append(&lv_font_roboto_22);
-	m_fontNames << "Roboto 22";
-	m_fontCodeNames << "lv_font_roboto_22";
+	m_fonts << new LVGLFont("Roboto 22", "lv_font_roboto_22", &lv_font_roboto_22);
 #endif
 #if LV_FONT_ROBOTO_28
-	m_fonts.append(&lv_font_roboto_28);
-	m_fontNames << "Roboto 28";
-	m_fontCodeNames << "lv_font_roboto_28";
+	m_fonts << new LVGLFont("Roboto 28", "lv_font_roboto_28", &lv_font_roboto_28);
 #endif
 #if LV_FONT_UNSCII_8
-	m_fonts.append(&lv_font_unscii_8);
-	m_fontNames << "UNSCII 8";
-	m_fontCodeNames << "lv_font_unscii_8";
+	m_fonts << new LVGLFont("UNSCII 8", "lv_font_unscii_8", &lv_font_unscii_8);
 #endif
 
 	addWidget(new LVGLBar);
@@ -157,8 +156,8 @@ QPixmap QLVGL::grab(const QRect &region) const
 	for (auto y = 0; y < region.height(); ++y)
 		memcpy(img.scanLine(y + region.y()),
 				 &disp_framebuffer[y * stride + region.x()],
-				 static_cast<size_t>(stride) * 4
-				 );
+				static_cast<size_t>(stride) * 4
+				);
 	return QPixmap::fromImage(img);
 }
 
@@ -288,63 +287,63 @@ void QLVGL::removeAllImages()
 
 QStringList QLVGL::symbolNames() const
 {
-  return QStringList() << "LV_SYMBOL_AUDIO"
-							  << "LV_SYMBOL_VIDEO"
-							  << "LV_SYMBOL_LIST"
-							  << "LV_SYMBOL_OK"
-							  << "LV_SYMBOL_CLOSE"
-							  << "LV_SYMBOL_POWER"
-							  << "LV_SYMBOL_SETTINGS"
-							  << "LV_SYMBOL_HOME"
-							  << "LV_SYMBOL_DOWNLOAD"
-							  << "LV_SYMBOL_DRIVE"
-							  << "LV_SYMBOL_REFRESH"
-							  << "LV_SYMBOL_MUTE"
-							  << "LV_SYMBOL_VOLUME_MID"
-							  << "LV_SYMBOL_VOLUME_MAX"
-							  << "LV_SYMBOL_IMAGE"
-							  << "LV_SYMBOL_EDIT"
-							  << "LV_SYMBOL_PREV"
-							  << "LV_SYMBOL_PLAY"
-							  << "LV_SYMBOL_PAUSE"
-							  << "LV_SYMBOL_STOP"
-							  << "LV_SYMBOL_NEXT"
-							  << "LV_SYMBOL_EJECT"
-							  << "LV_SYMBOL_LEFT"
-							  << "LV_SYMBOL_RIGHT"
-							  << "LV_SYMBOL_PLUS"
-							  << "LV_SYMBOL_MINUS"
-							  << "LV_SYMBOL_EYE_OPEN"
-							  << "LV_SYMBOL_EYE_CLOSE"
-							  << "LV_SYMBOL_WARNING"
-							  << "LV_SYMBOL_SHUFFLE"
-							  << "LV_SYMBOL_UP"
-							  << "LV_SYMBOL_DOWN"
-							  << "LV_SYMBOL_LOOP"
-							  << "LV_SYMBOL_DIRECTORY"
-							  << "LV_SYMBOL_UPLOAD"
-							  << "LV_SYMBOL_CALL"
-							  << "LV_SYMBOL_CUT"
-							  << "LV_SYMBOL_COPY"
-							  << "LV_SYMBOL_SAVE"
-							  << "LV_SYMBOL_CHARGE"
-							  << "LV_SYMBOL_PASTE"
-							  << "LV_SYMBOL_BELL"
-							  << "LV_SYMBOL_KEYBOARD"
-							  << "LV_SYMBOL_GPS"
-							  << "LV_SYMBOL_FILE"
-							  << "LV_SYMBOL_WIFI"
-							  << "LV_SYMBOL_BATTERY_FULL"
-							  << "LV_SYMBOL_BATTERY_3"
-							  << "LV_SYMBOL_BATTERY_2"
-							  << "LV_SYMBOL_BATTERY_1"
-							  << "LV_SYMBOL_BATTERY_EMPTY"
-							  << "LV_SYMBOL_USB"
-							  << "LV_SYMBOL_BLUETOOTH"
-							  << "LV_SYMBOL_TRASH"
-							  << "LV_SYMBOL_BACKSPACE"
-							  << "LV_SYMBOL_SD_CARD"
-							  << "LV_SYMBOL_NEW_LINE";
+	return QStringList() << "LV_SYMBOL_AUDIO"
+								<< "LV_SYMBOL_VIDEO"
+								<< "LV_SYMBOL_LIST"
+								<< "LV_SYMBOL_OK"
+								<< "LV_SYMBOL_CLOSE"
+								<< "LV_SYMBOL_POWER"
+								<< "LV_SYMBOL_SETTINGS"
+								<< "LV_SYMBOL_HOME"
+								<< "LV_SYMBOL_DOWNLOAD"
+								<< "LV_SYMBOL_DRIVE"
+								<< "LV_SYMBOL_REFRESH"
+								<< "LV_SYMBOL_MUTE"
+								<< "LV_SYMBOL_VOLUME_MID"
+								<< "LV_SYMBOL_VOLUME_MAX"
+								<< "LV_SYMBOL_IMAGE"
+								<< "LV_SYMBOL_EDIT"
+								<< "LV_SYMBOL_PREV"
+								<< "LV_SYMBOL_PLAY"
+								<< "LV_SYMBOL_PAUSE"
+								<< "LV_SYMBOL_STOP"
+								<< "LV_SYMBOL_NEXT"
+								<< "LV_SYMBOL_EJECT"
+								<< "LV_SYMBOL_LEFT"
+								<< "LV_SYMBOL_RIGHT"
+								<< "LV_SYMBOL_PLUS"
+								<< "LV_SYMBOL_MINUS"
+								<< "LV_SYMBOL_EYE_OPEN"
+								<< "LV_SYMBOL_EYE_CLOSE"
+								<< "LV_SYMBOL_WARNING"
+								<< "LV_SYMBOL_SHUFFLE"
+								<< "LV_SYMBOL_UP"
+								<< "LV_SYMBOL_DOWN"
+								<< "LV_SYMBOL_LOOP"
+								<< "LV_SYMBOL_DIRECTORY"
+								<< "LV_SYMBOL_UPLOAD"
+								<< "LV_SYMBOL_CALL"
+								<< "LV_SYMBOL_CUT"
+								<< "LV_SYMBOL_COPY"
+								<< "LV_SYMBOL_SAVE"
+								<< "LV_SYMBOL_CHARGE"
+								<< "LV_SYMBOL_PASTE"
+								<< "LV_SYMBOL_BELL"
+								<< "LV_SYMBOL_KEYBOARD"
+								<< "LV_SYMBOL_GPS"
+								<< "LV_SYMBOL_FILE"
+								<< "LV_SYMBOL_WIFI"
+								<< "LV_SYMBOL_BATTERY_FULL"
+								<< "LV_SYMBOL_BATTERY_3"
+								<< "LV_SYMBOL_BATTERY_2"
+								<< "LV_SYMBOL_BATTERY_1"
+								<< "LV_SYMBOL_BATTERY_EMPTY"
+								<< "LV_SYMBOL_USB"
+								<< "LV_SYMBOL_BLUETOOTH"
+								<< "LV_SYMBOL_TRASH"
+								<< "LV_SYMBOL_BACKSPACE"
+								<< "LV_SYMBOL_SD_CARD"
+								<< "LV_SYMBOL_NEW_LINE";
 }
 
 const char *QLVGL::symbol(const QString &name) const
@@ -619,24 +618,57 @@ lv_color_t QLVGL::fromColor(QColor c) const
 #endif
 }
 
+lv_color_t QLVGL::fromColor(QVariant v) const
+{
+	return fromColor(v.value<QColor>());
+}
+
+LVGLFont *QLVGL::addFont(const QString &fileName, uint8_t size)
+{
+	LVGLFont *font = LVGLFont::parse(fileName, size, 4, 0x0020, 0x007f);
+	if (font)
+		m_fonts << font;
+	return font;
+}
+
 QStringList QLVGL::fontNames() const
 {
-	return m_fontNames;
+	QStringList ret;
+	for (const LVGLFont *f:m_fonts)
+		ret << f->name();
+	return ret;
 }
 
 QStringList QLVGL::fontCodeNames() const
 {
-	return m_fontCodeNames;
+	QStringList ret;
+	for (const LVGLFont *f:m_fonts)
+		ret << f->codeName();
+	return ret;
 }
 
 const lv_font_t *QLVGL::font(int index) const
 {
-	return m_fonts.at(index);
+	return m_fonts.at(index)->font();
+}
+
+const lv_font_t *QLVGL::font(const QString &name, Qt::CaseSensitivity cs) const
+{
+	for (const LVGLFont *font:m_fonts) {
+		if (name.compare(font->name(), cs) == 0)
+			return font->font();
+	}
+	return nullptr;
 }
 
 int QLVGL::indexOfFont(const lv_font_t *font) const
 {
-	return m_fonts.indexOf(font);
+	int index = 0;
+	for (auto it = m_fonts.begin(); it != m_fonts.end(); ++it, ++index) {
+		if ((*it)->font() == font)
+			return index;
+	}
+	return -1;
 }
 
 QString QLVGL::baseStyleName(const lv_style_t *style) const

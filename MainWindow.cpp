@@ -9,7 +9,9 @@
 #include "widgets/LVGLWidgets.h"
 
 #include "LVGLDialog.h"
+#include "LVGLFont.h"
 #include "NewDialog.h"
+#include "LVGLFontDialog.h"
 
 #include <QFileDialog>
 #include <QMessageBox>
@@ -89,6 +91,10 @@ MainWindow::MainWindow(QWidget *parent)
 	// add style editor dock to property dock and show the property dock
 	tabifyDockWidget(m_ui->PropertyEditor, m_ui->StyleEditor);
 	m_ui->PropertyEditor->raise();
+
+	// add font editor dock to image dock and show the image dock
+	tabifyDockWidget(m_ui->ImageEditor, m_ui->FontEditor);
+	m_ui->ImageEditor->raise();
 }
 
 MainWindow::~MainWindow()
@@ -352,4 +358,16 @@ void MainWindow::on_action_run_toggled(bool arg1)
 {
 	m_ui->simulation->setMouseEnable(arg1);
 	m_ui->simulation->setSelectedObject(nullptr);
+}
+
+void MainWindow::on_button_add_font_clicked()
+{
+	LVGLFontDialog dialog(this);
+	if (dialog.exec() != QDialog::Accepted)
+		return;
+	LVGLFont *f = lvgl.addFont(dialog.selectedFontPath(), dialog.selectedFontSize());
+	if (f)
+		m_ui->list_fonts->addItem(f->name());
+	else
+		QMessageBox::critical(this, "Error", "Could not load font!");
 }

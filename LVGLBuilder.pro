@@ -14,6 +14,13 @@
 # THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
 # AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+#
+# ------------------------------------------------------------
+#
+# FreeType
+#
+# Copyright (C) 2006-2019 by David Turner, Robert Wilhelm, and Werner Lemberg.
+# See freetype/docs/LICENSE.TXT for the freetype licence
 
 QT       += core gui
 
@@ -35,6 +42,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 include(lvgl/lvgl.pri)
+include(freetype/freetype.pri)
 
 RC_FILE = resources/icon.rc
 
@@ -46,6 +54,8 @@ UI_DIR = build/ui
 SOURCES += \
     LVGLCore.cpp \
     LVGLDialog.cpp \
+    LVGLFont.cpp \
+    LVGLFontDialog.cpp \
     LVGLImageData.cpp \
     LVGLObject.cpp \
     LVGLObjectModel.cpp \
@@ -99,6 +109,8 @@ SOURCES += \
 HEADERS += \
     LVGLCore.h \
     LVGLDialog.h \
+    LVGLFont.h \
+    LVGLFontDialog.h \
     LVGLImageData.h \
     LVGLObject.h \
     LVGLObjectModel.h \
@@ -150,6 +162,7 @@ HEADERS += \
     widgets/LVGLWidgets.h
 
 FORMS += \
+    LVGLFontDialog.ui \
     MainWindow.ui \
     NewDialog.ui
 

@@ -37,7 +37,7 @@ public:
 	};
 
 	LVGLStyleItem(QString name, LVGL::StylePart stylePart, LVGLStyleItem *parent = nullptr);
-	LVGLStyleItem(QString name, Type type, int offset, LVGL::StylePart stylePart, LVGLStyleItem *parent = nullptr);
+	LVGLStyleItem(QString name, Type type, size_t offset, LVGL::StylePart stylePart, LVGLStyleItem *parent = nullptr);
 	~LVGLStyleItem();
 
 	QString name() const;
@@ -51,7 +51,7 @@ public:
 
 	Type type() const;
 
-	int offset() const;
+	size_t offset() const;
 
 	LVGL::StylePart stylePart() const;
 
@@ -59,7 +59,7 @@ protected:
 	QString m_name;
 	LVGLStyleItem *m_parent;
 	Type m_type;
-	int m_offset;
+	size_t m_offset;
 	QList<LVGLStyleItem*> m_childs;
 	LVGL::StylePart m_stylePart;
 

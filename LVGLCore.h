@@ -14,6 +14,7 @@
 #include <QHash>
 
 class LVGLObject;
+class LVGLFont;
 
 class QLVGL : public QObject
 {
@@ -73,10 +74,13 @@ public:
 
 	QColor toColor(lv_color_t c) const;
 	lv_color_t fromColor(QColor c) const;
+	lv_color_t fromColor(QVariant v) const;
 
+	LVGLFont *addFont(const QString &fileName, uint8_t size);
 	QStringList fontNames() const;
 	QStringList fontCodeNames() const;
 	const lv_font_t *font(int index) const;
+	const lv_font_t *font(const QString &name, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 	int indexOfFont(const lv_font_t *font) const;
 
 	QString baseStyleName(const lv_style_t *style) const;
@@ -100,11 +104,11 @@ private:
 	QHash<QString,const LVGLWidget *> m_widgets;
 	LVGLImageData *m_default;
 	QList<LVGLObject*> m_objects;
-	QStringList m_fontNames;
-	QStringList m_fontCodeNames;
-	QList<const lv_font_t*> m_fonts;
+	QList<LVGLFont *> m_fonts;
 	lv_style_t m_screen_style;
 
+	struct FT_LibraryRec_ *m_ft;
+	friend class LVGLFont;
 };
 
 extern QLVGL lvgl;

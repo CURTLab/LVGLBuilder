@@ -3,16 +3,18 @@
 #include <QColor>
 #include "LVGLCore.h"
 
+using lv_font_ref = const lv_font_t *;
+
 LVGLStyleItem::LVGLStyleItem(QString name, LVGL::StylePart stylePart, LVGLStyleItem *parent)
 	: m_name(name)
 	, m_parent(parent)
 	, m_type(Property)
-	, m_offset(-1)
+	, m_offset(std::numeric_limits<size_t>::max())
 	, m_stylePart(stylePart)
 {
 }
 
-LVGLStyleItem::LVGLStyleItem(QString name, Type type, int offset, LVGL::StylePart stylePart, LVGLStyleItem *parent)
+LVGLStyleItem::LVGLStyleItem(QString name, Type type, size_t offset, LVGL::StylePart stylePart, LVGLStyleItem *parent)
 	: m_name(name)
 	, m_parent(parent)
 	, m_type(type)
@@ -66,7 +68,7 @@ LVGLStyleItem::Type LVGLStyleItem::type() const
 	return m_type;
 }
 
-int LVGLStyleItem::offset() const
+size_t LVGLStyleItem::offset() const
 {
 	return m_offset;
 }
@@ -131,7 +133,8 @@ LVGLStyle::LVGLStyle() : LVGLStyleItem("", LVGL::None), m_style(nullptr)
 
 QVariant LVGLStyle::get(const LVGLStyleItem *item) const
 {
-	if (m_style == nullptr || item->offset() == -1 || item->type() == Property)
+	if ((m_style == nullptr) || (item->offset() == std::numeric_limits<size_t>::max()) ||
+		 (item->type() == Property))
 		return QVariant();
 	if (item->type() == Coord) {
 		lv_coord_t c = *reinterpret_cast<lv_coord_t*>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
@@ -173,28 +176,29 @@ lv_border_part_t LVGLStyle::getBorderPart(const LVGLStyleItem *item) const
 	return 0;
 }
 
+template<class T, class P>
+void set_helper(P value, size_t offset, lv_style_t *style)
+{
+	T &c = *reinterpret_cast<T*>(reinterpret_cast<uint8_t*>(style)+offset);
+	c = static_cast<T>(value);
+}
+
 void LVGLStyle::set(const LVGLStyleItem *item, QVariant value)
 {
-	if (m_style == nullptr || item->offset() == -1 || item->type() == Property)
+	if ((m_style == nullptr) || (item->offset() == std::numeric_limits<size_t>::max()) ||
+		 (item->type() == Property))
 		return;
 
-	if (item->type() == Coord) {
-		lv_coord_t &c = *reinterpret_cast<lv_coord_t*>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
-		c = static_cast<lv_coord_t>(value.toInt());
-	} else if (item->type() == Opacity) {
-		lv_opa_t &c = *reinterpret_cast<lv_opa_t*>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
-		c = static_cast<lv_opa_t>(value.toInt());
-	} else if (item->type() == Color) {
-		lv_color_t &c = *reinterpret_cast<lv_color_t*>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
-		c = lvgl.fromColor(value.value<QColor>());
-	} else if (item->type() == Font) {
-		lv_font_t **c = reinterpret_cast<lv_font_t**>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
-		lv_font_t *sel = const_cast<lv_font_t*>(lvgl.font(lvgl.fontNames().indexOf(value.toString())));
-		*c = sel;
-	} else if (item->type() == BorderPart) {
-		lv_border_part_t &c = *reinterpret_cast<lv_border_part_t*>(reinterpret_cast<uint8_t*>(m_style)+item->offset());
-		c = static_cast<lv_border_part_t>(value.toInt());
-	}
+	if (item->type() == Coord)
+		set_helper<lv_coord_t>(value.toInt(), item->offset(), m_style);
+	else if (item->type() == Opacity)
+		set_helper<lv_opa_t>(value.toInt(), item->offset(), m_style);
+	else if (item->type() == Color)
+		set_helper<lv_color_t>(lvgl.fromColor(value), item->offset(), m_style);
+	else if (item->type() == Font)
+		set_helper<lv_font_ref>(lvgl.font(value.toString()), item->offset(), m_style);
+	else if (item->type() == BorderPart)
+		set_helper<lv_border_part_t>(value.toInt(), item->offset(), m_style);
 }
 
 lv_style_t *LVGLStyle::style() const
