@@ -683,10 +683,12 @@ QList<const LVGLFont *> QLVGL::customFonts() const
 
 void QLVGL::removeCustomFonts()
 {
-	for (auto it = m_fonts.begin(); it != m_fonts.end(); ++it) {
+	for (auto it = m_fonts.begin(); it != m_fonts.end();) {
 		if ((*it)->isCustomFont()) {
 			delete *it;
 			it = m_fonts.erase(it);
+		} else {
+			++it;
 		}
 	}
 }

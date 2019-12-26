@@ -28,8 +28,8 @@ private slots:
 	void setCurrentObject(LVGLObject *obj);
 	void styleChanged();
 	void loadRecent();
+	void openNewProject();
 
-	void on_action_new_triggered();
 	void on_action_load_triggered();
 	void on_action_save_triggered();
 	void on_combo_style_currentIndexChanged(int index);
@@ -39,6 +39,9 @@ private slots:
 	void on_button_remove_clicked();
 	void on_action_run_toggled(bool arg1);
 	void on_button_add_font_clicked();
+
+protected:
+	void showEvent(QShowEvent *event);
 
 private:
 	void updateImages();
@@ -50,7 +53,7 @@ private:
 
 	Ui::MainWindow *m_ui;
 	QSlider *m_zoom_slider;
-	LVGLProject m_project;
+	LVGLProject *m_project;
 
 	class LVGLPropertyModel *m_propertyModel;
 	class LVGLStyleModel *m_styleModel;

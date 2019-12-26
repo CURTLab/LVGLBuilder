@@ -39,10 +39,6 @@ public:
 	explicit LVGLSimulator(QWidget *parent = nullptr);
 	~LVGLSimulator() override;
 
-	bool load(const QString &fileName, LVGLProject *project);
-	bool save(const QString &fileName, const LVGLProject *project);
-	bool exportCode(const QString &path, const LVGLProject *project);
-
 	LVGLObject *selectedObject() const;
 
 	LVGLItem *item() const;

@@ -235,6 +235,15 @@ LVGLObject *LVGLItem::object() const
 
 void LVGLItem::setObject(LVGLObject *obj)
 {
+	if (obj == m_object)
+		return;
+
+	if (m_object) {
+		disconnect(m_object, &LVGLObject::positionChanged,
+					  this, &LVGLItem::updateGeometry
+					  );
+	}
+
 	m_object = obj;
 	m_direction.clear();
 	if (obj) {
@@ -242,6 +251,9 @@ void LVGLItem::setObject(LVGLObject *obj)
 		setFlag(QGraphicsItem::ItemIsMovable, obj->isMovable());
 		setAcceptHoverEvents(obj->isMovable());
 		setPos(obj->absolutePosition());
+		connect(m_object, &LVGLObject::positionChanged,
+				  this, &LVGLItem::updateGeometry
+				  );
 	}
 }
 

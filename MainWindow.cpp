@@ -10,7 +10,7 @@
 
 #include "LVGLDialog.h"
 #include "LVGLFont.h"
-#include "NewDialog.h"
+#include "LVGLNewDialog.h"
 #include "LVGLFontDialog.h"
 
 #include <QFileDialog>
@@ -24,6 +24,7 @@ MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, m_ui(new Ui::MainWindow)
 	, m_zoom_slider(new QSlider(Qt::Horizontal))
+	, m_project(nullptr)
 	, m_maxFileNr(5)
 {
 	m_ui->setupUi(this);
@@ -42,6 +43,10 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(m_ui->simulation->item(), &LVGLItem::geometryChanged,
 			  this, &MainWindow::updateProperty
 			  );
+	connect(m_ui->action_new, &QAction::triggered,
+			  this, &MainWindow::openNewProject
+			  );
+
 	m_ui->property_tree->setModel(m_propertyModel);
 	m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate);
 
@@ -100,6 +105,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
 	delete m_ui;
+	delete m_project;
 }
 
 LVGLSimulator *MainWindow::simulator() const
@@ -150,6 +156,23 @@ void MainWindow::loadRecent()
 	QAction *action = qobject_cast<QAction*>(QObject::sender());
 	if (action == nullptr) return;
 	loadUI(action->data().toString());
+}
+
+void MainWindow::openNewProject()
+{
+	LVGLNewDialog dialog(this);
+	if (dialog.exec() == QDialog::Accepted) {
+		delete m_project;
+		m_project = new LVGLProject(dialog.selectedName());
+		m_ui->simulation->clear();
+		m_ui->action_save->setEnabled(true);
+		m_ui->action_export_c->setEnabled(true);
+		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
+	} else {
+		m_ui->action_save->setEnabled(false);
+		m_ui->action_export_c->setEnabled(false);
+		setWindowTitle("LVGL Builder");
+	}
 }
 
 void MainWindow::updateImages()
@@ -224,23 +247,22 @@ void MainWindow::adjustForCurrentFile(const QString &fileName)
 
 void MainWindow::loadUI(const QString &fileName)
 {
-	if (!m_ui->simulation->load(fileName, &m_project)) {
+	delete m_project;
+	m_ui->simulation->clear();
+	m_project = LVGLProject::load(fileName);
+	if (m_project == nullptr) {
 		QMessageBox::critical(this, "Error", "Could not load lvgl file!");
+		setWindowTitle("LVGL Builder");
+		m_ui->action_save->setEnabled(false);
+		m_ui->action_export_c->setEnabled(false);
 	} else {
-		updateImages();
-		updateFonts();
 		adjustForCurrentFile(fileName);
+		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
+		m_ui->action_save->setEnabled(true);
+		m_ui->action_export_c->setEnabled(true);
 	}
-}
-
-void MainWindow::on_action_new_triggered()
-{
-	NewDialog dialog(this);
-	if (dialog.exec() == QDialog::Accepted) {
-		m_project.setName(dialog.name());
-		m_ui->simulation->clear();
-		lvgl.removeAllImages();
-	}
+	updateImages();
+	updateFonts();
 }
 
 void MainWindow::on_action_load_triggered()
@@ -256,7 +278,7 @@ void MainWindow::on_action_save_triggered()
 	QString fileName = QFileDialog::getSaveFileName(this, "Save lvgl", "", "LVGL (*.lvgl)");
 	if (fileName.isEmpty())
 		return;
-	if (!m_ui->simulation->save(fileName, &m_project)) {
+	if (!m_project->save(fileName)) {
 		QMessageBox::critical(this, "Error", "Could not save lvgl file!");
 	} else {
 		adjustForCurrentFile(fileName);
@@ -322,7 +344,7 @@ void MainWindow::on_action_export_c_triggered()
 	QString path = QFileDialog::getExistingDirectory(this, "Export C files");
 	if (path.isEmpty())
 		return;
-	if (m_ui->simulation->exportCode(path, &m_project))
+	if (m_project->exportCode(path))
 		QMessageBox::information(this, "Export", "C project exported!");
 }
 
@@ -378,4 +400,11 @@ void MainWindow::on_button_add_font_clicked()
 		m_ui->list_fonts->addItem(f->name());
 	else
 		QMessageBox::critical(this, "Error", "Could not load font!");
+}
+
+void MainWindow::showEvent(QShowEvent *event)
+{
+	QMainWindow::showEvent(event);
+	if (m_project == nullptr)
+		QTimer::singleShot(50, this, SLOT(openNewProject()));
 }

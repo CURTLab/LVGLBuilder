@@ -57,12 +57,12 @@ SOURCES += \
     LVGLFont.cpp \
     LVGLFontDialog.cpp \
     LVGLImageData.cpp \
+    LVGLNewDialog.cpp \
     LVGLObject.cpp \
     LVGLObjectModel.cpp \
     LVGLProject.cpp \
     LVGLStyle.cpp \
     LVGLStyleModel.cpp \
-    NewDialog.cpp \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
     properties/LVGLPropertyDate.cpp \
@@ -112,12 +112,12 @@ HEADERS += \
     LVGLFont.h \
     LVGLFontDialog.h \
     LVGLImageData.h \
+    LVGLNewDialog.h \
     LVGLObject.h \
     LVGLObjectModel.h \
     LVGLProject.h \
     LVGLStyle.h \
     LVGLStyleModel.h \
-    NewDialog.h \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
     properties/LVGLPropertyDate.h \
@@ -163,8 +163,8 @@ HEADERS += \
 
 FORMS += \
     LVGLFontDialog.ui \
-    MainWindow.ui \
-    NewDialog.ui
+    LVGLNewDialog.ui \
+    MainWindow.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
