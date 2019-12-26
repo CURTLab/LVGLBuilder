@@ -8,6 +8,7 @@ class LVGLFont
 {
 public:
 	LVGLFont(const QString &name, const QString &codeName, const lv_font_t *font);
+	~LVGLFont();
 
 	static LVGLFont *parse(const QString &fileName, uint8_t size, uint8_t bpp, uint32_t unicodeFirst, uint32_t unicodeLast);
 
@@ -17,13 +18,16 @@ public:
 	QString codeName() const;
 	bool saveAsCode(const QString &fileName);
 
+	bool isCustomFont() const;
+
+	QString fileName() const;
+
 private:
 	lv_font_t *m_font;
 	QString m_fileName;
 	QString m_name;
 	QString m_codeName;
-	uint8_t m_size;
-	uint8_t m_bpp;
+	bool m_customFont;
 
 };
 
