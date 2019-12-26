@@ -671,6 +671,26 @@ int QLVGL::indexOfFont(const lv_font_t *font) const
 	return -1;
 }
 
+QList<const LVGLFont *> QLVGL::customFonts() const
+{
+	QList<const LVGLFont *> ret;
+	for (const LVGLFont *font:m_fonts) {
+		if (font->isCustomFont())
+			ret << font;
+	}
+	return  ret;
+}
+
+void QLVGL::removeCustomFonts()
+{
+	for (auto it = m_fonts.begin(); it != m_fonts.end(); ++it) {
+		if ((*it)->isCustomFont()) {
+			delete *it;
+			it = m_fonts.erase(it);
+		}
+	}
+}
+
 QString QLVGL::baseStyleName(const lv_style_t *style) const
 {
 	if (style == &lv_style_scr)

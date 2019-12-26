@@ -42,6 +42,7 @@ private slots:
 
 private:
 	void updateImages();
+	void updateFonts();
 	void addImage(LVGLImageData *img, QString name);
 	void updateRecentActionList();
 	void adjustForCurrentFile(const QString &fileName);

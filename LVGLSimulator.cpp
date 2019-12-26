@@ -19,6 +19,7 @@
 #include "widgets/LVGLWidget.h"
 #include "LVGLCore.h"
 #include "properties/LVGLPropertyGeometry.h"
+#include "LVGLFont.h"
 
 #define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
 
@@ -129,6 +130,13 @@ bool LVGLSimulator::load(const QString &fileName, LVGLProject *project)
 		LVGLImageData *img = new LVGLImageData(imageArr[i].toObject());
 		lvgl.addImage(img);
 	}
+
+	QJsonArray fontArr = doc["fonts"].toArray();
+	for (int i = 0; i < fontArr.size(); ++i) {
+		QJsonObject object = fontArr[i].toObject();
+		lvgl.addFont(object["fileName"].toString(), uint8_t(object["size"].toInt()));
+	}
+
 	QJsonObject lvglObj = doc["lvgl"].toObject();
 	if (!lvglObj.contains("widgets"))
 		return false;
@@ -169,12 +177,19 @@ bool LVGLSimulator::save(const QString &fileName, const LVGLProject *project)
 		if (!i->fileName().isEmpty())
 			imageArr.append(i->toJson());
 	}
+
+	QJsonArray fontArr;
+	for (const LVGLFont *f:lvgl.customFonts())
+		fontArr.append(f->toJson());
+
 	QJsonObject screen({{"widgets", widgetArr},
 							  {"name", project->name()}});
 	if (lvgl.screenColorChanged())
 		screen.insert("screen color", QVariant(lvgl.screenColor()).toString());
 	QJsonObject lvgl({{"lvgl", screen},
-							{"images", imageArr}});
+							{"images", imageArr},
+							{"fonts", fontArr}
+						  });
 	QJsonDocument doc(lvgl);
 
 	file.write(doc.toJson());
@@ -368,6 +383,7 @@ void LVGLSimulator::clear()
 	setSelectedObject(nullptr);
 	lvgl.removeAllObjects();
 	lvgl.removeAllImages();
+	lvgl.removeCustomFonts();
 }
 
 void LVGLSimulator::setMouseEnable(bool enable)

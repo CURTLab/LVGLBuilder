@@ -3,6 +3,7 @@
 
 #include <lvgl/lvgl.h>
 #include <QString>
+#include <QJsonObject>
 
 class LVGLFont
 {
@@ -21,6 +22,8 @@ public:
 	bool isCustomFont() const;
 
 	QString fileName() const;
+
+	QJsonObject toJson() const;
 
 private:
 	lv_font_t *m_font;

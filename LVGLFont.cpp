@@ -135,7 +135,8 @@ LVGLFont *LVGLFont::parse(const QString &fileName, uint8_t size, uint8_t bpp, ui
 	lv_font_t *font = new lv_font_t;
 	font->get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt;
 	font->get_glyph_bitmap = lv_font_get_bitmap_fmt_txt;
-	font->line_height = uint8_t((face->ascender / 64 - face->descender / 64));
+	//font->line_height = uint8_t((face->ascender / 64 - face->descender / 64));
+	font->line_height = size;
 	font->base_line = uint8_t(-face->descender / 64);
 	font->subpx = LV_FONT_SUBPX_NONE;
 	font->dsc = font_dsc;
@@ -292,4 +293,15 @@ bool LVGLFont::isCustomFont() const
 QString LVGLFont::fileName() const
 {
 	return m_fileName;
+}
+
+QJsonObject LVGLFont::toJson() const
+{
+	QJsonObject object({{"name", m_name},
+							  {"code", m_codeName},
+							  {"size", m_font->line_height}
+							 });
+	if (!m_fileName.isEmpty())
+		object.insert("fileName", m_fileName);
+	return  object;
 }

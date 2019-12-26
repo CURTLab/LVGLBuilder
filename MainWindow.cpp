@@ -163,6 +163,13 @@ void MainWindow::updateImages()
 	}
 }
 
+void MainWindow::updateFonts()
+{
+	m_ui->list_fonts->clear();
+	for (const LVGLFont *f:lvgl.customFonts())
+		m_ui->list_fonts->addItem(f->name());
+}
+
 void MainWindow::addImage(LVGLImageData *img, QString name)
 {
 	union {
@@ -221,6 +228,7 @@ void MainWindow::loadUI(const QString &fileName)
 		QMessageBox::critical(this, "Error", "Could not load lvgl file!");
 	} else {
 		updateImages();
+		updateFonts();
 		adjustForCurrentFile(fileName);
 	}
 }
