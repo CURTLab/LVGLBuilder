@@ -701,7 +701,7 @@ QString QLVGL::fontCodeName(const lv_font_t *font) const
 {
 	for (const LVGLFont *f:m_fonts) {
 		if (f->font() == font)
-			return f->name();
+			return f->codeName();
 	}
 	return m_defaultFont->codeName();
 }

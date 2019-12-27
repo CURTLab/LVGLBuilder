@@ -208,7 +208,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 	stream << "#include \"lvgl.h\"\n\n";
 
 	const QString defName = m_codeName.toUpper();
-	const QString output_name = "lv_font_helvetica_17";
+	const QString output_name = m_codeName;
 
 	stream << "/*******************************************************************************\n";
 	stream << " * Size: " << m_size << " px\n";
@@ -222,7 +222,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 	stream << "/*-----------------\n";
 	stream << " *    BITMAPS\n";
 	stream << " *----------------*/\n\n";
-	stream << "/* Store the image of the letters (glyph)* /\n";
+	stream << "/* Store the image of the letters (glyph) */\n";
 
 	stream << "static const uint8_t " << output_name << "_glyph_bitmap[] =\n{\n";
 	for (uint32_t unicodeAct = unicodeFirst; unicodeAct <= unicodeSec; ++unicodeAct) {
@@ -237,7 +237,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 		stream << "\n";
 		if (unicodeAct != unicodeSec) stream << "\n";
 	}
-	stream << "}\n\n";
+	stream << "};\n\n";
 
 	stream << "/*---------------------\n";
 	stream << " *  GLYPH DESCRIPTION\n";
@@ -256,7 +256,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 		stream << "\n";
 		++gdsc;
 	}
-	stream << "}\n\n";
+	stream << "};\n\n";
 
 	stream << "/*---------------------\n";
 	stream << " *  CHARACTER MAPPING\n";
@@ -277,7 +277,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 
 	stream << "/* Store all the custom data of the font */\n";
 	stream << "static lv_font_fmt_txt_dsc_t " << output_name << "_font_dsc = \n{\n";
-	stream << "\t.glyph_bitmap = " << output_name << "_gylph_bitmap,\n";
+	stream << "\t.glyph_bitmap = " << output_name << "_glyph_bitmap,\n";
 	stream << "\t.glyph_dsc = " << output_name << "_glyph_dsc,\n";
 	stream << "\t.cmaps = " << output_name << "_cmaps,\n";
 	stream << "\t.kern_dsc = NULL,\n\t.kern_scale = 0,\n";
