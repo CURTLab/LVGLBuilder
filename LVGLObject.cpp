@@ -294,7 +294,7 @@ QJsonArray LVGLObject::jsonStyles() const
 			if (!defaultStyle || (defaultStyle->text.sel_color.full != objStyle.text.sel_color.full))
 				text.insert("sel_color", QVariant(lvgl.toColor(objStyle.text.sel_color)).toString());
 			if (!defaultStyle || (defaultStyle->text.font != objStyle.text.font))
-				text.insert("font", lvgl.fontNames().at(lvgl.indexOfFont(objStyle.text.font)));
+				text.insert("font", lvgl.fontName(objStyle.text.font));
 			if (!defaultStyle || (defaultStyle->text.letter_space != objStyle.text.letter_space))
 				text.insert("letter_space", objStyle.text.letter_space);
 			if (!defaultStyle || (defaultStyle->text.line_space != objStyle.text.line_space))
@@ -412,7 +412,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, int type) const
 			ret << styleVar + ".text.sel_color = lv_color_hex(" + color + ");";
 		}
 		if (!defaultStyle || (defaultStyle->text.font != objStyle.text.font))
-			ret << styleVar + ".text.font = &" + lvgl.fontCodeNames().at(lvgl.indexOfFont(objStyle.text.font)) + ";";
+			ret << styleVar + ".text.font = &" + lvgl.fontCodeName(objStyle.text.font) + ";";
 		if (!defaultStyle || (defaultStyle->text.letter_space != objStyle.text.letter_space))
 			ret << styleVar + ".text.letter_space = " + QString::number(objStyle.text.letter_space) + ";";
 		if (!defaultStyle || (defaultStyle->text.line_space != objStyle.text.letter_space))
@@ -520,7 +520,8 @@ void LVGLObject::parseStyles(const QJsonArray &styles)
 				objStyle->text.sel_color = lvgl.fromColor(c);
 			}
 			if (text.contains("font")) {
-				const lv_font_t *f = lvgl.font(lvgl.fontNames().indexOf(text["font"].toString()));
+				const QString fontName = text["font"].toString();
+				const lv_font_t *f = lvgl.font(fontName);
 				objStyle->text.font = f;
 			}
 			if (text.contains("line_space"))

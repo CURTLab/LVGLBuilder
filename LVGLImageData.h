@@ -36,8 +36,8 @@ public:
 	int height() const;
 
 	QString codeName() const;
-	bool saveAsCode(const QString &fileName);
-	bool saveAsBin(const QString &fileName);
+	bool saveAsCode(const QString &fileName) const;
+	bool saveAsBin(const QString &fileName) const;
 
 	ColorFormat colorFormat() const;
 	void setColorFormat(const ColorFormat &colorFormat);

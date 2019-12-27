@@ -160,7 +160,7 @@ QStringList LVGLImageData::colorFormats()
 	return QStringList() << "Mono" << "RGB332" << "RGB565" << "RGB888" << "RGBA";
 }
 
-bool LVGLImageData::saveAsCode(const QString &fileName)
+bool LVGLImageData::saveAsCode(const QString &fileName) const
 {
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly))
@@ -228,7 +228,7 @@ bool LVGLImageData::saveAsCode(const QString &fileName)
 	return true;
 }
 
-bool LVGLImageData::saveAsBin(const QString &fileName)
+bool LVGLImageData::saveAsBin(const QString &fileName) const
 {
 	if ((m_colorFormat != LV_COLOR_32Bit) && (m_colorFormat != LV_COLOR_24Bit))
 		return false;

@@ -77,11 +77,14 @@ public:
 	lv_color_t fromColor(QVariant v) const;
 
 	LVGLFont *addFont(const QString &fileName, uint8_t size);
+	void addFont(LVGLFont *font);
 	QStringList fontNames() const;
 	QStringList fontCodeNames() const;
 	const lv_font_t *font(int index) const;
 	const lv_font_t *font(const QString &name, Qt::CaseSensitivity cs = Qt::CaseSensitive) const;
 	int indexOfFont(const lv_font_t *font) const;
+	QString fontName(const lv_font_t *font) const;
+	QString fontCodeName(const lv_font_t *font) const;
 	QList<const LVGLFont *> customFonts() const;
 	void removeCustomFonts();
 
@@ -108,6 +111,7 @@ private:
 	QList<LVGLObject*> m_objects;
 	QList<LVGLFont *> m_fonts;
 	lv_style_t m_screen_style;
+	const LVGLFont *m_defaultFont;
 
 	struct FT_LibraryRec_ *m_ft;
 	friend class LVGLFont;

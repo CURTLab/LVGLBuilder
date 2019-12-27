@@ -51,7 +51,7 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 	QJsonArray fontArr = doc["fonts"].toArray();
 	for (int i = 0; i < fontArr.size(); ++i) {
 		QJsonObject object = fontArr[i].toObject();
-		lvgl.addFont(object["fileName"].toString(), uint8_t(object["size"].toInt()));
+		lvgl.addFont(LVGLFont::parse(object));
 	}
 
 	if (lvglObj.contains("screen color"))
@@ -88,7 +88,8 @@ bool LVGLProject::save(const QString &fileName) const
 		fontArr.append(f->toJson());
 
 	QJsonObject screen({{"widgets", widgetArr},
-							  {"name", m_name}});
+							  {"name", m_name}
+							 });
 	if (lvgl.screenColorChanged())
 		screen.insert("screen color", QVariant(lvgl.screenColor()).toString());
 	QJsonObject lvgl({{"lvgl", screen},
@@ -178,6 +179,12 @@ bool LVGLProject::exportCode(const QString &path) const
 	for (LVGLImageData *img:images) {
 		img->saveAsCode(dir.path() + "/" + img->codeName() + ".c");
 		stream << "LV_IMG_DECLARE(" << img->codeName() << ");\n";
+	}
+	stream << "\n";
+	auto fonts = lvgl.customFonts();
+	for (const LVGLFont *f:fonts) {
+		f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
+		stream << "LV_FONT_DECLARE(" << f->codeName() << ");\n";
 	}
 	stream << "\n";
 
