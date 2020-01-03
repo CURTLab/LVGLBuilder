@@ -614,6 +614,17 @@ void LVGLObject::setAccessible(bool accessible)
 	m_accessible = accessible;
 }
 
+bool LVGLObject::doesNameExists() const
+{
+	for (LVGLObject *o:lvgl.allObjects()) {
+		if (o == this)
+			continue;
+		if (o->name() == m_name)
+			return true;
+	}
+	return false;
+}
+
 bool LVGLObject::doesNameExists(const QString &name, LVGLObject *except)
 {
 	for (LVGLObject *o:lvgl.allObjects()) {

@@ -1,18 +1,18 @@
-#ifndef LVGLFONT_H
-#define LVGLFONT_H
+#ifndef LVGLFONTDATA_H
+#define LVGLFONTDATA_H
 
 #include <lvgl/lvgl.h>
 #include <QString>
 #include <QJsonObject>
 
-class LVGLFont
+class LVGLFontData
 {
 public:
-	LVGLFont(const QString &name, const QString &codeName, uint8_t size, const lv_font_t *font);
-	~LVGLFont();
+	LVGLFontData(const QString &name, const QString &codeName, uint8_t size, const lv_font_t *font);
+	~LVGLFontData();
 
-	static LVGLFont *parse(const QString &fileName, uint8_t size, uint8_t bpp, uint32_t unicodeFirst, uint32_t unicodeLast);
-	static LVGLFont *parse(QJsonObject object);
+	static LVGLFontData *parse(const QString &fileName, uint8_t size, uint8_t bpp, uint32_t unicodeFirst, uint32_t unicodeLast);
+	static LVGLFontData *parse(QJsonObject object);
 
 	const lv_font_t *font() const;
 	QString name() const;
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif // LVGLFONT_H
+#endif // LVGLFONTDATA_H

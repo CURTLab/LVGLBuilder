@@ -14,7 +14,7 @@
 #include <QHash>
 
 class LVGLObject;
-class LVGLFont;
+class LVGLFontData;
 
 class QLVGL : public QObject
 {
@@ -76,8 +76,9 @@ public:
 	lv_color_t fromColor(QColor c) const;
 	lv_color_t fromColor(QVariant v) const;
 
-	LVGLFont *addFont(const QString &fileName, uint8_t size);
-	void addFont(LVGLFont *font);
+	LVGLFontData *addFont(const QString &fileName, uint8_t size);
+	void addFont(LVGLFontData *font);
+	bool removeFont(LVGLFontData *font);
 	QStringList fontNames() const;
 	QStringList fontCodeNames() const;
 	const lv_font_t *font(int index) const;
@@ -85,7 +86,7 @@ public:
 	int indexOfFont(const lv_font_t *font) const;
 	QString fontName(const lv_font_t *font) const;
 	QString fontCodeName(const lv_font_t *font) const;
-	QList<const LVGLFont *> customFonts() const;
+	QList<const LVGLFontData *> customFonts() const;
 	void removeCustomFonts();
 
 	QString baseStyleName(const lv_style_t *style) const;
@@ -109,12 +110,12 @@ private:
 	QHash<QString,const LVGLWidget *> m_widgets;
 	LVGLImageData *m_default;
 	QList<LVGLObject*> m_objects;
-	QList<LVGLFont *> m_fonts;
+	QList<LVGLFontData *> m_fonts;
 	lv_style_t m_screen_style;
-	const LVGLFont *m_defaultFont;
+	const LVGLFontData *m_defaultFont;
 
 	struct FT_LibraryRec_ *m_ft;
-	friend class LVGLFont;
+	friend class LVGLFontData;
 };
 
 extern QLVGL lvgl;

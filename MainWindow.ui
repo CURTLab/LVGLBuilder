@@ -232,7 +232,7 @@
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
        <item>
-        <widget class="QToolButton" name="button_add">
+        <widget class="QToolButton" name="button_add_image">
          <property name="text">
           <string>...</string>
          </property>
@@ -249,7 +249,7 @@
         </widget>
        </item>
        <item>
-        <widget class="QToolButton" name="button_remove">
+        <widget class="QToolButton" name="button_remove_image">
          <property name="text">
           <string>...</string>
          </property>
@@ -378,7 +378,11 @@
       </layout>
      </item>
      <item>
-      <widget class="QListWidget" name="list_fonts"/>
+      <widget class="QListWidget" name="list_fonts">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>

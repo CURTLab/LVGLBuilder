@@ -3,11 +3,13 @@
 
 #include <QMainWindow>
 #include <QSlider>
-#include "widgets/LVGLWidget.h"
-#include "LVGLImageData.h"
-#include "LVGLProject.h"
+#include <QListWidgetItem>
 
 class LVGLSimulator;
+class LVGLObject;
+class LVGLProject;
+class LVGLImageData;
+class LVGLFontData;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -33,23 +35,31 @@ private slots:
 	void on_action_load_triggered();
 	void on_action_save_triggered();
 	void on_combo_style_currentIndexChanged(int index);
-	void on_list_images_customContextMenuRequested(const QPoint &pos);
 	void on_action_export_c_triggered();
-	void on_button_add_clicked();
-	void on_button_remove_clicked();
-	void on_action_run_toggled(bool arg1);
+	void on_button_add_image_clicked();
+	void on_button_remove_image_clicked();
+	void on_list_images_customContextMenuRequested(const QPoint &pos);
+	void on_list_images_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
 	void on_button_add_font_clicked();
+	void on_button_remove_font_clicked();
+	void on_list_fonts_customContextMenuRequested(const QPoint &pos);
+	void on_list_fonts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous);
+	void on_action_run_toggled(bool run);
 
 protected:
 	void showEvent(QShowEvent *event);
 
 private:
-	void updateImages();
-	void updateFonts();
 	void addImage(LVGLImageData *img, QString name);
+	void updateImages();
+
+	void addFont(LVGLFontData *font, QString name);
+	void updateFonts();
+
 	void updateRecentActionList();
 	void adjustForCurrentFile(const QString &fileName);
 	void loadUI(const QString &fileName);
+	void setEnableBuilder(bool enable);
 
 	Ui::MainWindow *m_ui;
 	QSlider *m_zoom_slider;

@@ -1,4 +1,4 @@
-#include "LVGLFont.h"
+#include "LVGLFontData.h"
 
 #include <QDebug>
 #include <QFile>
@@ -8,7 +8,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-LVGLFont::LVGLFont(const QString &name, const QString &codeName, uint8_t size, const lv_font_t *font)
+LVGLFontData::LVGLFontData(const QString &name, const QString &codeName, uint8_t size, const lv_font_t *font)
 	: m_font(const_cast<lv_font_t*>(font))
 	, m_name(name)
 	, m_codeName(codeName)
@@ -17,7 +17,7 @@ LVGLFont::LVGLFont(const QString &name, const QString &codeName, uint8_t size, c
 {
 }
 
-LVGLFont::~LVGLFont()
+LVGLFontData::~LVGLFontData()
 {
 	if (m_customFont) {
 		lv_font_fmt_txt_dsc_t *fdsc = reinterpret_cast<lv_font_fmt_txt_dsc_t *>(m_font->dsc);
@@ -30,15 +30,15 @@ LVGLFont::~LVGLFont()
 	}
 }
 
-LVGLFont *LVGLFont::parse(const QString &fileName, uint8_t size, uint8_t bpp, uint32_t unicodeFirst, uint32_t unicodeLast)
+LVGLFontData *LVGLFontData::parse(const QString &fileName, uint8_t size, uint8_t bpp, uint32_t unicodeFirst, uint32_t unicodeLast)
 {
 	FT_Face face;
 	int error = FT_New_Face(lvgl.m_ft, qPrintable(fileName), 0, &face);
 	if (error == FT_Err_Unknown_File_Format) {
-		qCritical() << "LVGLFont: Unkown file format";
+		qCritical() << "LVGLFontData: Unkown file format";
 		return nullptr;
 	} else if (error) {
-		qCritical() << "LVGLFont: Error loading font:" << FT_Error_String(error);
+		qCritical() << "LVGLFontData: Error loading font:" << FT_Error_String(error);
 		return nullptr;
 	}
 
@@ -77,8 +77,10 @@ LVGLFont *LVGLFont::parse(const QString &fileName, uint8_t size, uint8_t bpp, ui
 			h = bitmap.rows & 0xff;
 
 			const uint size_bitmap = bitmap.rows * bitmap.width;
-			const size_t buf_size = size_bitmap * bpp / 8;
+			const size_t buf_size = (size_bitmap + 1) * bpp / 8;
 			gylph_bitmap.resize(curr_buf_size + buf_size);
+
+			//assert(size_bitmap % (8 / bpp) == 0);
 
 			uint8_t *buf_in = bitmap.buffer;
 			uint8_t *buf_out = gylph_bitmap.data() + curr_buf_size;
@@ -87,8 +89,11 @@ LVGLFont *LVGLFont::parse(const QString &fileName, uint8_t size, uint8_t bpp, ui
 			for (uint j = 0; j < buf_size; ++j) {
 				*buf_out = 0;
 				for (int i = 0; i < 8; i += bpp) {
-					*buf_out |= (((*buf_in) & mask) >> i);
-					++buf_in; // avoid pointing to not allocated memory
+					const bool ok = ((buf_in - bitmap.buffer) < size_bitmap);
+					const uint8_t val = (ok?*buf_in:0);
+					*buf_out |= ((val & mask) >> i);
+					if (ok)
+						++buf_in; // avoid pointing to not allocated memory
 				}
 				++buf_out; // avoid pointing to not allocated memory
 			}
@@ -155,13 +160,13 @@ LVGLFont *LVGLFont::parse(const QString &fileName, uint8_t size, uint8_t bpp, ui
 		baseName += QString(" %1").arg(face->style_name);
 
 	QString name = QString("%1 %2").arg(baseName).arg(size);
-	LVGLFont *ret = new LVGLFont(name, name.toLower().replace(" ", "_").replace("-", "_"), size, font);
+	LVGLFontData *ret = new LVGLFontData(name, name.toLower().replace(" ", "_").replace("-", "_"), size, font);
 	ret->m_customFont = true;
 	ret->m_fileName = fileName;
 	return  ret;
 }
 
-LVGLFont *LVGLFont::parse(QJsonObject object)
+LVGLFontData *LVGLFontData::parse(QJsonObject object)
 {
 	if (!object.contains("fileName") || !object.contains("bpp") ||
 		 !object.contains("start") || !object.contains("end"))
@@ -173,22 +178,22 @@ LVGLFont *LVGLFont::parse(QJsonObject object)
 	return parse(object["fileName"].toString(), size, bpp, start, end);
 }
 
-const lv_font_t *LVGLFont::font() const
+const lv_font_t *LVGLFontData::font() const
 {
 	return m_font;
 }
 
-QString LVGLFont::name() const
+QString LVGLFontData::name() const
 {
 	return m_name;
 }
 
-QString LVGLFont::codeName() const
+QString LVGLFontData::codeName() const
 {
 	return m_codeName;
 }
 
-bool LVGLFont::saveAsCode(const QString &fileName) const
+bool LVGLFontData::saveAsCode(const QString &fileName) const
 {
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly))
@@ -197,7 +202,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 	lv_font_fmt_txt_dsc_t *fdsc = reinterpret_cast<lv_font_fmt_txt_dsc_t *>(m_font->dsc);
 
 	if (fdsc->cmap_num != 1) {
-		qCritical() << "LVGLFont: Char map count <==> 1!";
+		qCritical() << "LVGLFontData: Char map count <==> 1!";
 		return false;
 	}
 
@@ -228,7 +233,7 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 	for (uint32_t unicodeAct = unicodeFirst; unicodeAct <= unicodeSec; ++unicodeAct) {
 		stream << "\t/* U+" << QString::number(unicodeAct, 16).rightJustified(4, '0') << " \"" <<  QChar(unicodeAct) << "\" */";
 		const lv_font_fmt_txt_glyph_dsc_t &gdsc = fdsc->glyph_dsc[unicodeAct - unicodeFirst + 1];
-		const uint32_t size = gdsc.box_w * gdsc.box_h * fdsc->bpp / 8;
+		const uint32_t size = (gdsc.box_w * gdsc.box_h + 1) * fdsc->bpp / 8;
 		const uint8_t *buf = fdsc->glyph_bitmap + gdsc.bitmap_index;
 		for (uint32_t i = 0; i < size; ++i, ++buf) {
 			if (i % 8 == 0) stream << "\n\t";
@@ -305,17 +310,17 @@ bool LVGLFont::saveAsCode(const QString &fileName) const
 	return true;
 }
 
-bool LVGLFont::isCustomFont() const
+bool LVGLFontData::isCustomFont() const
 {
 	return m_customFont;
 }
 
-QString LVGLFont::fileName() const
+QString LVGLFontData::fileName() const
 {
 	return m_fileName;
 }
 
-QJsonObject LVGLFont::toJson() const
+QJsonObject LVGLFontData::toJson() const
 {
 	QJsonObject object({{"name", m_name},
 							  {"code", m_codeName},
@@ -331,7 +336,7 @@ QJsonObject LVGLFont::toJson() const
 	return  object;
 }
 
-uint8_t LVGLFont::size() const
+uint8_t LVGLFontData::size() const
 {
 	return m_size;
 }

@@ -9,7 +9,7 @@
 
 #include "LVGLCore.h"
 #include "LVGLObject.h"
-#include "LVGLFont.h"
+#include "LVGLFontData.h"
 
 #define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
 
@@ -51,7 +51,7 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 	QJsonArray fontArr = doc["fonts"].toArray();
 	for (int i = 0; i < fontArr.size(); ++i) {
 		QJsonObject object = fontArr[i].toObject();
-		lvgl.addFont(LVGLFont::parse(object));
+		lvgl.addFont(LVGLFontData::parse(object));
 	}
 
 	if (lvglObj.contains("screen color"))
@@ -73,8 +73,11 @@ bool LVGLProject::save(const QString &fileName) const
 
 	QJsonArray widgetArr;
 	for (LVGLObject *o:lvgl.allObjects()) {
-		if (o->parent() == nullptr)
+		if (o->parent() == nullptr) {
+			if (o->doesNameExists())
+				o->generateName();
 			widgetArr.append(o->toJson());
+		}
 	}
 
 	QJsonArray imageArr;
@@ -84,7 +87,7 @@ bool LVGLProject::save(const QString &fileName) const
 	}
 
 	QJsonArray fontArr;
-	for (const LVGLFont *f:lvgl.customFonts())
+	for (const LVGLFontData *f:lvgl.customFonts())
 		fontArr.append(f->toJson());
 
 	QJsonObject screen({{"widgets", widgetArr},
@@ -131,8 +134,7 @@ bool LVGLProject::exportCode(const QString &path) const
 	stream << " *       WIDGETS\n";
 	stream << " **********************/\n";
 	for (LVGLObject *o:objects) {
-		QString name = o->name();
-		assert(!LVGLObject::doesNameExists(name, o));
+		assert(!o->doesNameExists());
 		if (o->isAccessible())
 			stream << "extern lv_obj_t *" << o->codeName() << ";\n";
 	}
@@ -182,7 +184,7 @@ bool LVGLProject::exportCode(const QString &path) const
 	}
 	stream << "\n";
 	auto fonts = lvgl.customFonts();
-	for (const LVGLFont *f:fonts) {
+	for (const LVGLFontData *f:fonts) {
 		f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
 		stream << "LV_FONT_DECLARE(" << f->codeName() << ");\n";
 	}

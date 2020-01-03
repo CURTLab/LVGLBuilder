@@ -7,7 +7,7 @@
 #include FT_FREETYPE_H
 
 #include "widgets/LVGLWidgets.h"
-#include "LVGLFont.h"
+#include "LVGLFontData.h"
 
 static lv_color_t *disp_framebuffer;
 static lv_disp_buf_t disp_buf;
@@ -93,23 +93,23 @@ void QLVGL::init(int width, int height)
 	lv_style_copy(&m_screen_style, &lv_style_scr);
 
 #if LV_FONT_ROBOTO_12
-	m_fonts << new LVGLFont("Roboto 12", "lv_font_roboto_12", 12, &lv_font_roboto_12);
+	m_fonts << new LVGLFontData("Roboto 12", "lv_font_roboto_12", 12, &lv_font_roboto_12);
 #endif
 #if LV_FONT_ROBOTO_16
-	m_fonts << new LVGLFont("Roboto 16", "lv_font_roboto_16", 16, &lv_font_roboto_16);
+	m_fonts << new LVGLFontData("Roboto 16", "lv_font_roboto_16", 16, &lv_font_roboto_16);
 #endif
 #if LV_FONT_ROBOTO_22
-	m_fonts << new LVGLFont("Roboto 22", "lv_font_roboto_22", 22, &lv_font_roboto_22);
+	m_fonts << new LVGLFontData("Roboto 22", "lv_font_roboto_22", 22, &lv_font_roboto_22);
 #endif
 #if LV_FONT_ROBOTO_28
-	m_fonts << new LVGLFont("Roboto 28", "lv_font_roboto_28", 28, &lv_font_roboto_28);
+	m_fonts << new LVGLFontData("Roboto 28", "lv_font_roboto_28", 28, &lv_font_roboto_28);
 #endif
 #if LV_FONT_UNSCII_8
-	m_fonts << new LVGLFont("UNSCII 8", "lv_font_unscii_8", 8, &lv_font_unscii_8);
+	m_fonts << new LVGLFontData("UNSCII 8", "lv_font_unscii_8", 8, &lv_font_unscii_8);
 #endif
 
 	// search for default font name
-	for (const LVGLFont *f:m_fonts) {
+	for (const LVGLFontData *f:m_fonts) {
 		if (f->font() == LV_FONT_DEFAULT) {
 			m_defaultFont = f;
 			break;
@@ -632,24 +632,29 @@ lv_color_t QLVGL::fromColor(QVariant v) const
 	return fromColor(v.value<QColor>());
 }
 
-LVGLFont *QLVGL::addFont(const QString &fileName, uint8_t size)
+LVGLFontData *QLVGL::addFont(const QString &fileName, uint8_t size)
 {
-	LVGLFont *font = LVGLFont::parse(fileName, size, 4, 0x0020, 0x007f);
+	LVGLFontData *font = LVGLFontData::parse(fileName, size, 4, 0x0020, 0x007f);
 	if (font)
 		m_fonts << font;
 	return font;
 }
 
-void QLVGL::addFont(LVGLFont *font)
+void QLVGL::addFont(LVGLFontData *font)
 {
 	if (font)
 		m_fonts << font;
 }
 
+bool QLVGL::removeFont(LVGLFontData *font)
+{
+	return m_fonts.removeOne(font);
+}
+
 QStringList QLVGL::fontNames() const
 {
 	QStringList ret;
-	for (const LVGLFont *f:m_fonts)
+	for (const LVGLFontData *f:m_fonts)
 		ret << f->name();
 	return ret;
 }
@@ -657,7 +662,7 @@ QStringList QLVGL::fontNames() const
 QStringList QLVGL::fontCodeNames() const
 {
 	QStringList ret;
-	for (const LVGLFont *f:m_fonts)
+	for (const LVGLFontData *f:m_fonts)
 		ret << f->codeName();
 	return ret;
 }
@@ -671,7 +676,7 @@ const lv_font_t *QLVGL::font(int index) const
 
 const lv_font_t *QLVGL::font(const QString &name, Qt::CaseSensitivity cs) const
 {
-	for (const LVGLFont *font:m_fonts) {
+	for (const LVGLFontData *font:m_fonts) {
 		if (name.compare(font->name(), cs) == 0)
 			return font->font();
 	}
@@ -690,7 +695,7 @@ int QLVGL::indexOfFont(const lv_font_t *font) const
 
 QString QLVGL::fontName(const lv_font_t *font) const
 {
-	for (const LVGLFont *f:m_fonts) {
+	for (const LVGLFontData *f:m_fonts) {
 		if (f->font() == font)
 			return f->name();
 	}
@@ -699,17 +704,17 @@ QString QLVGL::fontName(const lv_font_t *font) const
 
 QString QLVGL::fontCodeName(const lv_font_t *font) const
 {
-	for (const LVGLFont *f:m_fonts) {
+	for (const LVGLFontData *f:m_fonts) {
 		if (f->font() == font)
 			return f->codeName();
 	}
 	return m_defaultFont->codeName();
 }
 
-QList<const LVGLFont *> QLVGL::customFonts() const
+QList<const LVGLFontData *> QLVGL::customFonts() const
 {
-	QList<const LVGLFont *> ret;
-	for (const LVGLFont *font:m_fonts) {
+	QList<const LVGLFontData *> ret;
+	for (const LVGLFontData *font:m_fonts) {
 		if (font->isCustomFont())
 			ret << font;
 	}

@@ -54,7 +54,7 @@ UI_DIR = build/ui
 SOURCES += \
     LVGLCore.cpp \
     LVGLDialog.cpp \
-    LVGLFont.cpp \
+    LVGLFontData.cpp \
     LVGLFontDialog.cpp \
     LVGLImageData.cpp \
     LVGLNewDialog.cpp \
@@ -109,7 +109,7 @@ SOURCES += \
 HEADERS += \
     LVGLCore.h \
     LVGLDialog.h \
-    LVGLFont.h \
+    LVGLFontData.h \
     LVGLFontDialog.h \
     LVGLImageData.h \
     LVGLNewDialog.h \

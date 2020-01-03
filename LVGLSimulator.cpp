@@ -19,7 +19,7 @@
 #include "widgets/LVGLWidget.h"
 #include "LVGLCore.h"
 #include "properties/LVGLPropertyGeometry.h"
-#include "LVGLFont.h"
+#include "LVGLFontData.h"
 
 #define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
 

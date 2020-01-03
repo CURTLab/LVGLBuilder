@@ -67,6 +67,7 @@ public:
 	bool isAccessible() const;
 	void setAccessible(bool accessible);
 
+	bool doesNameExists() const;
 	static bool doesNameExists(const QString &name, LVGLObject *except = nullptr);
 	void generateName();
 

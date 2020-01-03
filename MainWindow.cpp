@@ -9,7 +9,7 @@
 #include "widgets/LVGLWidgets.h"
 
 #include "LVGLDialog.h"
-#include "LVGLFont.h"
+#include "LVGLFontData.h"
 #include "LVGLNewDialog.h"
 #include "LVGLFontDialog.h"
 
@@ -19,6 +19,16 @@
 #include <QDebug>
 #include <QSettings>
 #include <QInputDialog>
+
+union LVGLImageDataCast {
+	LVGLImageData *ptr;
+	qintptr i;
+};
+
+union LVGLFontDataCast {
+	LVGLFontData *ptr;
+	qintptr i;
+};
 
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
@@ -32,6 +42,9 @@ MainWindow::MainWindow(QWidget *parent)
 	m_zoom_slider->setRange(-2, 2);
 	connect(m_zoom_slider, &QSlider::valueChanged, m_ui->simulation, &LVGLSimulator::setZoomLevel);
 	m_ui->statusbar->addPermanentWidget(m_zoom_slider);
+
+	m_ui->button_remove_image->setEnabled(false);
+	m_ui->button_remove_font->setEnabled(false);
 
 	m_propertyModel = new LVGLPropertyModel();
 	connect(m_ui->simulation, &LVGLSimulator::objectSelected,
@@ -165,14 +178,22 @@ void MainWindow::openNewProject()
 		delete m_project;
 		m_project = new LVGLProject(dialog.selectedName());
 		m_ui->simulation->clear();
-		m_ui->action_save->setEnabled(true);
-		m_ui->action_export_c->setEnabled(true);
+		setEnableBuilder(true);
 		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
 	} else {
-		m_ui->action_save->setEnabled(false);
-		m_ui->action_export_c->setEnabled(false);
+		setEnableBuilder(false);
 		setWindowTitle("LVGL Builder");
 	}
+}
+
+void MainWindow::addImage(LVGLImageData *img, QString name)
+{
+	LVGLImageDataCast cast;
+	cast.ptr = img;
+
+	QListWidgetItem *item = new QListWidgetItem(img->icon(), name);
+	item->setData(Qt::UserRole + 3, cast.i);
+	m_ui->list_images->addItem(item);
 }
 
 void MainWindow::updateImages()
@@ -186,25 +207,21 @@ void MainWindow::updateImages()
 	}
 }
 
+void MainWindow::addFont(LVGLFontData *font, QString name)
+{
+	LVGLFontDataCast cast;
+	cast.ptr = font;
+
+	QListWidgetItem *item = new QListWidgetItem(name);
+	item->setData(Qt::UserRole + 3, cast.i);
+	m_ui->list_fonts->addItem(item);
+}
+
 void MainWindow::updateFonts()
 {
 	m_ui->list_fonts->clear();
-	for (const LVGLFont *f:lvgl.customFonts())
-		m_ui->list_fonts->addItem(f->name());
-}
-
-void MainWindow::addImage(LVGLImageData *img, QString name)
-{
-	union {
-		LVGLImageData *ptr;
-		qintptr i;
-	} cast;
-
-	cast.ptr = img;
-
-	QListWidgetItem *item = new QListWidgetItem(img->icon(), name);
-	item->setData(Qt::UserRole + 3, cast.i);
-	m_ui->list_images->addItem(item);
+	for (const LVGLFontData *f:lvgl.customFonts())
+		addFont(const_cast<LVGLFontData*>(f), f->name());
 }
 
 void MainWindow::updateRecentActionList()
@@ -253,16 +270,25 @@ void MainWindow::loadUI(const QString &fileName)
 	if (m_project == nullptr) {
 		QMessageBox::critical(this, "Error", "Could not load lvgl file!");
 		setWindowTitle("LVGL Builder");
-		m_ui->action_save->setEnabled(false);
-		m_ui->action_export_c->setEnabled(false);
+		setEnableBuilder(false);
 	} else {
 		adjustForCurrentFile(fileName);
 		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
-		m_ui->action_save->setEnabled(true);
-		m_ui->action_export_c->setEnabled(true);
+		setEnableBuilder(true);
 	}
 	updateImages();
 	updateFonts();
+}
+
+void MainWindow::setEnableBuilder(bool enable)
+{
+	m_ui->action_save->setEnabled(enable);
+	m_ui->action_export_c->setEnabled(enable);
+	m_ui->action_run->setEnabled(enable);
+
+	m_ui->WidgeBox->setEnabled(enable);
+	m_ui->ImageEditor->setEnabled(enable);
+	m_ui->FontEditor->setEnabled(enable);
 }
 
 void MainWindow::on_action_load_triggered()
@@ -292,53 +318,6 @@ void MainWindow::on_combo_style_currentIndexChanged(int index)
 		m_styleModel->setStyle(obj->style(index), obj->widgetClass()->editableStyles(index));
 }
 
-void MainWindow::on_list_images_customContextMenuRequested(const QPoint &pos)
-{
-	QPoint item = m_ui->list_images->mapToGlobal(pos);
-	QListWidgetItem *listItem = m_ui->list_images->itemAt(pos);
-	if (listItem == nullptr)
-		return;
-
-	QMenu menu;
-	QAction *save = menu.addAction("Save as ...");
-	QAction *color = menu.addAction("Set output color ...");
-	QAction *sel = menu.exec(item);
-	if (sel == save) {
-		union {
-			LVGLImageData *ptr;
-			qintptr i;
-		} cast;
-
-		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
-
-		QStringList options({"C Code (*.c)", "Binary (*.bin)"});
-		QString selected;
-		QString fileName = QFileDialog::getSaveFileName(this, "Save image as c file", cast.ptr->codeName(), options.join(";;"), &selected);
-		if (fileName.isEmpty())
-			return;
-		bool ok = false;
-		if (selected == options.at(0))
-			ok = cast.ptr->saveAsCode(fileName);
-		else if (selected == options.at(1))
-			ok = cast.ptr->saveAsBin(fileName);
-		if (!ok) {
-			QMessageBox::critical(this, "Error", tr("Could not save image '%1'").arg(fileName));
-		}
-	} else if (sel == color) {
-		union {
-			LVGLImageData *ptr;
-			qintptr i;
-		} cast;
-
-		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
-		int index = static_cast<int>(cast.ptr->colorFormat());
-		QString ret = QInputDialog::getItem(this, "Output color", "Select output color", LVGLImageData::colorFormats(), index, false);
-		index = LVGLImageData::colorFormats().indexOf(ret);
-		if (index >= 0)
-			cast.ptr->setColorFormat(static_cast<LVGLImageData::ColorFormat>(index));
-	}
-}
-
 void MainWindow::on_action_export_c_triggered()
 {
 	QString path = QFileDialog::getExistingDirectory(this, "Export C files");
@@ -348,7 +327,7 @@ void MainWindow::on_action_export_c_triggered()
 		QMessageBox::information(this, "Export", "C project exported!");
 }
 
-void MainWindow::on_button_add_clicked()
+void MainWindow::on_button_add_image_clicked()
 {
 	QStringList fileNames = QFileDialog::getOpenFileNames(this, "Import image", "", "Image (*.png *.jpg *.bmp *.jpeg)");
 	for (const QString &fileName:fileNames) {
@@ -367,27 +346,63 @@ void MainWindow::on_button_add_clicked()
 	}
 }
 
-void MainWindow::on_button_remove_clicked()
+void MainWindow::on_button_remove_image_clicked()
 {
 	QListWidgetItem *item = m_ui->list_images->currentItem();
 	if (item == nullptr)
 		return;
 	const int row = m_ui->list_images->currentRow();
 
-	union {
-		LVGLImageData *ptr;
-		qintptr i;
-	} cast;
+	LVGLImageDataCast cast;
 	cast.i = item->data(Qt::UserRole + 3).toLongLong();
 
 	if (lvgl.removeImage(cast.ptr))
 		m_ui->list_images->takeItem(row);
 }
 
-void MainWindow::on_action_run_toggled(bool arg1)
+void MainWindow::on_list_images_customContextMenuRequested(const QPoint &pos)
 {
-	m_ui->simulation->setMouseEnable(arg1);
-	m_ui->simulation->setSelectedObject(nullptr);
+	QPoint item = m_ui->list_images->mapToGlobal(pos);
+	QListWidgetItem *listItem = m_ui->list_images->itemAt(pos);
+	if (listItem == nullptr)
+		return;
+
+	QMenu menu;
+	QAction *save = menu.addAction("Save as ...");
+	QAction *color = menu.addAction("Set output color ...");
+	QAction *sel = menu.exec(item);
+	if (sel == save) {
+		LVGLImageDataCast cast;
+		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
+
+		QStringList options({"C Code (*.c)", "Binary (*.bin)"});
+		QString selected;
+		QString fileName = QFileDialog::getSaveFileName(this, "Save image as c file", cast.ptr->codeName(), options.join(";;"), &selected);
+		if (fileName.isEmpty())
+			return;
+		bool ok = false;
+		if (selected == options.at(0))
+			ok = cast.ptr->saveAsCode(fileName);
+		else if (selected == options.at(1))
+			ok = cast.ptr->saveAsBin(fileName);
+		if (!ok) {
+			QMessageBox::critical(this, "Error", tr("Could not save image '%1'").arg(fileName));
+		}
+	} else if (sel == color) {
+		LVGLImageDataCast cast;
+		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
+		int index = static_cast<int>(cast.ptr->colorFormat());
+		QString ret = QInputDialog::getItem(this, "Output color", "Select output color", LVGLImageData::colorFormats(), index, false);
+		index = LVGLImageData::colorFormats().indexOf(ret);
+		if (index >= 0)
+			cast.ptr->setColorFormat(static_cast<LVGLImageData::ColorFormat>(index));
+	}
+}
+
+void MainWindow::on_list_images_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+	Q_UNUSED(previous)
+	m_ui->button_remove_image->setEnabled(current != nullptr);
 }
 
 void MainWindow::on_button_add_font_clicked()
@@ -395,11 +410,65 @@ void MainWindow::on_button_add_font_clicked()
 	LVGLFontDialog dialog(this);
 	if (dialog.exec() != QDialog::Accepted)
 		return;
-	LVGLFont *f = lvgl.addFont(dialog.selectedFontPath(), dialog.selectedFontSize());
+	LVGLFontData *f = lvgl.addFont(dialog.selectedFontPath(), dialog.selectedFontSize());
 	if (f)
-		m_ui->list_fonts->addItem(f->name());
+		addFont(f, f->name());
 	else
 		QMessageBox::critical(this, "Error", "Could not load font!");
+}
+
+void MainWindow::on_button_remove_font_clicked()
+{
+	QListWidgetItem *item = m_ui->list_fonts->currentItem();
+	if (item == nullptr)
+		return;
+	const int row = m_ui->list_fonts->currentRow();
+
+	LVGLFontDataCast cast;
+	cast.i = item->data(Qt::UserRole + 3).toLongLong();
+
+	if (lvgl.removeFont(cast.ptr))
+		m_ui->list_fonts->takeItem(row);
+}
+
+void MainWindow::on_list_fonts_customContextMenuRequested(const QPoint &pos)
+{
+	QPoint item = m_ui->list_fonts->mapToGlobal(pos);
+	QListWidgetItem *listItem = m_ui->list_fonts->itemAt(pos);
+	if (listItem == nullptr)
+		return;
+
+	QMenu menu;
+	QAction *save = menu.addAction("Save as ...");
+	QAction *sel = menu.exec(item);
+	if (sel == save) {
+		LVGLFontDataCast cast;
+		cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
+
+		QStringList options({"C Code (*.c)", "Binary (*.bin)"});
+		QString selected;
+		QString fileName = QFileDialog::getSaveFileName(this, "Save font as c file", cast.ptr->codeName(), options.join(";;"), &selected);
+		if (fileName.isEmpty())
+			return;
+		bool ok = false;
+		if (selected == options.at(0))
+			ok = cast.ptr->saveAsCode(fileName);
+		if (!ok) {
+			QMessageBox::critical(this, "Error", tr("Could not save font '%1'").arg(fileName));
+		}
+	}
+}
+
+void MainWindow::on_list_fonts_currentItemChanged(QListWidgetItem *current, QListWidgetItem *previous)
+{
+	Q_UNUSED(previous)
+	m_ui->button_remove_font->setEnabled(current != nullptr);
+}
+
+void MainWindow::on_action_run_toggled(bool run)
+{
+	m_ui->simulation->setMouseEnable(run);
+	m_ui->simulation->setSelectedObject(nullptr);
 }
 
 void MainWindow::showEvent(QShowEvent *event)
