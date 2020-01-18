@@ -40,10 +40,10 @@ Building with QtCreator:
 - [x] Loading GUI as JSON
 - [x] Export C-project
 - [x] Change style of single widgets
+- [x] Support different display formats
 - [ ] Default values for widgets
 - [ ] Preview for widgets
 - [ ] Icons for widgets
-- [ ] Support different display formats (Default screens like ili9341 or OLED screens)
 - [ ] Support multiple screens
 - [ ] Fix object inspector (insertion and deletion of widgets)
 - [ ] Dialog for changing keyboard layout
@@ -57,7 +57,7 @@ Building with QtCreator:
 - [x] Calendar (lv_calendar)
 - [ ] Canvas (lv_canvas)
 - [x] Checkbox (lv_cb)
-- [ ] Chart (lv_chart)
+- [x] Chart (lv_chart)
 - [x] Container (lv_cont)
 - [x] Color picker (lv_cpicker)
 - [x] Drop-down list (lv_ddlist)
