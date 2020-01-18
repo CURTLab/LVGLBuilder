@@ -180,6 +180,9 @@ void MainWindow::openNewProject()
 		m_ui->simulation->clear();
 		setEnableBuilder(true);
 		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
+		const auto res = dialog.selectedResolution();
+		lvgl.changeResolution(res.first, res.second);
+		m_ui->simulation->changeResolution(res.first, res.second);
 	} else {
 		setEnableBuilder(false);
 		setWindowTitle("LVGL Builder");

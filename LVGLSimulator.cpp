@@ -146,6 +146,11 @@ void LVGLSimulator::setMouseEnable(bool enable)
 	m_mouseEnabled = enable;
 }
 
+void LVGLSimulator::changeResolution(lv_coord_t width, lv_coord_t height)
+{
+	m_scene->setSceneRect(0, 0, width, height);
+}
+
 void LVGLSimulator::mousePressEvent(QMouseEvent *event)
 {
 	const QPoint pos = mapToScene(event->pos()).toPoint();

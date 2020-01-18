@@ -11,5 +11,7 @@
         <file>folder.png</file>
         <file>lvgl.ico</file>
         <file>start.png</file>
+        <file>Landscape.png</file>
+        <file>Portrait.png</file>
     </qresource>
 </RCC>

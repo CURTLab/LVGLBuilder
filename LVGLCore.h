@@ -25,6 +25,8 @@ public:
 
 	void init(int width, int height);
 
+	bool changeResolution(lv_coord_t width, lv_coord_t height);
+
 	QPixmap framebuffer() const;
 	QPixmap grab(const QRect &region) const;
 
@@ -103,6 +105,7 @@ private slots:
 
 private:
 	void addWidget(const LVGLWidget *w);
+	void dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
 
 	QTimer m_timer;
 	QElapsedTimer m_time;
@@ -114,8 +117,15 @@ private:
 	lv_style_t m_screen_style;
 	const LVGLFontData *m_defaultFont;
 
+	QVector<lv_color_t> m_disp_framebuffer;
+	QVector<lv_color_t> m_buf1;
+	QVector<lv_color_t> m_buf2;
+	lv_disp_buf_t m_disp_buf;
+	lv_disp_drv_t m_disp_drv;
+
 	struct FT_LibraryRec_ *m_ft;
 	friend class LVGLFontData;
+	friend void lvgl_core_flush_cb(lv_disp_drv_t *, const lv_area_t *, lv_color_t *);
 };
 
 extern QLVGL lvgl;

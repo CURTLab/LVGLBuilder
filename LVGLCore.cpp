@@ -9,15 +9,17 @@
 #include "widgets/LVGLWidgets.h"
 #include "LVGLFontData.h"
 
-static lv_color_t *disp_framebuffer;
-static lv_disp_buf_t disp_buf;
-static lv_color_t *buf1;
-static lv_color_t *buf2;
 static lv_indev_data_t disp_mouse;
 
 QLVGL lvgl(nullptr);
 
 #include "LVGLObject.h"
+
+static void lvgl_core_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+{
+	QLVGL *self = reinterpret_cast<QLVGL*>(disp->user_data);
+	self->dispFlush(disp, area, color_p);
+}
 
 bool my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t * data)
 {
@@ -28,18 +30,6 @@ bool my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t * data)
 	data->point.y = disp_mouse.point.y;
 
 	return false; /*Return `false` because we are not buffering and no more data to read*/
-}
-
-void my_disp_flush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
-{
-	const auto stride = disp->hor_res;
-	for (auto y = area->y1; y <= area->y2; ++y) {
-		for (auto x = area->x1; x <= area->x2; ++x) {
-			disp_framebuffer[x + y * stride].full = color_p->full;
-			color_p++;
-		}
-	}
-	lv_disp_flush_ready(disp);
 }
 
 QLVGL::QLVGL(QObject *parent) : QObject(parent), m_defaultFont(nullptr)
@@ -66,20 +56,19 @@ void QLVGL::init(int width, int height)
 	lv_init();
 
 	const uint32_t n = static_cast<uint32_t>(width * height);
-	disp_framebuffer = new lv_color_t[n];
-	buf1 = new lv_color_t[n];
-	buf2 = new lv_color_t[n];
+	m_disp_framebuffer.resize(n);
+	m_buf1.resize(n);
+	m_buf2.resize(n);
 
-	lv_disp_buf_init(&disp_buf, buf1, buf2, n);
+	lv_disp_buf_init(&m_disp_buf, m_buf1.data(), m_buf2.data(), n);
 
-	lv_disp_drv_t disp_drv;
-	lv_disp_drv_init(&disp_drv);
-	disp_drv.hor_res = static_cast<lv_coord_t>(width);
-	disp_drv.ver_res = static_cast<lv_coord_t>(height);
-
-	disp_drv.flush_cb = my_disp_flush;
-	disp_drv.buffer = &disp_buf;
-	lv_disp_drv_register(&disp_drv);
+	lv_disp_drv_init(&m_disp_drv);
+	m_disp_drv.hor_res = static_cast<lv_coord_t>(width);
+	m_disp_drv.ver_res = static_cast<lv_coord_t>(height);
+	m_disp_drv.user_data = this;
+	m_disp_drv.flush_cb = lvgl_core_flush_cb;
+	m_disp_drv.buffer = &m_disp_buf;
+	lv_disp_drv_register(&m_disp_drv);
 
 	lv_indev_drv_t indev_drv;
 	lv_indev_drv_init(&indev_drv);             /*Descriptor of a input device driver*/
@@ -144,6 +133,23 @@ void QLVGL::init(int width, int height)
 	//lv_log_register_print_cb(lvgl_print_cb);
 }
 
+bool QLVGL::changeResolution(lv_coord_t width, lv_coord_t height)
+{
+	const uint32_t n = static_cast<uint32_t>(width * height);
+	if (n != m_disp_buf.size) {
+		m_disp_framebuffer.resize(n);
+		m_buf1.resize(n);
+		m_buf2.resize(n);
+		lv_disp_buf_init(&m_disp_buf, m_buf1.data(), m_buf2.data(), n);
+	}
+
+	m_disp_drv.hor_res = static_cast<lv_coord_t>(width);
+	m_disp_drv.ver_res = static_cast<lv_coord_t>(height);
+	lv_disp_drv_update(lv_disp_get_default(), &m_disp_drv);
+
+	return false;
+}
+
 QPixmap QLVGL::framebuffer() const
 {
 	auto disp = lv_disp_get_default();
@@ -151,7 +157,7 @@ QPixmap QLVGL::framebuffer() const
 	auto height = lv_disp_get_ver_res(disp);
 
 	QImage img(width, height, QImage::Format_ARGB32);
-	memcpy(img.bits(), disp_framebuffer, static_cast<size_t>(width * height) * 4);
+	memcpy(img.bits(), m_disp_framebuffer.data(), static_cast<size_t>(width * height) * 4);
 	return QPixmap::fromImage(img);
 }
 
@@ -164,7 +170,7 @@ QPixmap QLVGL::grab(const QRect &region) const
 	QImage img(region.width(), region.height(), QImage::Format_ARGB32);
 	for (auto y = 0; y < region.height(); ++y)
 		memcpy(img.scanLine(y + region.y()),
-				 &disp_framebuffer[y * stride + region.x()],
+				 &m_disp_framebuffer[y * stride + region.x()],
 				static_cast<size_t>(stride) * 4
 				);
 	return QPixmap::fromImage(img);
@@ -803,4 +809,16 @@ void QLVGL::tick()
 void QLVGL::addWidget(const LVGLWidget *w)
 {
 	m_widgets.insert(w->className(), w);
+}
+
+void QLVGL::dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+{
+	const auto stride = disp->hor_res;
+	for (auto y = area->y1; y <= area->y2; ++y) {
+		for (auto x = area->x1; x <= area->x2; ++x) {
+			m_disp_framebuffer[x + y * stride].full = color_p->full;
+			color_p++;
+		}
+	}
+	lv_disp_flush_ready(disp);
 }
