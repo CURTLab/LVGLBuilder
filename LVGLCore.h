@@ -25,7 +25,7 @@ public:
 
 	void init(int width, int height);
 
-	bool changeResolution(lv_coord_t width, lv_coord_t height);
+	bool changeResolution(QSize size);
 
 	QPixmap framebuffer() const;
 	QPixmap grab(const QRect &region) const;
@@ -117,9 +117,9 @@ private:
 	lv_style_t m_screen_style;
 	const LVGLFontData *m_defaultFont;
 
-	QVector<lv_color_t> m_disp_framebuffer;
-	QVector<lv_color_t> m_buf1;
-	QVector<lv_color_t> m_buf2;
+	std::vector<lv_color_t> m_disp_framebuffer;
+	std::vector<lv_color_t> m_buf1;
+	std::vector<lv_color_t> m_buf2;
 	lv_disp_buf_t m_disp_buf;
 	lv_disp_drv_t m_disp_drv;
 

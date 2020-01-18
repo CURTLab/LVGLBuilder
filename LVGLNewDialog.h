@@ -18,7 +18,7 @@ public:
 	virtual ~LVGLNewDialog() override;
 
 	QString selectedName() const;
-	QPair<lv_coord_t,lv_coord_t> selectedResolution() const;
+	QSize selectedResolution() const;
 
 public slots:
 	virtual void accept() override;

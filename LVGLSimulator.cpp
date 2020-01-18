@@ -146,9 +146,9 @@ void LVGLSimulator::setMouseEnable(bool enable)
 	m_mouseEnabled = enable;
 }
 
-void LVGLSimulator::changeResolution(lv_coord_t width, lv_coord_t height)
+void LVGLSimulator::changeResolution(QSize size)
 {
-	m_scene->setSceneRect(0, 0, width, height);
+	m_scene->setSceneRect(0, 0, size.width(), size.height());
 }
 
 void LVGLSimulator::mousePressEvent(QMouseEvent *event)

@@ -168,7 +168,7 @@ void MainWindow::loadRecent()
 {
 	QAction *action = qobject_cast<QAction*>(QObject::sender());
 	if (action == nullptr) return;
-	loadUI(action->data().toString());
+	loadProject(action->data().toString());
 }
 
 void MainWindow::openNewProject()
@@ -176,14 +176,14 @@ void MainWindow::openNewProject()
 	LVGLNewDialog dialog(this);
 	if (dialog.exec() == QDialog::Accepted) {
 		delete m_project;
-		m_project = new LVGLProject(dialog.selectedName());
+		m_project = new LVGLProject(dialog.selectedName(), dialog.selectedResolution());
 		m_ui->simulation->clear();
 		setEnableBuilder(true);
 		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
 		const auto res = dialog.selectedResolution();
-		lvgl.changeResolution(res.first, res.second);
-		m_ui->simulation->changeResolution(res.first, res.second);
-	} else {
+		lvgl.changeResolution(res);
+		m_ui->simulation->changeResolution(res);
+	} else if (m_project == nullptr) {
 		setEnableBuilder(false);
 		setWindowTitle("LVGL Builder");
 	}
@@ -265,7 +265,7 @@ void MainWindow::adjustForCurrentFile(const QString &fileName)
 	updateRecentActionList();
 }
 
-void MainWindow::loadUI(const QString &fileName)
+void MainWindow::loadProject(const QString &fileName)
 {
 	delete m_project;
 	m_ui->simulation->clear();
@@ -277,6 +277,8 @@ void MainWindow::loadUI(const QString &fileName)
 	} else {
 		adjustForCurrentFile(fileName);
 		setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
+		lvgl.changeResolution(m_project->resolution());
+		m_ui->simulation->changeResolution(m_project->resolution());
 		setEnableBuilder(true);
 	}
 	updateImages();
@@ -299,7 +301,7 @@ void MainWindow::on_action_load_triggered()
 	QString fileName = QFileDialog::getOpenFileName(this, "Load lvgl", "", "LVGL (*.lvgl)");
 	if (fileName.isEmpty())
 		return;
-	loadUI(fileName);
+	loadProject(fileName);
 }
 
 void MainWindow::on_action_save_triggered()

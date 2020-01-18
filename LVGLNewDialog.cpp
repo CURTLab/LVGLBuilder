@@ -43,14 +43,14 @@ QString LVGLNewDialog::selectedName() const
 	return m_ui->edit_name->text();
 }
 
-QPair<lv_coord_t, lv_coord_t> LVGLNewDialog::selectedResolution() const
+QSize LVGLNewDialog::selectedResolution() const
 {
-	lv_coord_t w = static_cast<lv_coord_t>(m_ui->spin_width->value());
-	lv_coord_t h = static_cast<lv_coord_t>(m_ui->spin_height->value());
+	int w = m_ui->spin_width->value();
+	int h = m_ui->spin_height->value();
 
 	if (m_ui->radio_portrait->isChecked())
 		qSwap(w, h);
-	return qMakePair<lv_coord_t,lv_coord_t>(w, h);
+	return QSize(w, h);
 }
 
 void LVGLNewDialog::accept()

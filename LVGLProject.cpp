@@ -15,17 +15,24 @@
 
 LVGLProject::LVGLProject()
 	: m_name("App")
+	, m_resolution(LV_HOR_RES_MAX, LV_VER_RES_MAX)
 {
 }
 
-LVGLProject::LVGLProject(const QString &name)
+LVGLProject::LVGLProject(const QString &name, QSize resolution)
 	: m_name(name)
+	, m_resolution(resolution)
 {
 }
 
 QString LVGLProject::name() const
 {
 	return m_name;
+}
+
+QSize LVGLProject::resolution() const
+{
+	return m_resolution;
 }
 
 LVGLProject *LVGLProject::load(const QString &fileName)
@@ -41,6 +48,14 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 	QJsonObject lvglObj = doc["lvgl"].toObject();
 	if (!lvglObj.contains("widgets"))
 		return nullptr;
+
+	QSize resolution;
+	if (lvglObj.contains("resolution")) {
+		QJsonObject res = lvglObj["resolution"].toObject();
+		resolution = QSize(res["width"].toInt(), res["height"].toInt());
+	} else {
+		resolution = QSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
+	}
 
 	QJsonArray imageArr = doc["images"].toArray();
 	for (int i = 0; i < imageArr.size(); ++i) {
@@ -62,7 +77,7 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 		LVGLObject::parse(object, nullptr);
 	}
 
-	return new LVGLProject(lvglObj["name"].toString());
+	return new LVGLProject(lvglObj["name"].toString(), resolution);
 }
 
 bool LVGLProject::save(const QString &fileName) const
@@ -90,8 +105,12 @@ bool LVGLProject::save(const QString &fileName) const
 	for (const LVGLFontData *f:lvgl.customFonts())
 		fontArr.append(f->toJson());
 
+	QJsonObject resolution({{"width", m_resolution.width()},
+									{"height", m_resolution.height()}
+								  });
 	QJsonObject screen({{"widgets", widgetArr},
-							  {"name", m_name}
+							  {"name", m_name},
+							  {"resolution", resolution}
 							 });
 	if (lvgl.screenColorChanged())
 		screen.insert("screen color", QVariant(lvgl.screenColor()).toString());

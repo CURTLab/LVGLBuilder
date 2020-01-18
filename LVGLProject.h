@@ -2,14 +2,16 @@
 #define LVGLPROJECT_H
 
 #include <QString>
+#include <QSize>
 
 class LVGLProject
 {
 public:
 	LVGLProject();
-	LVGLProject(const QString &name);
+	LVGLProject(const QString &name, QSize resolution);
 
 	QString name() const;
+	QSize resolution() const;
 
 	static LVGLProject *load(const QString &fileName);
 	bool save(const QString &fileName) const;
@@ -17,6 +19,7 @@ public:
 
 private:
 	QString m_name;
+	QSize m_resolution;
 
 };
 

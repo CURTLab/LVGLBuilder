@@ -58,7 +58,7 @@ private:
 
 	void updateRecentActionList();
 	void adjustForCurrentFile(const QString &fileName);
-	void loadUI(const QString &fileName);
+	void loadProject(const QString &fileName);
 	void setEnableBuilder(bool enable);
 
 	Ui::MainWindow *m_ui;

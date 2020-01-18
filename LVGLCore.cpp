@@ -15,7 +15,7 @@ QLVGL lvgl(nullptr);
 
 #include "LVGLObject.h"
 
-static void lvgl_core_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+void lvgl_core_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
 	QLVGL *self = reinterpret_cast<QLVGL*>(disp->user_data);
 	self->dispFlush(disp, area, color_p);
@@ -133,9 +133,9 @@ void QLVGL::init(int width, int height)
 	//lv_log_register_print_cb(lvgl_print_cb);
 }
 
-bool QLVGL::changeResolution(lv_coord_t width, lv_coord_t height)
+bool QLVGL::changeResolution(QSize size)
 {
-	const uint32_t n = static_cast<uint32_t>(width * height);
+	const uint32_t n = static_cast<uint32_t>(size.width() * size.height());
 	if (n != m_disp_buf.size) {
 		m_disp_framebuffer.resize(n);
 		m_buf1.resize(n);
@@ -143,8 +143,8 @@ bool QLVGL::changeResolution(lv_coord_t width, lv_coord_t height)
 		lv_disp_buf_init(&m_disp_buf, m_buf1.data(), m_buf2.data(), n);
 	}
 
-	m_disp_drv.hor_res = static_cast<lv_coord_t>(width);
-	m_disp_drv.ver_res = static_cast<lv_coord_t>(height);
+	m_disp_drv.hor_res = static_cast<lv_coord_t>(size.width());
+	m_disp_drv.ver_res = static_cast<lv_coord_t>(size.height());
 	lv_disp_drv_update(lv_disp_get_default(), &m_disp_drv);
 
 	return false;
@@ -170,7 +170,7 @@ QPixmap QLVGL::grab(const QRect &region) const
 	QImage img(region.width(), region.height(), QImage::Format_ARGB32);
 	for (auto y = 0; y < region.height(); ++y)
 		memcpy(img.scanLine(y + region.y()),
-				 &m_disp_framebuffer[y * stride + region.x()],
+				 &m_disp_framebuffer[static_cast<size_t>(y * stride + region.x())],
 				static_cast<size_t>(stride) * 4
 				);
 	return QPixmap::fromImage(img);

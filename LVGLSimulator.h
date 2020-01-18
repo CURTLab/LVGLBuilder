@@ -50,7 +50,7 @@ public slots:
 	void setZoomLevel(int level);
 	void clear();
 	void setMouseEnable(bool enable);
-	void changeResolution(lv_coord_t width, lv_coord_t height);
+	void changeResolution(QSize size);
 
 signals:
 	void objectSelected(LVGLObject *obj);
