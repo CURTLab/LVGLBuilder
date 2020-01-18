@@ -43,7 +43,7 @@ void LVGLScene::drawBackground(QPainter *painter, const QRectF &rect)
 	if (m_hoverObject != nullptr) {
 		painter->setPen(QPen(Qt::red, 2));
 		painter->setBrush(Qt::NoBrush);
-		if (m_hoverObject->widgetType() == LVGLWidget::Tabview) {
+		if (m_hoverObject->widgetType() == LVGLWidget::TabView) {
 			lv_obj_t *obj = m_hoverObject->obj();
 			lv_obj_t *tab = lv_tabview_get_tab(obj, lv_tabview_get_tab_act(obj));
 			painter->drawRect(lvgl.get_object_rect(tab));
@@ -259,13 +259,13 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 		LVGLObject *newObj = nullptr;
 
 		// check if moved into another widget
-		const QPoint pos = mapToScene(event->pos()).toPoint();
+		QPoint pos = mapToScene(event->pos()).toPoint();
 		auto parent = selectObject(objectsUnderCoords(pos, true), false);
 
 		// create new widget
 		if (parent) {
 			QPoint parentPos;
-			if (parent->widgetType() == LVGLWidget::Tabview) {
+			if (parent->widgetType() == LVGLWidget::TabView) {
 				lv_obj_t *obj = parent->obj();
 				parent = parent->findChildByIndex(lv_tabview_get_tab_act(obj));
 				assert(parent);
@@ -275,7 +275,13 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 			newObj->setGeometry(QRect(pos - parentPos, widgetClass->minimumSize()));
 		} else {
 			newObj = new LVGLObject(widgetClass, "", lv_scr_act());
-			newObj->setGeometry(QRect(pos, widgetClass->minimumSize()));
+			QSize size(std::min(widgetClass->minimumSize().width(), lvgl.width()),
+						  std::min(widgetClass->minimumSize().height(), lvgl.height()));
+			if (pos.x() + size.width() >= lvgl.width())
+				pos.setX(lvgl.width() - size.width());
+			if (pos.y() + size.height() >= lvgl.height())
+				pos.setY(lvgl.height() - size.height());
+			newObj->setGeometry(QRect(pos, size));
 		}
 		qDebug().noquote() << "Class:" << widgetClass->className() << "Id:" << newObj->name();
 

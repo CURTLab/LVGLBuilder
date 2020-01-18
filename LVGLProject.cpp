@@ -11,7 +11,7 @@
 #include "LVGLObject.h"
 #include "LVGLFontData.h"
 
-#define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
+#define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::TabView))
 
 LVGLProject::LVGLProject()
 	: m_name("App")
@@ -253,7 +253,7 @@ bool LVGLProject::exportCode(const QString &path) const
 				stream << "\tlv_obj_t *" << o->codeName() << " = " << o->widgetClass()->className() << "_create(" << parent << ", NULL);\n";
 
 			// special case for tabview
-			if (o->widgetType() == LVGLWidget::Tabview) {
+			if (o->widgetType() == LVGLWidget::TabView) {
 				lv_tabview_ext_t *ext = reinterpret_cast<lv_tabview_ext_t*>(lv_obj_get_ext_attr(o->obj()));
 				for (LVGLObject *child:o->childs()) {
 					if ((child->widgetType() == LVGLWidget::Page) && (child->index() >= 0))

@@ -312,16 +312,22 @@ void LVGLPropertyString::updateWidget(LVGLObject *obj)
 	set(obj, m_widget->text());
 }
 
+LVGLPropertyCoord::LVGLPropertyCoord(LVGLProperty *parent)
+	: LVGLPropertyType(parent)
+	, m_max(std::min(lvgl.width(), lvgl.height()))
+{
+}
+
 LVGLPropertyCoord::LVGLPropertyCoord(Qt::Orientation orientation, LVGLProperty *parent)
 	: LVGLPropertyType(parent)
-	, m_orientation(orientation)
+	, m_max(orientation == Qt::Horizontal ? lvgl.width() : lvgl.height())
 {
 }
 
 QWidget *LVGLPropertyCoord::editor(QWidget *parent)
 {
 	m_widget = new QSpinBox(parent);
-	m_widget->setRange(0, (m_orientation == Qt::Horizontal ? lvgl.width() : lvgl.height()));
+	m_widget->setRange(0, m_max);
 	return m_widget;
 }
 

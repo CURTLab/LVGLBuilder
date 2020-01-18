@@ -232,5 +232,6 @@ void LVGLImageSlider::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const
 
 lv_style_t *LVGLImageSlider::defaultStyle(int type) const
 {
+	Q_UNUSED(type)
 	return nullptr;
 }

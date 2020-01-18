@@ -193,7 +193,7 @@ QString LVGLTabview::className() const
 
 LVGLWidget::Type LVGLTabview::type() const
 {
-	return Tabview;
+	return TabView;
 }
 
 QPixmap LVGLTabview::preview() const

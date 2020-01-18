@@ -12,14 +12,16 @@ public:
 	virtual ~LVGLWidget();
 
 	enum Type {
+		Arc,
 		Bar,
 		Button,
 		ButtonMatrix,
-		Canvas,
 		Calendar,
+		Canvas,
 		CheckBox,
-		ColorPicker,
+		Chart,
 		Container,
+		ColorPicker,
 		DropDownList,
 		Gauge,
 		Image,
@@ -28,14 +30,21 @@ public:
 		ImageBar,
 		Keyboard,
 		Label,
+		LED,
 		Line,
 		List,
+		LineMeter,
+		MessageBox,
 		Page,
 		Preloader,
+		Roller,
 		Slider,
+		SpinBox,
 		Switch,
-		Tabview,
-		TextArea
+		TabView,
+		TextArea,
+		TileView,
+		Window
 	};
 
 	virtual QString name() const = 0;

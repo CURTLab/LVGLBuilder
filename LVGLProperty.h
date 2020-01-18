@@ -107,6 +107,7 @@ protected:
 class LVGLPropertyCoord : public LVGLPropertyType<lv_coord_t>
 {
 public:
+	LVGLPropertyCoord(LVGLProperty *parent = nullptr);
 	LVGLPropertyCoord(Qt::Orientation orientation, LVGLProperty *parent = nullptr);
 
 	QWidget *editor(QWidget *parent) override;
@@ -115,7 +116,7 @@ public:
 
 protected:
 	QSpinBox *m_widget;
-	Qt::Orientation m_orientation;
+	int m_max;
 
 };
 

@@ -68,8 +68,8 @@ private:
 };
 
 LVGLPropertyTextList::LVGLPropertyTextList(LVGLProperty *parent)
+	: LVGLProperty(parent)
 {
-
 }
 
 bool LVGLPropertyTextList::hasEditor() const

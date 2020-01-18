@@ -193,9 +193,11 @@ LVGLTextArea::LVGLTextArea()
 	m_properties << new LVGLPropertyTAScrollPropagation;
 	m_properties << new LVGLPropertyTAEdgeFlash;
 
-	m_editableStyles << LVGL::Body; // LV_TA_STYLE_BG
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_TA_STYLE_BG
 	m_editableStyles << LVGL::Body; // LV_TA_STYLE_SB
 	m_editableStyles << LVGL::StyleParts(LVGL::BodyPadding | LVGL::Line); // LV_TA_STYLE_CURSOR
+	m_editableStyles << LVGL::Body; // LV_TA_STYLE_EDGE_FLASH
+	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_TA_STYLE_PLACEHOLDER
 }
 
 QString LVGLTextArea::name() const

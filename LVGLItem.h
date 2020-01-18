@@ -8,6 +8,7 @@
 class LVGLItem : public QObject, public QGraphicsItem
 {
 	Q_OBJECT
+	Q_INTERFACES(QGraphicsItem)
 public:
 	LVGLItem(QGraphicsItem *parent = nullptr);
 

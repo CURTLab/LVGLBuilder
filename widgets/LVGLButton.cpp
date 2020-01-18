@@ -8,7 +8,7 @@ class LVGLPropertyButtonState : public LVGLPropertyEnum
 {
 public:
 	LVGLPropertyButtonState()
-		: LVGLPropertyEnum(QStringList() << "Released" << "Pressed" << "Toggled released" << "Toggled pressed" << "Inactive")
+		: LVGLPropertyEnum({"Released", "Pressed", "Toggled released", "Toggled pressed", "Inactive"})
 		, m_values({"LV_BTN_STATE_REL", "LV_BTN_STATE_PR", "LV_BTN_STATE_TGL_REL", "LV_BTN_STATE_TGL_PR", "LV_BTN_STATE_INA"})
 	{}
 
@@ -31,8 +31,8 @@ class LVGLPropertyButtonLayout : public LVGLPropertyEnum
 {
 public:
 	LVGLPropertyButtonLayout()
-		: LVGLPropertyEnum(QStringList() << "Off" << "Center" << "Column left align" << "Column middle align" << "Column right align"
-													<< "Row top align" << "Row middle align" << "Row bottom align" << "Pretty" << "Grid")
+		: LVGLPropertyEnum({"Off", "Center", "Column left align", "Column middle align", "Column right align",
+								 "Row top align", "Row middle align", "Row bottom align", "Pretty", "Grid"})
 		, m_values({"LV_LAYOUT_OFF", "LV_LAYOUT_CENTER", "LV_LAYOUT_COL_L", "LV_LAYOUT_COL_M", "LV_LAYOUT_COL_R",
 						"LV_LAYOUT_ROW_T", "LV_LAYOUT_ROW_M", "LV_LAYOUT_ROW_B", "LV_LAYOUT_PRETTY", "LV_LAYOUT_GRID"})
 	{}

@@ -706,7 +706,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent)
 			QJsonArray childs = object["children"].toArray();
 			for (int i = 0; i < childs.size(); ++i) {
 				QJsonObject child = childs[i].toObject();
-				if (widgetClass->type() == LVGLWidget::Tabview && child.contains("index")) {
+				if (widgetClass->type() == LVGLWidget::TabView && child.contains("index")) {
 					LVGLObject *page = newObj->findChildByIndex(child["index"].toInt());
 					page->setName(child["name"].toString());
 					// parse page props
