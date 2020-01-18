@@ -77,6 +77,8 @@ public:
 	QColor toColor(lv_color_t c) const;
 	lv_color_t fromColor(QColor c) const;
 	lv_color_t fromColor(QVariant v) const;
+	QJsonObject colorToJson(lv_color_t c) const;
+	lv_color_t colorFromJson(QJsonObject obj) const;
 
 	LVGLFontData *addFont(const QString &fileName, uint8_t size);
 	void addFont(LVGLFontData *font);

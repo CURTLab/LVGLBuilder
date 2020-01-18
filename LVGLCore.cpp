@@ -2,6 +2,7 @@
 
 #include <QPainter>
 #include <QDebug>
+#include <QJsonObject>
 
 #include <ft2build.h>
 #include FT_FREETYPE_H
@@ -111,6 +112,7 @@ void QLVGL::init(int width, int height)
 	addWidget(new LVGLButtonMatrix);
 	addWidget(new LVGLCalendar);
 	addWidget(new LVGLCanvas);
+	addWidget(new LVGLChart);
 	addWidget(new LVGLCheckBox);
 	addWidget(new LVGLColorPicker);
 	addWidget(new LVGLContainer);
@@ -635,7 +637,44 @@ lv_color_t QLVGL::fromColor(QColor c) const
 
 lv_color_t QLVGL::fromColor(QVariant v) const
 {
+	if (v.type() == QVariant::Map) {
+		QVariantMap map = v.toMap();
+#if LV_COLOR_DEPTH == 32
+		lv_color_t c;
+		c.ch.red = map["red"].toInt() & 0xff;
+		c.ch.green = map["green"].toInt() & 0xff;
+		c.ch.blue = map["blue"].toInt() & 0xff;
+		c.ch.alpha = map["alpha"].toInt() & 0xff;
+		return c;
+#endif
+	}
 	return fromColor(v.value<QColor>());
+}
+
+QJsonObject QLVGL::colorToJson(lv_color_t c) const
+{
+	QJsonObject color({{"red", c.ch.red},
+							 {"green", c.ch.green},
+							 {"blue", c.ch.blue}
+							 });
+#if LV_COLOR_DEPTH == 32
+	color.insert("alpha", c.ch.alpha);
+#endif
+	return color;
+}
+
+lv_color_t QLVGL::colorFromJson(QJsonObject obj) const
+{
+#if LV_COLOR_DEPTH == 32
+	lv_color_t c;
+	c.ch.red = obj["red"].toInt() & 0xff;
+	c.ch.green = obj["green"].toInt() & 0xff;
+	c.ch.blue = obj["blue"].toInt() & 0xff;
+	c.ch.alpha = obj["alpha"].toInt() & 0xff;
+	return c;
+#else
+	return lv_color_hex(0x000000);
+#endif
 }
 
 LVGLFontData *QLVGL::addFont(const QString &fileName, uint8_t size)

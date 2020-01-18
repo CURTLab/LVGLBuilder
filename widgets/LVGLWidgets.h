@@ -6,6 +6,7 @@
 #include "LVGLButtonMatrix.h"
 #include "LVGLCalendar.h"
 #include "LVGLCanvas.h"
+#include "LVGLChart.h"
 #include "LVGLCheckBox.h"
 #include "LVGLColorPicker.h"
 #include "LVGLContainer.h"

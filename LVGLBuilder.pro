@@ -66,18 +66,21 @@ SOURCES += \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
     properties/LVGLPropertyDate.cpp \
+    properties/LVGLPropertyFlags.cpp \
     properties/LVGLPropertyGeometry.cpp \
     properties/LVGLPropertyImage.cpp \
     properties/LVGLPropertyList.cpp \
     properties/LVGLPropertyPoints.cpp \
     properties/LVGLPropertyRange.cpp \
     properties/LVGLPropertyScale.cpp \
+    properties/LVGLPropertySeries.cpp \
     properties/LVGLPropertyTextList.cpp \
     widgets/LVGLBar.cpp \
     widgets/LVGLButton.cpp \
     widgets/LVGLButtonMatrix.cpp \
     widgets/LVGLCalendar.cpp \
     widgets/LVGLCanvas.cpp \
+    widgets/LVGLChart.cpp \
     widgets/LVGLCheckBox.cpp \
     widgets/LVGLColorPicker.cpp \
     widgets/LVGLContainer.cpp \
@@ -121,18 +124,21 @@ HEADERS += \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
     properties/LVGLPropertyDate.h \
+    properties/LVGLPropertyFlags.h \
     properties/LVGLPropertyGeometry.h \
     properties/LVGLPropertyImage.h \
     properties/LVGLPropertyList.h \
     properties/LVGLPropertyPoints.h \
     properties/LVGLPropertyRange.h \
     properties/LVGLPropertyScale.h \
+    properties/LVGLPropertySeries.h \
     properties/LVGLPropertyTextList.h \
     widgets/LVGLBar.h \
     widgets/LVGLButton.h \
     widgets/LVGLButtonMatrix.h \
     widgets/LVGLCalendar.h \
     widgets/LVGLCanvas.h \
+    widgets/LVGLChart.h \
     widgets/LVGLCheckBox.h \
     widgets/LVGLColorPicker.h \
     widgets/LVGLContainer.h \
