@@ -26,7 +26,7 @@ Building with QtCreator:
 * There are no special requironments, therefor it should build with QtCreator out of the box. 
 
 ### Usage
- * Create a new project (only 320x480 resolution supported at the moment)
+ * Create a new project and select the screen resolution
  * Simply drag and drop widgets from the list into the canvas
  * Widgets can be moved with the arrow keys or by dragging
  * Lock widgets to prevent editing (Unlock via right click context menu)
@@ -41,13 +41,13 @@ Building with QtCreator:
 - [x] Export C-project
 - [x] Change style of single widgets
 - [x] Support different display formats
+- [ ] Fix object inspector (insertion and deletion of widgets)
+- [ ] Undo and redo
 - [ ] Default values for widgets
+- [ ] Support multiple screens
+- [ ] Dialog for changing keyboard layout
 - [ ] Preview for widgets
 - [ ] Icons for widgets
-- [ ] Support multiple screens
-- [ ] Fix object inspector (insertion and deletion of widgets)
-- [ ] Dialog for changing keyboard layout
-- [ ] Undo and redo
 
 ### ToDo Widgets
 - [ ] Arc (lv_arc)
@@ -66,7 +66,7 @@ Building with QtCreator:
 - [x] Image button (lv_imgbtn)
 - [x] Keyboard (lv_kb)
 - [x] Label (lv_label)
-- [ ] LED (lv_led)
+- [x] LED (lv_led)
 - [x] Line (lv_line)
 - [x] List (lv_list)
 - [ ] Line meter (lv_lmeter)
