@@ -91,6 +91,7 @@ SOURCES += \
     widgets/LVGLImageButton.cpp \
     widgets/LVGLImageSlider.cpp \
     widgets/LVGLKeyboard.cpp \
+    widgets/LVGLLED.cpp \
     widgets/LVGLLabel.cpp \
     LVGLProperty.cpp \
     LVGLPropertyModel.cpp \
@@ -149,6 +150,7 @@ HEADERS += \
     widgets/LVGLImageButton.h \
     widgets/LVGLImageSlider.h \
     widgets/LVGLKeyboard.h \
+    widgets/LVGLLED.h \
     widgets/LVGLLabel.h \
     LVGLProperty.h \
     LVGLPropertyModel.h \

@@ -16,6 +16,7 @@
 #include "LVGLImageSlider.h"
 #include "LVGLKeyboard.h"
 #include "LVGLLabel.h"
+#include "LVGLLED.h"
 #include "LVGLLine.h"
 #include "LVGLList.h"
 #include "LVGLPage.h"

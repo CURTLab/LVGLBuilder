@@ -123,6 +123,7 @@ void QLVGL::init(int width, int height)
 	addWidget(new LVGLImageSlider);
 	addWidget(new LVGLKeyboard);
 	addWidget(new LVGLLabel);
+	addWidget(new LVGLLED);
 	addWidget(new LVGLLine);
 	addWidget(new LVGLList);
 	addWidget(new LVGLPage);
