@@ -155,7 +155,7 @@ void LVGLSimulator::mousePressEvent(QMouseEvent *event)
 {
 	const QPoint pos = mapToScene(event->pos()).toPoint();
 	if (m_mouseEnabled) {
-		lvgl.send_mouse_event(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
+		lvgl.sendMouseEvent(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
 	} else {
 		if (event->button() == Qt::RightButton) {
 			auto obj = selectObject(objectsUnderCoords(pos, true), false);
@@ -223,7 +223,7 @@ void LVGLSimulator::mouseReleaseEvent(QMouseEvent *event)
 {
 	if (m_mouseEnabled) {
 		const QPoint pos = mapToScene(event->pos()).toPoint();
-		lvgl.send_mouse_event(pos.x(), pos.y(), false);
+		lvgl.sendMouseEvent(pos.x(), pos.y(), false);
 	}
 	QGraphicsView::mouseReleaseEvent(event);
 }
@@ -232,7 +232,7 @@ void LVGLSimulator::mouseMoveEvent(QMouseEvent *event)
 {
 	if (m_mouseEnabled) {
 		const QPoint pos = mapToScene(event->pos()).toPoint();
-		lvgl.send_mouse_event(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
+		lvgl.sendMouseEvent(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
 	}
 	QGraphicsView::mouseMoveEvent(event);
 }
@@ -244,10 +244,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 
 	m_scene->setHoverObject(nullptr);
 
-	union {
-		LVGLWidget *ptr;
-		qintptr i;
-	} cast;
+	LVGLWidgetCast cast;
 
 	const QMimeData *mimeData = event->mimeData();
 	if (mimeData->hasFormat("application/x-widget")) {

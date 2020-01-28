@@ -12,13 +12,13 @@
 
 static lv_indev_data_t disp_mouse;
 
-QLVGL lvgl(nullptr);
+LVGLCore lvgl(nullptr);
 
 #include "LVGLObject.h"
 
 void lvgl_core_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
-	QLVGL *self = reinterpret_cast<QLVGL*>(disp->user_data);
+	LVGLCore *self = reinterpret_cast<LVGLCore*>(disp->user_data);
 	self->dispFlush(disp, area, color_p);
 }
 
@@ -33,12 +33,12 @@ bool my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t * data)
 	return false; /*Return `false` because we are not buffering and no more data to read*/
 }
 
-QLVGL::QLVGL(QObject *parent) : QObject(parent), m_defaultFont(nullptr)
+LVGLCore::LVGLCore(QObject *parent) : QObject(parent), m_defaultFont(nullptr)
 {
 	FT_Init_FreeType(&m_ft);
 }
 
-QLVGL::~QLVGL()
+LVGLCore::~LVGLCore()
 {
 	FT_Done_FreeType(m_ft);
 
@@ -52,7 +52,7 @@ void lvgl_print_cb(lv_log_level_t level, const char *file, uint32_t line, const 
 	qDebug().nospace() << file << " (" << line << "," << level << "): " << dsc;
 }
 
-void QLVGL::init(int width, int height)
+void LVGLCore::init(int width, int height)
 {
 	lv_init();
 
@@ -136,7 +136,7 @@ void QLVGL::init(int width, int height)
 	//lv_log_register_print_cb(lvgl_print_cb);
 }
 
-bool QLVGL::changeResolution(QSize size)
+bool LVGLCore::changeResolution(QSize size)
 {
 	const uint32_t n = static_cast<uint32_t>(size.width() * size.height());
 	if (n != m_disp_buf.size) {
@@ -153,7 +153,7 @@ bool QLVGL::changeResolution(QSize size)
 	return false;
 }
 
-QPixmap QLVGL::framebuffer() const
+QPixmap LVGLCore::framebuffer() const
 {
 	auto disp = lv_disp_get_default();
 	auto width = lv_disp_get_hor_res(disp);
@@ -164,7 +164,7 @@ QPixmap QLVGL::framebuffer() const
 	return QPixmap::fromImage(img);
 }
 
-QPixmap QLVGL::grab(const QRect &region) const
+QPixmap LVGLCore::grab(const QRect &region) const
 {
 	QPixmap ret(region.size());
 	QPainter painter(&ret);
@@ -179,24 +179,24 @@ QPixmap QLVGL::grab(const QRect &region) const
 	return QPixmap::fromImage(img);
 }
 
-int QLVGL::width() const
+int LVGLCore::width() const
 {
 	return lv_disp_get_hor_res(lv_disp_get_default());
 }
 
-int QLVGL::height() const
+int LVGLCore::height() const
 {
 	return lv_disp_get_ver_res(lv_disp_get_default());
 }
 
-QSize QLVGL::size() const
+QSize LVGLCore::size() const
 {
 	auto disp = lv_disp_get_default();
 	return QSize(lv_disp_get_hor_res(disp),
 					 lv_disp_get_ver_res(disp));
 }
 
-LVGLImageData *QLVGL::addImage(QImage image, QString name)
+LVGLImageData *LVGLCore::addImage(QImage image, QString name)
 {
 	if (image.isNull())
 		return nullptr;
@@ -205,7 +205,7 @@ LVGLImageData *QLVGL::addImage(QImage image, QString name)
 	return img;
 }
 
-LVGLImageData *QLVGL::addImage(QString fileName, QString name)
+LVGLImageData *LVGLCore::addImage(QString fileName, QString name)
 {
 	QImage image(fileName);
 	if (image.isNull())
@@ -239,22 +239,22 @@ LVGLImageData *QLVGL::addImage(QString fileName, QString name)
 	return img;
 }
 
-void QLVGL::addImage(LVGLImageData *image)
+void LVGLCore::addImage(LVGLImageData *image)
 {
 	m_images.insert(image->name(), image);
 }
 
-QStringList QLVGL::imageNames() const
+QStringList LVGLCore::imageNames() const
 {
 	return m_images.keys();
 }
 
-QList<LVGLImageData *> QLVGL::images() const
+QList<LVGLImageData *> LVGLCore::images() const
 {
 	return m_images.values();
 }
 
-lv_img_dsc_t *QLVGL::image(QString name)
+lv_img_dsc_t *LVGLCore::image(QString name)
 {
 	LVGLImageData *img = m_images.value(name, nullptr);
 	if (img)
@@ -262,12 +262,12 @@ lv_img_dsc_t *QLVGL::image(QString name)
 	return nullptr;
 }
 
-lv_img_dsc_t *QLVGL::defaultImage() const
+lv_img_dsc_t *LVGLCore::defaultImage() const
 {
 	return m_default->img_des();
 }
 
-QString QLVGL::nameByImage(const lv_img_dsc_t *img_dsc) const
+QString LVGLCore::nameByImage(const lv_img_dsc_t *img_dsc) const
 {
 	for (LVGLImageData *img:m_images) {
 		if (img->img_des() == img_dsc)
@@ -276,7 +276,7 @@ QString QLVGL::nameByImage(const lv_img_dsc_t *img_dsc) const
 	return "";
 }
 
-LVGLImageData *QLVGL::imageByDesc(const lv_img_dsc_t *img_dsc) const
+LVGLImageData *LVGLCore::imageByDesc(const lv_img_dsc_t *img_dsc) const
 {
 	for (LVGLImageData *img:m_images) {
 		if (img->img_des() == img_dsc)
@@ -285,7 +285,7 @@ LVGLImageData *QLVGL::imageByDesc(const lv_img_dsc_t *img_dsc) const
 	return nullptr;
 }
 
-bool QLVGL::removeImage(LVGLImageData *img)
+bool LVGLCore::removeImage(LVGLImageData *img)
 {
 	for (auto it = m_images.begin(); it != m_images.end(); ++it) {
 		if (it.value() == img) {
@@ -297,13 +297,13 @@ bool QLVGL::removeImage(LVGLImageData *img)
 	return false;
 }
 
-void QLVGL::removeAllImages()
+void LVGLCore::removeAllImages()
 {
 	qDeleteAll(m_images);
 	m_images.clear();
 }
 
-QStringList QLVGL::symbolNames() const
+QStringList LVGLCore::symbolNames() const
 {
 	return QStringList() << "LV_SYMBOL_AUDIO"
 								<< "LV_SYMBOL_VIDEO"
@@ -364,7 +364,7 @@ QStringList QLVGL::symbolNames() const
 								<< "LV_SYMBOL_NEW_LINE";
 }
 
-const char *QLVGL::symbol(const QString &name) const
+const char *LVGLCore::symbol(const QString &name) const
 {
 	if (name == "LV_SYMBOL_AUDIO") return LV_SYMBOL_AUDIO;
 	else if (name == "LV_SYMBOL_VIDEO") return LV_SYMBOL_VIDEO;
@@ -426,76 +426,21 @@ const char *QLVGL::symbol(const QString &name) const
 	else return nullptr;
 }
 
-void QLVGL::poll()
+void LVGLCore::poll()
 {
 	lv_task_handler();
 	lv_tick_inc(static_cast<uint32_t>(m_time.elapsed()));
 	m_time.restart();
 }
 
-void QLVGL::send_mouse_event(int x, int y, bool pressed)
+void LVGLCore::sendMouseEvent(int x, int y, bool pressed)
 {
 	disp_mouse.point.x = static_cast<lv_coord_t>(x);
 	disp_mouse.point.y = static_cast<lv_coord_t>(y);
 	disp_mouse.state = pressed ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
 }
 
-QList<lv_obj_t *> QLVGL::get_objects_under_coords(int x, int y, lv_obj_t *parent) const
-{
-	QList<lv_obj_t *> objects;
-
-	lv_obj_t *child = lv_obj_get_child(parent, nullptr);
-	while (child) {
-		auto rect = get_object_rect(child);
-		if (rect.contains(x, y)) {
-			objects << child;
-			objects << get_objects_under_coords(x, y, child);
-		}
-		child = lv_obj_get_child(parent, child);
-	}
-
-	return objects;
-}
-
-QList<lv_obj_t *> QLVGL::get_object_children(const lv_obj_t *obj, bool recursive) const
-{
-	QList<lv_obj_t *> objects;
-	lv_obj_t *child = lv_obj_get_child(obj, nullptr);
-	while (child) {
-		objects << child;
-		if (recursive)
-			objects << get_object_children(child, recursive);
-		child = lv_obj_get_child(obj, child);
-	}
-	return objects;
-}
-
-QList<lv_obj_t *> QLVGL::get_objects_by_type(QString type, lv_obj_t *parent) const
-{
-	QList<lv_obj_t *> objects;
-	lv_obj_t *child = lv_obj_get_child(lv_scr_act(), nullptr);
-	while (child) {
-		if (get_object_class(child) == type)
-			objects << child;
-		child = lv_obj_get_child(parent, child);
-	}
-
-	return objects;
-}
-
-int QLVGL::get_object_child_index(const lv_obj_t *obj) const
-{
-	lv_obj_t *parent = lv_obj_get_parent(obj);
-	if (parent == nullptr) return -1;
-	lv_obj_t *child = lv_obj_get_child(parent, nullptr);
-	for (int i = 0; child != nullptr; ++i, child = lv_obj_get_child(parent, child)) {
-		if (child == obj)
-			return i;
-	}
-	return -1;
-}
-
-QPoint QLVGL::get_absolute_position(const lv_obj_t *obj) const
+QPoint LVGLCore::get_absolute_position(const lv_obj_t *obj) const
 {
 	if (obj == lv_scr_act())
 		return QPoint(0, 0);
@@ -511,40 +456,22 @@ QPoint QLVGL::get_absolute_position(const lv_obj_t *obj) const
 	return QPoint(x, y);
 }
 
-QSize QLVGL::get_object_size(const lv_obj_t *lv_obj) const
+QSize LVGLCore::get_object_size(const lv_obj_t *lv_obj) const
 {
 	return QSize(lv_obj_get_width(lv_obj), lv_obj_get_height(lv_obj));
 }
 
-QRect QLVGL::get_object_rect(const lv_obj_t *lv_obj) const
+QRect LVGLCore::get_object_rect(const lv_obj_t *lv_obj) const
 {
 	return QRect(get_absolute_position(lv_obj), get_object_size(lv_obj));
 }
 
-QString QLVGL::get_object_class(lv_obj_t *lv_obj) const
-{
-	lv_obj_type_t buf;
-	lv_obj_get_type(lv_obj, &buf);
-	return QString(buf.type[0]);
-}
-
-void QLVGL::set_object_position(lv_obj_t *lv_obj, const QPoint &pos)
-{
-	lv_obj_set_pos(lv_obj, static_cast<lv_coord_t>(pos.x()), static_cast<lv_coord_t>(pos.y()));
-}
-
-void QLVGL::set_object_geometry(lv_obj_t *lv_obj, const QRect &geometry)
-{
-	lv_obj_set_pos(lv_obj, static_cast<lv_coord_t>(geometry.x()), static_cast<lv_coord_t>(geometry.y()));
-	lv_obj_set_size(lv_obj, static_cast<lv_coord_t>(geometry.width()), static_cast<lv_coord_t>(geometry.height()));
-}
-
-void QLVGL::addObject(LVGLObject *object)
+void LVGLCore::addObject(LVGLObject *object)
 {
 	m_objects << object;
 }
 
-void QLVGL::removeObject(LVGLObject *object)
+void LVGLCore::removeObject(LVGLObject *object)
 {
 	for (LVGLObject *c:object->childs())
 		removeObject(c);
@@ -554,7 +481,7 @@ void QLVGL::removeObject(LVGLObject *object)
 	delete object;
 }
 
-void QLVGL::removeAllObjects()
+void LVGLCore::removeAllObjects()
 {
 	for (LVGLObject *c:m_objects) {
 		if (c->parent() == nullptr)
@@ -562,12 +489,12 @@ void QLVGL::removeAllObjects()
 	}
 }
 
-QList<LVGLObject *> QLVGL::allObjects() const
+QList<LVGLObject *> LVGLCore::allObjects() const
 {
 	return m_objects;
 }
 
-QList<LVGLObject *> QLVGL::topLevelObjects() const
+QList<LVGLObject *> LVGLCore::topLevelObjects() const
 {
 	QList<LVGLObject *> ret;
 	for (LVGLObject *c:m_objects) {
@@ -577,7 +504,7 @@ QList<LVGLObject *> QLVGL::topLevelObjects() const
 	return ret;
 }
 
-QList<LVGLObject *> QLVGL::objectsByType(QString className) const
+QList<LVGLObject *> LVGLCore::objectsByType(QString className) const
 {
 	QList<LVGLObject *> ret;
 	for (LVGLObject *c:m_objects) {
@@ -587,7 +514,7 @@ QList<LVGLObject *> QLVGL::objectsByType(QString className) const
 	return ret;
 }
 
-LVGLObject *QLVGL::object(QString name) const
+LVGLObject *LVGLCore::object(QString name) const
 {
 	if (name.isEmpty())
 		return nullptr;
@@ -598,7 +525,7 @@ LVGLObject *QLVGL::object(QString name) const
 	return nullptr;
 }
 
-LVGLObject *QLVGL::object(lv_obj_t *obj) const
+LVGLObject *LVGLCore::object(lv_obj_t *obj) const
 {
 	if (obj == nullptr)
 		return nullptr;
@@ -609,7 +536,7 @@ LVGLObject *QLVGL::object(lv_obj_t *obj) const
 	return nullptr;
 }
 
-QColor QLVGL::toColor(lv_color_t c) const
+QColor LVGLCore::toColor(lv_color_t c) const
 {
 #if LV_COLOR_DEPTH == 24
 	return QColor(c.ch.red, c.ch.green, c.ch.blue);
@@ -618,7 +545,7 @@ QColor QLVGL::toColor(lv_color_t c) const
 #endif
 }
 
-lv_color_t QLVGL::fromColor(QColor c) const
+lv_color_t LVGLCore::fromColor(QColor c) const
 {
 #if LV_COLOR_DEPTH == 24
 	lv_color_t ret;
@@ -636,7 +563,7 @@ lv_color_t QLVGL::fromColor(QColor c) const
 #endif
 }
 
-lv_color_t QLVGL::fromColor(QVariant v) const
+lv_color_t LVGLCore::fromColor(QVariant v) const
 {
 	if (v.type() == QVariant::Map) {
 		QVariantMap map = v.toMap();
@@ -652,7 +579,7 @@ lv_color_t QLVGL::fromColor(QVariant v) const
 	return fromColor(v.value<QColor>());
 }
 
-QJsonObject QLVGL::colorToJson(lv_color_t c) const
+QJsonObject LVGLCore::colorToJson(lv_color_t c) const
 {
 	QJsonObject color({{"red", c.ch.red},
 							 {"green", c.ch.green},
@@ -664,7 +591,7 @@ QJsonObject QLVGL::colorToJson(lv_color_t c) const
 	return color;
 }
 
-lv_color_t QLVGL::colorFromJson(QJsonObject obj) const
+lv_color_t LVGLCore::colorFromJson(QJsonObject obj) const
 {
 #if LV_COLOR_DEPTH == 32
 	lv_color_t c;
@@ -678,7 +605,7 @@ lv_color_t QLVGL::colorFromJson(QJsonObject obj) const
 #endif
 }
 
-LVGLFontData *QLVGL::addFont(const QString &fileName, uint8_t size)
+LVGLFontData *LVGLCore::addFont(const QString &fileName, uint8_t size)
 {
 	LVGLFontData *font = LVGLFontData::parse(fileName, size, 4, 0x0020, 0x007f);
 	if (font)
@@ -686,18 +613,18 @@ LVGLFontData *QLVGL::addFont(const QString &fileName, uint8_t size)
 	return font;
 }
 
-void QLVGL::addFont(LVGLFontData *font)
+void LVGLCore::addFont(LVGLFontData *font)
 {
 	if (font)
 		m_fonts << font;
 }
 
-bool QLVGL::removeFont(LVGLFontData *font)
+bool LVGLCore::removeFont(LVGLFontData *font)
 {
 	return m_fonts.removeOne(font);
 }
 
-QStringList QLVGL::fontNames() const
+QStringList LVGLCore::fontNames() const
 {
 	QStringList ret;
 	for (const LVGLFontData *f:m_fonts)
@@ -705,7 +632,7 @@ QStringList QLVGL::fontNames() const
 	return ret;
 }
 
-QStringList QLVGL::fontCodeNames() const
+QStringList LVGLCore::fontCodeNames() const
 {
 	QStringList ret;
 	for (const LVGLFontData *f:m_fonts)
@@ -713,14 +640,14 @@ QStringList QLVGL::fontCodeNames() const
 	return ret;
 }
 
-const lv_font_t *QLVGL::font(int index) const
+const lv_font_t *LVGLCore::font(int index) const
 {
 	if ((index > 0) && (index < m_fonts.size()))
 		return m_fonts.at(index)->font();
 	return m_defaultFont->font();
 }
 
-const lv_font_t *QLVGL::font(const QString &name, Qt::CaseSensitivity cs) const
+const lv_font_t *LVGLCore::font(const QString &name, Qt::CaseSensitivity cs) const
 {
 	for (const LVGLFontData *font:m_fonts) {
 		if (name.compare(font->name(), cs) == 0)
@@ -729,7 +656,7 @@ const lv_font_t *QLVGL::font(const QString &name, Qt::CaseSensitivity cs) const
 	return m_defaultFont->font();
 }
 
-int QLVGL::indexOfFont(const lv_font_t *font) const
+int LVGLCore::indexOfFont(const lv_font_t *font) const
 {
 	int index = 0;
 	for (auto it = m_fonts.begin(); it != m_fonts.end(); ++it, ++index) {
@@ -739,7 +666,7 @@ int QLVGL::indexOfFont(const lv_font_t *font) const
 	return -1;
 }
 
-QString QLVGL::fontName(const lv_font_t *font) const
+QString LVGLCore::fontName(const lv_font_t *font) const
 {
 	for (const LVGLFontData *f:m_fonts) {
 		if (f->font() == font)
@@ -748,7 +675,7 @@ QString QLVGL::fontName(const lv_font_t *font) const
 	return m_defaultFont->name();
 }
 
-QString QLVGL::fontCodeName(const lv_font_t *font) const
+QString LVGLCore::fontCodeName(const lv_font_t *font) const
 {
 	for (const LVGLFontData *f:m_fonts) {
 		if (f->font() == font)
@@ -757,7 +684,7 @@ QString QLVGL::fontCodeName(const lv_font_t *font) const
 	return m_defaultFont->codeName();
 }
 
-QList<const LVGLFontData *> QLVGL::customFonts() const
+QList<const LVGLFontData *> LVGLCore::customFonts() const
 {
 	QList<const LVGLFontData *> ret;
 	for (const LVGLFontData *font:m_fonts) {
@@ -767,7 +694,7 @@ QList<const LVGLFontData *> QLVGL::customFonts() const
 	return  ret;
 }
 
-void QLVGL::removeCustomFonts()
+void LVGLCore::removeCustomFonts()
 {
 	for (auto it = m_fonts.begin(); it != m_fonts.end();) {
 		if ((*it)->isCustomFont()) {
@@ -779,7 +706,7 @@ void QLVGL::removeCustomFonts()
 	}
 }
 
-QString QLVGL::baseStyleName(const lv_style_t *style) const
+QString LVGLCore::baseStyleName(const lv_style_t *style) const
 {
 	if (style == &lv_style_scr)
 		return "lv_style_scr";
@@ -810,48 +737,48 @@ QString QLVGL::baseStyleName(const lv_style_t *style) const
 	return  "";
 }
 
-void QLVGL::setScreenColor(QColor color)
+void LVGLCore::setScreenColor(QColor color)
 {
 	m_screen_style.body.main_color = fromColor(color);
 	m_screen_style.body.grad_color = fromColor(color);
 	lv_obj_set_style(lv_scr_act(), &m_screen_style);
 }
 
-QColor QLVGL::screenColor() const
+QColor LVGLCore::screenColor() const
 {
 	return toColor(m_screen_style.body.main_color);
 }
 
-bool QLVGL::screenColorChanged() const
+bool LVGLCore::screenColorChanged() const
 {
 	return (m_screen_style.body.main_color.full != lv_style_scr.body.main_color.full &&
 			m_screen_style.body.grad_color.full != lv_style_scr.body.grad_color.full);
 }
 
-QList<const LVGLWidget *> QLVGL::widgets() const
+QList<const LVGLWidget *> LVGLCore::widgets() const
 {
 	return m_widgets.values();
 }
 
-const LVGLWidget *QLVGL::widget(const QString &name) const
+const LVGLWidget *LVGLCore::widget(const QString &name) const
 {
 	if (m_widgets.contains(name))
 		return m_widgets[name];
 	return nullptr;
 }
 
-void QLVGL::tick()
+void LVGLCore::tick()
 {
 	lv_task_handler();
 	lv_tick_inc(20);
 }
 
-void QLVGL::addWidget(const LVGLWidget *w)
+void LVGLCore::addWidget(const LVGLWidget *w)
 {
 	m_widgets.insert(w->className(), w);
 }
 
-void QLVGL::dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+void LVGLCore::dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
 	const auto stride = disp->hor_res;
 	for (auto y = area->y1; y <= area->y2; ++y) {

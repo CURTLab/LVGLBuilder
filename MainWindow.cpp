@@ -20,16 +20,6 @@
 #include <QSettings>
 #include <QInputDialog>
 
-union LVGLImageDataCast {
-	LVGLImageData *ptr;
-	qintptr i;
-};
-
-union LVGLFontDataCast {
-	LVGLFontData *ptr;
-	qintptr i;
-};
-
 MainWindow::MainWindow(QWidget *parent)
 	: QMainWindow(parent)
 	, m_ui(new Ui::MainWindow)

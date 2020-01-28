@@ -43,15 +43,11 @@ QMimeData *LVGLWidgetModel::mimeData(const QModelIndexList &indexes) const
 	QMimeData * mimeData = new QMimeData();
 	QByteArray encodedData;
 
-	union {
-		const LVGLWidget *ptr;
-		qintptr i;
-	} cast;
-
+	LVGLWidgetCast cast;
 	QDataStream stream(&encodedData, QIODevice::WriteOnly);
 	for (const QModelIndex &index:indexes) {
 		if (index.isValid() && index.column() == 0) {
-			cast.ptr = lvgl.widgets().at(index.row());
+			cast.ptr = const_cast<LVGLWidget*>(lvgl.widgets().at(index.row()));
 			stream << cast.i;
 		}
 	}

@@ -16,12 +16,12 @@
 class LVGLObject;
 class LVGLFontData;
 
-class QLVGL : public QObject
+class LVGLCore : public QObject
 {
 	Q_OBJECT
 public:
-	QLVGL(QObject *parent = nullptr);
-	~QLVGL();
+	LVGLCore(QObject *parent = nullptr);
+	~LVGLCore();
 
 	void init(int width, int height);
 
@@ -50,19 +50,11 @@ public:
 	const char *symbol(const QString &name) const;
 
 	void poll();
-	void send_mouse_event(int x, int y, bool pressed);
-
-	QList<lv_obj_t *> get_objects_under_coords(int x, int y, lv_obj_t *parent = lv_scr_act()) const;
-	QList<lv_obj_t *> get_object_children(const lv_obj_t *obj, bool recursive) const;
-	QList<lv_obj_t *> get_objects_by_type(QString type, lv_obj_t *parent = lv_scr_act()) const;
-	int get_object_child_index(const lv_obj_t *obj) const;
+	void sendMouseEvent(int x, int y, bool pressed);
 
 	QPoint get_absolute_position(const lv_obj_t *lv_obj) const;
 	QSize get_object_size(const lv_obj_t *lv_obj) const;
 	QRect get_object_rect(const lv_obj_t *lv_obj) const;
-	QString get_object_class(lv_obj_t *lv_obj) const;
-	void set_object_position(lv_obj_t *lv_obj, const QPoint &pos);
-	void set_object_geometry(lv_obj_t *lv_obj, const QRect &geometry);
 
 	void addObject(LVGLObject *object);
 	void removeObject(LVGLObject *object);
@@ -130,6 +122,27 @@ private:
 	friend void lvgl_core_flush_cb(lv_disp_drv_t *, const lv_area_t *, lv_color_t *);
 };
 
-extern QLVGL lvgl;
+extern LVGLCore lvgl;
+
+// cast helpers for internal models
+union LVGLImageDataCast {
+	LVGLImageData *ptr;
+	qintptr i;
+};
+
+union LVGLFontDataCast {
+	LVGLFontData *ptr;
+	qintptr i;
+};
+
+union LVGLWidgetCast {
+	LVGLWidget *ptr;
+	qintptr i;
+};
+
+union LVGLObjectCast {
+	LVGLObject *ptr;
+	qintptr i;
+};
 
 #endif // LVGLCORE_HPP

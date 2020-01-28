@@ -6,6 +6,7 @@
 #include <QDebug>
 
 #include "widgets/LVGLWidget.h"
+#include "LVGLCore.h"
 
 LVGLPropertyModel::LVGLPropertyModel(QObject *parent)
 	: QAbstractItemModel(parent)
@@ -86,10 +87,7 @@ QVariant LVGLPropertyModel::data(const QModelIndex &index, int role) const
 			return p;
 		}
 	} else if (role == (Qt::UserRole + 1)) {
-		union {
-			LVGLObject *ptr;
-			qintptr i;
-		} cast;
+		LVGLObjectCast cast;
 		cast.ptr = m_obj;
 		return cast.i;
 	}
@@ -163,11 +161,7 @@ void LVGLPropertyDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 	if (!index.isValid() || (index.column() != 1))
 		return;
 
-	union {
-		LVGLObject *ptr;
-		qintptr i;
-	} cast;
-
+	LVGLObjectCast cast;
 	auto prop = reinterpret_cast<LVGLProperty*>(index.internalPointer());
 	cast.i = index.data(Qt::UserRole + 1).toLongLong();
 	if ((cast.ptr == nullptr) || (prop == nullptr))
@@ -182,11 +176,7 @@ void LVGLPropertyDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
 	if (!index.isValid() || (index.column() != 1))
 		return;
 
-	union {
-		LVGLObject *ptr;
-		qintptr i;
-	} cast;
-
+	LVGLObjectCast cast;
 	auto prop = reinterpret_cast<LVGLProperty*>(index.internalPointer());
 	cast.i = index.data(Qt::UserRole + 1).toLongLong();
 	if ((cast.ptr == nullptr) || (prop == nullptr))
@@ -201,11 +191,7 @@ void LVGLPropertyDelegate::setEditorData(QWidget *editor, const QModelIndex &ind
 	if (!index.isValid() || (index.column() != 1))
 		return;
 
-	union {
-		LVGLObject *ptr;
-		qintptr i;
-	} cast;
-
+	LVGLObjectCast cast;
 	cast.i = index.data(Qt::UserRole + 1).toLongLong();
 	if (cast.ptr == nullptr)
 		return;
@@ -236,11 +222,7 @@ void LVGLPropertyDelegate::setModelData(QWidget *editor, QAbstractItemModel *mod
 	if (!index.isValid() || (index.column() != 1))
 		return;
 
-	union {
-		LVGLObject *ptr;
-		qintptr i;
-	} cast;
-
+	LVGLObjectCast cast;
 	cast.i = index.data(Qt::UserRole + 1).toLongLong();
 	if (cast.ptr == nullptr)
 		return;
