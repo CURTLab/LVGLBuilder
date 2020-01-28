@@ -153,7 +153,7 @@ bool LVGLProject::exportCode(const QString &path) const
 	stream << " *       WIDGETS\n";
 	stream << " **********************/\n";
 	for (LVGLObject *o:objects) {
-		assert(!o->doesNameExists());
+		Q_ASSERT(!o->doesNameExists());
 		if (o->isAccessible())
 			stream << "extern lv_obj_t *" << o->codeName() << ";\n";
 	}

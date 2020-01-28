@@ -268,7 +268,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 			if (parent->widgetType() == LVGLWidget::TabView) {
 				lv_obj_t *obj = parent->obj();
 				parent = parent->findChildByIndex(lv_tabview_get_tab_act(obj));
-				assert(parent);
+				Q_ASSERT(parent);
 			}
 			newObj = new LVGLObject(widgetClass, "", parent);
 			parentPos = parent->absolutePosition();

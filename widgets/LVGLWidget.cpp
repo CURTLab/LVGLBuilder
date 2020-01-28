@@ -77,7 +77,7 @@ LVGLProperty *LVGLWidget::property(QString name) const
 
 LVGL::StyleParts LVGLWidget::editableStyles(int type) const
 {
-	assert(!m_editableStyles.isEmpty());
+	Q_ASSERT(!m_editableStyles.isEmpty());
 	if (m_editableStyles.size() > type)
 		return m_editableStyles.at(type);
 	return LVGL::None;

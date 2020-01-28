@@ -247,13 +247,13 @@ LVGLPropertyEnum::LVGLPropertyEnum(QStringList enumText, LVGLProperty *parent)
 QVariant LVGLPropertyEnum::value(LVGLObject *obj) const
 {
 	const int index = get(obj);
-	assert(index < m_enum.size());
+	Q_ASSERT(index < m_enum.size());
 	return m_enum.at(index);
 }
 
 void LVGLPropertyEnum::setValue(LVGLObject *obj, QVariant value)
 {
-	assert(m_enum.indexOf(value.toString()) >= 0);
+	Q_ASSERT(m_enum.indexOf(value.toString()) >= 0);
 	set(obj, m_enum.indexOf(value.toString()));
 }
 

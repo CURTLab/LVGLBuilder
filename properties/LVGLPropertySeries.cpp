@@ -207,7 +207,7 @@ QWidget *LVGLPropertySeries::editor(QWidget *parent)
 void LVGLPropertySeries::updateEditor(LVGLObject *obj)
 {
 	lv_obj_t *chart = obj->obj();
-	assert(lv_debug_check_obj_type(chart, "lv_chart"));
+	Q_ASSERT(lv_debug_check_obj_type(chart, "lv_chart"));
 
 	lv_chart_ext_t *ext = reinterpret_cast<lv_chart_ext_t*>(lv_obj_get_ext_attr(chart));
 
@@ -230,7 +230,7 @@ void LVGLPropertySeries::updateEditor(LVGLObject *obj)
 void LVGLPropertySeries::updateWidget(LVGLObject *obj)
 {
 	lv_obj_t *chart = obj->obj();
-	assert(lv_debug_check_obj_type(chart, "lv_chart"));
+	Q_ASSERT(lv_debug_check_obj_type(chart, "lv_chart"));
 
 	lv_chart_ext_t *ext = reinterpret_cast<lv_chart_ext_t*>(lv_obj_get_ext_attr(chart));
 
@@ -263,7 +263,7 @@ QStringList LVGLPropertySeries::function(LVGLObject *obj) const
 	QStringList ret;
 
 	lv_obj_t *chart = obj->obj();
-	assert(lv_debug_check_obj_type(chart, "lv_chart"));
+	Q_ASSERT(lv_debug_check_obj_type(chart, "lv_chart"));
 
 	lv_chart_ext_t *ext = reinterpret_cast<lv_chart_ext_t*>(lv_obj_get_ext_attr(chart));
 
@@ -289,7 +289,7 @@ QJsonValue LVGLPropertySeries::toJson(LVGLObject *obj) const
 	QJsonArray ret;
 
 	lv_obj_t *chart = obj->obj();
-	assert(lv_debug_check_obj_type(chart, "lv_chart"));
+	Q_ASSERT(lv_debug_check_obj_type(chart, "lv_chart"));
 
 	lv_chart_ext_t *ext = reinterpret_cast<lv_chart_ext_t*>(lv_obj_get_ext_attr(chart));
 
@@ -312,7 +312,7 @@ QJsonValue LVGLPropertySeries::toJson(LVGLObject *obj) const
 void LVGLPropertySeries::setValue(LVGLObject *obj, QVariant value)
 {
 	lv_obj_t *chart = obj->obj();
-	assert(lv_debug_check_obj_type(chart, "lv_chart"));
+	Q_ASSERT(lv_debug_check_obj_type(chart, "lv_chart"));
 
 	if (value.type() == QVariant::List) {
 		QVariantList series = value.toList();

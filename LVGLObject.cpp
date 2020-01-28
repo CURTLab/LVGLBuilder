@@ -33,7 +33,7 @@ LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass, LVGLObject 
 	: m_obj(obj), m_widgetClass(widgetClass), m_locked(false), m_accessible(false)
 	, m_movable(movable), m_index(index), m_parent(parent)
 {
-	assert(m_widgetClass);
+	Q_ASSERT(m_widgetClass);
 	if (parent)
 		parent->m_childs.append(this);
 	generateName();
@@ -451,7 +451,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles)
 	for (int i = 0; i < styles.size(); ++i) {
 		QJsonObject style = styles[i].toObject();
 		int type = m_widgetClass->styles().indexOf(style["type"].toString());
-		assert(type >= 0);
+		Q_ASSERT(type >= 0);
 
 		lv_style_t *objStyle = this->style(type);
 		if (style.contains("body")) {
@@ -582,7 +582,7 @@ lv_style_t *LVGLObject::style(int type)
 	if (doner == nullptr) doner = &lv_style_plain;
 	//lv_style_t *doner = m_widgetType->style(m_obj, type);
 	// security check
-	assert(doner != nullptr);
+	Q_ASSERT(doner != nullptr);
 
 
 	lv_style_copy(s, doner);

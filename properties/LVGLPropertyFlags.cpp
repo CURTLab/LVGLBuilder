@@ -9,8 +9,8 @@ LVGLPropertyFlags::LVGLPropertyFlags(QStringList flagNames, QStringList flagCode
 	, m_flagCodeName(flagCodeName)
 	, m_flags(flags)
 {
-	assert(m_flagNames.size() == m_flagCodeName.size());
-	assert(m_flagNames.size() == m_flags.size());
+	Q_ASSERT(m_flagNames.size() == m_flagCodeName.size());
+	Q_ASSERT(m_flagNames.size() == m_flags.size());
 }
 
 bool LVGLPropertyFlags::hasEditor() const
