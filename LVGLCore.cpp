@@ -8,30 +8,10 @@
 #include FT_FREETYPE_H
 
 #include "widgets/LVGLWidgets.h"
+#include "LVGLObject.h"
 #include "LVGLFontData.h"
 
-static lv_indev_data_t disp_mouse;
-
 LVGLCore lvgl(nullptr);
-
-#include "LVGLObject.h"
-
-void lvgl_core_flush_cb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
-{
-	LVGLCore *self = reinterpret_cast<LVGLCore*>(disp->user_data);
-	self->dispFlush(disp, area, color_p);
-}
-
-bool my_touchpad_read(lv_indev_drv_t *indev_driver, lv_indev_data_t * data)
-{
-	(void)indev_driver;
-
-	data->state = disp_mouse.state;
-	data->point.x = disp_mouse.point.x;
-	data->point.y = disp_mouse.point.y;
-
-	return false; /*Return `false` because we are not buffering and no more data to read*/
-}
 
 LVGLCore::LVGLCore(QObject *parent) : QObject(parent), m_defaultFont(nullptr)
 {
@@ -47,40 +27,39 @@ LVGLCore::~LVGLCore()
 	qDeleteAll(m_fonts);
 }
 
-void lvgl_print_cb(lv_log_level_t level, const char *file, uint32_t line, const char *dsc)
-{
-	qDebug().nospace() << file << " (" << line << "," << level << "): " << dsc;
-}
-
 void LVGLCore::init(int width, int height)
 {
 	lv_init();
 
 	const uint32_t n = static_cast<uint32_t>(width * height);
-	m_disp_framebuffer.resize(n);
+	m_dispFrameBuf.resize(n);
 	m_buf1.resize(n);
 	m_buf2.resize(n);
 
-	lv_disp_buf_init(&m_disp_buf, m_buf1.data(), m_buf2.data(), n);
+	lv_disp_buf_init(&m_dispBuf, m_buf1.data(), m_buf2.data(), n);
 
-	lv_disp_drv_init(&m_disp_drv);
-	m_disp_drv.hor_res = static_cast<lv_coord_t>(width);
-	m_disp_drv.ver_res = static_cast<lv_coord_t>(height);
-	m_disp_drv.user_data = this;
-	m_disp_drv.flush_cb = lvgl_core_flush_cb;
-	m_disp_drv.buffer = &m_disp_buf;
-	lv_disp_drv_register(&m_disp_drv);
+	lv_disp_drv_init(&m_dispDrv);
+	m_dispDrv.hor_res = static_cast<lv_coord_t>(width);
+	m_dispDrv.ver_res = static_cast<lv_coord_t>(height);
+	m_dispDrv.user_data = this;
+	m_dispDrv.flush_cb = flushCb;
+	m_dispDrv.buffer = &m_dispBuf;
+	lv_disp_drv_register(&m_dispDrv);
+
+	// to be sure that there is no button press at the start
+	m_inputData.state = LV_INDEV_STATE_REL;
 
 	lv_indev_drv_t indev_drv;
-	lv_indev_drv_init(&indev_drv);             /*Descriptor of a input device driver*/
-	indev_drv.type = LV_INDEV_TYPE_POINTER;    /*Touch pad is a pointer-like device*/
-	indev_drv.read_cb = my_touchpad_read;      /*Set your driver function*/
-	lv_indev_drv_register(&indev_drv);         /*Finally register the driver*/
+	lv_indev_drv_init(&indev_drv);
+	indev_drv.type = LV_INDEV_TYPE_POINTER;
+	indev_drv.read_cb = inputCb;
+	indev_drv.user_data = this;
+	lv_indev_drv_register(&indev_drv);
 
 	QImage pix(":/images/littlevgl_logo.png");
 	m_default = lvgl.addImage(pix, "default");
 
-	lv_style_copy(&m_screen_style, &lv_style_scr);
+	lv_style_copy(&m_screenStyle, &lv_style_scr);
 
 #if LV_FONT_ROBOTO_12
 	m_fonts << new LVGLFontData("Roboto 12", "lv_font_roboto_12", 12, &lv_font_roboto_12);
@@ -133,22 +112,22 @@ void LVGLCore::init(int width, int height)
 	addWidget(new LVGLTabview);
 	addWidget(new LVGLTextArea);
 
-	//lv_log_register_print_cb(lvgl_print_cb);
+	//lv_log_register_print_cb(logCb);
 }
 
 bool LVGLCore::changeResolution(QSize size)
 {
 	const uint32_t n = static_cast<uint32_t>(size.width() * size.height());
-	if (n != m_disp_buf.size) {
-		m_disp_framebuffer.resize(n);
+	if (n != m_dispBuf.size) {
+		m_dispFrameBuf.resize(n);
 		m_buf1.resize(n);
 		m_buf2.resize(n);
-		lv_disp_buf_init(&m_disp_buf, m_buf1.data(), m_buf2.data(), n);
+		lv_disp_buf_init(&m_dispBuf, m_buf1.data(), m_buf2.data(), n);
 	}
 
-	m_disp_drv.hor_res = static_cast<lv_coord_t>(size.width());
-	m_disp_drv.ver_res = static_cast<lv_coord_t>(size.height());
-	lv_disp_drv_update(lv_disp_get_default(), &m_disp_drv);
+	m_dispDrv.hor_res = static_cast<lv_coord_t>(size.width());
+	m_dispDrv.ver_res = static_cast<lv_coord_t>(size.height());
+	lv_disp_drv_update(lv_disp_get_default(), &m_dispDrv);
 
 	return false;
 }
@@ -160,7 +139,7 @@ QPixmap LVGLCore::framebuffer() const
 	auto height = lv_disp_get_ver_res(disp);
 
 	QImage img(width, height, QImage::Format_ARGB32);
-	memcpy(img.bits(), m_disp_framebuffer.data(), static_cast<size_t>(width * height) * 4);
+	memcpy(img.bits(), m_dispFrameBuf.data(), static_cast<size_t>(width * height) * 4);
 	return QPixmap::fromImage(img);
 }
 
@@ -173,7 +152,7 @@ QPixmap LVGLCore::grab(const QRect &region) const
 	QImage img(region.width(), region.height(), QImage::Format_ARGB32);
 	for (auto y = 0; y < region.height(); ++y)
 		memcpy(img.scanLine(y + region.y()),
-				 &m_disp_framebuffer[static_cast<size_t>(y * stride + region.x())],
+				 &m_dispFrameBuf[static_cast<size_t>(y * stride + region.x())],
 				static_cast<size_t>(stride) * 4
 				);
 	return QPixmap::fromImage(img);
@@ -435,9 +414,9 @@ void LVGLCore::poll()
 
 void LVGLCore::sendMouseEvent(int x, int y, bool pressed)
 {
-	disp_mouse.point.x = static_cast<lv_coord_t>(x);
-	disp_mouse.point.y = static_cast<lv_coord_t>(y);
-	disp_mouse.state = pressed ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
+	m_inputData.point.x = static_cast<lv_coord_t>(x);
+	m_inputData.point.y = static_cast<lv_coord_t>(y);
+	m_inputData.state = pressed ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
 }
 
 QPoint LVGLCore::get_absolute_position(const lv_obj_t *obj) const
@@ -739,20 +718,20 @@ QString LVGLCore::baseStyleName(const lv_style_t *style) const
 
 void LVGLCore::setScreenColor(QColor color)
 {
-	m_screen_style.body.main_color = fromColor(color);
-	m_screen_style.body.grad_color = fromColor(color);
-	lv_obj_set_style(lv_scr_act(), &m_screen_style);
+	m_screenStyle.body.main_color = fromColor(color);
+	m_screenStyle.body.grad_color = m_screenStyle.body.main_color;
+	lv_obj_set_style(lv_scr_act(), &m_screenStyle);
 }
 
 QColor LVGLCore::screenColor() const
 {
-	return toColor(m_screen_style.body.main_color);
+	return toColor(m_screenStyle.body.main_color);
 }
 
 bool LVGLCore::screenColorChanged() const
 {
-	return (m_screen_style.body.main_color.full != lv_style_scr.body.main_color.full &&
-			m_screen_style.body.grad_color.full != lv_style_scr.body.grad_color.full);
+	return (m_screenStyle.body.main_color.full != lv_style_scr.body.main_color.full &&
+			m_screenStyle.body.grad_color.full != lv_style_scr.body.grad_color.full);
 }
 
 QList<const LVGLWidget *> LVGLCore::widgets() const
@@ -778,14 +757,42 @@ void LVGLCore::addWidget(const LVGLWidget *w)
 	m_widgets.insert(w->className(), w);
 }
 
-void LVGLCore::dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+void LVGLCore::flushHandler(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
 {
 	const auto stride = disp->hor_res;
 	for (auto y = area->y1; y <= area->y2; ++y) {
 		for (auto x = area->x1; x <= area->x2; ++x) {
-			m_disp_framebuffer[x + y * stride].full = color_p->full;
+			m_dispFrameBuf[x + y * stride].full = color_p->full;
 			color_p++;
 		}
 	}
 	lv_disp_flush_ready(disp);
+}
+
+bool LVGLCore::inputHandler(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
+{
+	(void)indev_driver;
+
+	data->state = m_inputData.state;
+	data->point.x = m_inputData.point.x;
+	data->point.y = m_inputData.point.y;
+
+	return false; /*Return `false` because we are not buffering and no more data to read*/
+}
+
+void LVGLCore::flushCb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p)
+{
+	LVGLCore *self = reinterpret_cast<LVGLCore*>(disp->user_data);
+	self->flushHandler(disp, area, color_p);
+}
+
+bool LVGLCore::inputCb(lv_indev_drv_t *indev_driver, lv_indev_data_t *data)
+{
+	LVGLCore *self = reinterpret_cast<LVGLCore*>(indev_driver->user_data);
+	return self->inputHandler(indev_driver, data);
+}
+
+void LVGLCore::logCb(lv_log_level_t level, const char *file, uint32_t line, const char *dsc)
+{
+	qDebug().nospace() << file << " (" << line << "," << level << "): " << dsc;
 }

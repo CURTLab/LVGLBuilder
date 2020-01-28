@@ -99,7 +99,12 @@ private slots:
 
 private:
 	void addWidget(const LVGLWidget *w);
-	void dispFlush(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
+	void flushHandler(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
+	bool inputHandler(lv_indev_drv_t *indev_driver, lv_indev_data_t *data);
+
+	static void flushCb(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
+	static bool inputCb(lv_indev_drv_t *indev_driver, lv_indev_data_t *data);
+	static void logCb(lv_log_level_t level, const char *file, uint32_t line, const char *dsc);
 
 	QTimer m_timer;
 	QElapsedTimer m_time;
@@ -108,18 +113,19 @@ private:
 	LVGLImageData *m_default;
 	QList<LVGLObject*> m_objects;
 	QList<LVGLFontData *> m_fonts;
-	lv_style_t m_screen_style;
+	lv_style_t m_screenStyle;
 	const LVGLFontData *m_defaultFont;
 
-	std::vector<lv_color_t> m_disp_framebuffer;
+	std::vector<lv_color_t> m_dispFrameBuf;
 	std::vector<lv_color_t> m_buf1;
 	std::vector<lv_color_t> m_buf2;
-	lv_disp_buf_t m_disp_buf;
-	lv_disp_drv_t m_disp_drv;
+	lv_disp_buf_t m_dispBuf;
+	lv_disp_drv_t m_dispDrv;
+
+	lv_indev_data_t m_inputData;
 
 	struct FT_LibraryRec_ *m_ft;
 	friend class LVGLFontData;
-	friend void lvgl_core_flush_cb(lv_disp_drv_t *, const lv_area_t *, lv_color_t *);
 };
 
 extern LVGLCore lvgl;
