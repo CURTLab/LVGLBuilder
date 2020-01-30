@@ -42,12 +42,16 @@ Building with QtCreator:
 - [x] Change style of single widgets
 - [x] Support different display formats
 - [ ] Fix object inspector (insertion and deletion of widgets)
+- [ ] Fix absolute and relative positions of widgets
 - [ ] Undo and redo
 - [ ] Default values for widgets
 - [ ] Support multiple screens
 - [ ] Dialog for changing keyboard layout
 - [ ] Preview for widgets
 - [ ] Icons for widgets
+
+### Wishlist
+- [ ] C code driver generator (Touch, Buttons, Displays for µC)
 
 ### ToDo Widgets
 - [ ] Arc (lv_arc)
