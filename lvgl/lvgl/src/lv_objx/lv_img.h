@@ -168,7 +168,7 @@ static inline const lv_style_t * lv_img_get_style(const lv_obj_t * img, lv_img_s
  **********************/
 
 /*Use this macro to declare an image in a c file*/
-#define LV_IMG_DECLARE(var_name) extern "C" const lv_img_dsc_t var_name;
+#define LV_IMG_DECLARE(var_name) extern const lv_img_dsc_t var_name;
 
 #endif /*LV_USE_IMG*/
 

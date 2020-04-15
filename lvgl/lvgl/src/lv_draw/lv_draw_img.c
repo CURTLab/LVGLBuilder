@@ -11,8 +11,6 @@
 #include "../lv_misc/lv_log.h"
 #include "../lv_misc/lv_mem.h"
 
-#include <stdio.h>
-
 /*********************
  *      DEFINES
  *********************/
@@ -574,41 +572,29 @@ static lv_res_t lv_img_draw_core(const lv_area_t * coords, const lv_area_t * mas
     }
     /* The whole uncompressed image is not available. Try to read it line-by-line*/
     else {
-        char tmp[100];
-
-        uint32_t t_start = lv_tick_get();
-
         lv_coord_t width = lv_area_get_width(&mask_com);
-        lv_coord_t height = lv_area_get_height(&mask_com);
 
-        const uint8_t px_size = lv_img_color_format_get_px_size(cdsc->dec_dsc.header.cf);
-        const lv_coord_t h = 1;
-        const lv_coord_t size =  width * h * px_size;
-
-        uint8_t *buf = lv_draw_get_buf(size);
+        uint8_t  * buf = lv_draw_get_buf(lv_area_get_width(&mask_com) * LV_IMG_PX_SIZE_ALPHA_BYTE);  /*space for the possible alpha byte*/
 
         lv_area_t line;
         lv_area_copy(&line, &mask_com);
-        lv_area_set_height(&line, h);
+        lv_area_set_height(&line, 1);
         lv_coord_t x = mask_com.x1 - coords->x1;
         lv_coord_t y = mask_com.y1 - coords->y1;
         lv_coord_t row;
         lv_res_t read_res;
-        for(row = mask_com.y1; row <= mask_com.y2; row += h) {
-            read_res = lv_img_decoder_read_line(&cdsc->dec_dsc, x, y, width * h, buf);
+        for(row = mask_com.y1; row <= mask_com.y2; row++) {
+            read_res = lv_img_decoder_read_line(&cdsc->dec_dsc, x, y, width, buf);
             if(read_res != LV_RES_OK) {
                 lv_img_decoder_close(&cdsc->dec_dsc);
                 LV_LOG_WARN("Image draw can't read the line");
                 return LV_RES_INV;
             }
             lv_draw_map(&line, mask, buf, opa, chroma_keyed, alpha_byte, style->image.color, style->image.intense);
-            line.y1 += h;
-            line.y2 += h;
-            y += h;
+            line.y1++;
+            line.y2++;
+            y++;
         }
-
-        snprintf(tmp, 100, "Time (%d x %d): %ul ms", width, height, lv_tick_elaps(t_start));
-        LV_LOG_WARN(tmp);
     }
 
     return LV_RES_OK;

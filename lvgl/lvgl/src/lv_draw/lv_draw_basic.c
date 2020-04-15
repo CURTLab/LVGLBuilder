@@ -416,7 +416,7 @@ void lv_draw_letter(const lv_point_t * pos_p, const lv_area_t * mask_p, const lv
                     }
                     if(scr_transp == false) {
                         vdb_buf_tmp->full = res_color.full;
-#if (LV_COLOR_DEPTH == 24 || LV_COLOR_DEPTH == 32) && LV_COLOR_SCREEN_TRANSP
+#if LV_COLOR_DEPTH == 32 && LV_COLOR_SCREEN_TRANSP
                     } else {
                         *vdb_buf_tmp = color_mix_2_alpha(*vdb_buf_tmp, (*vdb_buf_tmp).ch.alpha, color, px_opa);
 #endif
@@ -564,7 +564,7 @@ void lv_draw_map(const lv_area_t * cords_p, const lv_area_t * mask_p, const uint
                     /*Because of Alpha byte 16 bit color can start on odd address which can cause
                      * crash*/
                     px_color.full = px_color_p[0] + (px_color_p[1] << 8);
-#elif LV_COLOR_DEPTH == 24 || LV_COLOR_DEPTH == 32
+#elif LV_COLOR_DEPTH == 32
                     px_color = *((lv_color_t *)px_color_p);
 #endif
                     lv_opa_t px_opa = *(px_color_p + LV_IMG_PX_SIZE_ALPHA_BYTE - 1);

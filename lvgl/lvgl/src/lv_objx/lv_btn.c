@@ -284,7 +284,7 @@ void lv_btn_set_style(lv_obj_t * btn, lv_btn_style_t type, const lv_style_t * st
 
     /*Refresh the object with the new style*/
     lv_obj_set_style(btn, ext->styles[ext->state]);
-	}
+}
 
 /*=====================
  * Getter functions

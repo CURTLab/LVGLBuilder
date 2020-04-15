@@ -3,6 +3,7 @@
 
 #include <QString>
 #include <QList>
+#include <QVariant>
 
 #include <lvgl/lvgl.h>
 
