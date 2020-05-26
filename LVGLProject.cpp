@@ -77,10 +77,12 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 		LVGLObject::parse(object, nullptr);
 	}
 
-	return new LVGLProject(lvglObj["name"].toString(), resolution);
+	LVGLProject *pro = new LVGLProject(lvglObj["name"].toString(), resolution);
+	pro->m_fileName = fileName;
+	return pro;
 }
 
-bool LVGLProject::save(const QString &fileName) const
+bool LVGLProject::save(const QString &fileName)
 {
 	QFile file(fileName);
 	if (!file.open(QIODevice::WriteOnly))
@@ -122,6 +124,9 @@ bool LVGLProject::save(const QString &fileName) const
 
 	file.write(doc.toJson());
 	file.close();
+
+	m_fileName = fileName;
+
 	return true;
 }
 
@@ -283,4 +288,9 @@ bool LVGLProject::exportCode(const QString &path) const
 	file.close();
 
 	return true;
+}
+
+QString LVGLProject::fileName() const
+{
+	return m_fileName;
 }

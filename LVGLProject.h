@@ -14,11 +14,14 @@ public:
 	QSize resolution() const;
 
 	static LVGLProject *load(const QString &fileName);
-	bool save(const QString &fileName) const;
+	bool save(const QString &fileName);
 	bool exportCode(const QString &path) const;
+
+	QString fileName() const;
 
 private:
 	QString m_name;
+	QString m_fileName;
 	QSize m_resolution;
 
 };

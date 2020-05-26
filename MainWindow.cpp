@@ -288,7 +288,10 @@ void MainWindow::setEnableBuilder(bool enable)
 
 void MainWindow::on_action_load_triggered()
 {
-	QString fileName = QFileDialog::getOpenFileName(this, "Load lvgl", "", "LVGL (*.lvgl)");
+	QString path;
+	if (m_project != nullptr)
+		path = m_project->fileName();
+	QString fileName = QFileDialog::getOpenFileName(this, "Load lvgl", path, "LVGL (*.lvgl)");
 	if (fileName.isEmpty())
 		return;
 	loadProject(fileName);
@@ -296,7 +299,10 @@ void MainWindow::on_action_load_triggered()
 
 void MainWindow::on_action_save_triggered()
 {
-	QString fileName = QFileDialog::getSaveFileName(this, "Save lvgl", "", "LVGL (*.lvgl)");
+	QString path;
+	if (m_project != nullptr)
+		path = m_project->fileName();
+	QString fileName = QFileDialog::getSaveFileName(this, "Save lvgl", path, "LVGL (*.lvgl)");
 	if (fileName.isEmpty())
 		return;
 	if (!m_project->save(fileName)) {
@@ -315,7 +321,12 @@ void MainWindow::on_combo_style_currentIndexChanged(int index)
 
 void MainWindow::on_action_export_c_triggered()
 {
-	QString path = QFileDialog::getExistingDirectory(this, "Export C files");
+	QString dir;
+	if (m_project != nullptr) {
+		QFileInfo fi(m_project->fileName());
+		dir = fi.absoluteFilePath();
+	}
+	QString path = QFileDialog::getExistingDirectory(this, "Export C files", dir);
 	if (path.isEmpty())
 		return;
 	if (m_project->exportCode(path))
@@ -324,7 +335,12 @@ void MainWindow::on_action_export_c_triggered()
 
 void MainWindow::on_button_add_image_clicked()
 {
-	QStringList fileNames = QFileDialog::getOpenFileNames(this, "Import image", "", "Image (*.png *.jpg *.bmp *.jpeg)");
+	QString dir;
+	if (m_project != nullptr) {
+		QFileInfo fi(m_project->fileName());
+		dir = fi.absoluteFilePath();
+	}
+	QStringList fileNames = QFileDialog::getOpenFileNames(this, "Import image", dir, "Image (*.png *.jpg *.bmp *.jpeg)");
 	for (const QString &fileName:fileNames) {
 		QImage image(fileName);
 		if (image.isNull())
