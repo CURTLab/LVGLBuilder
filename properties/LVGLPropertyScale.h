@@ -14,10 +14,12 @@ public:
 
 	QJsonValue toJson(LVGLObject *obj) const override;
 
+	QStringList function(LVGLObject *obj) const override;
+
 protected:
-	LVGLProperty *m_angle;
-	LVGLProperty *m_line;
-	LVGLProperty *m_label;
+	class LVGLPropertyAngle *m_angle;
+	class LVGLPropertyLines *m_line;
+	class LVGLPropertyLabels *m_label;
 
 };
 

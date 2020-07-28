@@ -8,21 +8,30 @@
 class LVGLPropertyGaugeCriticalValue : public LVGLPropertyInt
 {
 public:
-	LVGLPropertyGaugeCriticalValue() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
+	inline LVGLPropertyGaugeCriticalValue() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
 
-	QString name() const { return "Critical value"; }
+	inline QString name() const override { return "Critical value"; }
+
+	inline QStringList function(LVGLObject *obj) const override {
+		return { QString("lv_gauge_set_critical_value(%1, %2);").arg(obj->codeName()).arg(get(obj)) };
+	}
 
 protected:
-	int get(LVGLObject *obj) const { return lv_gauge_get_critical_value(obj->obj()); }
-	void set(LVGLObject *obj, int value) { lv_gauge_set_critical_value(obj->obj(), static_cast<int16_t>(value)); }
+	inline int get(LVGLObject *obj) const override { return lv_gauge_get_critical_value(obj->obj()); }
+	inline void set(LVGLObject *obj, int value) override { lv_gauge_set_critical_value(obj->obj(), static_cast<int16_t>(value)); }
 };
 
 class LVGLPropertyGaugeRange : public LVGLPropertyRange
 {
+public:
+	inline QStringList function(LVGLObject *obj) const override {
+		return { QString("lv_gauge_set_range(%1, %2, %3);").arg(obj->codeName()).arg(getMin(obj)).arg(getMax(obj)) };
+	}
+
 protected:
-	int getMin(LVGLObject *obj) const { return lv_gauge_get_min_value(obj->obj()); }
-	int getMax(LVGLObject *obj) const { return lv_gauge_get_max_value(obj->obj()); }
-	void set(LVGLObject *obj, int min, int max) {
+	inline int getMin(LVGLObject *obj) const override { return lv_gauge_get_min_value(obj->obj()); }
+	inline int getMax(LVGLObject *obj) const override { return lv_gauge_get_max_value(obj->obj()); }
+	inline void set(LVGLObject *obj, int min, int max) override {
 		lv_gauge_set_range(obj->obj(), static_cast<int16_t>(min), static_cast<int16_t>(max));
 	}
 };
@@ -30,13 +39,17 @@ protected:
 class LVGLPropertyGaugeVal : public LVGLPropertyInt
 {
 public:
-	LVGLPropertyGaugeVal() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
+	inline LVGLPropertyGaugeVal() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
 
-	QString name() const { return "Value"; }
+	inline QString name() const override { return "Value"; }
+
+	inline QStringList function(LVGLObject *obj) const override {
+		return { QString("lv_gauge_set_value(%1, 0, %2);").arg(obj->codeName()).arg(get(obj)) };
+	}
 
 protected:
-	int get(LVGLObject *obj) const { return lv_gauge_get_value(obj->obj(), 0); }
-	void set(LVGLObject *obj, int value) { lv_gauge_set_value(obj->obj(), 0, static_cast<int16_t>(value)); }
+	inline int get(LVGLObject *obj) const override { return lv_gauge_get_value(obj->obj(), 0); }
+	inline void set(LVGLObject *obj, int value) override { lv_gauge_set_value(obj->obj(), 0, static_cast<int16_t>(value)); }
 };
 
 LVGLGauge::LVGLGauge()
