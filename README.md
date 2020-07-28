@@ -8,7 +8,9 @@
 * C++11
 * LVGL 6.1 (included in source since a few adaptions are applied)
 
-Tested on Windows 10 with MSVC 2017 & Qt 5.13.1
+Tested:
+ * Windows 10 + MSVC 2017 + Qt 5.13.1
+ * Ubuntu 18.04.4 + Qt 5.14.2
 
 ### Build
 Building with console:
