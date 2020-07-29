@@ -4,6 +4,7 @@
 #include <QVariant>
 #include <QJsonValue>
 #include <lvgl/lvgl.h>
+#include <functional>
 
 class LVGLObject;
 
@@ -157,6 +158,55 @@ protected:
 
 	virtual const lv_font_t *get(LVGLObject *obj) const = 0;
 	virtual void set(LVGLObject *obj, const lv_font_t *value) = 0;
+};
+
+template<class T>
+class LVGLPropertyValT : public LVGLPropertyType<T>
+{
+public:
+	LVGLPropertyValT(T min, T max, QString title,
+						  QString functionName, std::function<void(lv_obj_t*, T)> setter,
+						  std::function<T(lv_obj_t*)> getter,
+						  LVGLProperty *parent = nullptr);
+
+	QWidget *editor(QWidget *parent) override;
+	void updateEditor(LVGLObject *obj) override;
+	void updateWidget(LVGLObject *obj) override;
+
+	QString name() const override;
+
+	QStringList function(LVGLObject *obj) const override;
+
+protected:
+	virtual T get(LVGLObject *obj) const override;
+	virtual void set(LVGLObject *obj, T value) override;
+
+	QSpinBox *m_widget;
+	int16_t m_min;
+	int16_t m_max;
+	QString m_title;
+	QString m_functionName;
+	std::function<void(lv_obj_t*, T)> m_setter;
+	std::function<T(lv_obj_t*)> m_getter;
+
+};
+
+class LVGLPropertyValInt16 : public LVGLPropertyValT<int16_t>
+{
+public:
+	LVGLPropertyValInt16(int16_t min, int16_t max, QString title,
+								QString functionName, std::function<void(lv_obj_t*, int16_t)> setter,
+								std::function<int16_t(lv_obj_t*)> getter,
+								LVGLProperty *parent = nullptr);
+};
+
+class LVGLPropertyValUInt16 : public LVGLPropertyValT<uint16_t>
+{
+public:
+	LVGLPropertyValUInt16(uint16_t min, uint16_t max, QString title,
+								 QString functionName, std::function<void(lv_obj_t*, uint16_t)> setter,
+								 std::function<uint16_t(lv_obj_t*)> getter,
+								 LVGLProperty *parent = nullptr);
 };
 
 #endif // LVGLPROPERTY_H

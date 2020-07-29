@@ -76,6 +76,7 @@ SOURCES += \
     properties/LVGLPropertyScale.cpp \
     properties/LVGLPropertySeries.cpp \
     properties/LVGLPropertyTextList.cpp \
+    properties/LVGLPropertyVal2.cpp \
     widgets/LVGLArc.cpp \
     widgets/LVGLBar.cpp \
     widgets/LVGLButton.cpp \
@@ -99,6 +100,7 @@ SOURCES += \
     LVGLPropertyModel.cpp \
     LVGLSimulator.cpp \
     widgets/LVGLLine.cpp \
+    widgets/LVGLLineMeter.cpp \
     widgets/LVGLList.cpp \
     widgets/LVGLPage.cpp \
     widgets/LVGLPreloader.cpp \
@@ -137,6 +139,7 @@ HEADERS += \
     properties/LVGLPropertyScale.h \
     properties/LVGLPropertySeries.h \
     properties/LVGLPropertyTextList.h \
+    properties/LVGLPropertyVal2.h \
     widgets/LVGLArc.h \
     widgets/LVGLBar.h \
     widgets/LVGLButton.h \
@@ -160,6 +163,7 @@ HEADERS += \
     LVGLPropertyModel.h \
     LVGLSimulator.h \
     widgets/LVGLLine.h \
+    widgets/LVGLLineMeter.h \
     widgets/LVGLList.h \
     widgets/LVGLPage.h \
     widgets/LVGLPreloader.h \

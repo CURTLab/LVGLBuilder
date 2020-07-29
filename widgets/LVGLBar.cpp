@@ -22,6 +22,11 @@ protected:
 
 class LVGLPropertyBarRange : public LVGLPropertyRange
 {
+public:
+	QStringList function(LVGLObject *obj) const {
+		return { QString("lv_bar_set_range(%1, %2, %2);").arg(obj->codeName()).arg(getMin(obj)).arg(getMax(obj)) };
+	}
+
 protected:
 	int getMin(LVGLObject *obj) const { return lv_bar_get_min_value(obj->obj()); }
 	int getMax(LVGLObject *obj) const { return lv_bar_get_max_value(obj->obj()); }

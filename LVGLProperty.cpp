@@ -241,6 +241,7 @@ QStringList LVGLProperty::function(LVGLObject *obj) const
 LVGLPropertyEnum::LVGLPropertyEnum(QStringList enumText, LVGLProperty *parent)
 	: LVGLProperty(parent)
 	, m_enum(enumText)
+	, m_widget(nullptr)
 {
 }
 
@@ -406,4 +407,67 @@ void LVGLPropertyFont::updateEditor(LVGLObject *obj)
 void LVGLPropertyFont::updateWidget(LVGLObject *obj)
 {
 	set(obj, lvgl.font(m_widget->currentIndex()));
+}
+
+template<class T>
+LVGLPropertyValT<T>::LVGLPropertyValT(T min, T max, QString title, QString functionName, std::function<void (lv_obj_t *, T)> setter, std::function<T (lv_obj_t *)> getter, LVGLProperty *parent)
+	: m_widget(nullptr)
+	, m_min(min), m_max(max), m_title(title)
+	, m_functionName(functionName), m_setter(setter)
+	, m_getter(getter)
+{
+}
+
+template<class T>
+QWidget *LVGLPropertyValT<T>::editor(QWidget *parent)
+{
+	m_widget = new QSpinBox(parent);
+	m_widget->setRange(m_min, m_max);
+	return m_widget;
+}
+
+template<class T>
+void LVGLPropertyValT<T>::updateEditor(LVGLObject *obj)
+{
+	m_widget->setValue(static_cast<int>(get(obj)));
+}
+
+template<class T>
+void LVGLPropertyValT<T>::updateWidget(LVGLObject *obj)
+{
+	set(obj, static_cast<T>(m_widget->value()));
+}
+
+template<class T>
+QString LVGLPropertyValT<T>::name() const
+{
+	return m_title;
+}
+
+template<class T>
+QStringList LVGLPropertyValT<T>::function(LVGLObject *obj) const
+{
+	return { QString("%1(%2, %3);").arg(m_functionName).arg(obj->codeName()).arg(get(obj)) };
+}
+
+template<class T>
+T LVGLPropertyValT<T>::get(LVGLObject *obj) const
+{
+	return m_getter(obj->obj());
+}
+
+template<class T>
+void LVGLPropertyValT<T>::set(LVGLObject *obj, T value)
+{
+	m_setter(obj->obj(), value);
+}
+
+LVGLPropertyValInt16::LVGLPropertyValInt16(int16_t min, int16_t max, QString title, QString functionName, std::function<void (lv_obj_t *, int16_t)> setter, std::function<int16_t (lv_obj_t *)> getter, LVGLProperty *parent)
+	: LVGLPropertyValT<int16_t>(min, max, title, functionName, setter, getter, parent)
+{
+}
+
+LVGLPropertyValUInt16::LVGLPropertyValUInt16(uint16_t min, uint16_t max, QString title, QString functionName, std::function<void (lv_obj_t *, uint16_t)> setter, std::function<uint16_t (lv_obj_t *)> getter, LVGLProperty *parent)
+	: LVGLPropertyValT<uint16_t>(min, max, title, functionName, setter, getter, parent)
+{
 }
