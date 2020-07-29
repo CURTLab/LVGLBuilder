@@ -1,6 +1,9 @@
 #ifndef LVGLWIDGETS_H
 #define LVGLWIDGETS_H
 
+#include "LVGLWidget.h"
+
+#include "LVGLArc.h"
 #include "LVGLBar.h"
 #include "LVGLButton.h"
 #include "LVGLButtonMatrix.h"

@@ -75,6 +75,7 @@ SOURCES += \
     properties/LVGLPropertyScale.cpp \
     properties/LVGLPropertySeries.cpp \
     properties/LVGLPropertyTextList.cpp \
+    widgets/LVGLArc.cpp \
     widgets/LVGLBar.cpp \
     widgets/LVGLButton.cpp \
     widgets/LVGLButtonMatrix.cpp \
@@ -134,6 +135,7 @@ HEADERS += \
     properties/LVGLPropertyScale.h \
     properties/LVGLPropertySeries.h \
     properties/LVGLPropertyTextList.h \
+    widgets/LVGLArc.h \
     widgets/LVGLBar.h \
     widgets/LVGLButton.h \
     widgets/LVGLButtonMatrix.h \

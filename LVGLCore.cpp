@@ -86,6 +86,7 @@ void LVGLCore::init(int width, int height)
 	}
 	Q_ASSERT(m_defaultFont != nullptr);
 
+	addWidget(new LVGLArc);
 	addWidget(new LVGLBar);
 	addWidget(new LVGLButton);
 	addWidget(new LVGLButtonMatrix);
