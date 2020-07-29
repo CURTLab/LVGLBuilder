@@ -215,11 +215,6 @@ LVGLWidget::Type LVGLTextArea::type() const
 	return TextArea;
 }
 
-QPixmap LVGLTextArea::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLTextArea::icon() const
 {
 	return QIcon();

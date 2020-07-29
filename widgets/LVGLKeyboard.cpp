@@ -69,11 +69,6 @@ LVGLWidget::Type LVGLKeyboard::type() const
 	return Keyboard;
 }
 
-QPixmap LVGLKeyboard::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLKeyboard::icon() const
 {
 	return QIcon();

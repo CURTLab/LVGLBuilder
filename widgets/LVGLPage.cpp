@@ -103,11 +103,6 @@ LVGLWidget::Type LVGLPage::type() const
 	return Page;
 }
 
-QPixmap LVGLPage::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLPage::icon() const
 {
 	return QIcon();

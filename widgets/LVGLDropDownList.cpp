@@ -112,11 +112,6 @@ LVGLWidget::Type LVGLDropDownList::type() const
 	return DropDownList;
 }
 
-QPixmap LVGLDropDownList::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLDropDownList::icon() const
 {
 	return QIcon();

@@ -4,6 +4,7 @@
 #include "LVGLStyle.h"
 #include "LVGLProperty.h"
 #include <QJsonObject>
+#include <QPixmap>
 
 class LVGLWidget
 {
@@ -50,7 +51,6 @@ public:
 	virtual QString name() const = 0;
 	virtual QString className() const = 0;
 	virtual Type type() const = 0;
-	virtual QPixmap preview() const = 0;
 	virtual QIcon icon() const = 0;
 	virtual QSize minimumSize() const = 0;
 	virtual lv_obj_t *newObject(lv_obj_t *parent) const = 0;
@@ -58,6 +58,9 @@ public:
 	virtual lv_style_t *style(lv_obj_t *obj, int type) const = 0;
 	virtual void setStyle(lv_obj_t *obj, int type, lv_style_t *style) const = 0;
 	virtual lv_style_t *defaultStyle(int type) const = 0;
+
+	virtual QPixmap preview() const;
+	void setPreview(QPixmap preview);
 
 	QVector<LVGLProperty*> properties() const;
 	QList<LVGLProperty*> specialProperties() const;
@@ -72,6 +75,7 @@ protected:
 	LVGLProperty *m_geometryProp;
 	QVector<LVGLProperty*> m_properties;
 	QList<LVGL::StyleParts> m_editableStyles;
+	QPixmap m_preview;
 
 };
 Q_DECLARE_METATYPE(LVGLWidget*)

@@ -203,7 +203,7 @@
       </widget>
      </item>
      <item row="1" column="0">
-      <widget class="QListView" name="list_widgets">
+      <widget class="LVGLWidgetListView" name="list_widgets">
        <property name="font">
         <font>
          <pointsize>12</pointsize>
@@ -464,6 +464,11 @@
    <class>LVGLSimulator</class>
    <extends>QGraphicsView</extends>
    <header>LVGLSimulator.h</header>
+  </customwidget>
+  <customwidget>
+   <class>LVGLWidgetListView</class>
+   <extends>QListView</extends>
+   <header>LVGLWidgetListView.h</header>
   </customwidget>
  </customwidgets>
  <resources>

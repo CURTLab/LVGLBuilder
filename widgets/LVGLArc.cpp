@@ -57,11 +57,6 @@ LVGLWidget::Type LVGLArc::type() const
 	return Arc;
 }
 
-QPixmap LVGLArc::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLArc::icon() const
 {
 	return QIcon();

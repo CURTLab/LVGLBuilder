@@ -132,11 +132,6 @@ LVGLWidget::Type LVGLColorPicker::type() const
 	return ColorPicker;
 }
 
-QPixmap LVGLColorPicker::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLColorPicker::icon() const
 {
 	return QIcon();

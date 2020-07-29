@@ -196,11 +196,6 @@ LVGLWidget::Type LVGLTabview::type() const
 	return TabView;
 }
 
-QPixmap LVGLTabview::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLTabview::icon() const
 {
 	return QIcon();

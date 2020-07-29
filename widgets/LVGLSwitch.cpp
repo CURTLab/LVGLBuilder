@@ -44,11 +44,6 @@ LVGLWidget::Type LVGLSwitch::type() const
 	return Switch;
 }
 
-QPixmap LVGLSwitch::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLSwitch::icon() const
 {
 	return QIcon();

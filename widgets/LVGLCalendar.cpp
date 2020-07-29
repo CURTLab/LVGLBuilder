@@ -55,11 +55,6 @@ LVGLWidget::Type LVGLCalendar::type() const
 	return Calendar;
 }
 
-QPixmap LVGLCalendar::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLCalendar::icon() const
 {
 	return QIcon();

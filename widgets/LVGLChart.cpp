@@ -183,11 +183,6 @@ LVGLWidget::Type LVGLChart::type() const
 	return Chart;
 }
 
-QPixmap LVGLChart::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLChart::icon() const
 {
 	return QIcon();

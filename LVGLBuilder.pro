@@ -63,6 +63,7 @@ SOURCES += \
     LVGLProject.cpp \
     LVGLStyle.cpp \
     LVGLStyleModel.cpp \
+    LVGLWidgetListView.cpp \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
     properties/LVGLPropertyDate.cpp \
@@ -123,6 +124,7 @@ HEADERS += \
     LVGLProject.h \
     LVGLStyle.h \
     LVGLStyleModel.h \
+    LVGLWidgetListView.h \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
     properties/LVGLPropertyDate.h \

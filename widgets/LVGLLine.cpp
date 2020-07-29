@@ -82,11 +82,6 @@ LVGLWidget::Type LVGLLine::type() const
 	return Line;
 }
 
-QPixmap LVGLLine::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLLine::icon() const
 {
 	return QIcon();

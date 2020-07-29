@@ -76,11 +76,6 @@ LVGLWidget::Type LVGLSlider::type() const
 	return Slider;
 }
 
-QPixmap LVGLSlider::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLSlider::icon() const
 {
 	return QIcon();

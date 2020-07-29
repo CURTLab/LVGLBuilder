@@ -77,11 +77,6 @@ LVGLWidget::Type LVGLGauge::type() const
 	return Gauge;
 }
 
-QPixmap LVGLGauge::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLGauge::icon() const
 {
 	return QIcon();

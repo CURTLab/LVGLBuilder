@@ -51,11 +51,6 @@ LVGLWidget::Type LVGLContainer::type() const
 	return Container;
 }
 
-QPixmap LVGLContainer::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLContainer::icon() const
 {
 	return QIcon();

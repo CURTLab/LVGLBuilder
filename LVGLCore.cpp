@@ -113,6 +113,8 @@ void LVGLCore::init(int width, int height)
 	addWidget(new LVGLTabview);
 	addWidget(new LVGLTextArea);
 
+	setScreenColor(Qt::white);
+	changeResolution({width, height});
 	//lv_log_register_print_cb(logCb);
 }
 
@@ -146,8 +148,6 @@ QPixmap LVGLCore::framebuffer() const
 
 QPixmap LVGLCore::grab(const QRect &region) const
 {
-	QPixmap ret(region.size());
-	QPainter painter(&ret);
 	const auto stride = lv_disp_get_hor_res(lv_disp_get_default());
 
 	QImage img(region.width(), region.height(), QImage::Format_ARGB32);
@@ -156,7 +156,13 @@ QPixmap LVGLCore::grab(const QRect &region) const
 				 &m_dispFrameBuf[static_cast<size_t>(y * stride + region.x())],
 				static_cast<size_t>(stride) * 4
 				);
-	return QPixmap::fromImage(img);
+	QPixmap pix;
+	try {
+		pix = QPixmap::fromImage(img);
+	} catch (std::exception const &ex) {
+		qDebug()<<ex.what();
+	}
+	return pix;
 }
 
 int LVGLCore::width() const
@@ -753,8 +759,31 @@ void LVGLCore::tick()
 	lv_tick_inc(20);
 }
 
-void LVGLCore::addWidget(const LVGLWidget *w)
+void LVGLCore::addWidget(LVGLWidget *w)
 {
+	auto size = w->minimumSize();
+	if (size.width() > width() || size.height() > height())
+		changeResolution({std::max(size.width(), width()),
+								std::max(size.height(), height())});
+
+	setScreenColor(Qt::transparent);
+	lv_obj_t *o = w->newObject(lv_scr_act());
+	lv_obj_set_pos(o, 0, 0);
+	lv_obj_set_size(o, w->minimumSize().width(),
+							 w->minimumSize().height());
+
+	lv_scr_load(lv_scr_act());
+	lv_tick_inc(LV_DISP_DEF_REFR_PERIOD);
+	lv_task_handler();
+
+	w->setPreview(/*grab(QRect(QPoint(0, 0), size))*/framebuffer().copy({{0, 0}, size}));
+	w->preview().save(w->name() + ".png");
+	lv_obj_del(o);
+
+	lv_scr_load(lv_scr_act());
+	lv_tick_inc(LV_DISP_DEF_REFR_PERIOD);
+	lv_task_handler();
+
 	m_widgets.insert(w->className(), w);
 }
 

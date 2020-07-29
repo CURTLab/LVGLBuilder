@@ -45,11 +45,6 @@ LVGLWidget::Type LVGLLED::type() const
 	return LED;
 }
 
-QPixmap LVGLLED::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLLED::icon() const
 {
 	return QIcon();

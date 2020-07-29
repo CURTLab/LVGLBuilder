@@ -54,11 +54,6 @@ LVGLWidget::Type LVGLBar::type() const
 	return Bar;
 }
 
-QPixmap LVGLBar::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLBar::icon() const
 {
 	return QIcon();

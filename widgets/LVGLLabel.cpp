@@ -124,11 +124,6 @@ LVGLWidget::Type LVGLLabel::type() const
 	return Label;
 }
 
-QPixmap LVGLLabel::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLLabel::icon() const
 {
 	return QIcon();

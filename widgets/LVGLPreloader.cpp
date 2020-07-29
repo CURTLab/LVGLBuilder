@@ -80,11 +80,6 @@ LVGLWidget::Type LVGLPreloader::type() const
 	return Preloader;
 }
 
-QPixmap LVGLPreloader::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLPreloader::icon() const
 {
 	return QIcon();

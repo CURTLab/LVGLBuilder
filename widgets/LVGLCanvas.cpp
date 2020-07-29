@@ -24,11 +24,6 @@ LVGLWidget::Type LVGLCanvas::type() const
 	return Canvas;
 }
 
-QPixmap LVGLCanvas::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLCanvas::icon() const
 {
 	return QIcon();

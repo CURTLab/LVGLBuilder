@@ -63,11 +63,6 @@ LVGLWidget::Type LVGLCheckBox::type() const
 	return CheckBox;
 }
 
-QPixmap LVGLCheckBox::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLCheckBox::icon() const
 {
 	return QIcon();

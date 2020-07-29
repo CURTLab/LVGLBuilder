@@ -29,6 +29,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
 	m_ui->setupUi(this);
 
+	lvgl.init(320, 480);
+
 	m_zoom_slider->setRange(-2, 2);
 	connect(m_zoom_slider, &QSlider::valueChanged, m_ui->simulation, &LVGLSimulator::setZoomLevel);
 	m_ui->statusbar->addPermanentWidget(m_zoom_slider);

@@ -11,7 +11,6 @@ public:
 	virtual QString name() const;
 	virtual QString className() const;
 	virtual Type type() const;
-	virtual QPixmap preview() const;
 	virtual QIcon icon() const;
 	virtual QSize minimumSize() const;
 	virtual lv_obj_t *newObject(lv_obj_t *parent) const;

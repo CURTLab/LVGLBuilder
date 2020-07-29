@@ -95,11 +95,6 @@ LVGLWidget::Type LVGLButton::type() const
 	return Button;
 }
 
-QPixmap LVGLButton::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLButton::icon() const
 {
 	return QIcon();

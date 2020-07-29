@@ -133,11 +133,6 @@ LVGLWidget::Type LVGLImage::type() const
 	return Image;
 }
 
-QPixmap LVGLImage::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLImage::icon() const
 {
 	return QIcon();

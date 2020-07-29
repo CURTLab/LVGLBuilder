@@ -78,11 +78,6 @@ LVGLWidget::Type LVGLList::type() const
 	return List;
 }
 
-QPixmap LVGLList::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLList::icon() const
 {
 	return QIcon();

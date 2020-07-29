@@ -48,6 +48,16 @@ LVGLWidget::~LVGLWidget()
 	qDeleteAll(m_properties);
 }
 
+QPixmap LVGLWidget::preview() const
+{
+	return m_preview;
+}
+
+void LVGLWidget::setPreview(QPixmap preview)
+{
+	m_preview = preview;
+}
+
 QVector<LVGLProperty *> LVGLWidget::properties() const
 {
 	return m_properties;

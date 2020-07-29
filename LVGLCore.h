@@ -98,7 +98,7 @@ private slots:
 	void tick();
 
 private:
-	void addWidget(const LVGLWidget *w);
+	void addWidget(LVGLWidget *w);
 	void flushHandler(lv_disp_drv_t *disp, const lv_area_t *area, lv_color_t *color_p);
 	bool inputHandler(lv_indev_drv_t *indev_driver, lv_indev_data_t *data);
 

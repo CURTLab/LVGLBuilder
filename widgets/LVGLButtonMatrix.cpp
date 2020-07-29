@@ -30,11 +30,6 @@ LVGLWidget::Type LVGLButtonMatrix::type() const
 	return ButtonMatrix;
 }
 
-QPixmap LVGLButtonMatrix::preview() const
-{
-	return QPixmap();
-}
-
 QIcon LVGLButtonMatrix::icon() const
 {
 	return QIcon();
