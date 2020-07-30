@@ -1,5 +1,5 @@
 # LVGLBuilder
- GUI Builder for littlevgl written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
+ GUI Builder for littlevgl release 6.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
 
 ![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview.png)
 
@@ -49,14 +49,14 @@ Building with QtCreator:
 - [ ] Default values for widgets
 - [ ] Support multiple screens
 - [ ] Dialog for changing keyboard layout
-- [ ] Preview for widgets
+- [x] Preview for widgets
 - [ ] Icons for widgets
 
 ### Wishlist
 - [ ] C code driver generator (Touch, Buttons, Displays for µC)
 
 ### ToDo Widgets
-- [ ] Arc (lv_arc)
+- [x] Arc (lv_arc)
 - [x] Bar (lv_bar)
 - [x] Button (lv_btn)
 - [ ] Button matrix (lv_btnm)
@@ -75,8 +75,8 @@ Building with QtCreator:
 - [x] LED (lv_led)
 - [x] Line (lv_line)
 - [x] List (lv_list)
-- [ ] Line meter (lv_lmeter)
-- [ ] Message box (lv_mbox)
+- [x] Line meter (lv_lmeter)
+- [x] Message box (lv_mbox)
 - [ ] Page (lv_page)
 - [x] Preloader (lv_preload)
 - [ ] Roller (lv_roller)
