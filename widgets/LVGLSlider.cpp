@@ -36,25 +36,11 @@ protected:
 	}
 };
 
-class LVGLPropertySliderKnob : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Knob inside"; }
-
-	QStringList function(LVGLObject *obj) const {
-		return QStringList() << QString("lv_slider_set_knob_in(%1, %2);").arg(obj->codeName()).arg(QVariant(get(obj)).toString());
-	}
-
-protected:
-	bool get(LVGLObject *obj) const { return lv_slider_get_knob_in(obj->obj()); }
-	void set(LVGLObject *obj, bool boolean) { lv_slider_set_knob_in(obj->obj(), boolean); }
-};
-
 LVGLSlider::LVGLSlider()
 {
 	m_properties << new LVGLPropertySliderValue;
 	m_properties << new LVGLPropertySliderRange;
-	m_properties << new LVGLPropertySliderKnob;
+	m_properties << new LVGLPropertyBool("Knob inside", "lv_slider_set_knob_in", lv_slider_set_knob_in, lv_slider_get_knob_in);
 
 	m_editableStyles << LVGL::Body; // LV_SLIDER_STYLE_BG
 	m_editableStyles << LVGL::Body; // LV_SLIDER_STYLE_INDIC

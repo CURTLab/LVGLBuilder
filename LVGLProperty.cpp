@@ -280,39 +280,6 @@ void LVGLPropertyEnum::updateWidget(LVGLObject *obj)
 	set(obj, m_widget->currentIndex());
 }
 
-QWidget *LVGLPropertyBool::editor(QWidget *parent)
-{
-	m_widget = new QComboBox(parent);
-	m_widget->addItems(QStringList() << "true" << "false");
-	return m_widget;
-}
-
-void LVGLPropertyBool::updateEditor(LVGLObject *obj)
-{
-	m_widget->setCurrentIndex(get(obj) ? 0 : 1);
-}
-
-void LVGLPropertyBool::updateWidget(LVGLObject *obj)
-{
-	set(obj, m_widget->currentIndex() == 0);
-}
-
-QWidget *LVGLPropertyString::editor(QWidget *parent)
-{
-	m_widget = new QLineEdit(parent);
-	return m_widget;
-}
-
-void LVGLPropertyString::updateEditor(LVGLObject *obj)
-{
-	m_widget->setText(get(obj));
-}
-
-void LVGLPropertyString::updateWidget(LVGLObject *obj)
-{
-	set(obj, m_widget->text());
-}
-
 LVGLPropertyCoord::LVGLPropertyCoord(LVGLProperty *parent)
 	: LVGLPropertyType(parent)
 	, m_max(std::min(lvgl.width(), lvgl.height()))
@@ -447,6 +414,8 @@ QString LVGLPropertyValT<T>::name() const
 template<class T>
 QStringList LVGLPropertyValT<T>::function(LVGLObject *obj) const
 {
+	if (m_functionName.isEmpty())
+		return {};
 	return { QString("%1(%2, %3);").arg(m_functionName).arg(obj->codeName()).arg(get(obj)) };
 }
 
@@ -470,4 +439,117 @@ LVGLPropertyValInt16::LVGLPropertyValInt16(int16_t min, int16_t max, QString tit
 LVGLPropertyValUInt16::LVGLPropertyValUInt16(uint16_t min, uint16_t max, QString title, QString functionName, std::function<void (lv_obj_t *, uint16_t)> setter, std::function<uint16_t (lv_obj_t *)> getter, LVGLProperty *parent)
 	: LVGLPropertyValT<uint16_t>(min, max, title, functionName, setter, getter, parent)
 {
+}
+
+LVGLPropertyBool::LVGLPropertyBool(QString title, QString functionName, LVGLProperty *parent)
+	: LVGLPropertyType<bool>(parent)
+	, m_widget(nullptr)
+	, m_title(title)
+	, m_functionName(functionName)
+{
+}
+
+LVGLPropertyBool::LVGLPropertyBool(QString title, QString functionName, std::function<void (lv_obj_t *, bool)> setter, std::function<bool (lv_obj_t *)> getter, LVGLProperty *parent)
+	: LVGLPropertyType<bool>(parent)
+	, m_widget(nullptr)
+	, m_title(title)
+	, m_functionName(functionName)
+	, m_setter(setter)
+	, m_getter(getter)
+{
+}
+
+QWidget *LVGLPropertyBool::editor(QWidget *parent)
+{
+	m_widget = new QComboBox(parent);
+	m_widget->addItems(QStringList() << "true" << "false");
+	return m_widget;
+}
+
+void LVGLPropertyBool::updateEditor(LVGLObject *obj)
+{
+	m_widget->setCurrentIndex(get(obj) ? 0 : 1);
+}
+
+void LVGLPropertyBool::updateWidget(LVGLObject *obj)
+{
+	set(obj, m_widget->currentIndex() == 0);
+}
+
+QString LVGLPropertyBool::name() const
+{
+	return m_title;
+}
+
+QStringList LVGLPropertyBool::function(LVGLObject *obj) const
+{
+	if (m_functionName.isEmpty())
+		return {};
+	return { QString("%1(%2, %3);").arg(m_functionName).arg(obj->codeName()).arg(get(obj) ? "true" : "false") };
+}
+
+bool LVGLPropertyBool::get(LVGLObject *obj) const
+{
+	return m_getter(obj->obj());
+}
+
+void LVGLPropertyBool::set(LVGLObject *obj, bool boolean)
+{
+	m_setter(obj->obj(), boolean);
+}
+
+LVGLPropertyString::LVGLPropertyString(QString title, QString functionName, LVGLProperty *parent)
+	: LVGLPropertyType<QString>(parent)
+	, m_widget(nullptr)
+	, m_title(title)
+	, m_functionName(functionName)
+{
+}
+
+LVGLPropertyString::LVGLPropertyString(QString title, QString functionName, std::function<void (lv_obj_t *, const char *)> setter, std::function<const char*(lv_obj_t *)> getter, LVGLProperty *parent)
+	: LVGLPropertyType<QString>(parent)
+	, m_widget(nullptr)
+	, m_title(title)
+	, m_functionName(functionName)
+	, m_setter(setter)
+	, m_getter(getter)
+{
+}
+
+QString LVGLPropertyString::name() const
+{
+	return m_title;
+}
+
+QWidget *LVGLPropertyString::editor(QWidget *parent)
+{
+	m_widget = new QLineEdit(parent);
+	return m_widget;
+}
+
+void LVGLPropertyString::updateEditor(LVGLObject *obj)
+{
+	m_widget->setText(get(obj));
+}
+
+void LVGLPropertyString::updateWidget(LVGLObject *obj)
+{
+	set(obj, m_widget->text());
+}
+
+QStringList LVGLPropertyString::function(LVGLObject *obj) const
+{
+	if (m_functionName.isEmpty())
+		return {};
+	return { QString("%1(%2, \"%3\");").arg(m_functionName).arg(obj->codeName()).arg(get(obj)) };
+}
+
+QString LVGLPropertyString::get(LVGLObject *obj) const
+{
+	return m_getter(obj->obj());
+}
+
+void LVGLPropertyString::set(LVGLObject *obj, QString string)
+{
+	m_setter(obj->obj(), qPrintable(string));
 }

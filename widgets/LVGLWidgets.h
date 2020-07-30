@@ -22,6 +22,7 @@
 #include "LVGLLED.h"
 #include "LVGLLine.h"
 #include "LVGLLineMeter.h"
+#include "LVGLMessageBox.h"
 #include "LVGLList.h"
 #include "LVGLPage.h"
 #include "LVGLPreloader.h"

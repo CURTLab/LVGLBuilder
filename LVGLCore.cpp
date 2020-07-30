@@ -106,6 +106,7 @@ void LVGLCore::init(int width, int height)
 	addWidget(new LVGLLED);
 	addWidget(new LVGLLine);
 	addWidget(new LVGLLineMeter);
+	addWidget(new LVGLMessageBox);
 	addWidget(new LVGLList);
 	addWidget(new LVGLPage);
 	addWidget(new LVGLPreloader);

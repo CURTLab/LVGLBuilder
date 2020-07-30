@@ -476,7 +476,7 @@ void lv_label_set_text_sel_end(lv_obj_t * label, uint16_t index)
  * @param label pointer to a label object
  * @return the text of the label
  */
-char * lv_label_get_text(const lv_obj_t * label)
+const char * lv_label_get_text(const lv_obj_t * label)
 {
     LV_ASSERT_OBJ(label, LV_OBJX_NAME);
 

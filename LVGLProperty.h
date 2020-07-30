@@ -81,30 +81,6 @@ protected:
 	virtual void set(LVGLObject *obj, int value) = 0;
 };
 
-class LVGLPropertyBool : public LVGLPropertyType<bool>
-{
-public:
-	QWidget *editor(QWidget *parent) override;
-	void updateEditor(LVGLObject *obj) override;
-	void updateWidget(LVGLObject *obj) override;
-
-protected:
-	QComboBox *m_widget;
-
-};
-
-class LVGLPropertyString : public LVGLPropertyType<QString>
-{
-public:
-	QWidget *editor(QWidget *parent) override;
-	void updateEditor(LVGLObject *obj) override;
-	void updateWidget(LVGLObject *obj) override;
-
-protected:
-	QLineEdit *m_widget;
-
-};
-
 class LVGLPropertyCoord : public LVGLPropertyType<lv_coord_t>
 {
 public:
@@ -207,6 +183,64 @@ public:
 								 QString functionName, std::function<void(lv_obj_t*, uint16_t)> setter,
 								 std::function<uint16_t(lv_obj_t*)> getter,
 								 LVGLProperty *parent = nullptr);
+};
+
+class LVGLPropertyBool : public LVGLPropertyType<bool>
+{
+public:
+	LVGLPropertyBool(QString title = "", QString functionName = "", LVGLProperty *parent = nullptr);
+	LVGLPropertyBool(QString title,
+						  QString functionName, std::function<void(lv_obj_t*, bool)> setter,
+						  std::function<bool(lv_obj_t*)> getter,
+						  LVGLProperty *parent = nullptr);
+
+	QWidget *editor(QWidget *parent) override;
+	void updateEditor(LVGLObject *obj) override;
+	void updateWidget(LVGLObject *obj) override;
+
+	QString name() const override;
+
+	QStringList function(LVGLObject *obj) const override;
+
+protected:
+	bool get(LVGLObject *obj) const override;
+	void set(LVGLObject *obj, bool boolean) override;
+
+	QComboBox *m_widget;
+	QString m_title;
+	QString m_functionName;
+	std::function<void(lv_obj_t*, bool)> m_setter;
+	std::function<bool(lv_obj_t*)> m_getter;
+
+};
+
+class LVGLPropertyString : public LVGLPropertyType<QString>
+{
+public:
+	LVGLPropertyString(QString title = "", QString functionName = "", LVGLProperty *parent = nullptr);
+	LVGLPropertyString(QString title,
+						  QString functionName, std::function<void(lv_obj_t*, const char*)> setter,
+						  std::function<const char*(lv_obj_t*)> getter,
+						  LVGLProperty *parent = nullptr);
+
+	QString name() const override;
+
+	QWidget *editor(QWidget *parent) override;
+	void updateEditor(LVGLObject *obj) override;
+	void updateWidget(LVGLObject *obj) override;
+
+	QStringList function(LVGLObject *obj) const override;
+
+protected:
+	QString get(LVGLObject *obj) const override;
+	void set(LVGLObject *obj, QString string) override;
+
+	QLineEdit *m_widget;
+	QString m_title;
+	QString m_functionName;
+	std::function<void(lv_obj_t*, const char*)> m_setter;
+	std::function<const char*(lv_obj_t*)> m_getter;
+
 };
 
 #endif // LVGLPROPERTY_H

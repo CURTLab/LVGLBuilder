@@ -4,16 +4,6 @@
 
 #include "LVGLObject.h"
 
-class LVGLPropertyCBText : public LVGLPropertyString
-{
-public:
-	QString name() const { return "Text"; }
-
-protected:
-	QString get(LVGLObject *obj) const { return lv_cb_get_text(obj->obj()); }
-	void set(LVGLObject *obj, QString string) { lv_cb_set_text(obj->obj(), qPrintable(string)); }
-};
-
 class LVGLPropertyCBChecked : public LVGLPropertyBool
 {
 public:
@@ -36,7 +26,7 @@ protected:
 
 LVGLCheckBox::LVGLCheckBox()
 {
-	m_properties << new LVGLPropertyCBText;
+	m_properties << new LVGLPropertyString("Text", "lv_cb_set_text", lv_cb_set_text, lv_cb_get_text);
 	m_properties << new LVGLPropertyCBChecked;
 	m_properties << new LVGLPropertyCBInactive;
 

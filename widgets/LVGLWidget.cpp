@@ -6,31 +6,31 @@
 class LVGLPropertyName : public LVGLPropertyString
 {
 public:
-	QString name() const { return "Name"; }
+	inline QString name() const override { return "Name"; }
 
 protected:
-	QString get(LVGLObject *obj) const { return obj->name(); }
-	void set(LVGLObject *obj, QString string) { obj->setName(string); }
+	inline QString get(LVGLObject *obj) const override { return obj->name(); }
+	inline void set(LVGLObject *obj, QString string) override { obj->setName(string); }
 };
 
 class LVGLPropertyAccessible : public LVGLPropertyBool
 {
 public:
-	QString name() const { return "Accessible"; }
+	inline LVGLPropertyAccessible() : LVGLPropertyBool("Accessible") {}
 
 protected:
-	bool get(LVGLObject *obj) const { return obj->isAccessible(); }
-	void set(LVGLObject *obj, bool statue) { obj->setAccessible(statue); }
+	inline bool get(LVGLObject *obj) const override { return obj->isAccessible(); }
+	inline void set(LVGLObject *obj, bool statue) override { obj->setAccessible(statue); }
 };
 
 class LVGLPropertyLocked : public LVGLPropertyBool
 {
 public:
-	QString name() const { return "Locked"; }
+	inline LVGLPropertyLocked() : LVGLPropertyBool("Locked") {}
 
 protected:
-	bool get(LVGLObject *obj) const { return obj->isLocked(); }
-	void set(LVGLObject *obj, bool statue) { obj->setLocked(statue); }
+	inline bool get(LVGLObject *obj) const override { return obj->isLocked(); }
+	inline void set(LVGLObject *obj, bool statue) override { obj->setLocked(statue); }
 };
 
 

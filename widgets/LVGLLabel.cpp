@@ -4,21 +4,6 @@
 #include "LVGLObject.h"
 #include "properties/LVGLPropertyColor.h"
 
-class LVGLPropertyLabelText : public LVGLPropertyString
-{
-public:
-	QString name() const { return "Text"; }
-
-	QStringList function(LVGLObject *obj) const {
-		return QStringList() << QString("lv_label_set_text(%1, \"%2\");").arg(obj->codeName()).arg(get(obj));
-	}
-
-protected:
-	QString get(LVGLObject *obj) const { return lv_label_get_text(obj->obj()); }
-	void set(LVGLObject *obj, QString string) { lv_label_set_text(obj->obj(), qPrintable(string)); }
-
-};
-
 class LVGLPropertyLabelAlign : public LVGLPropertyEnum
 {
 public:
@@ -100,7 +85,7 @@ LVGLLabel::LVGLLabel()
 	m_properties << new LVGLPropertyLabelLongMode;
 	m_properties << new LVGLPropertyLabelRecolor;
 	m_properties << new LVGLPropertyLabelBodyDraw;
-	m_properties << new LVGLPropertyLabelText;
+	m_properties << new LVGLPropertyString("Text", "lv_label_set_text", lv_label_set_text, lv_label_get_text);
 
 	// swap geometry in order to stop autosize
 	const int index = m_properties.indexOf(m_geometryProp);

@@ -56,24 +56,10 @@ protected:
 	QStringList m_values;
 };
 
-class LVGLPropertyImgBtnToggle : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Toggle"; }
-
-	QStringList function(LVGLObject *obj) const {
-		return QStringList() << QString("lv_imgbtn_set_toggle(%1, %2);").arg(obj->codeName()).arg(QVariant(get(obj)).toString());
-	}
-
-protected:
-	bool get(LVGLObject *obj) const { return lv_imgbtn_get_toggle(obj->obj()); }
-	void set(LVGLObject *obj, bool statue) { lv_imgbtn_set_toggle(obj->obj(), statue); }
-};
-
 LVGLImageButton::LVGLImageButton()
 {
 	m_properties << new LVGLPropertyImgBtnState;
-	m_properties << new LVGLPropertyImgBtnToggle;
+	m_properties << new LVGLPropertyBool("Toggle", "lv_imgbtn_set_toggle", lv_imgbtn_set_toggle, lv_imgbtn_get_toggle);
 	m_properties << new LVGLPropertyImgBtnSrc(LV_IMGBTN_STYLE_REL);
 	m_properties << new LVGLPropertyImgBtnSrc(LV_IMGBTN_STYLE_PR);
 	m_properties << new LVGLPropertyImgBtnSrc(LV_IMGBTN_STYLE_TGL_REL);

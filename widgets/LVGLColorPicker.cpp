@@ -72,26 +72,6 @@ protected:
 	void set(LVGLObject *obj, int index) { lv_cpicker_set_color_mode(obj->obj(), index & 0xff); }
 };
 
-class LVGLPropertyCPickerIndicator : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Indicator Colored"; }
-
-protected:
-	bool get(LVGLObject *obj) const { return lv_cpicker_get_indic_colored(obj->obj()); }
-	void set(LVGLObject *obj, bool boolean) { lv_cpicker_set_indic_colored(obj->obj(), boolean); }
-};
-
-class LVGLPropertyCPickerPreview : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Preview"; }
-
-protected:
-	bool get(LVGLObject *obj) const { return lv_cpicker_get_preview(obj->obj()); }
-	void set(LVGLObject *obj, bool boolean) { lv_cpicker_set_preview(obj->obj(), boolean); }
-};
-
 class LVGLPropertyCPickerColor : public LVGLPropertyColor
 {
 public:
@@ -109,8 +89,8 @@ LVGLColorPicker::LVGLColorPicker()
 	m_properties << new LVGLPropertyCPickerSaturation;
 	m_properties << new LVGLPropertyCPickerValue;
 	m_properties << new LVGLPropertyCPickerMode;
-	m_properties << new LVGLPropertyCPickerIndicator;
-	m_properties << new LVGLPropertyCPickerPreview;
+	m_properties << new LVGLPropertyBool("Indicator Colored", "lv_cpicker_set_indic_colored", lv_cpicker_set_indic_colored, lv_cpicker_get_indic_colored);
+	m_properties << new LVGLPropertyBool("Preview", "lv_cpicker_set_preview", lv_cpicker_set_preview, lv_cpicker_get_preview);
 	m_properties << new LVGLPropertyCPickerColor;
 
 	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Line); // LV_CPICKER_STYLE_MAIN

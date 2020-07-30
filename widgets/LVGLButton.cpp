@@ -52,25 +52,10 @@ protected:
 	QStringList m_values;
 };
 
-class LVGLPropertyButtonToggle : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Toggle"; }
-
-	QStringList function(LVGLObject *obj) const {
-		if (!get(obj)) return QStringList();
-		return QStringList() << QString("lv_btn_set_toggle(%1, %2);").arg(obj->codeName()).arg(QVariant(get(obj)).toString());
-	}
-
-protected:
-	bool get(LVGLObject *obj) const { return lv_btn_get_toggle(obj->obj()); }
-	void set(LVGLObject *obj, bool statue) { lv_btn_set_toggle(obj->obj(), statue); }
-};
-
 LVGLButton::LVGLButton()
 {
 	m_properties << new LVGLPropertyButtonState;
-	m_properties << new LVGLPropertyButtonToggle;
+	m_properties << new LVGLPropertyBool("Toggle", "lv_btn_set_toggle", lv_btn_set_toggle, lv_btn_get_toggle);
 	m_properties << new LVGLPropertyButtonLayout;
 
 	m_editableStyles << LVGL::Body; // LV_BTN_STYLE_REL

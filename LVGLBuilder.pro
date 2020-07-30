@@ -102,6 +102,7 @@ SOURCES += \
     widgets/LVGLLine.cpp \
     widgets/LVGLLineMeter.cpp \
     widgets/LVGLList.cpp \
+    widgets/LVGLMessageBox.cpp \
     widgets/LVGLPage.cpp \
     widgets/LVGLPreloader.cpp \
     widgets/LVGLSlider.cpp \
@@ -165,6 +166,7 @@ HEADERS += \
     widgets/LVGLLine.h \
     widgets/LVGLLineMeter.h \
     widgets/LVGLList.h \
+    widgets/LVGLMessageBox.h \
     widgets/LVGLPage.h \
     widgets/LVGLPreloader.h \
     widgets/LVGLSlider.h \
