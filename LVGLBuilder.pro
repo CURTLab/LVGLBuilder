@@ -67,6 +67,7 @@ SOURCES += \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
     properties/LVGLPropertyDate.cpp \
+    properties/LVGLPropertyDateList.cpp \
     properties/LVGLPropertyFlags.cpp \
     properties/LVGLPropertyGeometry.cpp \
     properties/LVGLPropertyImage.cpp \
@@ -131,6 +132,7 @@ HEADERS += \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
     properties/LVGLPropertyDate.h \
+    properties/LVGLPropertyDateList.h \
     properties/LVGLPropertyFlags.h \
     properties/LVGLPropertyGeometry.h \
     properties/LVGLPropertyImage.h \

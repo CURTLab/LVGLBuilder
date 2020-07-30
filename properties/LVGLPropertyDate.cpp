@@ -2,8 +2,18 @@
 
 #include <QDateTimeEdit>
 
-LVGLPropertyDate::LVGLPropertyDate(LVGLProperty *parent)
+#include "LVGLObject.h"
+
+LVGLPropertyDate::LVGLPropertyDate(QString title, QString functionName,
+											  std::function<void(lv_obj_t*, lv_calendar_date_t*)> setter,
+											  std::function<lv_calendar_date_t*(lv_obj_t*)> getter,
+											  LVGLProperty *parent)
 	: LVGLProperty(parent)
+	, m_widget(nullptr)
+	, m_title(title)
+	, m_functionName(functionName)
+	, m_setter(setter)
+	, m_getter(getter)
 {
 }
 
@@ -50,4 +60,31 @@ void LVGLPropertyDate::setValue(LVGLObject *obj, QVariant value)
 	d.month = static_cast<int8_t>(date.month());
 	d.year = static_cast<uint16_t>(date.year());
 	set(obj, &d);
+}
+
+QString LVGLPropertyDate::name() const
+{
+	return m_title;
+}
+
+QStringList LVGLPropertyDate::function(LVGLObject *obj) const
+{
+	if (m_functionName.isEmpty())
+		return {};
+	QStringList ret;
+	lv_calendar_date_t *data = get(obj);
+	const QString varName = QString("date_%1_%2").arg(m_title.toLower().replace(' ', '_')).arg(obj->codeName());
+	ret << QString("lv_calendar_date_t %1 = {.year = %2, .month = %3, .day = %4};").arg(varName).arg(data->year).arg(data->month).arg(data->day);
+	ret << QString("%1(%2, &%3);").arg(m_functionName).arg(obj->codeName()).arg(varName);
+	return ret;
+}
+
+lv_calendar_date_t *LVGLPropertyDate::get(LVGLObject *obj) const
+{
+	return m_getter(obj->obj());
+}
+
+void LVGLPropertyDate::set(LVGLObject *obj, lv_calendar_date_t *value)
+{
+	m_setter(obj->obj(), value);
 }

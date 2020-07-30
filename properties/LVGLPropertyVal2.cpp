@@ -6,7 +6,6 @@
 template<class T>
 LVGLPropertyVal2<T>::LVGLPropertyVal::LVGLPropertyVal(size_t idx, T min, T max, QString value, std::function<T (lv_obj_t *)> getter, LVGLPropertyVal2 *parent)
 	: LVGLPropertyType<T>(parent)
-	, m_p(parent)
 	, m_idx(idx)
 	, m_widget(nullptr)
 	, m_min(min), m_max(max), m_value(value)
@@ -49,10 +48,11 @@ T LVGLPropertyVal2<T>::LVGLPropertyVal::get(LVGLObject *obj) const
 template<class T>
 void LVGLPropertyVal2<T>::LVGLPropertyVal::set(LVGLObject *obj, T value)
 {
+	LVGLPropertyVal2<T> *d = reinterpret_cast<LVGLPropertyVal2<T> *>(const_cast<LVGLProperty*>(m_parent));
 	if (m_idx == 0)
-		m_p->m_setter(obj->obj(), value, m_p->m_item2->get(obj));
+		d->m_setter(obj->obj(), value, d->m_item2->get(obj));
 	else if (m_idx == 1)
-		m_p->m_setter(obj->obj(), m_p->m_item1->get(obj), value);
+		d->m_setter(obj->obj(), d->m_item1->get(obj), value);
 }
 
 template<class T>

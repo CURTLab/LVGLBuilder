@@ -3,41 +3,13 @@
 #include <QIcon>
 
 #include "LVGLObject.h"
-
-class LVGLPropertyAngleStart : public LVGLPropertyInt
-{
-public:
-	inline LVGLPropertyAngleStart() : LVGLPropertyInt(0, 360) {}
-	inline QString name() const override { return "Start angle"; }
-
-	inline int get(LVGLObject *obj) const override { return lv_arc_get_angle_start(obj->obj()); }
-	inline void set(LVGLObject *obj, int value) override {
-		lv_obj_t *o = obj->obj();
-		lv_arc_set_angles(o, static_cast<uint16_t>(value),
-									lv_arc_get_angle_end(o));
-	}
-
-};
-
-class LVGLPropertyAngleEnd : public LVGLPropertyInt
-{
-public:
-	inline LVGLPropertyAngleEnd() : LVGLPropertyInt(0, 360) {}
-	inline QString name() const override { return "End angle"; }
-
-	inline int get(LVGLObject *obj) const override { return lv_arc_get_angle_end(obj->obj()); }
-	inline void set(LVGLObject *obj, int value) override {
-		lv_obj_t *o = obj->obj();
-		lv_arc_set_angles(o, lv_arc_get_angle_start(o),
-									static_cast<uint16_t>(value));
-	}
-
-};
+#include "properties/LVGLPropertyVal2.h"
 
 LVGLArc::LVGLArc()
 {
-	m_properties << new LVGLPropertyAngleStart;
-	m_properties << new LVGLPropertyAngleEnd;
+	m_properties << new LVGLPropertyVal2UInt16(0, 360, "Start", lv_arc_get_angle_start,
+															 0, 360, "End", lv_arc_get_angle_end,
+															 "lv_arc_set_angles", lv_arc_set_angles, "Angles");
 
 	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Line); // LV_GAUGE_STYLE_MAIN
 }

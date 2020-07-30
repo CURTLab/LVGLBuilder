@@ -189,8 +189,8 @@ class LVGLPropertyBool : public LVGLPropertyType<bool>
 {
 public:
 	LVGLPropertyBool(QString title = "", QString functionName = "", LVGLProperty *parent = nullptr);
-	LVGLPropertyBool(QString title,
-						  QString functionName, std::function<void(lv_obj_t*, bool)> setter,
+	LVGLPropertyBool(QString title, QString functionName,
+						  std::function<void(lv_obj_t*, bool)> setter,
 						  std::function<bool(lv_obj_t*)> getter,
 						  LVGLProperty *parent = nullptr);
 
@@ -218,10 +218,10 @@ class LVGLPropertyString : public LVGLPropertyType<QString>
 {
 public:
 	LVGLPropertyString(QString title = "", QString functionName = "", LVGLProperty *parent = nullptr);
-	LVGLPropertyString(QString title,
-						  QString functionName, std::function<void(lv_obj_t*, const char*)> setter,
-						  std::function<const char*(lv_obj_t*)> getter,
-						  LVGLProperty *parent = nullptr);
+	LVGLPropertyString(QString title, QString functionName,
+							 std::function<void(lv_obj_t*, const char*)> setter,
+							 std::function<const char*(lv_obj_t*)> getter,
+							 LVGLProperty *parent = nullptr);
 
 	QString name() const override;
 

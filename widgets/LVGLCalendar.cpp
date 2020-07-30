@@ -3,32 +3,158 @@
 #include <QIcon>
 #include "LVGLObject.h"
 #include "properties/LVGLPropertyDate.h"
+#include "properties/LVGLPropertyDateList.h"
+#include "properties/LVGLPropertyTextList.h"
 
-class LVGLPropertyCalendarCurrentDate : public LVGLPropertyDate
+class LVGLPropertyDayNames : public LVGLPropertyTextList
 {
 public:
-	QString name() const { return "Current date"; }
+	inline LVGLPropertyDayNames() : LVGLPropertyTextList(false) {}
+	inline ~LVGLPropertyDayNames() {
+		for (const char **d:m_garbageCollector) {
+			for (uint8_t i = 0; i < N; ++i)
+				delete [] d[i];
+			delete [] d;
+		}
+	}
+
+	inline QString name() const override { return "Day names"; }
+
+	inline QStringList function(LVGLObject *obj) const override
+	{
+		const QStringList list = get(obj);
+		if (!isDifferent(list))
+			return {};
+		QStringList days;
+		for (uint8_t i = 0; i < N; ++i)
+			days << "\"" + list[i] + "\"";
+		QStringList ret;
+		const QString varName = QString("days_%1").arg(obj->codeName());
+		ret << QString("static const char *%1[7] = {%2};").arg(varName).arg(days.join(", "));
+		ret << QString("lv_calendar_set_day_names(%1, %2);").arg(obj->codeName()).arg(varName);
+		return ret;
+	}
 
 protected:
-	lv_calendar_date_t *get(LVGLObject *obj) const { return lv_calendar_get_today_date(obj->obj()); }
-	void set(LVGLObject *obj, lv_calendar_date_t *date) { lv_calendar_set_today_date(obj->obj(), date); }
+	QList<const char **> m_garbageCollector;
+	static constexpr uint8_t N = 7;
+	static constexpr const char *DEFAULT[N] = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
+
+	inline bool isDifferent(QStringList list) const {
+		for (uint8_t i = 0; i < N; ++i) {
+			if (list[i] != QString(DEFAULT[i]))
+				return true;
+		}
+		return false;
+	}
+
+	inline QStringList get(LVGLObject *obj) const override {
+		const char **names = lv_calendar_get_day_names(obj->obj());
+		if (names == nullptr)
+			return {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
+		QStringList ret;
+		for (uint8_t i = 0; i < N; ++i)
+			ret << QString(names[i]);
+		return ret;
+	}
+
+	inline void set(LVGLObject *obj, QStringList list) override {
+		if (!isDifferent(list))
+			return;
+		const char **data = new const char *[N];
+		for (uint8_t i = 0; i < N; ++i) {
+			const QString &s = list[i];
+			char *string = new char[s.size()+1];
+			memcpy(string, qPrintable(s), s.size());
+			string[s.size()] = '\0';
+			data[i] = string;
+		}
+		m_garbageCollector << data;
+		lv_calendar_set_day_names(obj->obj(), data);
+	}
+
 };
 
-class LVGLPropertyCalendarShownDate : public LVGLPropertyDate
+class LVGLPropertyMonthNames : public LVGLPropertyTextList
 {
 public:
-	QString name() const { return "Shown date"; }
+	inline LVGLPropertyMonthNames() : LVGLPropertyTextList(false) {}
+	inline ~LVGLPropertyMonthNames() {
+		for (const char **d:m_garbageCollector) {
+			for (uint8_t i = 0; i < N; ++i)
+				delete [] d[i];
+			delete [] d;
+		}
+	}
+
+	inline QString name() const override { return "Month names"; }
+
+	inline QStringList function(LVGLObject *obj) const override
+	{
+		const QStringList list = get(obj);
+		if (!isDifferent(list))
+			return {};
+		QStringList months;
+		for (uint8_t i = 0; i < N; ++i)
+			months << "\"" + list[i] + "\"";
+		QStringList ret;
+		const QString varName = QString("months_%1").arg(obj->codeName());
+		ret << QString("static const char *%1[12] = {%2};").arg(varName).arg(months.join(", "));
+		ret << QString("lv_calendar_set_month_names(%1, %2);").arg(obj->codeName()).arg(varName);
+		return ret;
+	}
 
 protected:
-	lv_calendar_date_t *get(LVGLObject *obj) const { return lv_calendar_get_showed_date(obj->obj()); }
-	void set(LVGLObject *obj, lv_calendar_date_t *date) { lv_calendar_set_showed_date(obj->obj(), date); }
-};
+	QList<const char **> m_garbageCollector;
+	static constexpr uint8_t N = 12;
+	static constexpr const char *DEFAULT[N] = {"January", "February", "March",     "April",   "May",      "June",
+															 "July",    "August",   "September", "October", "November", "December"};
 
+	inline bool isDifferent(QStringList list) const {
+		for (uint8_t i = 0; i < N; ++i) {
+			if (list[i] != QString(DEFAULT[i]))
+				return true;
+		}
+		return false;
+	}
+
+	inline QStringList get(LVGLObject *obj) const override {
+		const char **names = lv_calendar_get_month_names(obj->obj());
+		if (names == nullptr)
+			return {"January", "February", "March",     "April",   "May",      "June",
+					  "July",    "August",   "September", "October", "November", "December"};
+		QStringList ret;
+		for (uint8_t i = 0; i < N; ++i)
+			ret << QString(names[i]);
+		return ret;
+	}
+
+	inline void set(LVGLObject *obj, QStringList list) override {
+		if (!isDifferent(list))
+			return;
+		const char **data = new const char *[N];
+		for (uint8_t i = 0; i < N; ++i) {
+			const QString &s = list[i];
+			char *string = new char[s.size()+1];
+			memcpy(string, qPrintable(s), s.size());
+			string[s.size()] = '\0';
+			data[i] = string;
+		}
+		m_garbageCollector << data;
+		lv_calendar_set_month_names(obj->obj(), data);
+	}
+
+};
 
 LVGLCalendar::LVGLCalendar()
 {
-	m_properties << new LVGLPropertyCalendarCurrentDate;
-	m_properties << new LVGLPropertyCalendarShownDate;
+	m_properties << new LVGLPropertyDate("Current date", "lv_calendar_set_today_date", lv_calendar_set_today_date, lv_calendar_get_today_date);
+	m_properties << new LVGLPropertyDate("Shown date", "lv_calendar_set_showed_date", lv_calendar_set_showed_date, lv_calendar_get_showed_date);
+	m_properties << new LVGLPropertyDateList("Highlighted dates", "lv_calendar_set_highlighted_dates",
+														  lv_calendar_set_highlighted_dates, lv_calendar_get_highlighted_dates, lv_calendar_get_highlighted_dates_num);
+
+	m_properties << new LVGLPropertyDayNames;
+	m_properties << new LVGLPropertyMonthNames;
 
 	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_CALENDAR_STYLE_BG
 	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_CALENDAR_STYLE_HEADER

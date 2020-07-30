@@ -30,7 +30,6 @@ private:
 		T get(LVGLObject *obj) const override;
 		void set(LVGLObject *obj, T value) override;
 	protected:
-		LVGLPropertyVal2 *m_p;
 		size_t m_idx;
 		QSpinBox *m_widget;
 		T m_min;

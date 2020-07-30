@@ -6,7 +6,7 @@
 class LVGLPropertyTextList : public LVGLProperty
 {
 public:
-	LVGLPropertyTextList(LVGLProperty *parent = nullptr);
+	LVGLPropertyTextList(bool canInsert = true, LVGLProperty *parent = nullptr);
 
 	bool hasEditor() const;
 	QWidget *editor(QWidget *parent);
@@ -20,6 +20,7 @@ public:
 
 protected:
 	class LVGLPropertyTextListDialog *m_widget;
+	bool m_canInsert;
 
 	virtual QStringList get(LVGLObject *obj) const = 0;
 	virtual void set(LVGLObject *obj, QStringList list) = 0;

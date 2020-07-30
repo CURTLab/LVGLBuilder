@@ -233,7 +233,7 @@ bool LVGLProject::exportCode(const QString &path) const
 	stream << "\n";
 	for (LVGLObject *o:objects) {
 		QString ifdef = o->widgetClass()->className().toUpper().insert(3, "USE_");
-		stream << "#ifdef " << ifdef <<"\n";
+		stream << "#if " << ifdef <<"\n";
 
 		for (int i = 0; i < o->widgetClass()->styles().size(); ++i) {
 			if (o->hasCustomStyle(i)) {

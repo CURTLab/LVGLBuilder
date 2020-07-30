@@ -15,15 +15,15 @@ public:
 	QJsonValue toJson(LVGLObject *obj) const override;
 
 protected:
-	LVGLProperty *m_min;
-	LVGLProperty *m_max;
+	friend class LVGLPropertyMin;
+	friend class LVGLPropertyMax;
+
+	LVGLPropertyMin *m_min;
+	LVGLPropertyMax *m_max;
 
 	virtual int getMin(LVGLObject *obj) const = 0;
 	virtual int getMax(LVGLObject *obj) const = 0;
 	virtual void set(LVGLObject *obj, int min, int max) = 0;
-
-	friend class LVGLPropertyMin;
-	friend class LVGLPropertyMax;
 
 };
 

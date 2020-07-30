@@ -83,8 +83,14 @@ QVariant LVGLPropertyModel::data(const QModelIndex &index, int role) const
 		if (index.column() == 0) {
 			return prop->name();
 		} else if (index.column() == 1) {
-			auto p = prop->value(m_obj);
-			return p;
+			QVariant val = prop->value(m_obj);
+			if (val.type() != QVariant::List)
+			return val;
+
+			QStringList ret;
+			for (const QVariant &v:val.toList())
+				ret << v.toString();
+			return "[" + ret.join(",") + "]";
 		}
 	} else if (role == (Qt::UserRole + 1)) {
 		LVGLObjectCast cast;

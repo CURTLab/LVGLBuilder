@@ -10,33 +10,36 @@
 class LVGLPropertyTextListDialog : public QDialog
 {
 public:
-	inline LVGLPropertyTextListDialog(QWidget *parent = nullptr) : QDialog(parent)
+	inline LVGLPropertyTextListDialog(bool canInsert, QWidget *parent = nullptr) : QDialog(parent)
 	{
 		m_list = new QListWidget(this);
 
 		QDialogButtonBox *box = new QDialogButtonBox(QDialogButtonBox::Ok |
 																	QDialogButtonBox::Cancel);
-		QToolButton *add = new QToolButton();
-		add->setIcon(QIcon(":/icons/add.png"));
-		add->setIconSize(QSize(24, 24));
-		QToolButton *rem = new QToolButton();
-		rem->setIcon(QIcon(":/icons/delete.png"));
-		rem->setIconSize(QSize(24, 24));
-
-		box->addButton(add, QDialogButtonBox::ApplyRole);
-		box->addButton(rem, QDialogButtonBox::ApplyRole);
-
 		connect(box, &QDialogButtonBox::accepted, this, &QDialog::accept);
 		connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
-		connect(box, &QDialogButtonBox::clicked, [this,add,rem](QAbstractButton *b) {
-			if (b == add) {
-				QListWidgetItem *item = new QListWidgetItem("New text");
-				item->setFlags(item->flags() | Qt::ItemIsEditable);
-				m_list->addItem(item);
-			} else if (b == rem) {
-				m_list->takeItem(m_list->currentRow());
-			}
-		});
+
+		if (canInsert) {
+			QToolButton *add = new QToolButton();
+			add->setIcon(QIcon(":/icons/add.png"));
+			add->setIconSize(QSize(24, 24));
+			QToolButton *rem = new QToolButton();
+			rem->setIcon(QIcon(":/icons/delete.png"));
+			rem->setIconSize(QSize(24, 24));
+
+			box->addButton(add, QDialogButtonBox::ApplyRole);
+			box->addButton(rem, QDialogButtonBox::ApplyRole);
+
+			connect(box, &QDialogButtonBox::clicked, [this,add,rem](QAbstractButton *b) {
+				if (b == add) {
+					QListWidgetItem *item = new QListWidgetItem("New text");
+					item->setFlags(item->flags() | Qt::ItemIsEditable);
+					m_list->addItem(item);
+				} else if (b == rem) {
+					m_list->takeItem(m_list->currentRow());
+				}
+			});
+		}
 
 		QVBoxLayout *layout1 = new QVBoxLayout;
 		layout1->addWidget(m_list);
@@ -63,12 +66,13 @@ public:
 	}
 
 private:
-	class QListWidget *m_list;
+	QListWidget *m_list;
 
 };
 
-LVGLPropertyTextList::LVGLPropertyTextList(LVGLProperty *parent)
+LVGLPropertyTextList::LVGLPropertyTextList(bool canInsert, LVGLProperty *parent)
 	: LVGLProperty(parent)
+	, m_canInsert(false)
 {
 }
 
@@ -79,7 +83,7 @@ bool LVGLPropertyTextList::hasEditor() const
 
 QWidget *LVGLPropertyTextList::editor(QWidget *parent)
 {
-	m_widget = new LVGLPropertyTextListDialog(parent);
+	m_widget = new LVGLPropertyTextListDialog(m_canInsert, parent);
 	return m_widget;
 }
 

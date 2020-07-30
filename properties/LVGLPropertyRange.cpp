@@ -8,7 +8,6 @@ public:
 	inline LVGLPropertyMin(LVGLProperty *p) : LVGLPropertyInt(INT16_MIN, INT16_MAX, p) {}
 	inline QString name() const override { return "Min"; }
 
-protected:
 	inline int get(LVGLObject *obj) const override {
 		const LVGLPropertyRange *r = reinterpret_cast<const LVGLPropertyRange *>(m_parent);
 		return r->getMin(obj);
@@ -26,7 +25,6 @@ public:
 	inline LVGLPropertyMax(LVGLProperty *p) : LVGLPropertyInt(INT16_MIN, INT16_MAX, p) {}
 	inline QString name() const override { return "Max"; }
 
-protected:
 	inline int get(LVGLObject *obj) const override {
 		const LVGLPropertyRange *r = reinterpret_cast<const LVGLPropertyRange *>(m_parent);
 		return r->getMax(obj);
@@ -53,8 +51,7 @@ QString LVGLPropertyRange::name() const
 
 QVariant LVGLPropertyRange::value(LVGLObject *obj) const
 {
-	return QString("[%1,%2]").arg(m_min->value(obj).toInt())
-			.arg(m_max->value(obj).toInt());
+	return QString("[%1,%2]").arg(getMin(obj)).arg(getMax(obj));
 }
 
 void LVGLPropertyRange::setValue(LVGLObject *obj, QVariant value)
