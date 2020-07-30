@@ -22,6 +22,8 @@ public:
 		LV_COLOR_32Bit
 	};
 
+	bool isValid();
+
 	lv_img_dsc_t *img_des();
 
 	QString name() const;

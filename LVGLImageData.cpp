@@ -48,11 +48,19 @@ LVGLImageData::LVGLImageData(QImage image, QString fileName, QString name)
 }
 
 LVGLImageData::LVGLImageData(QString fileName, QString name)
-	: m_name(name)
+	: m_size(0)
+	, m_data(nullptr)
+	, m_name(name)
 	, m_fileName(fileName)
 	, m_colorFormat(LV_COLOR_24Bit)
 {
+	if (!QFile(fileName).exists())
+		return;
+
+	memset(&m_img_dsc, 0, sizeof(m_img_dsc));
+
 	QImage img = QImage(fileName).convertToFormat(QImage::Format_ARGB32);
+
 	m_size = static_cast<uint32_t>(img.width()*img.height()*4);
 	m_data = new uint8_t[m_size];
 
@@ -94,6 +102,11 @@ LVGLImageData::LVGLImageData(QJsonObject object)
 LVGLImageData::~LVGLImageData()
 {
 	delete [] m_data;
+}
+
+bool LVGLImageData::isValid()
+{
+	return (m_size > 0) && (m_data != nullptr) && (m_img_dsc.header.w > 0) && (m_img_dsc.header.h > 0);
 }
 
 lv_img_dsc_t *LVGLImageData::img_des()

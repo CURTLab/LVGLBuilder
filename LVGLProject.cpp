@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QJsonArray>
+#include <QMessageBox>
 
 #include "LVGLCore.h"
 #include "LVGLObject.h"
@@ -60,7 +61,12 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 	QJsonArray imageArr = doc["images"].toArray();
 	for (int i = 0; i < imageArr.size(); ++i) {
 		LVGLImageData *img = new LVGLImageData(imageArr[i].toObject());
-		lvgl.addImage(img);
+		if (img->isValid()) {
+			lvgl.addImage(img);
+		} else {
+			QMessageBox::critical(nullptr, "Error", QString("Could not load image (%1)").arg(img->fileName()));
+			delete img;
+		}
 	}
 
 	QJsonArray fontArr = doc["fonts"].toArray();
