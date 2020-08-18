@@ -72,7 +72,8 @@ private:
 
 LVGLPropertyTextList::LVGLPropertyTextList(bool canInsert, LVGLProperty *parent)
 	: LVGLProperty(parent)
-	, m_canInsert(false)
+	, m_widget(nullptr)
+	, m_canInsert(canInsert)
 {
 }
 

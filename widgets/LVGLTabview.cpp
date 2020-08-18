@@ -32,10 +32,13 @@ protected:
 class LVGLPropertyTabs : public LVGLPropertyTextList
 {
 public:
-	QString name() const { return "Tabs"; }
+	inline LVGLPropertyTabs(LVGLProperty *parent = nullptr)
+		: LVGLPropertyTextList(true, parent) {}
+
+	inline QString name() const { return "Tabs"; }
 
 protected:
-	QStringList get(LVGLObject *obj) const {
+	inline QStringList get(LVGLObject *obj) const {
 		QStringList ret;
 		lv_tabview_ext_t * ext = reinterpret_cast<lv_tabview_ext_t*>(lv_obj_get_ext_attr(obj->obj()));
 		for (uint16_t i = 0; i < ext->tab_cnt; ++i)
@@ -43,7 +46,7 @@ protected:
 		return ret;
 	}
 
-	void set(LVGLObject *obj, QStringList list) {
+	inline void set(LVGLObject *obj, QStringList list) {
 		lv_tabview_ext_t * ext = reinterpret_cast<lv_tabview_ext_t*>(lv_obj_get_ext_attr(obj->obj()));
 		// rename
 		for (uint16_t i = 0; i < qMin(ext->tab_cnt, static_cast<uint16_t>(list.size())); ++i) {
