@@ -43,7 +43,7 @@ Building with QtCreator:
 - [x] Export C-project
 - [x] Change style of single widgets
 - [x] Support different display formats
-- [ ] Fix object inspector (insertion and deletion of widgets)
+- [x] Fix object inspector (insertion and deletion of widgets)
 - [ ] Fix absolute and relative positions of widgets
 - [ ] Undo and redo
 - [ ] Default values for widgets
