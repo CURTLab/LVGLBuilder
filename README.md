@@ -10,6 +10,7 @@
 
 Tested:
  * Windows 10 + MSVC 2017 + Qt 5.13.1
+ * Windows 10 + MSVC 2019 + Qt 5.15.1
  * Ubuntu 18.04.4 + Qt 5.14.2
 
 ### Build
