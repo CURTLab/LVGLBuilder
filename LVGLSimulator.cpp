@@ -20,6 +20,10 @@
 #include "LVGLCore.h"
 #include "properties/LVGLPropertyGeometry.h"
 #include "LVGLFontData.h"
+#include "LVGLItem.h"
+#include "LVGLObject.h"
+#include "LVGLProject.h"
+#include "LVGLObjectModel.h"
 
 #define IS_PAGE_OF_TABVIEW(o) ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && o->parent() && (o->parent()->widgetType() == LVGLWidget::Tabview))
 
@@ -83,6 +87,7 @@ LVGLSimulator::LVGLSimulator(QWidget *parent)
 	, m_selectedObject(nullptr)
 	, m_mouseEnabled(false)
 	, m_item(new LVGLItem)
+	, m_objectModel(nullptr)
 {
 	//setMinimumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
 	//setMaximumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
@@ -120,6 +125,9 @@ void LVGLSimulator::setSelectedObject(LVGLObject *obj)
 
 	m_selectedObject = obj;
 	m_item->setObject(obj);
+	if (m_objectModel)
+		m_objectModel->setCurrentObject(obj);
+
 	emit objectSelected(m_selectedObject);
 	update();
 }
@@ -280,16 +288,9 @@ void LVGLSimulator::dropEvent(QDropEvent *event)
 				pos.setY(lvgl.height() - size.height());
 			newObj->setGeometry(QRect(pos, size));
 		}
+
 		qDebug().noquote() << "Class:" << widgetClass->className() << "Id:" << newObj->name();
-
-		connect(newObj, &LVGLObject::positionChanged,
-				  m_item, &LVGLItem::updateGeometry
-				  );
-		lvgl.addObject(newObj);
-		setSelectedObject(newObj);
-		setFocus();
-
-		emit objectAdded(newObj);
+		addObject(newObj);
 	}
 }
 
@@ -348,6 +349,11 @@ QList<LVGLObject *> LVGLSimulator::objectsUnderCoords(QPoint pos, bool includeLo
 	return ret;
 }
 
+void LVGLSimulator::setObjectModel(LVGLObjectModel *objectModel)
+{
+	m_objectModel = objectModel;
+}
+
 LVGLItem *LVGLSimulator::item() const
 {
 	return m_item;
@@ -364,6 +370,41 @@ void LVGLSimulator::moveObject(LVGLObject *obj, int dx, int dy)
 			obj->setY(qBound(0, obj->y() + dy, lvgl.height() - obj->height() - 1));
 		}
 	}
+}
+
+void LVGLSimulator::addObject(LVGLObject *obj)
+{
+	connect(obj, &LVGLObject::positionChanged,
+			  m_item, &LVGLItem::updateGeometry
+			  );
+
+	// add to object viewer
+	if (m_objectModel)
+		m_objectModel->beginInsertObject(obj);
+
+	// add object to interal list
+	lvgl.addObject(obj);
+
+	if (m_objectModel)
+		m_objectModel->endInsertObject();
+
+	setSelectedObject(obj);
+	setFocus();
+
+	emit objectAdded(obj);
+}
+
+void LVGLSimulator::removeObject(LVGLObject *obj)
+{
+	setSelectedObject(nullptr);
+
+	if (m_objectModel)
+		m_objectModel->beginRemoveObject(obj);
+
+	lvgl.removeObject(obj);
+
+	if (m_objectModel)
+		m_objectModel->endRemoveObject();
 }
 
 LVGLObject *LVGLSimulator::selectedObject() const
@@ -388,8 +429,7 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event)
 	QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
 	if (keyEvent->key() == Qt::Key_Delete) {
 		LVGLObject *obj = m_sim->selectedObject();
-		m_sim->setSelectedObject(nullptr);
-		lvgl.removeObject(obj);
+		m_sim->removeObject(obj);
 		return true;
 	} else if (keyEvent->key() == Qt::Key_Left) {
 		m_sim->moveObject(m_sim->selectedObject(), -1, 0);
@@ -408,10 +448,8 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event)
 		if (obj) {
 			QJsonDocument doc(obj->toJson());
 			QApplication::clipboard()->setText(doc.toJson(QJsonDocument::Compact));
-			if (keyEvent->key() == Qt::Key_X) {
-				m_sim->setSelectedObject(nullptr);
-				lvgl.removeObject(obj);
-			}
+			if (keyEvent->key() == Qt::Key_X)
+				m_sim->removeObject(obj);
 		}
 		return true;
 	} else if (keyEvent->modifiers() & Qt::ControlModifier && keyEvent->key() == Qt::Key_V) {

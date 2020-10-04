@@ -5,9 +5,9 @@
 #include <QGraphicsScene>
 #include <QTextStream>
 
-#include "LVGLItem.h"
-#include "LVGLObject.h"
-#include "LVGLProject.h"
+class LVGLObject;
+class LVGLItem;
+class LVGLObjectModel;
 
 class LVGLScene : public QGraphicsScene
 {
@@ -44,6 +44,10 @@ public:
 	LVGLItem *item() const;
 
 	void moveObject(LVGLObject *obj, int dx, int dy);
+	void addObject(LVGLObject *obj);
+	void removeObject(LVGLObject *obj);
+
+	void setObjectModel(LVGLObjectModel *objectModel);
 
 public slots:
 	void setSelectedObject(LVGLObject *obj);
@@ -80,6 +84,7 @@ private:
 	LVGLObject *m_selectedObject;
 	bool m_mouseEnabled;
 	LVGLItem *m_item;
+	LVGLObjectModel *m_objectModel;
 
 };
 

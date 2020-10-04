@@ -8,8 +8,11 @@
 
 #include "widgets/LVGLWidgets.h"
 
-#include "LVGLDialog.h"
+#include "LVGLItem.h"
+#include "LVGLProject.h"
 #include "LVGLFontData.h"
+
+#include "LVGLDialog.h"
 #include "LVGLNewDialog.h"
 #include "LVGLFontDialog.h"
 
@@ -51,6 +54,9 @@ MainWindow::MainWindow(QWidget *parent)
 	connect(m_ui->action_new, &QAction::triggered,
 			  this, &MainWindow::openNewProject
 			  );
+	connect(m_ui->simulation, &LVGLSimulator::objectAdded,
+			  m_ui->object_tree, &QTreeView::expandAll
+			  );
 
 	m_ui->property_tree->setModel(m_propertyModel);
 	m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate);
@@ -64,6 +70,7 @@ MainWindow::MainWindow(QWidget *parent)
 					m_ui->simulation->setSelectedObject(m_objectModel->object(index));
 				});
 	m_ui->object_tree->setModel(m_objectModel);
+	m_ui->simulation->setObjectModel(m_objectModel);
 
 	LVGLWidgetModel *widgetModel = new LVGLWidgetModel;
 	QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);

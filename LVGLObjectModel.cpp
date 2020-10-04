@@ -85,41 +85,41 @@ QVariant LVGLObjectModel::data(const QModelIndex &index, int role) const
 		font.setBold(m_current == o);
 		return font;
 	}
-
-	// FIXME: Implement me!
 	return QVariant();
 }
 
-bool LVGLObjectModel::insertRows(int row, int count, const QModelIndex &parent)
+void LVGLObjectModel::beginInsertObject(LVGLObject *obj)
 {
-	beginInsertRows(parent, row, row + count - 1);
-	// FIXME: Implement me!
+	int row = 0;
+	LVGLObject *p = obj->parent();
+	QModelIndex parent;
+	if (p) {
+		row = p->childs().indexOf(obj);
+		parent = objIndex(p, 0);
+	}
+	beginInsertRows(parent, row, row);
+}
+
+void LVGLObjectModel::endInsertObject()
+{
 	endInsertRows();
-	return true;
 }
 
-bool LVGLObjectModel::insertColumns(int column, int count, const QModelIndex &parent)
+void LVGLObjectModel::beginRemoveObject(LVGLObject *obj)
 {
-	beginInsertColumns(parent, column, column + count - 1);
-	// FIXME: Implement me!
-	endInsertColumns();
-	return true;
+	int row = 0;
+	LVGLObject *p = obj->parent();
+	QModelIndex parent;
+	if (p) {
+		row = p->childs().indexOf(obj);
+		parent = objIndex(p, 0);
+	}
+	beginRemoveRows(parent, row, row);
 }
 
-bool LVGLObjectModel::removeRows(int row, int count, const QModelIndex &parent)
+void LVGLObjectModel::endRemoveObject()
 {
-	beginRemoveRows(parent, row, row + count - 1);
-	// FIXME: Implement me!
 	endRemoveRows();
-	return true;
-}
-
-bool LVGLObjectModel::removeColumns(int column, int count, const QModelIndex &parent)
-{
-	beginRemoveColumns(parent, column, column + count - 1);
-	// FIXME: Implement me!
-	endRemoveColumns();
-	return true;
 }
 
 LVGLObject *LVGLObjectModel::object(const QModelIndex &index) const
@@ -132,6 +132,7 @@ LVGLObject *LVGLObjectModel::object(const QModelIndex &index) const
 void LVGLObjectModel::setCurrentObject(LVGLObject *obj)
 {
 	LVGLObject *old = m_current;
+	m_current = obj;
 	emit dataChanged(objIndex(obj, 0), objIndex(obj, 1), QVector<int>({Qt::FontRole}));
 	emit dataChanged(objIndex(old, 0), objIndex(old, 1), QVector<int>({Qt::FontRole}));
 }

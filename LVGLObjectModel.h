@@ -25,13 +25,13 @@ public:
 
 	QVariant data(const QModelIndex &index, int role = Qt::DisplayRole) const override;
 
-	// Add data:
-	bool insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	bool insertColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
+	// Add object
+	void beginInsertObject(LVGLObject *obj);
+	void endInsertObject();
 
-	// Remove data:
-	bool removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) override;
-	bool removeColumns(int column, int count, const QModelIndex &parent = QModelIndex()) override;
+	// Remove object
+	void beginRemoveObject(LVGLObject *obj);
+	void endRemoveObject();
 
 	LVGLObject *object(const QModelIndex &index) const;
 
