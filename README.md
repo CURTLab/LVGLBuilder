@@ -51,6 +51,7 @@ Building with QtCreator:
 - [ ] Dialog for changing keyboard layout
 - [x] Preview for widgets
 - [ ] Icons for widgets
+- [ ] Support for lvgl 7.x
 
 ### Wishlist
 - [ ] C code driver generator (Touch, Buttons, Displays for µC)
