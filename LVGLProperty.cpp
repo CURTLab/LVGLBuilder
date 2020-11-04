@@ -232,7 +232,8 @@ void LVGLPropertyFont::updateWidget(LVGLObject *obj)
 
 template<class T>
 LVGLPropertyValT<T>::LVGLPropertyValT(T min, T max, QString title, QString functionName, std::function<void (lv_obj_t *, T)> setter, std::function<T (lv_obj_t *)> getter, LVGLProperty *parent)
-	: m_widget(nullptr)
+	: LVGLPropertyType<T>(parent)
+	, m_widget(nullptr)
 	, m_min(min), m_max(max), m_title(title)
 	, m_functionName(functionName), m_setter(setter)
 	, m_getter(getter)

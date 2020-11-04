@@ -48,7 +48,7 @@ T LVGLPropertyVal2<T>::LVGLPropertyVal::get(LVGLObject *obj) const
 template<class T>
 void LVGLPropertyVal2<T>::LVGLPropertyVal::set(LVGLObject *obj, T value)
 {
-	LVGLPropertyVal2<T> *d = reinterpret_cast<LVGLPropertyVal2<T> *>(const_cast<LVGLProperty*>(m_parent));
+	LVGLPropertyVal2<T> *d = reinterpret_cast<LVGLPropertyVal2<T> *>(m_parent);
 	if (m_idx == 0)
 		d->m_setter(obj->obj(), value, d->m_item2->get(obj));
 	else if (m_idx == 1)

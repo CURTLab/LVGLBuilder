@@ -39,7 +39,7 @@ public:
 	virtual QStringList function(LVGLObject *obj) const;
 
 protected:
-	const LVGLProperty *m_parent;
+	LVGLProperty *m_parent;
 	QList<const LVGLProperty*> m_childs;
 
 };
