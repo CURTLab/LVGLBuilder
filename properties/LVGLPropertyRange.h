@@ -3,6 +3,10 @@
 
 #include "LVGLProperty.h"
 
+// forward declaration
+class LVGLPropertyMin;
+class LVGLPropertyMax;
+
 class LVGLPropertyRange : public LVGLProperty
 {
 public:
