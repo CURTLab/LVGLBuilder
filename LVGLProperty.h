@@ -158,8 +158,8 @@ protected:
 	virtual void set(LVGLObject *obj, T value) override;
 
 	QSpinBox *m_widget;
-	int16_t m_min;
-	int16_t m_max;
+	T m_min;
+	T m_max;
 	QString m_title;
 	QString m_functionName;
 	std::function<void(lv_obj_t*, T)> m_setter;

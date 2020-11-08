@@ -3,7 +3,7 @@
 #include <QIcon>
 #include "LVGLObject.h"
 #include "properties/LVGLPropertyScale.h"
-#include "properties/LVGLPropertyRange.h"
+#include "properties/LVGLPropertyVal2.h"
 
 class LVGLPropertyGaugeCriticalValue : public LVGLPropertyInt
 {
@@ -19,21 +19,6 @@ public:
 protected:
 	inline int get(LVGLObject *obj) const override { return lv_gauge_get_critical_value(obj->obj()); }
 	inline void set(LVGLObject *obj, int value) override { lv_gauge_set_critical_value(obj->obj(), static_cast<int16_t>(value)); }
-};
-
-class LVGLPropertyGaugeRange : public LVGLPropertyRange
-{
-public:
-	inline QStringList function(LVGLObject *obj) const override {
-		return { QString("lv_gauge_set_range(%1, %2, %3);").arg(obj->codeName()).arg(getMin(obj)).arg(getMax(obj)) };
-	}
-
-protected:
-	inline int getMin(LVGLObject *obj) const override { return lv_gauge_get_min_value(obj->obj()); }
-	inline int getMax(LVGLObject *obj) const override { return lv_gauge_get_max_value(obj->obj()); }
-	inline void set(LVGLObject *obj, int min, int max) override {
-		lv_gauge_set_range(obj->obj(), static_cast<int16_t>(min), static_cast<int16_t>(max));
-	}
 };
 
 class LVGLPropertyGaugeVal : public LVGLPropertyInt
@@ -55,8 +40,10 @@ protected:
 LVGLGauge::LVGLGauge()
 {
 	m_properties << new LVGLPropertyScale;
-	m_properties << new LVGLPropertyGaugeCriticalValue;
-	m_properties << new LVGLPropertyGaugeRange;
+	m_properties << new LVGLPropertyValInt16(INT16_MIN, INT16_MAX, "Critical value", "lv_gauge_set_critical_value", lv_gauge_set_critical_value, lv_gauge_get_critical_value);
+	m_properties << new LVGLPropertyVal2Int16(INT16_MIN, INT16_MAX, "Min", lv_gauge_get_min_value,
+															INT16_MIN, INT16_MAX, "Max", lv_gauge_get_max_value,
+															"lv_gauge_set_range", lv_gauge_set_range, "Range");
 	m_properties << new LVGLPropertyGaugeVal;
 
 	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text | LVGL::Line); // LV_GAUGE_STYLE_MAIN

@@ -283,7 +283,11 @@ T LVGLPropertyValT<T>::get(LVGLObject *obj) const
 template<class T>
 void LVGLPropertyValT<T>::set(LVGLObject *obj, T value)
 {
-	m_setter(obj->obj(), value);
+	try {
+		m_setter(obj->obj(), value);
+	} catch (std::exception e) {
+		qDebug() << "Error:" << e.what();
+	}
 }
 
 LVGLPropertyValInt16::LVGLPropertyValInt16(int16_t min, int16_t max, QString title, QString functionName, std::function<void (lv_obj_t *, int16_t)> setter, std::function<int16_t (lv_obj_t *)> getter, LVGLProperty *parent)

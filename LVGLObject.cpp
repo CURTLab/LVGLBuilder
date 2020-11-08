@@ -564,6 +564,16 @@ LVGLObject *LVGLObject::parent() const
 	return m_parent;
 }
 
+LVGLObject::operator const lv_obj_t *() const noexcept
+{
+	return m_obj;
+}
+
+LVGLObject::operator lv_obj_t *() noexcept
+{
+	return m_obj;
+}
+
 bool LVGLObject::hasCustomStyle(int type) const
 {
 	return m_styles.contains(type);

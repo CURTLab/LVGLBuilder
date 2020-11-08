@@ -18,30 +18,18 @@ public:
 
 	QJsonValue toJson(LVGLObject *obj) const override;
 
-private:
-	class LVGLPropertyVal : public LVGLPropertyType<T>
-	{
-	public:
-		LVGLPropertyVal(size_t idx, T min, T max, QString value, std::function<T (lv_obj_t *)> getter, LVGLPropertyVal2 *parent);
-		QString name() const override;
-		QWidget *editor(QWidget *parent) override;
-		void updateEditor(LVGLObject *obj) override;
-		void updateWidget(LVGLObject *obj) override;
-		T get(LVGLObject *obj) const override;
-		void set(LVGLObject *obj, T value) override;
-	protected:
-		size_t m_idx;
-		QSpinBox *m_widget;
-		T m_min;
-		T m_max;
-		QString m_value;
-		std::function<T(lv_obj_t*)> m_getter;
-	};
+	virtual QStringList function(LVGLObject *obj) const override;
 
-	LVGLPropertyVal *m_item1;
-	LVGLPropertyVal *m_item2;
+private:
+	LVGLPropertyValT<T> *m_item1;
+	LVGLPropertyValT<T> *m_item2;
 	QString m_title;
+	QString m_functionName;
 	std::function<void (lv_obj_t *, T, T)> m_setter;
+	std::function<void (lv_obj_t *, T)> m_setter1;
+	std::function<void (lv_obj_t *, T)> m_setter2;
+	std::function<T (lv_obj_t *)> m_getter1;
+	std::function<T (lv_obj_t *)> m_getter2;
 
 };
 

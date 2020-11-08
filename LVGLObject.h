@@ -56,6 +56,9 @@ public:
 
 	LVGLObject *parent() const;
 
+	operator lv_obj_t *() noexcept;
+	operator const lv_obj_t *() const noexcept;
+
 	bool hasCustomStyle(int type) const;
 	lv_style_t *style(int type);
 	QString styleCodeName(int type) const;
