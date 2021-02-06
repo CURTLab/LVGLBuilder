@@ -9,8 +9,8 @@
 * LVGL 6.1 (included in source since a few adaptions are applied)
 
 Tested:
- * Windows 10 + MSVC 2017 + Qt 5.13.1
  * Windows 10 + MSVC 2019 + Qt 5.15.1
+ * Windows 10 + MinGW 8.1 + Qt 5.15.2
  * Ubuntu 18.04.4 + Qt 5.14.2
 
 ### Build
