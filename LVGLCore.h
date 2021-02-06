@@ -94,6 +94,9 @@ public:
 	QList<const LVGLWidget *> widgets() const;
 	const LVGLWidget *widget(const QString &name) const;
 
+	static const char * DEFAULT_DAYS[7];
+	static const char * DEFAULT_MONTHS[12];
+
 private slots:
 	void tick();
 

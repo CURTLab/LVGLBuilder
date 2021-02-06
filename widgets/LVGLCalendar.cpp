@@ -5,6 +5,7 @@
 #include "properties/LVGLPropertyDate.h"
 #include "properties/LVGLPropertyDateList.h"
 #include "properties/LVGLPropertyTextList.h"
+#include "LVGLCore.h"
 
 class LVGLPropertyDayNames : public LVGLPropertyTextList
 {
@@ -38,11 +39,10 @@ public:
 protected:
 	QList<const char **> m_garbageCollector;
 	static constexpr uint8_t N = 7;
-	static constexpr const char *DEFAULT[N] = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
 
 	inline bool isDifferent(QStringList list) const {
 		for (uint8_t i = 0; i < N; ++i) {
-			if (list[i] != QString(DEFAULT[i]))
+			if (list[i] != LVGLCore::DEFAULT_DAYS[i])
 				return true;
 		}
 		return false;
@@ -107,12 +107,9 @@ public:
 protected:
 	QList<const char **> m_garbageCollector;
 	static constexpr uint8_t N = 12;
-	static constexpr const char *DEFAULT[N] = {"January", "February", "March",     "April",   "May",      "June",
-															 "July",    "August",   "September", "October", "November", "December"};
-
 	inline bool isDifferent(QStringList list) const {
 		for (uint8_t i = 0; i < N; ++i) {
-			if (list[i] != QString(DEFAULT[i]))
+			if (list[i] != LVGLCore::DEFAULT_MONTHS[i])
 				return true;
 		}
 		return false;
@@ -121,8 +118,7 @@ protected:
 	inline QStringList get(LVGLObject *obj) const override {
 		const char **names = lv_calendar_get_month_names(obj->obj());
 		if (names == nullptr)
-			return {"January", "February", "March",     "April",   "May",      "June",
-					  "July",    "August",   "September", "October", "November", "December"};
+			names = LVGLCore::DEFAULT_MONTHS;
 		QStringList ret;
 		for (uint8_t i = 0; i < N; ++i)
 			ret << QString(names[i]);

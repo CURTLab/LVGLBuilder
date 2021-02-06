@@ -412,3 +412,7 @@ void LVGLPropertyString::set(LVGLObject *obj, QString string)
 {
 	m_setter(obj->obj(), qPrintable(string));
 }
+
+// needed declartion for gcc, code needs to be refactored
+template class LVGLPropertyValT<int16_t>;
+template class LVGLPropertyValT<uint16_t>;

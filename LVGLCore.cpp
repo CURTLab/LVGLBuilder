@@ -13,6 +13,10 @@
 
 LVGLCore lvgl(nullptr);
 
+const char * LVGLCore::DEFAULT_DAYS[7] = {"Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"};
+const char * LVGLCore::DEFAULT_MONTHS[12] = {"January", "February", "March",     "April",   "May",      "June",
+															"July",    "August",   "September", "October", "November", "December"};
+
 LVGLCore::LVGLCore(QObject *parent) : QObject(parent), m_defaultFont(nullptr)
 {
 	FT_Init_FreeType(&m_ft);
