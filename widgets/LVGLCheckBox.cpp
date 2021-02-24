@@ -4,104 +4,95 @@
 
 #include "LVGLObject.h"
 
-class LVGLPropertyCBChecked : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Checked"; }
+class LVGLPropertyCBChecked : public LVGLPropertyBool {
+ public:
+  QString name() const { return "Checked"; }
 
-protected:
-	bool get(LVGLObject *obj) const { return lv_cb_is_checked(obj->obj()); }
-	void set(LVGLObject *obj, bool boolean) { lv_cb_set_checked(obj->obj(), boolean); }
+ protected:
+  bool get(LVGLObject *obj) const { return lv_checkbox_is_checked(obj->obj()); }
+  void set(LVGLObject *obj, bool boolean) {
+    lv_checkbox_set_checked(obj->obj(), boolean);
+  }
 };
 
-class LVGLPropertyCBInactive : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Inactive"; }
+class LVGLPropertyCBInactive : public LVGLPropertyBool {
+ public:
+  QString name() const { return "Inactive"; }
 
-protected:
-	bool get(LVGLObject *obj) const { return lv_cb_is_inactive(obj->obj()); }
-	void set(LVGLObject *obj, bool boolean) { lv_btn_set_state(obj->obj(), boolean ? LV_BTN_STATE_INA : LV_BTN_STATE_TGL_REL); }
+ protected:
+  bool get(LVGLObject *obj) const {
+    return lv_checkbox_is_inactive(obj->obj());
+  }
+  void set(LVGLObject *obj, bool boolean) {
+    lv_btn_set_state(obj->obj(),
+                     boolean ? LV_BTN_STATE_DISABLED : LV_BTN_STATE_RELEASED);
+  }
 };
 
-LVGLCheckBox::LVGLCheckBox()
-{
-	m_properties << new LVGLPropertyString("Text", "lv_cb_set_text", lv_cb_set_text, lv_cb_get_text);
-	m_properties << new LVGLPropertyCBChecked;
-	m_properties << new LVGLPropertyCBInactive;
+LVGLCheckBox::LVGLCheckBox() {
+  initStateStyles();
+  m_parts << LV_CHECKBOX_PART_BG << LV_CHECKBOX_PART_BULLET;
 
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BG
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BOX_REL
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BOX_PR
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BOX_TGL_REL
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BOX_TGL_PR
-	m_editableStyles << LVGL::Body; // LV_CB_STYLE_BOX_INA
+  m_properties << new LVGLPropertyString(
+      "Text", "lv_cb_set_text", lv_checkbox_set_text, lv_checkbox_get_text);
+  m_properties << new LVGLPropertyCBChecked;
+  m_properties << new LVGLPropertyCBInactive;
+
+  m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BG
+  m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BULLET
 }
 
-QString LVGLCheckBox::name() const
-{
-	return "Check box";
+QString LVGLCheckBox::name() const { return "Check box"; }
+
+QString LVGLCheckBox::className() const { return "lv_cb"; }
+
+LVGLWidget::Type LVGLCheckBox::type() const { return CheckBox; }
+
+QIcon LVGLCheckBox::icon() const { return QIcon(); }
+
+lv_obj_t *LVGLCheckBox::newObject(lv_obj_t *parent) const {
+  lv_obj_t *obj = lv_checkbox_create(parent, nullptr);
+  return obj;
 }
 
-QString LVGLCheckBox::className() const
-{
-	return "lv_cb";
+QSize LVGLCheckBox::minimumSize() const { return QSize(100, 35); }
+
+QStringList LVGLCheckBox::styles() const {
+  return QStringList() << "CHECKBOX_PART_BG"
+                       << "CHECKBOX_PART_BULLET";
 }
 
-LVGLWidget::Type LVGLCheckBox::type() const
-{
-	return CheckBox;
+lv_style_t *LVGLCheckBox::style(lv_obj_t *obj, lv_obj_part_t part) const {
+  return lv_obj_get_local_style(obj, part);
 }
 
-QIcon LVGLCheckBox::icon() const
-{
-	return QIcon();
+void LVGLCheckBox::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const {
+  lv_obj_add_style(obj, LV_BTN_PART_MAIN, style);
 }
 
-lv_obj_t *LVGLCheckBox::newObject(lv_obj_t *parent) const
-{
-	lv_obj_t *obj = lv_cb_create(parent, nullptr);
-	return obj;
+void LVGLCheckBox::addStyle(lv_obj_t *obj, lv_style_t *style,
+                            lv_obj_part_t part) const {
+  lv_obj_add_style(obj, part, style);
 }
 
-QSize LVGLCheckBox::minimumSize() const
-{
-	return QSize(100, 35);
-}
-
-QStringList LVGLCheckBox::styles() const
-{
-	return QStringList() << "LV_CB_STYLE_BG"
-								<< "LV_CB_STYLE_BOX_REL"
-								<< "LV_CB_STYLE_BOX_PR"
-								<< "LV_CB_STYLE_BOX_TGL_REL"
-								<< "LV_CB_STYLE_BOX_TGL_PR"
-								<< "LV_CB_STYLE_BOX_INA";
-}
-
-lv_style_t *LVGLCheckBox::style(lv_obj_t *obj, int type) const
-{
-	return const_cast<lv_style_t*>(lv_cb_get_style(obj, type & 0xff));
-}
-
-void LVGLCheckBox::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const
-{
-	lv_cb_set_style(obj, static_cast<lv_cb_style_t>(type), style);
-}
-
-lv_style_t *LVGLCheckBox::defaultStyle(int type) const
-{
-	if (type == LV_CB_STYLE_BG)
-		return &lv_style_transp;
-	else if (type == LV_CB_STYLE_BOX_REL)
-		return &lv_style_btn_rel;
-	else if (type == LV_CB_STYLE_BOX_PR)
-		return &lv_style_btn_pr;
-	else if (type == LV_CB_STYLE_BOX_TGL_REL)
-		return &lv_style_btn_tgl_rel;
-	else if (type == LV_CB_STYLE_BOX_TGL_PR)
-		return &lv_style_btn_tgl_pr;
-	else if (type == LV_CB_STYLE_BOX_INA)
-		return &lv_style_btn_ina;
-	return nullptr;
+void LVGLCheckBox::initStateStyles() {
+  for (int i = 0; i < 2; ++i) {
+    lv_style_t *de = new lv_style_t;
+    lv_style_t *ch = new lv_style_t;
+    lv_style_t *fo = new lv_style_t;
+    lv_style_t *ed = new lv_style_t;
+    lv_style_t *ho = new lv_style_t;
+    lv_style_t *pr = new lv_style_t;
+    lv_style_t *di = new lv_style_t;
+    lv_style_init(de);
+    lv_style_init(ch);
+    lv_style_init(fo);
+    lv_style_init(ed);
+    lv_style_init(ho);
+    lv_style_init(pr);
+    lv_style_init(di);
+    QList<lv_style_t *> stateStyles;
+    stateStyles << de << ch << fo << ed << ho << pr << di;
+    m_partsStyles[i] = stateStyles;
+  }
 }

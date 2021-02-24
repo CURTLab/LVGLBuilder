@@ -1,8 +1,6 @@
 #ifndef LVGLWIDGETS_H
 #define LVGLWIDGETS_H
 
-#include "LVGLWidget.h"
-
 #include "LVGLArc.h"
 #include "LVGLBar.h"
 #include "LVGLButton.h"
@@ -14,22 +12,28 @@
 #include "LVGLColorPicker.h"
 #include "LVGLContainer.h"
 #include "LVGLDropDownList.h"
+#include "LVGLGauge.h"
 #include "LVGLImage.h"
 #include "LVGLImageButton.h"
-#include "LVGLImageSlider.h"
 #include "LVGLKeyboard.h"
-#include "LVGLLabel.h"
 #include "LVGLLED.h"
+#include "LVGLLabel.h"
 #include "LVGLLine.h"
 #include "LVGLLineMeter.h"
-#include "LVGLMessageBox.h"
 #include "LVGLList.h"
+#include "LVGLMessageBox.h"
+#include "LVGLObjectMask.h"
 #include "LVGLPage.h"
-#include "LVGLPreloader.h"
+#include "LVGLRoller.h"
 #include "LVGLSlider.h"
+#include "LVGLSpinbox.h"
+#include "LVGLSpinner.h"
 #include "LVGLSwitch.h"
+#include "LVGLTable.h"
 #include "LVGLTabview.h"
 #include "LVGLTextArea.h"
-#include "LVGLGauge.h"
+#include "LVGLTileView.h"
+#include "LVGLWidget.h"
+#include "LVGLWindow.h"
 
-#endif // LVGLWIDGETS_H
+#endif  // LVGLWIDGETS_H

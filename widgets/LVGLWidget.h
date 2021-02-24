@@ -1,84 +1,94 @@
 #ifndef LVGLWIDGET_H
 #define LVGLWIDGET_H
 
-#include "LVGLStyle.h"
-#include "LVGLProperty.h"
 #include <QJsonObject>
 #include <QPixmap>
 
-class LVGLWidget
-{
-public:
-	LVGLWidget();
-	virtual ~LVGLWidget();
+#include "LVGLProperty.h"
+#include "LVGLStyle.h"
 
-	enum Type {
-		Arc,
-		Bar,
-		Button,
-		ButtonMatrix,
-		Calendar,
-		Canvas,
-		CheckBox,
-		Chart,
-		Container,
-		ColorPicker,
-		DropDownList,
-		Gauge,
-		Image,
-		ImageButton,
-		ImageSlider,
-		ImageBar,
-		Keyboard,
-		Label,
-		LED,
-		Line,
-		List,
-		LineMeter,
-		MessageBox,
-		Page,
-		Preloader,
-		Roller,
-		Slider,
-		SpinBox,
-		Switch,
-		TabView,
-		TextArea,
-		TileView,
-		Window
-	};
+class LVGLWidget {
+ public:
+  LVGLWidget();
+  virtual ~LVGLWidget();
 
-	virtual QString name() const = 0;
-	virtual QString className() const = 0;
-	virtual Type type() const = 0;
-	virtual QIcon icon() const = 0;
-	virtual QSize minimumSize() const = 0;
-	virtual lv_obj_t *newObject(lv_obj_t *parent) const = 0;
-	virtual QStringList styles() const = 0;
-	virtual lv_style_t *style(lv_obj_t *obj, int type) const = 0;
-	virtual void setStyle(lv_obj_t *obj, int type, lv_style_t *style) const = 0;
-	virtual lv_style_t *defaultStyle(int type) const = 0;
+  enum Type {
+    Arc,
+    Bar,
+    Button,
+    ButtonMatrix,
+    Calendar,
+    Canvas,
+    CheckBox,
+    Chart,
+    Container,
+    ColorPicker,
+    DropDownList,
+    Gauge,
+    Image,
+    ImageButton,
+    ImageSlider,
+    ImageBar,
+    Keyboard,
+    Label,
+    LED,
+    Line,
+    List,
+    LineMeter,
+    MessageBox,
+    ObjectMask,
+    Page,
+    Roller,
+    Slider,
+    SpinBox,
+    Spinner,
+    Switch,
+    Table,
+    TabView,
+    TextArea,
+    TileView,
+    Window
+  };
 
-	virtual QPixmap preview() const;
-	void setPreview(QPixmap preview);
+  virtual QString name() const = 0;
+  virtual QString className() const = 0;
+  virtual Type type() const = 0;
+  virtual QIcon icon() const = 0;
+  virtual QSize minimumSize() const = 0;
+  virtual lv_obj_t *newObject(lv_obj_t *parent) const = 0;
+  virtual QStringList styles() const = 0;
+  virtual lv_style_t *style(lv_obj_t *obj,
+                            lv_obj_part_t part = LV_OBJ_PART_MAIN) const = 0;
+  virtual void setStyle(lv_obj_t *obj, int type, lv_style_t *style) const = 0;
+  virtual void addStyle(lv_obj_t *obj, lv_style_t *style,
+                        lv_obj_part_t part = LV_OBJ_PART_MAIN) const = 0;
+  virtual void initStateStyles() = 0;
 
-	QVector<LVGLProperty*> properties() const;
-	QList<LVGLProperty*> specialProperties() const;
+  virtual QPixmap preview() const;
+  void setPreview(QPixmap preview);
+  int getindexofparts(lv_obj_part_t part);
 
-	LVGLProperty *property(QString name) const;
+  QList<lv_obj_part_t> parts() const;
 
-	LVGL::StyleParts editableStyles(int type) const;
+  QVector<LVGLProperty *> properties() const;
+  QList<LVGLProperty *> specialProperties() const;
 
-	LVGLProperty *geometryProp() const;
+  LVGLProperty *property(QString name) const;
 
-protected:
-	LVGLProperty *m_geometryProp;
-	QVector<LVGLProperty*> m_properties;
-	QList<LVGL::StyleParts> m_editableStyles;
-	QPixmap m_preview;
+  LVGL::StyleParts editableStyles(int type) const;
 
+  LVGLProperty *geometryProp() const;
+  lv_style_t *getstyle(int partindex, int stateindex) const;
+
+ protected:
+  LVGLProperty *m_geometryProp;
+  QVector<LVGLProperty *> m_properties;
+  QList<LVGL::StyleParts> m_editableStyles;
+  QPixmap m_preview;
+  QList<lv_obj_part_t> m_parts;
+  QMap<int, QList<lv_style_t *>> m_partsStyles;
 };
-Q_DECLARE_METATYPE(LVGLWidget*)
-Q_DECLARE_METATYPE(const LVGLWidget*)
+Q_DECLARE_METATYPE(LVGLWidget *)
+Q_DECLARE_METATYPE(const LVGLWidget *)
 
-#endif // LVGLWIDGET_H
+#endif  // LVGLWIDGET_H

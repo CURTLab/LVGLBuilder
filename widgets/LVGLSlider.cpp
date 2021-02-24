@@ -5,105 +5,113 @@
 #include "LVGLObject.h"
 #include "properties/LVGLPropertyRange.h"
 
-class LVGLPropertySliderValue : public LVGLPropertyInt
-{
-public:
-	LVGLPropertySliderValue() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
+class LVGLPropertySliderValue : public LVGLPropertyInt {
+ public:
+  LVGLPropertySliderValue() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
 
-	QString name() const { return "Value"; }
+  QString name() const { return "Value"; }
 
-	QStringList function(LVGLObject *obj) const {
-		return QStringList() << QString("lv_slider_set_value(%1, %2, LV_ANIM_OFF);").arg(obj->codeName()).arg(get(obj));
-	}
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_slider_set_value(%1, %2, LV_ANIM_OFF);")
+                                .arg(obj->codeName())
+                                .arg(get(obj));
+  }
 
-protected:
-	int get(LVGLObject *obj) const { return lv_slider_get_value(obj->obj()); }
-	void set(LVGLObject *obj, int value) { lv_slider_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_OFF); }
+ protected:
+  int get(LVGLObject *obj) const { return lv_slider_get_value(obj->obj()); }
+  void set(LVGLObject *obj, int value) {
+    lv_slider_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_OFF);
+  }
 };
 
-class LVGLPropertySliderRange : public LVGLPropertyRange
-{
-public:
-	QStringList function(LVGLObject *obj) const override {
-		return QStringList() << QString("lv_slider_set_range(%1, %2, %3);").arg(obj->codeName()).arg(getMin(obj)).arg(getMax(obj));
-	}
+class LVGLPropertySliderRange : public LVGLPropertyRange {
+ public:
+  QStringList function(LVGLObject *obj) const override {
+    return QStringList() << QString("lv_slider_set_range(%1, %2, %3);")
+                                .arg(obj->codeName())
+                                .arg(getMin(obj))
+                                .arg(getMax(obj));
+  }
 
-protected:
-	int getMin(LVGLObject *obj) const override { return lv_slider_get_min_value(obj->obj()); }
-	int getMax(LVGLObject *obj) const override { return lv_slider_get_max_value(obj->obj()); }
-	void set(LVGLObject *obj, int min, int max) override {
-		lv_slider_set_range(obj->obj(), static_cast<int16_t>(min), static_cast<int16_t>(max));
-	}
+ protected:
+  int getMin(LVGLObject *obj) const override {
+    return lv_slider_get_min_value(obj->obj());
+  }
+  int getMax(LVGLObject *obj) const override {
+    return lv_slider_get_max_value(obj->obj());
+  }
+  void set(LVGLObject *obj, int min, int max) override {
+    lv_slider_set_range(obj->obj(), static_cast<int16_t>(min),
+                        static_cast<int16_t>(max));
+  }
 };
 
-LVGLSlider::LVGLSlider()
-{
-	m_properties << new LVGLPropertySliderValue;
-	m_properties << new LVGLPropertySliderRange;
-	m_properties << new LVGLPropertyBool("Knob inside", "lv_slider_set_knob_in", lv_slider_set_knob_in, lv_slider_get_knob_in);
+LVGLSlider::LVGLSlider() {
+  initStateStyles();
+  m_parts << LV_SLIDER_PART_BG << LV_SLIDER_PART_INDIC << LV_SLIDER_PART_KNOB;
 
-	m_editableStyles << LVGL::Body; // LV_SLIDER_STYLE_BG
-	m_editableStyles << LVGL::Body; // LV_SLIDER_STYLE_INDIC
-	m_editableStyles << LVGL::Body; // LV_SLIDER_STYLE_KNOB
+  m_properties << new LVGLPropertySliderValue;
+  m_properties << new LVGLPropertySliderRange;
+
+  m_editableStyles << LVGL::SliderBG;     // LV_SLIDER_PART_BG
+  m_editableStyles << LVGL::SliderINDIC;  // LV_SLIDER_PART_INDIC
+  m_editableStyles << LVGL::SliderKNOB;   // LV_SLIDER_PART_KNOB
 }
 
-QString LVGLSlider::name() const
-{
-	return "Slider";
+QString LVGLSlider::name() const { return "Slider"; }
+
+QString LVGLSlider::className() const { return "lv_slider"; }
+
+LVGLWidget::Type LVGLSlider::type() const { return Slider; }
+
+QIcon LVGLSlider::icon() const { return QIcon(); }
+
+lv_obj_t *LVGLSlider::newObject(lv_obj_t *parent) const {
+  lv_obj_t *obj = lv_slider_create(parent, nullptr);
+  /*for (const LVGLProperty &p:m_properties)
+          p.set(obj, p.defaultVal);*/
+  return obj;
 }
 
-QString LVGLSlider::className() const
-{
-	return "lv_slider";
+QSize LVGLSlider::minimumSize() const { return QSize(150, 25); }
+
+QStringList LVGLSlider::styles() const {
+  return QStringList() << "LV_SLIDER_PART_BG"
+                       << "LV_SLIDER_PART_INDIC"
+                       << "LV_SLIDER_PART_KNOB";
 }
 
-LVGLWidget::Type LVGLSlider::type() const
-{
-	return Slider;
+lv_style_t *LVGLSlider::style(lv_obj_t *obj, lv_obj_part_t part) const {
+  return lv_obj_get_local_style(obj, part);
 }
 
-QIcon LVGLSlider::icon() const
-{
-	return QIcon();
+void LVGLSlider::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const {
+  lv_obj_add_style(obj, LV_BTN_PART_MAIN, style);
 }
 
-lv_obj_t *LVGLSlider::newObject(lv_obj_t *parent) const
-{
-	lv_obj_t *obj = lv_slider_create(parent, nullptr);
-	/*for (const LVGLProperty &p:m_properties)
-		p.set(obj, p.defaultVal);*/
-	return obj;
+void LVGLSlider::addStyle(lv_obj_t *obj, lv_style_t *style,
+                          lv_obj_part_t part) const {
+  lv_obj_add_style(obj, part, style);
 }
 
-QSize LVGLSlider::minimumSize() const
-{
-	return QSize(150, 25);
-}
-
-QStringList LVGLSlider::styles() const
-{
-	return QStringList() << "LV_SLIDER_STYLE_BG"
-								<< "LV_SLIDER_STYLE_INDIC"
-								<< "LV_SLIDER_STYLE_KNOB";
-}
-
-lv_style_t *LVGLSlider::style(lv_obj_t *obj, int type) const
-{
-	return const_cast<lv_style_t*>(lv_slider_get_style(obj, type & 0xff));
-}
-
-void LVGLSlider::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const
-{
-	lv_slider_set_style(obj, static_cast<lv_slider_style_t>(type), style);
-}
-
-lv_style_t *LVGLSlider::defaultStyle(int type) const
-{
-	if (type == LV_SLIDER_STYLE_BG)
-		return &lv_style_pretty;
-	else if (type == LV_SLIDER_STYLE_INDIC)
-		return &lv_style_pretty_color;
-	else if (type == LV_SLIDER_STYLE_KNOB)
-		return &lv_style_pretty;
-	return nullptr;
+void LVGLSlider::initStateStyles() {
+  for (int i = 0; i < 3; ++i) {
+    lv_style_t *de = new lv_style_t;
+    lv_style_t *ch = new lv_style_t;
+    lv_style_t *fo = new lv_style_t;
+    lv_style_t *ed = new lv_style_t;
+    lv_style_t *ho = new lv_style_t;
+    lv_style_t *pr = new lv_style_t;
+    lv_style_t *di = new lv_style_t;
+    lv_style_init(de);
+    lv_style_init(ch);
+    lv_style_init(fo);
+    lv_style_init(ed);
+    lv_style_init(ho);
+    lv_style_init(pr);
+    lv_style_init(di);
+    QList<lv_style_t *> stateStyles;
+    stateStyles << de << ch << fo << ed << ho << pr << di;
+    m_partsStyles[i] = stateStyles;
+  }
 }

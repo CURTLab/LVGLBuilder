@@ -4,154 +4,237 @@
 
 #include "LVGLObject.h"
 
-class LVGLPropertyDDListAlign : public LVGLPropertyEnum
-{
-public:
-	LVGLPropertyDDListAlign() : LVGLPropertyEnum(QStringList() << "Left" << "Center" << "Right") {}
-	QString name() const { return "Align"; }
+class LVGLPropertyDropdownDir : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyDropdownDir()
+      : LVGLPropertyEnum(QStringList() << "Down"
+                                       << "Up"
+                                       << "Left"
+                                       << "Right"),
+        m_values({"LV_DROPDOWN_DIR_DOWN", "LV_DROPDOWN_DIR_UP",
+                  "LV_DROPDOWN_DIR_LEFT", "LV_DROPDOWN_DIR_RIGHT"}) {}
 
-protected:
-	int get(LVGLObject *obj) const { return lv_ddlist_get_align(obj->obj()); }
-	void set(LVGLObject *obj, int index) { lv_ddlist_set_align(obj->obj(), index & 0xff); }
+  QString name() const { return "Dir"; }
+
+  QStringList function(LVGLObject *obj) const {
+    if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
+    return QStringList() << QString("lv_dropdown_set_dir(%1, %2);")
+                                .arg(obj->codeName())
+                                .arg(m_values.at(get(obj)));
+  }
+
+ protected:
+  int get(LVGLObject *obj) const { return lv_dropdown_get_dir(obj->obj()); }
+  void set(LVGLObject *obj, int index) {
+    lv_dropdown_set_dir(obj->obj(), index & 0xff);
+  }
+
+  QStringList m_values;
 };
 
-class LVGLPropertyDDListFixedWidth : public LVGLPropertyCoord
-{
-public:
-	inline LVGLPropertyDDListFixedWidth(LVGLProperty *p = nullptr) : LVGLPropertyCoord(Qt::Vertical, p) {}
-	inline QString name() const override { return "Fixed width"; }
+class LVGLPropertyDropdownOptions : public LVGLPropertyStringPlus {
+ public:
+  QString name() const { return "Options"; }
 
-protected:
-	inline lv_coord_t get(LVGLObject *obj) const override { return lv_obj_get_width(obj->obj()); }
-	inline void set(LVGLObject *obj, lv_coord_t value) override { lv_ddlist_set_fix_width(obj->obj(), value); }
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_dropdown_set_options(%1, \"%2\");")
+                                .arg(obj->codeName())
+                                .arg(get(obj));
+  }
 
+ protected:
+  QString get(LVGLObject *obj) const {
+    return lv_dropdown_get_options(obj->obj());
+  }
+  void set(LVGLObject *obj, QString string) {
+    lv_dropdown_set_options(obj->obj(), qUtf8Printable(string));
+  }
 };
 
-class LVGLPropertyDDListFixedHeight : public LVGLPropertyCoord
-{
-public:
-	inline LVGLPropertyDDListFixedHeight(LVGLProperty *p = nullptr) : LVGLPropertyCoord(Qt::Vertical, p) {}
-	inline QString name() const override { return "Fixed height"; }
+class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyDropdownArrow()
+      : LVGLPropertyEnum(QStringList() << "Down"
+                                       << "Up"
+                                       << "Left"
+                                       << "Right"),
+        m_values({"LV_SYMBOL_DOWN", "LV_SYMBOL_UP", "LV_SYMBOL_LEFT",
+                  "LV_SYMBOL_RIGHT"}) {}
 
-protected:
-	inline lv_coord_t get(LVGLObject *obj) const override { return lv_ddlist_get_fix_height(obj->obj()); }
-	inline void set(LVGLObject *obj, lv_coord_t value) override { lv_ddlist_set_fix_height(obj->obj(), value); }
+  QString name() const { return "Arrow"; }
 
+  QStringList function(LVGLObject *obj) const {
+    if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
+    return QStringList() << QString("lv_dropdown_set_symbol(%1, %2);")
+                                .arg(obj->codeName())
+                                .arg(m_values.at(get(obj)));
+  }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    auto arrow = lv_dropdown_get_symbol(obj->obj());
+
+    if (arrow == LV_SYMBOL_DOWN)
+      return 0;
+    else if (arrow == LV_SYMBOL_UP)
+      return 1;
+    else if (arrow == LV_SYMBOL_LEFT)
+      return 2;
+    else if (arrow == LV_SYMBOL_RIGHT)
+      return 3;
+    else
+      return 0;
+  }
+  void set(LVGLObject *obj, int index) {
+    auto arrow = LV_SYMBOL_DOWN;
+    switch (index) {
+      case 0:
+        arrow = LV_SYMBOL_DOWN;
+        break;
+      case 1:
+        arrow = LV_SYMBOL_UP;
+        break;
+      case 2:
+        arrow = LV_SYMBOL_LEFT;
+        break;
+      case 3:
+        arrow = LV_SYMBOL_RIGHT;
+        break;
+      default:
+        arrow = LV_SYMBOL_DOWN;
+    }
+    lv_dropdown_set_symbol(obj->obj(), arrow);
+  }
+
+  QStringList m_values;
 };
 
-class LVGLPropertyDDListScrollbars : public LVGLPropertyEnum
-{
-public:
-	LVGLPropertyDDListScrollbars() : LVGLPropertyEnum(QStringList() << "Off"  << "On" << "Drag" << "Auto") {}
-	QString name() const { return "Scrollbars"; }
+class LVGLPropertyDropdownMaxHeight : public LVGLPropertyInt {
+ public:
+  LVGLPropertyDropdownMaxHeight() : LVGLPropertyInt(0, UINT16_MAX, "") {}
 
-protected:
-	int get(LVGLObject *obj) const { return lv_ddlist_get_sb_mode(obj->obj()) & 0x3; }
-	void set(LVGLObject *obj, int index) { lv_ddlist_set_sb_mode(obj->obj(), index & 0x3); }
+  QString name() const { return "Max height"; }
+
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_dropdown_set_max_height(%1,%2);")
+                                .arg(obj->codeName())
+                                .arg(m_value);
+  }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    m_value = lv_dropdown_get_max_height(obj->obj());
+    return m_value;
+  }
+  void set(LVGLObject *obj, int value) {
+    lv_dropdown_set_max_height(obj->obj(), static_cast<uint16_t>(value));
+  }
+
+ private:
+  mutable uint16_t m_value;
 };
 
-class LVGLPropertyDDListAnimationTime : public LVGLPropertyInt
-{
-public:
-	LVGLPropertyDDListAnimationTime() : LVGLPropertyInt(0, UINT16_MAX, " ms") {}
+// class LVGLPropertyDropdownManuallyOC : public LVGLPropertyEnum {
+// public:
+//  LVGLPropertyDropdownManuallyOC()
+//      : LVGLPropertyEnum(QStringList() << "Open"
+//                                       << "Close"),
+//        m_values({"LV_DROPDOWN_DIR_DOWN", "LV_DROPDOWN_DIR_UP"}) {}
 
-	QString name() const { return "Animation time"; }
+//  QString name() const { return "Dir"; }
 
-protected:
-	int get(LVGLObject *obj) const { return lv_ddlist_get_anim_time(obj->obj()); }
-	void set(LVGLObject *obj, int value) { lv_ddlist_set_anim_time(obj->obj(), static_cast<uint16_t>(value)); }
-};
+//  QStringList function(LVGLObject *obj) const {
+//    if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
+//    return QStringList() << QString("lv_dropdown_set_dir(%1, %2);")
+//                                .arg(obj->codeName())
+//                                .arg(m_values.at(get(obj)));
+//  }
 
-class LVGLPropertyDDListDrawArrow : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Decoration arrow"; }
+// protected:
+//  int get(LVGLObject *obj) const { return lv_dropdown_get_dir(obj->obj()); }
+//  void set(LVGLObject *obj, int index) {
+//    if (index == 0)
+//      lv_dropdown_open(obj);
+//    else
 
-protected:
-	bool get(LVGLObject *obj) const { return lv_ddlist_get_draw_arrow(obj->obj()); }
-	void set(LVGLObject *obj, bool statue) { lv_ddlist_set_draw_arrow(obj->obj(), statue); }
-};
+//      lv_dropdown_set_dir(obj->obj(), index & 0xff);
+//  }
 
-class LVGLPropertyDDListStayOpen : public LVGLPropertyBool
-{
-public:
-	QString name() const { return "Stay open"; }
+//  QStringList m_values;
+//};
 
-protected:
-	bool get(LVGLObject *obj) const { return lv_ddlist_get_stay_open(obj->obj()); }
-	void set(LVGLObject *obj, bool statue) { lv_ddlist_set_stay_open(obj->obj(), statue); }
-};
+LVGLDropDownList::LVGLDropDownList() {
+  initStateStyles();
+  m_parts << LV_DROPDOWN_PART_MAIN << LV_DROPDOWN_PART_LIST
+          << LV_DROPDOWN_PART_SCROLLBAR << LV_DROPDOWN_PART_SELECTED;
 
-LVGLDropDownList::LVGLDropDownList()
-{
-	m_properties << new LVGLPropertyDDListAlign;
-	m_properties << new LVGLPropertyDDListFixedWidth;
-	m_properties << new LVGLPropertyDDListFixedHeight;
-	m_properties << new LVGLPropertyDDListScrollbars;
-	m_properties << new LVGLPropertyDDListAnimationTime;
-	m_properties << new LVGLPropertyDDListDrawArrow;
-	m_properties << new LVGLPropertyDDListStayOpen;
+  m_properties << new LVGLPropertyDropdownOptions;
+  m_properties << new LVGLPropertyDropdownDir;
+  m_properties << new LVGLPropertyDropdownArrow;
+  m_properties << new LVGLPropertyDropdownMaxHeight;
+  //  m_properties << new LVGLPropertyDDListDrawArrow;
+  //  m_properties << new LVGLPropertyDDListStayOpen;
 
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_DDLIST_STYLE_BG
-	m_editableStyles << LVGL::StyleParts(LVGL::Body | LVGL::Text); // LV_DDLIST_STYLE_SEL
-	m_editableStyles << LVGL::Body; // LV_DDLIST_STYLE_SB
+  m_editableStyles << LVGL::DropdownMAIN;  // LV_DROPDOWN_PART_MAIN
+  //  m_editableStyles << LVGL::DropdownLIST;      // LV_DROPDOWN_PART_LIST
+  //  m_editableStyles << LVGL::DropdownDCRLBAR;   // LV_DROPDOWN_PART_SCROLLBAR
+  //  m_editableStyles << LVGL::DropdownSELECTED;  // LV_DROPDOWN_PART_SELECTED
 }
 
-QString LVGLDropDownList::name() const
-{
-	return "Drop down list";
+QString LVGLDropDownList::name() const { return "Dropdown"; }
+
+QString LVGLDropDownList::className() const { return "lv_dropdown"; }
+
+LVGLWidget::Type LVGLDropDownList::type() const { return DropDownList; }
+
+QIcon LVGLDropDownList::icon() const { return QIcon(); }
+
+lv_obj_t *LVGLDropDownList::newObject(lv_obj_t *parent) const {
+  lv_obj_t *obj = lv_dropdown_create(parent, nullptr);
+  return obj;
 }
 
-QString LVGLDropDownList::className() const
-{
-	return "lv_ddlist";
+QSize LVGLDropDownList::minimumSize() const { return QSize(100, 35); }
+
+QStringList LVGLDropDownList::styles() const {
+  return QStringList() << "DROPDOWN_PART_MAIN";
+  //                       << "DROPDOWN_PART_LIST"
+  //                       << "DROPDOWN_PART_SCROLLBAR"
+  //                       << "DROPDOWN_PART_SELECTED";
 }
 
-LVGLWidget::Type LVGLDropDownList::type() const
-{
-	return DropDownList;
+lv_style_t *LVGLDropDownList::style(lv_obj_t *obj, lv_obj_part_t part) const {
+  return lv_obj_get_local_style(obj, part);
 }
 
-QIcon LVGLDropDownList::icon() const
-{
-	return QIcon();
+void LVGLDropDownList::setStyle(lv_obj_t *obj, int type,
+                                lv_style_t *style) const {
+  lv_obj_add_style(obj, LV_BTN_PART_MAIN, style);
 }
 
-lv_obj_t *LVGLDropDownList::newObject(lv_obj_t *parent) const
-{
-	lv_obj_t *obj = lv_ddlist_create(parent, nullptr);
-	return obj;
+void LVGLDropDownList::addStyle(lv_obj_t *obj, lv_style_t *style,
+                                lv_obj_part_t part) const {
+  lv_obj_add_style(obj, part, style);
 }
 
-QSize LVGLDropDownList::minimumSize() const
-{
-	return QSize(100, 35);
-}
-
-QStringList LVGLDropDownList::styles() const
-{
-	return QStringList() << "LV_DDLIST_STYLE_BG"
-								<< "LV_DDLIST_STYLE_SEL"
-								<< "LV_DDLIST_STYLE_SB";
-}
-
-lv_style_t *LVGLDropDownList::style(lv_obj_t *obj, int type) const
-{
-	return const_cast<lv_style_t*>(lv_ddlist_get_style(obj, type & 0xff));
-}
-
-void LVGLDropDownList::setStyle(lv_obj_t *obj, int type, lv_style_t *style) const
-{
-	lv_ddlist_set_style(obj, static_cast<lv_btn_style_t>(type), style);
-}
-
-lv_style_t *LVGLDropDownList::defaultStyle(int type) const
-{
-	if (type == LV_DDLIST_STYLE_BG)
-		return &lv_style_pretty;
-	else if (type == LV_DDLIST_STYLE_SEL)
-		return &lv_style_plain_color;
-	else if (type == LV_DDLIST_STYLE_SB)
-		return &lv_style_plain_color;
-	return nullptr;
+void LVGLDropDownList::initStateStyles() {
+  for (int i = 0; i < 1; ++i) {
+    lv_style_t *de = new lv_style_t;
+    lv_style_t *ch = new lv_style_t;
+    lv_style_t *fo = new lv_style_t;
+    lv_style_t *ed = new lv_style_t;
+    lv_style_t *ho = new lv_style_t;
+    lv_style_t *pr = new lv_style_t;
+    lv_style_t *di = new lv_style_t;
+    lv_style_init(de);
+    lv_style_init(ch);
+    lv_style_init(fo);
+    lv_style_init(ed);
+    lv_style_init(ho);
+    lv_style_init(pr);
+    lv_style_init(di);
+    QList<lv_style_t *> stateStyles;
+    stateStyles << de << ch << fo << ed << ho << pr << di;
+    m_partsStyles[i] = stateStyles;
+  }
 }

@@ -13,5 +13,42 @@
         <file>start.png</file>
         <file>Landscape.png</file>
         <file>Portrait.png</file>
+        <file>Widget Box_arrow_0.png</file>
+        <file>Widget Box_arrow_90.png</file>
+        <file>Widget Box_background_cli.png</file>
+        <file>Widget Box_background_nor.png</file>
+        <file>Switch.png</file>
+        <file>Spinner.png</file>
+        <file>Spinbox.png</file>
+        <file>Slider.png</file>
+        <file>Roller.png</file>
+        <file>Line meter.png</file>
+        <file>List.png</file>
+        <file>Line.png</file>
+        <file>Keyboard.png</file>
+        <file>Gauge.png</file>
+        <file>Dropdown.png</file>
+        <file>Container.png</file>
+        <file>Color picker.png</file>
+        <file>Check box.png</file>
+        <file>Chart.png</file>
+        <file>Canvas.png</file>
+        <file>Calendar.png</file>
+        <file>Window.png</file>
+        <file>Text area.png</file>
+        <file>TileView.png</file>
+        <file>Tabview.png</file>
+        <file>Table.png</file>
+        <file>Page.png</file>
+        <file>ObjectMask.png</file>
+        <file>Message box.png</file>
+        <file>LED.png</file>
+        <file>Label.png</file>
+        <file>Image.png</file>
+        <file>Bar.png</file>
+        <file>Arc.png</file>
+        <file>Image button.png</file>
+        <file>Button Matrix.png</file>
+        <file>Button.png</file>
     </qresource>
 </RCC>

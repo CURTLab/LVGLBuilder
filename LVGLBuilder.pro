@@ -1,18 +1,18 @@
 # LVGL Builder
 #
 # MIT licence
-# Copyright (c) 2016 Gábor Kiss-Vámosi, 2019 Fabian Hauser
+# Copyright (c) 2016 G??bor Kiss-V??mosi, 2019 Fabian Hauser
 #
-# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated 
-# documentation files (the “Software”), to deal in the Software without restriction, including without limitation 
-# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, 
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated
+# documentation files (the a??Softwarea??), to deal in the Software without restriction, including without limitation
+# the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software,
 # and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-# 
+#
 # The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-# 
-# THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO 
-# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE 
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, 
+#
+# THE SOFTWARE IS PROVIDED a??AS ISa??, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO
+# THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 # TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 #
 # ------------------------------------------------------------
@@ -56,6 +56,7 @@ SOURCES += \
     LVGLDialog.cpp \
     LVGLFontData.cpp \
     LVGLFontDialog.cpp \
+    LVGLHelper.cpp \
     LVGLImageData.cpp \
     LVGLNewDialog.cpp \
     LVGLObject.cpp \
@@ -64,6 +65,12 @@ SOURCES += \
     LVGLStyle.cpp \
     LVGLStyleModel.cpp \
     LVGLWidgetListView.cpp \
+    LVGLWidgetModelDisplay.cpp \
+    LVGLWidgetModelInput.cpp \
+    ListDelegate.cpp \
+    ListViewItem.cpp \
+    TabWidget.cpp \
+    properties/LVGLPropertyAnyFunc.cpp \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
     properties/LVGLPropertyDate.cpp \
@@ -91,36 +98,42 @@ SOURCES += \
     widgets/LVGLDropDownList.cpp \
     widgets/LVGLGauge.cpp \
     widgets/LVGLImage.cpp \
-    LVGLItem.cpp \
     widgets/LVGLImageButton.cpp \
-    widgets/LVGLImageSlider.cpp \
     widgets/LVGLKeyboard.cpp \
     widgets/LVGLLED.cpp \
     widgets/LVGLLabel.cpp \
-    LVGLProperty.cpp \
-    LVGLPropertyModel.cpp \
-    LVGLSimulator.cpp \
     widgets/LVGLLine.cpp \
     widgets/LVGLLineMeter.cpp \
     widgets/LVGLList.cpp \
     widgets/LVGLMessageBox.cpp \
+    widgets/LVGLObjectMask.cpp \
     widgets/LVGLPage.cpp \
-    widgets/LVGLPreloader.cpp \
+    widgets/LVGLRoller.cpp \
     widgets/LVGLSlider.cpp \
+    widgets/LVGLSpinbox.cpp \
+    widgets/LVGLSpinner.cpp \
     widgets/LVGLSwitch.cpp \
+    widgets/LVGLTable.cpp \
     widgets/LVGLTabview.cpp \
     widgets/LVGLTextArea.cpp \
+    widgets/LVGLTileView.cpp \
     widgets/LVGLWidget.cpp \
+    LVGLItem.cpp \
+    LVGLProperty.cpp \
+    LVGLPropertyModel.cpp \
+    LVGLSimulator.cpp \
     LVGLWidgetModel.cpp \
     LVGLWorker.cpp \
     main.cpp \
-    MainWindow.cpp
+    MainWindow.cpp \
+    widgets/LVGLWindow.cpp
 
 HEADERS += \
     LVGLCore.h \
     LVGLDialog.h \
     LVGLFontData.h \
     LVGLFontDialog.h \
+    LVGLHelper.h \
     LVGLImageData.h \
     LVGLNewDialog.h \
     LVGLObject.h \
@@ -129,6 +142,12 @@ HEADERS += \
     LVGLStyle.h \
     LVGLStyleModel.h \
     LVGLWidgetListView.h \
+    LVGLWidgetModelDisplay.h \
+    LVGLWidgetModelInput.h \
+    ListDelegate.h \
+    ListViewItem.h \
+    TabWidget.h \
+    properties/LVGLPropertyAnyFunc.h \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
     properties/LVGLPropertyDate.h \
@@ -146,6 +165,13 @@ HEADERS += \
     widgets/LVGLArc.h \
     widgets/LVGLBar.h \
     widgets/LVGLButton.h \
+    LVGLItem.h \
+    LVGLProperty.h \
+    LVGLPropertyModel.h \
+    LVGLSimulator.h \
+    LVGLWidgetModel.h \
+    LVGLWorker.h \
+    MainWindow.h \
     widgets/LVGLButtonMatrix.h \
     widgets/LVGLCalendar.h \
     widgets/LVGLCanvas.h \
@@ -156,34 +182,33 @@ HEADERS += \
     widgets/LVGLDropDownList.h \
     widgets/LVGLGauge.h \
     widgets/LVGLImage.h \
-    LVGLItem.h \
     widgets/LVGLImageButton.h \
-    widgets/LVGLImageSlider.h \
     widgets/LVGLKeyboard.h \
     widgets/LVGLLED.h \
     widgets/LVGLLabel.h \
-    LVGLProperty.h \
-    LVGLPropertyModel.h \
-    LVGLSimulator.h \
     widgets/LVGLLine.h \
     widgets/LVGLLineMeter.h \
     widgets/LVGLList.h \
     widgets/LVGLMessageBox.h \
+    widgets/LVGLObjectMask.h \
     widgets/LVGLPage.h \
-    widgets/LVGLPreloader.h \
+    widgets/LVGLRoller.h \
     widgets/LVGLSlider.h \
+    widgets/LVGLSpinbox.h \
+    widgets/LVGLSpinner.h \
     widgets/LVGLSwitch.h \
+    widgets/LVGLTable.h \
     widgets/LVGLTabview.h \
     widgets/LVGLTextArea.h \
+    widgets/LVGLTileView.h \
     widgets/LVGLWidget.h \
-    LVGLWidgetModel.h \
-    LVGLWorker.h \
-    MainWindow.h \
-    widgets/LVGLWidgets.h
+    widgets/LVGLWidgets.h \
+    widgets/LVGLWindow.h
 
 FORMS += \
     LVGLFontDialog.ui \
     LVGLNewDialog.ui \
+    ListViewItem.ui \
     MainWindow.ui
 
 # Default rules for deployment.
