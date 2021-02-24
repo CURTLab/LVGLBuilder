@@ -1,12 +1,12 @@
 # LVGLBuilder
- GUI Builder for littlevgl release 6.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
+ GUI Builder for littlevgl release 7.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
 
-![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview.png)
+![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/preview.png)
 
 ### Prerequisites
 * [Qt 5.11+](https://www.qt.io/) - The Qt framework
 * C++11
-* LVGL 6.1 (included in source since a few adaptions are applied)
+* LVGL 7.11  (included in source since a few adaptions are applied)
 
 Tested:
  * Windows 10 + MSVC 2019 + Qt 5.15.1
@@ -51,8 +51,8 @@ Building with QtCreator:
 - [ ] Support multiple screens
 - [ ] Dialog for changing keyboard layout
 - [x] Preview for widgets
-- [ ] Icons for widgets
-- [ ] Support for lvgl 7.x
+- [x] Icons for widgets
+- [x] Support for lvgl 7.x
 
 ### Wishlist
 - [ ] C code driver generator (Touch, Buttons, Displays for µC)
@@ -61,7 +61,7 @@ Building with QtCreator:
 - [x] Arc (lv_arc)
 - [x] Bar (lv_bar)
 - [x] Button (lv_btn)
-- [ ] Button matrix (lv_btnm)
+- [x] Button matrix (lv_btnm)
 - [x] Calendar (lv_calendar)
 - [ ] Canvas (lv_canvas)
 - [x] Checkbox (lv_cb)
@@ -79,9 +79,9 @@ Building with QtCreator:
 - [x] List (lv_list)
 - [x] Line meter (lv_lmeter)
 - [x] Message box (lv_mbox)
-- [ ] Page (lv_page)
+- [x] Page (lv_page)
 - [x] Preloader (lv_preload)
-- [ ] Roller (lv_roller)
+- [x] Roller (lv_roller)
 - [x] Slider (lv_slider)
 - [ ] Spinbox (lv_spinbox)
 - [x] Switch (lv_sw)
