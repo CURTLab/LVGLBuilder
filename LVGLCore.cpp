@@ -43,7 +43,6 @@ LVGLCore::~LVGLCore() {
   FT_Done_FreeType(m_ft);
 
   qDeleteAll(m_images);
-  qDeleteAll(m_widgets);
   qDeleteAll(m_fonts);
 }
 

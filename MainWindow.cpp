@@ -109,7 +109,12 @@ MainWindow::MainWindow(QWidget *parent)
   LVGLHelper::getInstance().setMainW(this);
 }
 
-MainWindow::~MainWindow() { delete m_ui; }
+MainWindow::~MainWindow() {
+  delete m_ui;
+  qDeleteAll(m_widgets);
+  qDeleteAll(m_widgetsDisplayW);
+  qDeleteAll(m_widgetsInputW);
+}
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
