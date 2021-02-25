@@ -46,16 +46,10 @@ SOURCES += \
     $$PWD/lvgl/src/lv_font/lv_font_montserrat_48.c \
     $$PWD/lvgl/src/lv_font/lv_font_montserrat_8.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_12.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_12.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_12_subpx.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_12_subpx.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_16.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_16.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_22.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_22.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_28.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_28.c \
-    $$PWD/lvgl/src/lv_font/lv_font_roboto_28_compressed.c \
     $$PWD/lvgl/src/lv_font/lv_font_roboto_28_compressed.c \
     $$PWD/lvgl/src/lv_font/lv_font_simsun_16_cjk.c \
     $$PWD/lvgl/src/lv_font/lv_font_unscii_16.c \
