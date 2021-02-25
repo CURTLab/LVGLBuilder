@@ -123,8 +123,8 @@
          <font>
           <family>微软雅黑</family>
           <pointsize>11</pointsize>
-          <weight>50</weight>
-          <bold>false</bold>
+          <weight>75</weight>
+          <bold>true</bold>
          </font>
         </property>
         <property name="text">
@@ -159,13 +159,13 @@
         <property name="minimumSize">
          <size>
           <width>28</width>
-          <height>28</height>
+          <height>27</height>
          </size>
         </property>
         <property name="maximumSize">
          <size>
           <width>28</width>
-          <height>28</height>
+          <height>27</height>
          </size>
         </property>
         <property name="text">
@@ -217,7 +217,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>20</width>
+         <width>9</width>
          <height>20</height>
         </size>
        </property>
@@ -245,7 +245,7 @@
        </property>
        <property name="font">
         <font>
-         <family>Arial</family>
+         <family>微软雅黑</family>
          <pointsize>11</pointsize>
         </font>
        </property>
@@ -305,7 +305,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
+           <width>9</width>
            <height>20</height>
           </size>
          </property>
@@ -333,7 +333,7 @@
          </property>
          <property name="font">
           <font>
-           <family>Arial</family>
+           <family>微软雅黑</family>
            <pointsize>12</pointsize>
           </font>
          </property>
@@ -378,7 +378,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
+           <width>9</width>
            <height>20</height>
           </size>
          </property>
@@ -447,7 +447,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
+           <width>9</width>
            <height>20</height>
           </size>
          </property>
@@ -455,6 +455,12 @@
        </item>
        <item>
         <widget class="QLabel" name="res">
+         <property name="sizePolicy">
+          <sizepolicy hsizetype="Preferred" vsizetype="MinimumExpanding">
+           <horstretch>0</horstretch>
+           <verstretch>0</verstretch>
+          </sizepolicy>
+         </property>
          <property name="minimumSize">
           <size>
            <width>50</width>
@@ -464,11 +470,16 @@
          <property name="font">
           <font>
            <family>Arial</family>
-           <pointsize>11</pointsize>
+           <pointsize>10</pointsize>
+           <weight>50</weight>
+           <bold>false</bold>
           </font>
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -550,7 +561,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>20</width>
+           <width>9</width>
            <height>20</height>
           </size>
          </property>
@@ -572,12 +583,15 @@
          </property>
          <property name="font">
           <font>
-           <family>Arial</family>
+           <family>微软雅黑</family>
            <pointsize>11</pointsize>
           </font>
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>
@@ -664,12 +678,15 @@
          </property>
          <property name="font">
           <font>
-           <family>Arial</family>
+           <family>微软雅黑</family>
            <pointsize>11</pointsize>
           </font>
          </property>
          <property name="text">
           <string/>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
          </property>
         </widget>
        </item>

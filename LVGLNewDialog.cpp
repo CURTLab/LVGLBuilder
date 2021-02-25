@@ -10,10 +10,10 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
     : QDialog(parent), m_ui(new Ui::LVGLNewDialog) {
   m_ui->setupUi(this);
   m_ui->title->setText(tr("New Project"));
-  m_ui->filename->setText(tr("FileName"));
-  m_ui->res->setText(tr("Resolution"));
-  m_ui->width->setText(tr("Width"));
-  m_ui->height->setText(tr("Height"));
+  m_ui->filename->setText(tr("File Name:"));
+  m_ui->res->setText(tr("Resolution:"));
+  m_ui->width->setText(tr("Width:"));
+  m_ui->height->setText(tr("Height:"));
   m_ui->pushButton->setText("Ok");
   m_ui->pushButton_2->setText("Cancel");
   m_ui->combo_resolution->addItem(tr("Costume"));
@@ -52,10 +52,18 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
           &LVGLNewDialog::reject);
   m_ui->lineEdit->setStyleSheet(
       "QLineEdit#lineEdit{border:0px;background:#F8F8F8;}");
+  m_ui->spin_width->setStyleSheet(
+      "QSpinBox{border: 1px solid gray;"
+      "border-radius: 3px;"
+      "padding: 1px 18px 1px 13px;};");
+  m_ui->spin_height->setStyleSheet(
+      "QSpinBox{border: 1px solid gray;"
+      "border-radius: 3px;"
+      "padding: 1px 18px 1px 13px;};");
   m_ui->combo_resolution->setStyleSheet(
       "QComboBox#combo_resolution{ border: 1px solid gray;"
       "border-radius: 3px;"
-      "padding: 1px 18px 1px 3px; "
+      "padding: 1px 18px 1px 13px; "
       "color: #000000;"
       "background:#ffffff;}"
       "QComboBox::down-arrow#combo_resolution {"
