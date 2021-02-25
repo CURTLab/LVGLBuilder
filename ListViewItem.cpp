@@ -88,3 +88,5 @@ void ListViewItem::slot_toolbtnclicked() {
 
   ui->toolButton->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
 }
+
+void ListViewItem::slot_toshowtab() { ui->list_widgets->show(); }

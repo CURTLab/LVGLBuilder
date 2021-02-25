@@ -14,7 +14,7 @@ class LVGLPropertyArcRotation : public LVGLPropertyInt {
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_arc_set_rotation(%1,%2);")
                                 .arg(obj->codeName())
-                                .arg(m_widget->value());
+                                .arg(m_rations);
   }
 
  protected:

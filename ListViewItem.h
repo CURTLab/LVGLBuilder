@@ -24,6 +24,7 @@ class ListViewItem : public QWidget {
 
  public slots:
   void slot_toolbtnclicked();
+  void slot_toshowtab();
 
  private:
   Ui::ListViewItem *ui;

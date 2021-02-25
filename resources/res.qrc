@@ -50,5 +50,7 @@
         <file>Image button.png</file>
         <file>Button Matrix.png</file>
         <file>Button.png</file>
+        <file>x.png</file>
+        <file>arrows.png</file>
     </qresource>
 </RCC>

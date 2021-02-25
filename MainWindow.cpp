@@ -114,6 +114,8 @@ MainWindow::~MainWindow() {
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
   qDeleteAll(m_widgetsInputW);
+  for (int i = 0; i < 35; ++i)
+    if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
 }
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
@@ -168,7 +170,7 @@ void MainWindow::openNewProject() {
   LVGLNewDialog dialog(this);
   if (dialog.exec() == QDialog::Accepted) {
     if (m_curSimulation != nullptr) revlvglConnect();
-    TabWidget *tabw = new TabWidget(dialog.selectedName(), this);
+    TabWidget *tabw = new TabWidget(dialog.selectName(), this);
     lvgl = tabw->getCore();
     const auto res = dialog.selectedResolution();
     lvgl->init(res.width(), res.height());
@@ -760,6 +762,12 @@ void MainWindow::initlvglConnect() {
           &QSortFilterProxyModel::setFilterWildcard);
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModelIPW,
           &QSortFilterProxyModel::setFilterWildcard);
+  connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets,
+          &ListViewItem::slot_toshowtab);
+  connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_2,
+          &ListViewItem::slot_toshowtab);
+  connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_3,
+          &ListViewItem::slot_toshowtab);
 
   if (m_filter != nullptr) delete m_filter;
   m_filter = new LVGLKeyPressEventFilter(m_curSimulation, qApp);
@@ -784,6 +792,12 @@ void MainWindow::revlvglConnect() {
              &QSortFilterProxyModel::setFilterWildcard);
   disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModelIPW,
              &QSortFilterProxyModel::setFilterWildcard);
+  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets,
+             &ListViewItem::slot_toshowtab);
+  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_2,
+             &ListViewItem::slot_toshowtab);
+  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_3,
+             &ListViewItem::slot_toshowtab);
   disconnect(m_curSimulation, &LVGLSimulator::objectSelected, this,
              &MainWindow::setCurrentObject);
   disconnect(m_curSimulation, &LVGLSimulator::objectSelected,
