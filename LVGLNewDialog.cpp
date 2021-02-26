@@ -25,7 +25,6 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
 
   m_ui->frame->setStyleSheet(
       "QFrame#frame{background:#D8D8D8;border:1px solid #979797;}");
-  qDebug() << "######@@@@@" << m_ui->frame->x();
   m_resolutions << qMakePair(480, 320);
   m_resolutions << qMakePair(320, 240);
   m_resolutions << qMakePair(160, 120);

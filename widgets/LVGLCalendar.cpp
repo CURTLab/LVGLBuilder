@@ -59,11 +59,16 @@ class LVGLPropertyDayNames : public LVGLPropertyTextList {
     if (!isDifferent(list)) return;
     const char **data = new const char *[N];
     for (uint8_t i = 0; i < N; ++i) {
-      const QString &s = list[i];
-      char *string = new char[s.size() + 1];
-      memcpy(string, qUtf8Printable(s), s.size());
-      string[s.size()] = '\0';
-      data[i] = string;
+      const auto &byte = list[i].toUtf8();
+      char *str = new char[byte.size() + 1];
+      strcpy(str, byte.data());
+      str[byte.size()] = '\0';
+
+      //      const QString &s = list[i];
+      //      char *string = new char[s.size() + 1];
+      //      memcpy(string, qUtf8Printable(s), s.size());
+      //      string[s.size()] = '\0';
+      data[i] = str;
     }
     m_garbageCollector << data;
     lv_calendar_set_day_names(obj->obj(), data);
@@ -121,11 +126,16 @@ class LVGLPropertyMonthNames : public LVGLPropertyTextList {
     if (!isDifferent(list)) return;
     const char **data = new const char *[N];
     for (uint8_t i = 0; i < N; ++i) {
-      const QString &s = list[i];
-      char *string = new char[s.size() + 1];
-      memcpy(string, qUtf8Printable(s), s.size());
-      string[s.size()] = '\0';
-      data[i] = string;
+      const auto &byte = list[i].toUtf8();
+      char *str = new char[byte.size() + 1];
+      strcpy(str, byte.data());
+      str[byte.size()] = '\0';
+      data[i] = str;
+      //      const QString &s = list[i];
+      //      char *string = new char[s.size() + 1];
+      //      memcpy(string, qUtf8Printable(s), s.size());
+      //      string[s.size()] = '\0';
+      //      data[i] = string;
     }
     m_garbageCollector << data;
     lv_calendar_set_month_names(obj->obj(), data);

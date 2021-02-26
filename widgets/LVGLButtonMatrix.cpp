@@ -271,12 +271,19 @@ LVGLButtonMatrix::LVGLButtonMatrix() {
   initStateStyles();
   auto p = new LVGLPropertyBtnmatrixButtonsText;
   m_properties << p;
-  m_properties << new LVGLPropertyBtnmatrixFocus(p);
+  m_properties << new LVGLPropertyBool(
+      "Text Recolor", "lv_btnmatrix_set_one_check", lv_btnmatrix_set_recolor,
+      lv_btnmatrix_get_recolor);
   m_properties << new LVGLPropertyBtnmatrixTextAlign;
+  m_properties << new LVGLPropertyBtnmatrixFocus(p);
   static const AnyFuncColType arr[2]{e_QComboBox, e_QComboBox};
+
   m_properties << new LVGLPropertyBtnmatrixButtonCtrl(arr, 2, p);
   static const AnyFuncColType arr2[2]{e_QComboBox, e_QSpinBox};
   m_properties << new LVGLPropertyBtnmatrixButtonWidth(arr2, 2, p);
+  m_properties << new LVGLPropertyBool(
+      "One check", "lv_btnmatrix_set_one_check", lv_btnmatrix_set_one_check,
+      lv_btnmatrix_get_one_check);
 
   m_parts << LV_BTNMATRIX_PART_BG << LV_BTNMATRIX_PART_BTN;
   m_editableStyles << LVGL::Background;    // LV_BTNMATRIX_PART_BG

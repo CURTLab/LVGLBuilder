@@ -34,7 +34,7 @@ enum StylePart {
   Button = Mix | Background | Border | Outline | Shadow | Value | Pattern |
            Transition,
   BtnMatrixBTN = Background | Text,
-  CalendarHead = Mix | Background | Padding | Margin,
+  CalendarHead = Mix | Background | Padding | Margin | Text,
   Canvas = Image,
   ChartBG = Background | Text | Padding,
   ChartSERIESBG = Background | Line | Padding,
