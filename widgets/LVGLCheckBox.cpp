@@ -4,29 +4,32 @@
 
 #include "LVGLObject.h"
 
-class LVGLPropertyCBChecked : public LVGLPropertyBool {
+class LVGLPropertyCBDisabled : public LVGLPropertyBool {
  public:
-  QString name() const { return "Checked"; }
+  LVGLPropertyCBDisabled() : m_bool(false) {}
 
- protected:
-  bool get(LVGLObject *obj) const { return lv_checkbox_is_checked(obj->obj()); }
-  void set(LVGLObject *obj, bool boolean) {
-    lv_checkbox_set_checked(obj->obj(), boolean);
+  QString name() const { return "Disabled"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QStringList list;
+    if (false != m_bool)
+      list << QString("lv_checkbox_set_disabled(%1);").arg(obj->codeName());
+    return list;
   }
-};
-
-class LVGLPropertyCBInactive : public LVGLPropertyBool {
- public:
-  QString name() const { return "Inactive"; }
 
  protected:
   bool get(LVGLObject *obj) const {
-    return lv_checkbox_is_inactive(obj->obj());
+    Q_UNUSED(obj)
+    return m_bool;
   }
   void set(LVGLObject *obj, bool boolean) {
-    lv_btn_set_state(obj->obj(),
-                     boolean ? LV_BTN_STATE_DISABLED : LV_BTN_STATE_RELEASED);
+    m_bool = boolean;
+    if (m_bool)
+      lv_checkbox_set_disabled(obj->obj());
+    else
+      lv_checkbox_set_state(obj->obj(), LV_BTN_STATE_RELEASED);
   }
+  bool m_bool;
 };
 
 LVGLCheckBox::LVGLCheckBox() {
@@ -35,8 +38,10 @@ LVGLCheckBox::LVGLCheckBox() {
 
   m_properties << new LVGLPropertyString(
       "Text", "lv_cb_set_text", lv_checkbox_set_text, lv_checkbox_get_text);
-  m_properties << new LVGLPropertyCBChecked;
-  m_properties << new LVGLPropertyCBInactive;
+  m_properties << new LVGLPropertyBool("Checked", "lv_checkbox_set_checked",
+                                       lv_checkbox_set_checked,
+                                       lv_checkbox_is_checked);
+  m_properties << new LVGLPropertyCBDisabled;
 
   m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BG
   m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BULLET

@@ -1,2 +1,11 @@
 
 *.user
+/build
+/debug
+/release
+/homepage.h
+/homepage.c
+/.qmake.stash
+/Makefile
+/Makefile.Debug
+/Makefile.Release

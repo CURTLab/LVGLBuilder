@@ -52,6 +52,7 @@ RCC_DIR = build/rcc
 UI_DIR = build/ui
 
 SOURCES += \
+    ColorPick.cpp \
     LVGLCore.cpp \
     LVGLDialog.cpp \
     LVGLFontData.cpp \
@@ -129,6 +130,7 @@ SOURCES += \
     widgets/LVGLWindow.cpp
 
 HEADERS += \
+    ColorPick.h \
     LVGLCore.h \
     LVGLDialog.h \
     LVGLFontData.h \
@@ -206,6 +208,7 @@ HEADERS += \
     widgets/LVGLWindow.h
 
 FORMS += \
+    ColorPick.ui \
     LVGLFontDialog.ui \
     LVGLNewDialog.ui \
     ListViewItem.ui \

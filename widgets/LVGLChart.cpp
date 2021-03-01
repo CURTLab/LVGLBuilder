@@ -3,6 +3,9 @@
 #include <QIcon>
 
 #include "LVGLObject.h"
+#include "lvgl/src/lv_core/lv_obj.h"
+#include "lvgl/src/lv_widgets/lv_chart.h"
+#include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyFlags.h"
 #include "properties/LVGLPropertyRange.h"
 #include "properties/LVGLPropertySeries.h"
@@ -35,31 +38,31 @@
 //  }
 //};
 
-// class LVGLPropertyChartRange : public LVGLPropertyRange {
-// public:
-//  QString name() const override { return "Y range"; }
+class LVGLPropertyChartRange : public LVGLPropertyRange {
+ public:
+  QString name() const override { return "Y range"; }
 
-//  QStringList function(LVGLObject *obj) const override {
-//    return QStringList() << QString("lv_chart_set_range(%1, %2, %3);")
-//                                .arg(obj->codeName())
-//                                .arg(getMin(obj))
-//                                .arg(getMax(obj));
-//  }
+  QStringList function(LVGLObject *obj) const override {
+    return QStringList() << QString("lv_chart_set_range(%1, %2, %3);")
+                                .arg(obj->codeName())
+                                .arg(getMin(obj))
+                                .arg(getMax(obj));
+  }
 
-// protected:
-//  int getMin(LVGLObject *obj) const override {
-//    return reinterpret_cast<lv_chart_ext_t *>(lv_obj_get_ext_attr(obj->obj()))
-//        ->ymin;
-//  }
-//  int getMax(LVGLObject *obj) const override {
-//    return reinterpret_cast<lv_chart_ext_t *>(lv_obj_get_ext_attr(obj->obj()))
-//        ->ymax;
-//  }
-//  void set(LVGLObject *obj, int min, int max) override {
-//    lv_chart_set_range(obj->obj(), static_cast<lv_coord_t>(min),
-//                       static_cast<lv_coord_t>(max));
-//  }
-//};
+ protected:
+  int getMin(LVGLObject *obj) const override {
+    lv_chart_ext_t *ext = (lv_chart_ext_t *)lv_obj_get_ext_attr(obj->obj());
+    return ext->ymin[LV_CHART_AXIS_PRIMARY_Y];
+  }
+  int getMax(LVGLObject *obj) const override {
+    lv_chart_ext_t *ext = (lv_chart_ext_t *)lv_obj_get_ext_attr(obj->obj());
+    return ext->ymax[LV_CHART_AXIS_PRIMARY_Y];
+  }
+  void set(LVGLObject *obj, int min, int max) override {
+    lv_chart_set_range(obj->obj(), static_cast<lv_coord_t>(min),
+                       static_cast<lv_coord_t>(max));
+  }
+};
 
 class LVGLPropertyChartXDiv : public LVGLPropertyInt {
  public:
@@ -107,7 +110,7 @@ class LVGLPropertyChartYDiv : public LVGLPropertyInt {
 
 // protected:
 //  virtual lv_coord_t get(LVGLObject *obj) const override {
-//    return lv_chart_get_series_width(obj->obj());
+//    return lvchgets(obj->obj());
 //  }
 //  virtual void set(LVGLObject *obj, lv_coord_t value) override {
 //    lv_chart_set_series_width(obj->obj(), value);
@@ -176,17 +179,90 @@ class LVGLPropertyChartYDiv : public LVGLPropertyInt {
 //  }
 //};
 
+class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
+ public:
+  LVGLPropertyChartSeries(const AnyFuncColType arr[], int size)
+      : LVGLPropertyAnyFunc(arr, size), m_list(QStringList() << "Empty list") {}
+  QString name() const { return "Add Series"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QStringList list;
+    if (!m_sermap.isEmpty()) {
+      // var define
+      const QString str1 = "lv_chart_series_t *";
+      const QString str2 = "series";
+      for (int i = 1; i <= m_sermap.size(); ++i) {
+        QString name = str2 + QString::number(i);
+        QString tmp = str1 + name +
+                      QString(" = lv_chart_add_series(%1, lv_color_hex(0x%2));")
+                          .arg(obj->codeName())
+                          .arg(m_colorresult[i].mid(1, 6));
+        list << tmp;
+        auto datalist = m_coderesult[i];
+        for (int j = 0; j < datalist.size(); ++j) {
+          if (datalist[j] != "")
+            list << QString("%1->points[%2] = %3;")
+                        .arg(name)
+                        .arg(j)
+                        .arg(datalist[j]);
+        }
+      }
+      list << QString("lv_chart_refresh(%1);").arg(obj->codeName());
+    }
+    return list;
+  }
+
+ protected:
+  QStringList get(LVGLObject *obj) const {
+    if (m_list[0] != "Empty list") return m_list;
+    return QStringList();
+  }
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    for (auto s : list) {
+      QStringList strlist = s.split('@');
+      int index = strlist[0].toInt();
+      if (m_colorresult.contains(index) && m_colorresult[index] != strlist[1]) {
+        lv_chart_remove_series(obj->obj(), m_sermap[index]);
+      }
+
+      if (!m_sermap.contains(index) || (m_colorresult.contains(index) &&
+                                        m_colorresult[index] != strlist[1])) {
+        m_colorresult[index] = strlist[1];
+        m_sermap[index] = lv_chart_add_series(
+            obj->obj(), lvgl->fromColor(QColor(strlist[1])));
+      } else
+        lv_chart_clear_serie(obj->obj(), m_sermap[index]);
+
+      QStringList datalist = strlist[2].split(',');
+      m_coderesult[index] = datalist;
+      for (int i = 0; i < datalist.size(); ++i)
+        if (datalist[i] != "") m_sermap[index]->points[i] = datalist[i].toInt();
+    }
+    lv_chart_refresh(obj->obj());
+  }
+
+ private:
+  QStringList m_list;
+  QMap<int, QString> m_colorresult;
+  QMap<int, QStringList> m_coderesult;
+  QMap<int, lv_chart_series_t *> m_sermap;
+};
+
 LVGLChart::LVGLChart() {
   initStateStyles();
   m_parts << LV_CHART_PART_BG << LV_CHART_PART_SERIES_BG << LV_CHART_PART_SERIES
           << LV_CHART_PART_CURSOR;
   //  m_properties << new LVGLPropertyChartType;
-  //  m_properties << new LVGLPropertyChartRange;
+  m_properties << new LVGLPropertyChartRange;
   m_properties << new LVGLPropertyChartXDiv;
   m_properties << new LVGLPropertyChartYDiv;
   //  m_properties << new LVGLPropertyChartSeries;
   // m_properties << new LVGLPropertyChartMargin;
-  m_properties << new LVGLPropertySeries;
+  // m_properties << new LVGLPropertySeries;
+
+  static const AnyFuncColType arr[3] = {e_Seqlabel, e_ColorPick, e_QLineEdit};
+  m_properties << new LVGLPropertyChartSeries(arr, 3);
 
   m_editableStyles << LVGL::ChartBG;        // LV_CHART_PART_BG
   m_editableStyles << LVGL::ChartSERIESBG;  // LV_CHART_PART_SERIES_BG

@@ -121,7 +121,7 @@ class LVGLPropertyBarValue : public LVGLPropertyAnyFunc {
   void set(LVGLObject *obj, QStringList list) {
     m_list = list;
     if (!m_list.empty()) {
-      QStringList strlist = m_list[0].split(' ');
+      QStringList strlist = m_list[0].split('@');
       int value = strlist[0].toInt();
       QString str = strlist[1];
       lv_anim_enable_t ae;

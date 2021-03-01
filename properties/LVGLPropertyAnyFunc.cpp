@@ -6,10 +6,15 @@
 #include <QDialogButtonBox>
 #include <QHeaderView>
 #include <QJsonArray>
+#include <QLabel>
+#include <QLineEdit>
 #include <QSpinBox>
 #include <QTableWidget>
+#include <QTextEdit>
 #include <QToolButton>
 #include <QVBoxLayout>
+
+#include "ColorPick.h"
 
 class LVGLPropertyAnyFuncDialog : public QDialog {
  public:
@@ -20,14 +25,20 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
         m_rowCount(0),
         m_afctarr(coltype),
         m_arrsize(arrsize),
-        m_oneline(oneline) {
+        m_oneline(oneline),
+        m_seqindex(0) {
     m_tableW = new QTableWidget(this);
     m_tableW->setColumnCount(arrsize);
     m_tableW->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     QStringList headerlabels;
-    for (int i = 0; i < arrsize; ++i) headerlabels << "-";
-    m_tableW->setHorizontalHeaderLabels(headerlabels);
-    m_tableW->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
+    //    for (int i = 0; i < arrsize; ++i) headerlabels << "-";
+    //    m_tableW->setHorizontalHeaderLabels(headerlabels);
+    m_tableW->horizontalHeader()->setSectionResizeMode(
+        QHeaderView::ResizeToContents);
+    auto verhead = m_tableW->verticalHeader();
+    verhead->hide();
+    auto horhead = m_tableW->horizontalHeader();
+    horhead->hide();
     QDialogButtonBox *box =
         new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
 
@@ -48,29 +59,7 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
       connect(box, &QDialogButtonBox::clicked,
               [this, add, rem](QAbstractButton *b) {
                 if (b == add) {
-                  if (m_oneline) {
-                    if (m_rowCount < 1) {
-                      ++m_rowCount;
-                      m_tableW->setRowCount(m_rowCount);
-                      QMap<int, void *> map;
-                      for (int i = 0; i < m_arrsize; ++i) {
-                        if (m_afctarr[i] == AnyFuncColType::e_QComboBox) {
-                          QComboBox *comp = new QComboBox(this);
-                          comp->addItems(m_liststrlist[i]);
-                          m_tableW->setCellWidget(m_rowCount - 1, i, comp);
-                          map[i] = comp;
-
-                        } else if (m_afctarr[i] == AnyFuncColType::e_QSpinBox) {
-                          QSpinBox *spinp = new QSpinBox(this);
-                          spinp->setMaximum(m_maxlist[i]);
-                          spinp->setMinimum(m_minlist[i]);
-                          m_tableW->setCellWidget(m_rowCount - 1, i, spinp);
-                          map[i] = spinp;
-                        }
-                      }
-                      m_listmap.push_back(map);
-                    }
-                  } else {
+                  if ((m_oneline && (m_rowCount < 1)) || !m_oneline) {
                     ++m_rowCount;
                     m_tableW->setRowCount(m_rowCount);
                     QMap<int, void *> map;
@@ -87,11 +76,27 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
                         spinp->setMinimum(m_minlist[i]);
                         m_tableW->setCellWidget(m_rowCount - 1, i, spinp);
                         map[i] = spinp;
+                      } else if (m_afctarr[i] == AnyFuncColType::e_ColorPick) {
+                        ColorPick *cp = new ColorPick(this);
+                        m_tableW->setCellWidget(m_rowCount - 1, i, cp);
+                        map[i] = cp;
+                      } else if (m_afctarr[i] == AnyFuncColType::e_Seqlabel) {
+                        QLabel *lb =
+                            new QLabel(QString::number(++m_seqindex), this);
+                        m_tableW->setCellWidget(m_rowCount - 1, i, lb);
+                        map[i] = lb;
+                      } else if (m_afctarr[i] == AnyFuncColType::e_QTextEdit) {
+                        QTextEdit *te = new QTextEdit(this);
+                        m_tableW->setCellWidget(m_rowCount - 1, i, te);
+                        map[i] = te;
+                      } else if (m_afctarr[i] == AnyFuncColType::e_QLineEdit) {
+                        QLineEdit *le = new QLineEdit(this);
+                        m_tableW->setCellWidget(m_rowCount - 1, i, le);
+                        map[i] = le;
                       }
                     }
                     m_listmap.push_back(map);
                   }
-
                 } else if (b == rem) {
                   if (!m_oneline) {
                     int row = m_tableW->currentRow();
@@ -124,10 +129,11 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
     m_tableW->setRowCount(m_rowCount);
     m_tableW->clear();
     m_listmap.clear();  // will delete ,because they have parent
+    m_seqindex = 0;
     int index = 0;
     for (const QString &s : list) {
       QMap<int, void *> map;
-      QStringList spacestr = s.split(' ');
+      QStringList spacestr = s.split('@');
       for (int j = 0; j < spacestr.size() - 1; ++j) {
         if (m_afctarr[j] == AnyFuncColType::e_QComboBox) {
           auto comp = new QComboBox(this);
@@ -143,6 +149,26 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
           spinp->setValue(spacestr[j].toUInt());
           m_tableW->setCellWidget(index, j, spinp);
           map[j] = spinp;
+        } else if (m_afctarr[j] == AnyFuncColType::e_ColorPick) {
+          auto cp = new ColorPick(this);
+          cp->setColor(QColor(spacestr[j]));
+          m_tableW->setCellWidget(index, j, cp);
+          map[j] = cp;
+        } else if (m_afctarr[j] == AnyFuncColType::e_QTextEdit) {
+          auto te = new QTextEdit(this);
+          te->setPlainText(spacestr[j]);
+          m_tableW->setCellWidget(index, j, te);
+          map[j] = te;
+        } else if (m_afctarr[j] == AnyFuncColType::e_Seqlabel) {
+          auto lb = new QLabel(this);
+          lb->setText(QString::number(++m_seqindex));
+          m_tableW->setCellWidget(index, j, lb);
+          map[j] = lb;
+        } else if (m_afctarr[j] == AnyFuncColType::e_QLineEdit) {
+          QLineEdit *le = new QLineEdit(this);
+          le->setText(spacestr[j]);
+          m_tableW->setCellWidget(index, j, le);
+          map[j] = le;
         }
       }
       ++index;
@@ -169,10 +195,22 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
       for (int j = 0; j < m_arrsize; ++j) {
         if (m_afctarr[j] == AnyFuncColType::e_QComboBox) {
           auto p = static_cast<QComboBox *>(map[j]);
-          tmp += p->currentText() + " ";
+          tmp += p->currentText() + "@";
         } else if (m_afctarr[j] == AnyFuncColType::e_QSpinBox) {
           auto p = static_cast<QSpinBox *>(map[j]);
-          tmp += QString::number(p->value()) + " ";
+          tmp += QString::number(p->value()) + "@";
+        } else if (m_afctarr[j] == AnyFuncColType::e_ColorPick) {
+          auto p = static_cast<ColorPick *>(map[j]);
+          tmp += p->colorString() + "@";
+        } else if (m_afctarr[j] == AnyFuncColType::e_Seqlabel) {
+          auto p = static_cast<QLabel *>(map[j]);
+          tmp += p->text() + "@";
+        } else if (m_afctarr[j] == AnyFuncColType::e_QTextEdit) {
+          auto p = static_cast<QTextEdit *>(map[j]);
+          tmp += p->toPlainText() + "@";
+        } else if (m_afctarr[j] == AnyFuncColType::e_QLineEdit) {
+          auto p = static_cast<QLineEdit *>(map[j]);
+          tmp += p->text() + "@";
         }
       }
       ret << tmp;
@@ -187,6 +225,7 @@ class LVGLPropertyAnyFuncDialog : public QDialog {
   const AnyFuncColType *m_afctarr;
   int m_arrsize;
   bool m_oneline;
+  int m_seqindex;
   QList<QMap<int, void *>> m_listmap;
   QMap<int, QStringList> m_liststrlist;
   QMap<int, int> m_maxlist;

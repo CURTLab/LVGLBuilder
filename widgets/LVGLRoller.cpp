@@ -66,7 +66,7 @@ class LVGLPropertyRollerVisibleRows : public LVGLPropertyInt {
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_roller_set_visible_row_count(%1,%2);")
                                 .arg(obj->codeName())
-                                .arg(m_widget->value());
+                                .arg(m_value);
   }
 
  protected:

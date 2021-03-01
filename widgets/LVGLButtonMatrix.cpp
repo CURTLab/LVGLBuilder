@@ -153,6 +153,7 @@ class LVGLPropertyBtnmatrixButtonCtrl : public LVGLPropertyAnyFunc {
 
  protected:
   QStringList get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
     if (m_frun) {
       m_frun = false;
       QStringList l1, l2;
@@ -175,7 +176,7 @@ class LVGLPropertyBtnmatrixButtonCtrl : public LVGLPropertyAnyFunc {
   void set(LVGLObject *obj, QStringList list) {
     m_list = list;
     for (int i = 0; i < m_list.size(); ++i) {
-      QStringList strlist = list[i].split(' ');
+      QStringList strlist = list[i].split('@');
       int id = strlist[0].toInt();
       auto str = strlist[1];
       lv_btnmatrix_ctrl_t ctrl = LV_BTNMATRIX_CTRL_HIDDEN;
@@ -236,6 +237,7 @@ class LVGLPropertyBtnmatrixButtonWidth : public LVGLPropertyAnyFunc {
 
  protected:
   QStringList get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
     if (m_frun) {
       m_frun = false;
       QStringList l1;
@@ -252,7 +254,7 @@ class LVGLPropertyBtnmatrixButtonWidth : public LVGLPropertyAnyFunc {
   void set(LVGLObject *obj, QStringList list) {
     m_list = list;
     for (int i = 0; i < m_list.size(); ++i) {
-      QStringList strlist = m_list[i].split(' ');
+      QStringList strlist = m_list[i].split('@');
       int id = strlist[0].toInt();
       int width = strlist[1].toInt();
       m_coderesulet[id] = strlist[1];
