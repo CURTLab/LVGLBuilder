@@ -54,13 +54,13 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->property_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
       "#f2f2f2;}");
-  m_propertyModel = new LVGLPropertyModel();
+  m_propertyModel = new LVGLPropertyModel(this);
   m_ld1 = new ListDelegate(m_ui->list_widgets->getlistview());
   m_ld2 = new ListDelegate(m_ui->list_widgets_2->getlistview());
   m_ld3 = new ListDelegate(m_ui->list_widgets_3->getlistview());
 
   m_ui->property_tree->setModel(m_propertyModel);
-  m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate);
+  m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate(this));
   m_ui->button_remove_image->setEnabled(false);
   m_ui->button_remove_font->setEnabled(false);
 
@@ -68,7 +68,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   m_ui->statusbar->addPermanentWidget(m_zoom_slider);
 
-  m_styleModel = new LVGLStyleModel;
+  m_styleModel = new LVGLStyleModel(this);
   connect(m_styleModel, &LVGLStyleModel::styleChanged, this,
           &MainWindow::styleChanged);
   m_ui->style_tree->setModel(m_styleModel);
@@ -111,7 +111,13 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+  int n = m_ui->list_images->count();
+  for (int i = 0; i < n; ++i) {
+    auto item = m_ui->list_images->item(0);
+    delete item;
+  }
   delete m_ui;
+  qDeleteAll(m_listTabW);
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
   qDeleteAll(m_widgetsInputW);
@@ -829,7 +835,7 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
 }
 
 void MainWindow::tabChanged(int index) {
-  if (index != m_curTabWIndex) {
+  if (index != m_curTabWIndex && index >= 0) {
     if (nullptr != m_curSimulation) m_curSimulation->setSelectedObject(nullptr);
     m_curSimulation = m_listTabW[index]->getSimulator();
     lvgl = m_listTabW[index]->getCore();
