@@ -117,7 +117,6 @@ MainWindow::~MainWindow() {
     delete item;
   }
   delete m_ui;
-  qDeleteAll(m_listTabW);
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
   qDeleteAll(m_widgetsInputW);
@@ -205,6 +204,7 @@ void MainWindow::openNewProject() {
   } else if (m_project == nullptr) {
     setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
+    LVGLHelper::getInstance().reduceFileindex();
   }
   m_isrun = false;
 }

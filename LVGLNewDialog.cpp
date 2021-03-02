@@ -4,6 +4,7 @@
 #include <QPixmap>
 #include <QSettings>
 
+#include "LVGLHelper.h"
 #include "ui_LVGLNewDialog.h"
 
 LVGLNewDialog::LVGLNewDialog(QWidget *parent)
@@ -17,6 +18,7 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
   m_ui->pushButton->setText("Ok");
   m_ui->pushButton_2->setText("Cancel");
   m_ui->combo_resolution->addItem(tr("Costume"));
+  m_ui->lineEdit->setText(LVGLHelper::getInstance().generateFileName());
   setWindowFlags(Qt::FramelessWindowHint);
   setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
   m_ui->close->setStyleSheet(

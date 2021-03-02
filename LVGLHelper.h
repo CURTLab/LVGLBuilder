@@ -15,13 +15,18 @@ class LVGLHelper {
   }
   // get
   MainWindow* getMainW() { return m_pMainW; }
+  const QString generateFileName() {
+    return QString("Page-%1").arg(++m_filecount);
+  }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
+  void reduceFileindex() { --m_filecount; }
 
  private:
-  LVGLHelper(){};
+  LVGLHelper() : m_pMainW(nullptr), m_filecount(0){};
   static LVGLHelper* m_instance;
   MainWindow* m_pMainW;
+  int m_filecount;
 };
 #endif
