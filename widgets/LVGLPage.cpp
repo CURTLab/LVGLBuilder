@@ -10,16 +10,22 @@ class LVGLPropertyPageScrollbars : public LVGLPropertyEnum {
       : LVGLPropertyEnum(QStringList() << "Off"
                                        << "On"
                                        << "Drag"
-                                       << "Auto"),
+                                       << "Auto"
+                                       << "Hide"
+                                       << "Unhide"),
         m_values({"LV_SCROLLBAR_MODE_OFF", "LV_SCROLLBAR_MODE_ON",
-                  "LV_SCROLLBAR_MODE_DRAG", "LV_SCROLLBAR_MODE_AUTO"}) {}
+                  "LV_SCROLLBAR_MODE_DRAG", "LV_SCROLLBAR_MODE_AUTO",
+                  "LV_SCROLLBAR_MODE_HIDE", "LV_SCROLLBAR_MODE_UNHIDE"}) {}
 
   QString name() const { return "Scrollbars"; }
 
   QStringList function(LVGLObject *obj) const {
-    return QStringList() << QString("lv_page_set_scrlbar_mode(%1, %2);")
-                                .arg(obj->codeName())
-                                .arg(m_values.at(get(obj)));
+    QStringList list;
+    if (m_values.at(get(obj)) != "LV_SCROLLBAR_MODE_AUTO")
+      list << QString("lv_page_set_scrlbar_mode(%1, %2);")
+                  .arg(obj->codeName())
+                  .arg(m_values.at(get(obj)));
+    return list;
   }
 
  protected:

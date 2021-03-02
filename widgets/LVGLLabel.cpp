@@ -82,14 +82,40 @@ class LVGLPropertyLabelRecolor : public LVGLPropertyBool {
   }
 };
 
+class LVGLPropertyLabelText : public LVGLPropertyStringPlus {
+ public:
+  QString name() const { return "Text"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QString tmp = lv_label_get_text(obj->obj());
+    QStringList list;
+    if (!tmp.isEmpty()) {
+      QString str;
+      for (auto c : tmp) {
+        if (c != '\n')
+          str += c;
+        else
+          str += "\\n";
+      }
+      list << QString("lv_label_set(%1,\"%2\")").arg(obj->codeName()).arg(str);
+    }
+    return list;
+  }
+
+ protected:
+  QString get(LVGLObject *obj) const { return lv_label_get_text(obj->obj()); }
+  void set(LVGLObject *obj, QString string) {
+    lv_label_set_text(obj->obj(), string.toUtf8().data());
+  }
+};
+
 LVGLLabel::LVGLLabel() {
   initStateStyles();
   m_parts << LV_LABEL_PART_MAIN;
+  m_properties << new LVGLPropertyLabelText;
   m_properties << new LVGLPropertyLabelAlign;
   m_properties << new LVGLPropertyLabelLongMode;
   m_properties << new LVGLPropertyLabelRecolor;
-  m_properties << new LVGLPropertyString("Text", "lv_label_set_text",
-                                         lv_label_set_text, lv_label_get_text);
 
   // swap geometry in order to stop autosize
   const int index = m_properties.indexOf(m_geometryProp);

@@ -125,5 +125,6 @@ class MainWindow : public QMainWindow {
   QHash<QString, const LVGLWidget *> m_widgets;
   QHash<QString, const LVGLWidget *> m_widgetsDisplayW;
   QHash<QString, const LVGLWidget *> m_widgetsInputW;
+  bool m_isrun;
 };
 #endif  // MAINWINDOW_H

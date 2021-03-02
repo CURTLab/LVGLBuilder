@@ -45,7 +45,8 @@ MainWindow::MainWindow(QWidget *parent)
       m_widgetModelIPW(nullptr),
       m_filter(nullptr),
       m_curTabWIndex(-1),
-      m_frun(true) {
+      m_frun(true),
+      m_isrun(false) {
   m_ui->setupUi(this);
   m_ui->style_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
@@ -168,6 +169,7 @@ void MainWindow::loadRecent() {
 
 void MainWindow::openNewProject() {
   LVGLNewDialog dialog(this);
+  m_isrun = true;
   if (dialog.exec() == QDialog::Accepted) {
     if (m_curSimulation != nullptr) revlvglConnect();
     TabWidget *tabw = new TabWidget(dialog.selectName(), this);
@@ -198,6 +200,7 @@ void MainWindow::openNewProject() {
     setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
   }
+  m_isrun = false;
 }
 
 void MainWindow::addImage(LVGLImageData *img, QString name) {
@@ -495,7 +498,7 @@ void MainWindow::on_action_run_toggled(bool run) {
 
 void MainWindow::showEvent(QShowEvent *event) {
   QMainWindow::showEvent(event);
-  if (m_project == nullptr)
+  if (m_project == nullptr && !m_isrun)
     QTimer::singleShot(50, this, SLOT(openNewProject()));
 }
 
