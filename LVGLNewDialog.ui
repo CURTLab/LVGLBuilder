@@ -338,10 +338,10 @@
           </font>
          </property>
          <property name="toolTip">
-          <string>Page-1</string>
+          <string>Page_1</string>
          </property>
          <property name="placeholderText">
-          <string notr="true">Page-1</string>
+          <string notr="true">Page_1</string>
          </property>
         </widget>
        </item>

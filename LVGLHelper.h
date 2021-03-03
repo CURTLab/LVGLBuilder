@@ -16,7 +16,7 @@ class LVGLHelper {
   // get
   MainWindow* getMainW() { return m_pMainW; }
   const QString generateFileName() {
-    return QString("Page-%1").arg(++m_filecount);
+    return QString("Page_%1").arg(++m_filecount);
   }
 
   // set

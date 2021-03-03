@@ -206,7 +206,7 @@ bool LVGLFontData::saveAsCode(const QString &fileName) const {
   const uint32_t unicodeSec = unicodeFirst + fdsc->cmaps[0].range_length - 1;
 
   QTextStream stream(&file);
-  stream << "#include \"lvgl->h\"\n\n";
+  stream << "#include \"lvgl/lvgl.h\"\n\n";
 
   const QString defName = m_codeName.toUpper();
   const QString output_name = m_codeName;

@@ -147,7 +147,7 @@ bool LVGLImageData::saveAsCode(const QString &fileName) const {
   if (!file.open(QIODevice::WriteOnly)) return false;
   uint8_t *d = m_data;
   QTextStream stream(&file);
-  stream << "#include \"lvgl->h\"\n";
+  stream << "#include \"lvgl/lvgl.h\"\n";
 
   size_t bytes = 0;
   if (m_colorFormat == LV_COLOR_32Bit)
