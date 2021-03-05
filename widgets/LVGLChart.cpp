@@ -182,7 +182,7 @@ class LVGLPropertyChartYDiv : public LVGLPropertyInt {
 class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyChartSeries(const AnyFuncColType arr[], int size)
-      : LVGLPropertyAnyFunc(arr, size), m_list(QStringList() << "Empty list") {}
+      : LVGLPropertyAnyFunc(arr, size) {}
   QString name() const { return "Add Series"; }
 
   QStringList function(LVGLObject *obj) const {
@@ -214,7 +214,7 @@ class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
 
  protected:
   QStringList get(LVGLObject *obj) const {
-    if (m_list[0] != "Empty list") return m_list;
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
     return QStringList();
   }
   void set(LVGLObject *obj, QStringList list) {

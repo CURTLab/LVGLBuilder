@@ -20,6 +20,9 @@ class LVGLMessageBox : public LVGLWidget {
   virtual void addStyle(lv_obj_t *obj, lv_style_t *style,
                         lv_obj_part_t part = LV_OBJ_PART_MAIN) const;
   virtual void initStateStyles();
+
+ private:
+  bool havebtn;
 };
 
 #endif  // LVGLMESSAGEBOX_H

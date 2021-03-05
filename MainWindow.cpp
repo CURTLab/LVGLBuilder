@@ -200,7 +200,7 @@ void MainWindow::openNewProject() {
     m_project->setres(res);
     lvgl->changeResolution(res);
   } else {
-    setEnableBuilder(false);
+    if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
     LVGLHelper::getInstance().reduceFileindex();
   }
@@ -292,7 +292,7 @@ void MainWindow::loadProject(const QString &fileName) {
   setWindowTitle("LVGL Builder");
   if (m_project == nullptr) {
     QMessageBox::critical(this, "Error", "Could not load lvgl file!");
-    setEnableBuilder(false);
+    if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
   } else {
     m_ui->tabWidget->setTabText(index, m_project->name());
     adjustForCurrentFile(fileName);

@@ -2601,8 +2601,6 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
         if (!v.isNull()) p->setValue(newObj, v);
       }
     }
-    if (object.contains("styles"))
-      newObj->parseStyles(object["styles"].toArray());
 
     if (object.contains("children")) {
       QJsonArray childs = object["children"].toArray();
@@ -2634,6 +2632,9 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
         }
       }
     }
+
+    if (object.contains("styles"))
+      newObj->parseStyles(object["styles"].toArray());
     return newObj;
   }
   return nullptr;

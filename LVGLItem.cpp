@@ -77,14 +77,8 @@ QVariant LVGLItem::itemChange(QGraphicsItem::GraphicsItemChange change,
     lv_obj_t *parent = lv_obj_get_parent(m_object->obj());
     if (parent) {
       offset = lvgl->get_absolute_position(parent);
-      if (m_object->parent() != nullptr) {
-        auto obj = m_object->parent()->obj();
-        QSize size = QSize(lv_obj_get_width(obj), lv_obj_get_height(obj));
-        rect = QRect(QPoint(0, 0), size - m_object->size());
-      } else {
-        rect = QRect(QPoint(0, 0),
-                     lvgl->get_object_size(parent) - m_object->size());
-      }
+      rect =
+          QRect(QPoint(0, 0), lvgl->get_object_size(parent) - m_object->size());
     } else {
       rect = QRect(QPoint(0, 0), lvgl->size() - m_object->size());
     }

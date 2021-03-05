@@ -85,10 +85,7 @@ class LVGLPropertyBarValue : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyBarValue(const AnyFuncColType arr[], int arrsize,
                        LVGLPropertyBarRange *p)
-      : LVGLPropertyAnyFunc(arr, arrsize, true),
-        m_list(QStringList() << "Empty list"),
-        m_lpbr(p),
-        m_frun(true) {}
+      : LVGLPropertyAnyFunc(arr, arrsize, true), m_lpbr(p), m_frun(true) {}
 
   QString name() const { return "Value"; }
 
@@ -115,7 +112,7 @@ class LVGLPropertyBarValue : public LVGLPropertyAnyFunc {
       updateData(1, QStringList() << "LV_ANIM_ON"
                                   << "LV_ANIM_OFF");
     }
-    if (m_list[0] != "Empty list") return m_list;
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
     return QStringList();
   }
   void set(LVGLObject *obj, QStringList list) {

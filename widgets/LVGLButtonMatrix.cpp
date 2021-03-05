@@ -131,10 +131,7 @@ class LVGLPropertyBtnmatrixButtonCtrl : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyBtnmatrixButtonCtrl(const AnyFuncColType arr[], int size,
                                   LVGLPropertyBtnmatrixButtonsText *p)
-      : LVGLPropertyAnyFunc(arr, size),
-        m_lpbbt(p),
-        m_list(QStringList() << "Empty list"),
-        m_frun(true) {}
+      : LVGLPropertyAnyFunc(arr, size), m_lpbbt(p), m_frun(true) {}
   QString name() const { return "Button's Ctrl"; }
 
   QStringList function(LVGLObject *obj) const {
@@ -170,7 +167,7 @@ class LVGLPropertyBtnmatrixButtonCtrl : public LVGLPropertyAnyFunc {
       updateData(1, l2);
     }
 
-    if (m_list[0] != "Empty list") return m_list;
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
     return QStringList();
   }
   void set(LVGLObject *obj, QStringList list) {
@@ -214,10 +211,7 @@ class LVGLPropertyBtnmatrixButtonWidth : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyBtnmatrixButtonWidth(const AnyFuncColType arr[], int size,
                                    LVGLPropertyBtnmatrixButtonsText *p)
-      : LVGLPropertyAnyFunc(arr, size),
-        m_lpbbt(p),
-        m_list(QStringList() << "Empty list"),
-        m_frun(true) {}
+      : LVGLPropertyAnyFunc(arr, size), m_lpbbt(p), m_frun(true) {}
 
   QString name() const { return "Button's Width"; }
 
@@ -248,7 +242,7 @@ class LVGLPropertyBtnmatrixButtonWidth : public LVGLPropertyAnyFunc {
       updateData(1, 7, true);
     }
 
-    if (m_list[0] != "Empty list") return m_list;
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
     return QStringList();
   }
   void set(LVGLObject *obj, QStringList list) {

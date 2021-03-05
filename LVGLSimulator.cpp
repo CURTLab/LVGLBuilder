@@ -228,7 +228,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
     QDataStream stream(&encoded, QIODevice::ReadOnly);
     stream >> cast.i;
     LVGLWidget *widgetClass = cast.ptr;
-
+    auto wclass = lvgl->widget(widgetClass->className());
     LVGLObject *newObj = nullptr;
 
     // check if moved into another widget
@@ -243,14 +243,14 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
         parent = parent->findChildByIndex(lv_tabview_get_tab_act(obj));
         Q_ASSERT(parent);
       }
-      newObj = new LVGLObject(widgetClass, "", parent);
+
+      newObj = new LVGLObject(wclass, "", parent);
       parentPos = parent->absolutePosition();
-      newObj->setGeometry(QRect(pos - parentPos, widgetClass->minimumSize()));
+      newObj->setGeometry(QRect(pos - parentPos, wclass->minimumSize()));
     } else {
-      newObj = new LVGLObject(widgetClass, "", m_lvgl->getdispt()->act_scr);
-      QSize size(
-          std::min(widgetClass->minimumSize().width(), m_lvgl->width()),
-          std::min(widgetClass->minimumSize().height(), m_lvgl->height()));
+      newObj = new LVGLObject(wclass, "", m_lvgl->getdispt()->act_scr);
+      QSize size(std::min(wclass->minimumSize().width(), m_lvgl->width()),
+                 std::min(wclass->minimumSize().height(), m_lvgl->height()));
       if (pos.x() + size.width() >= m_lvgl->width())
         pos.setX(m_lvgl->width() - size.width());
       if (pos.y() + size.height() >= m_lvgl->height())
@@ -258,7 +258,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
       newObj->setGeometry(QRect(pos, size));
     }
 
-    qDebug().noquote() << "Class:" << widgetClass->className()
+    qDebug().noquote() << "Class:" << wclass->className()
                        << "Id:" << newObj->name();
     addObject(newObj);
   }

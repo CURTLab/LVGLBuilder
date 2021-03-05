@@ -86,7 +86,8 @@ class LVGLPropertyButtonFit : public LVGLPropertyEnum {
  protected:
   int get(LVGLObject *obj) const {
     Q_UNUSED(obj)
-    return m_index;
+    lv_cont_ext_t *ext = (lv_cont_ext_t *)lv_obj_get_ext_attr(obj->obj());
+    return ext->fit_left;
   }
   void set(LVGLObject *obj, int index) {
     m_index = index;

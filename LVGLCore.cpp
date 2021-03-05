@@ -481,7 +481,10 @@ void LVGLCore::removeObject(LVGLObject *object) {
 
 void LVGLCore::removeAllObjects() {
   for (LVGLObject *c : m_objects) {
-    if (c->parent() == nullptr) removeObject(c);
+    if (c->parent() == nullptr) {
+      removeObject(c);
+      c = nullptr;
+    }
   }
 }
 
@@ -700,9 +703,72 @@ QList<const LVGLWidget *> LVGLCore::widgetsInputW() const {
 }
 
 const LVGLWidget *LVGLCore::widget(const QString &name) const {
-  if (m_widgets.contains(name)) return m_widgets[name];
-  if (m_widgetsDisplayW.contains(name)) return m_widgetsDisplayW[name];
-  if (m_widgetsInputW.contains(name)) return m_widgetsInputW[name];
+  if (name == "lv_arc")
+    return new LVGLArc;
+  else if (name == "lv_bar")
+    return new LVGLBar;
+  else if (name == "lv_btn")
+    return new LVGLButton;
+  else if (name == "lv_btnmatrix")
+    return new LVGLButtonMatrix;
+  else if (name == "lv_calendar")
+    return new LVGLCalendar;
+  else if (name == "lv_canvas")
+    return new LVGLCanvas;
+  else if (name == "lv_chart")
+    return new LVGLChart;
+  else if (name == "lv_cb")
+    return new LVGLCheckBox;
+  else if (name == "lv_cpicker")
+    return new LVGLColorPicker;
+  else if (name == "lv_cont")
+    return new LVGLContainer;
+  else if (name == "lv_dropdown")
+    return new LVGLDropDownList;
+  else if (name == "lv_gauge")
+    return new LVGLGauge;
+  else if (name == "lv_img")
+    return new LVGLImage;
+  else if (name == "lv_imgbtn")
+    return new LVGLImageButton;
+  else if (name == "lv_kb")
+    return new LVGLKeyboard;
+  else if (name == "lv_label")
+    return new LVGLLabel;
+  else if (name == "lv_led")
+    return new LVGLLED;
+  else if (name == "lv_line")
+    return new LVGLLine;
+  else if (name == "lv_lmeter")
+    return new LVGLLineMeter;
+  else if (name == "lv_list")
+    return new LVGLList;
+  else if (name == "lv_msgbox")
+    return new LVGLMessageBox;
+  else if (name == "lv_objmask")
+    return new LVGLObjectMask;
+  else if (name == "lv_page")
+    return new LVGLPage;
+  else if (name == "lv_roller")
+    return new LVGLRoller;
+  else if (name == "lv_slider")
+    return new LVGLSlider;
+  else if (name == "lv_spinbox")
+    return new LVGLSpinbox;
+  else if (name == "lv_spinner")
+    return new LVGLSpinner;
+  else if (name == "lv_sw")
+    return new LVGLSwitch;
+  else if (name == "lv_table")
+    return new LVGLTable;
+  else if (name == "lv_tabview")
+    return new LVGLTabview;
+  else if (name == "lv_ta")
+    return new LVGLTextArea;
+  else if (name == "lv_tileview")
+    return new LVGLTileView;
+  else if (name == "lv_win")
+    return new LVGLWindow;
   return nullptr;
 }
 

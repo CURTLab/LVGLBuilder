@@ -300,8 +300,8 @@ void LVGLPropertyAnyFunc::setValue(LVGLObject *obj, QVariant value) {
 }
 
 QJsonValue LVGLPropertyAnyFunc::toJson(LVGLObject *obj) const {
-  //  const QStringList items = get(obj);
+  const QStringList items = get(obj);
   QJsonArray val;
-  //  for (const QString &i : items) val.append(i);
+  for (const QString &i : items) val.append(i);
   return val;
 }

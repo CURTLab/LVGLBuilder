@@ -37,7 +37,7 @@
 //  }
 //};
 
-LVGLMessageBox::LVGLMessageBox() {
+LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
   initStateStyles();
   m_parts << LV_MSGBOX_PART_BG << LV_MSGBOX_PART_BTN_BG << LV_MSGBOX_PART_BTN;
 
@@ -72,7 +72,10 @@ lv_obj_t *LVGLMessageBox::newObject(lv_obj_t *parent) const {
 QSize LVGLMessageBox::minimumSize() const { return {200, 85}; }
 
 QStringList LVGLMessageBox::styles() const {
-  return {"MSGBOX_PART_BG", "MSGBOX_PART_BTN_BG", "MSGBOX_PART_BTN"};
+  if (havebtn)
+    return {"MSGBOX_PART_BG", "MSGBOX_PART_BTN_BG", "MSGBOX_PART_BTN"};
+  else
+    return {"MSGBOX_PART_BG"};
 }
 
 lv_style_t *LVGLMessageBox::style(lv_obj_t *obj, lv_obj_part_t part) const {
@@ -90,23 +93,45 @@ void LVGLMessageBox::addStyle(lv_obj_t *obj, lv_style_t *style,
 }
 
 void LVGLMessageBox::initStateStyles() {
-  for (int i = 0; i < 3; ++i) {
-    lv_style_t *de = new lv_style_t;
-    lv_style_t *ch = new lv_style_t;
-    lv_style_t *fo = new lv_style_t;
-    lv_style_t *ed = new lv_style_t;
-    lv_style_t *ho = new lv_style_t;
-    lv_style_t *pr = new lv_style_t;
-    lv_style_t *di = new lv_style_t;
-    lv_style_init(de);
-    lv_style_init(ch);
-    lv_style_init(fo);
-    lv_style_init(ed);
-    lv_style_init(ho);
-    lv_style_init(pr);
-    lv_style_init(di);
-    QList<lv_style_t *> stateStyles;
-    stateStyles << de << ch << fo << ed << ho << pr << di;
-    m_partsStyles[i] = stateStyles;
+  if (havebtn) {
+    for (int i = 0; i < 3; ++i) {
+      lv_style_t *de = new lv_style_t;
+      lv_style_t *ch = new lv_style_t;
+      lv_style_t *fo = new lv_style_t;
+      lv_style_t *ed = new lv_style_t;
+      lv_style_t *ho = new lv_style_t;
+      lv_style_t *pr = new lv_style_t;
+      lv_style_t *di = new lv_style_t;
+      lv_style_init(de);
+      lv_style_init(ch);
+      lv_style_init(fo);
+      lv_style_init(ed);
+      lv_style_init(ho);
+      lv_style_init(pr);
+      lv_style_init(di);
+      QList<lv_style_t *> stateStyles;
+      stateStyles << de << ch << fo << ed << ho << pr << di;
+      m_partsStyles[i] = stateStyles;
+    }
+  } else {
+    for (int i = 0; i < 1; ++i) {
+      lv_style_t *de = new lv_style_t;
+      lv_style_t *ch = new lv_style_t;
+      lv_style_t *fo = new lv_style_t;
+      lv_style_t *ed = new lv_style_t;
+      lv_style_t *ho = new lv_style_t;
+      lv_style_t *pr = new lv_style_t;
+      lv_style_t *di = new lv_style_t;
+      lv_style_init(de);
+      lv_style_init(ch);
+      lv_style_init(fo);
+      lv_style_init(ed);
+      lv_style_init(ho);
+      lv_style_init(pr);
+      lv_style_init(di);
+      QList<lv_style_t *> stateStyles;
+      stateStyles << de << ch << fo << ed << ho << pr << di;
+      m_partsStyles[i] = stateStyles;
+    }
   }
 }

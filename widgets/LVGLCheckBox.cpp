@@ -34,7 +34,8 @@ class LVGLPropertyCBDisabled : public LVGLPropertyBool {
 
 LVGLCheckBox::LVGLCheckBox() {
   initStateStyles();
-  m_parts << LV_CHECKBOX_PART_BG << LV_CHECKBOX_PART_BULLET;
+  m_parts << LV_CHECKBOX_PART_BG;
+  //<< LV_CHECKBOX_PART_BULLET;
 
   m_properties << new LVGLPropertyString(
       "Text", "lv_cb_set_text", lv_checkbox_set_text, lv_checkbox_get_text);
@@ -44,7 +45,7 @@ LVGLCheckBox::LVGLCheckBox() {
   m_properties << new LVGLPropertyCBDisabled;
 
   m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BG
-  m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BULLET
+  // m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BULLET
 }
 
 QString LVGLCheckBox::name() const { return "Check box"; }
@@ -63,8 +64,8 @@ lv_obj_t *LVGLCheckBox::newObject(lv_obj_t *parent) const {
 QSize LVGLCheckBox::minimumSize() const { return QSize(100, 35); }
 
 QStringList LVGLCheckBox::styles() const {
-  return QStringList() << "CHECKBOX_PART_BG"
-                       << "CHECKBOX_PART_BULLET";
+  return QStringList() << "CHECKBOX_PART_BG";
+  //<< "CHECKBOX_PART_BULLET";
 }
 
 lv_style_t *LVGLCheckBox::style(lv_obj_t *obj, lv_obj_part_t part) const {
@@ -81,7 +82,7 @@ void LVGLCheckBox::addStyle(lv_obj_t *obj, lv_style_t *style,
 }
 
 void LVGLCheckBox::initStateStyles() {
-  for (int i = 0; i < 2; ++i) {
+  for (int i = 0; i < 1; ++i) {
     lv_style_t *de = new lv_style_t;
     lv_style_t *ch = new lv_style_t;
     lv_style_t *fo = new lv_style_t;
