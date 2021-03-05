@@ -32,9 +32,9 @@ TabWidget::TabWidget(const QString &name, QWidget *parent)
 }
 
 TabWidget::~TabWidget() {
-  delete m_project;
   delete m_core;
   delete m_simulator;
+  delete m_project;
 }
 
 void TabWidget::initLvglWidget() {

@@ -105,8 +105,6 @@ MainWindow::MainWindow(QWidget *parent)
   connect(m_ui->tabWidget, &QTabWidget::currentChanged, this,
           &MainWindow::tabChanged);
 
-  // initcodemap();
-  // initNewWidgets();
   LVGLHelper::getInstance().setMainW(this);
 }
 
@@ -201,7 +199,7 @@ void MainWindow::openNewProject() {
     m_project = tabw->getProject();
     m_project->setres(res);
     lvgl->changeResolution(res);
-  } else if (m_project == nullptr) {
+  } else {
     setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
     LVGLHelper::getInstance().reduceFileindex();
@@ -220,11 +218,15 @@ void MainWindow::addImage(LVGLImageData *img, QString name) {
 
 void MainWindow::updateImages() {
   m_ui->list_images->clear();
-  for (LVGLImageData *i : lvgl->images()) {
-    if (i->fileName().isEmpty()) continue;
-    QString name = QFileInfo(i->fileName()).baseName() +
-                   QString(" [%1x%2]").arg(i->width()).arg(i->height());
-    addImage(i, name);
+  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
+    auto tabW = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
+    auto tmplvgl = tabW->getCore();
+    for (LVGLImageData *i : tmplvgl->images()) {
+      if (i->fileName().isEmpty()) continue;
+      QString name = QFileInfo(i->fileName()).baseName() +
+                     QString(" [%1x%2]").arg(i->width()).arg(i->height());
+      addImage(i, name);
+    }
   }
 }
 
@@ -239,8 +241,12 @@ void MainWindow::addFont(LVGLFontData *font, QString name) {
 
 void MainWindow::updateFonts() {
   m_ui->list_fonts->clear();
-  for (const LVGLFontData *f : lvgl->customFonts())
-    addFont(const_cast<LVGLFontData *>(f), f->name());
+  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
+    auto tabW = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
+    auto tmplvgl = tabW->getCore();
+    for (const LVGLFontData *f : tmplvgl->customFonts())
+      addFont(const_cast<LVGLFontData *>(f), f->name());
+  }
 }
 
 void MainWindow::updateRecentActionList() {
@@ -277,15 +283,19 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 
 void MainWindow::loadProject(const QString &fileName) {
   delete m_project;
+  m_project = nullptr;
   m_curSimulation->clear();
-  m_project = LVGLProject::load(fileName);
+  int index = m_ui->tabWidget->currentIndex();
+  auto tab = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
+  tab->setProject(LVGLProject::load(fileName));
+  m_project = tab->getProject();
+  setWindowTitle("LVGL Builder");
   if (m_project == nullptr) {
     QMessageBox::critical(this, "Error", "Could not load lvgl file!");
-    setWindowTitle("LVGL Builder");
     setEnableBuilder(false);
   } else {
+    m_ui->tabWidget->setTabText(index, m_project->name());
     adjustForCurrentFile(fileName);
-    setWindowTitle("LVGL Builder - [" + m_project->name() + "]");
     lvgl->changeResolution(m_project->resolution());
     m_curSimulation->changeResolution(m_project->resolution());
     setEnableBuilder(true);

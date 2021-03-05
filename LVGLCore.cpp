@@ -674,17 +674,17 @@ void LVGLCore::setScreenColor(QColor color) {
 }
 
 QColor LVGLCore::screenColor() const {
-  lv_color_t res;
-  _lv_style_get_color(&m_screenStyle, LV_STYLE_BG_COLOR, &res);
+  lv_color_t res =
+      _lv_obj_get_style_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR);
   return toColor(res);
 }
 
 bool LVGLCore::screenColorChanged() const {
-  //  return (((m_screenStyle.map[LV_STYLE_BG_COLOR]) !=
-  //           lv_style_scr.map[LV_STYLE_BG_COLOR]) &&
-  //          ((m_screenStyle.map[LV_STYLE_BG_GRAD_COLOR]) !=
-  //           lv_style_scr.map[LV_STYLE_BG_GRAD_COLOR]));
-  return false;
+  lv_color_t res =
+      _lv_obj_get_style_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR);
+  QColor c = toColor(res);
+  if (0xff == c.red() && 0xff == c.blue() && 0xff == c.green()) return false;
+  return true;
 }
 
 QList<const LVGLWidget *> LVGLCore::widgets() const {
