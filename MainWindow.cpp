@@ -285,6 +285,10 @@ void MainWindow::loadProject(const QString &fileName) {
   delete m_project;
   m_project = nullptr;
   m_curSimulation->clear();
+  int msize = m_objectModel->rowCount();
+  for (int i = 0; i < msize; ++i) m_objectModel->removeRow(0);
+  msize = m_styleModel->rowCount();
+  for (int i = 0; i < msize; ++i) m_styleModel->removeRow(0);
   int index = m_ui->tabWidget->currentIndex();
   auto tab = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
   tab->setProject(LVGLProject::load(fileName));
@@ -336,6 +340,7 @@ void MainWindow::on_action_save_triggered() {
   QString fileName =
       QFileDialog::getSaveFileName(this, "Save lvgl", path, "LVGL (*.lvgl)");
   if (fileName.isEmpty()) return;
+  m_curSimulation->clear();
   if (!m_project->save(fileName)) {
     QMessageBox::critical(this, "Error", "Could not save lvgl file!");
   } else {

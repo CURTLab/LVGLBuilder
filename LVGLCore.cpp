@@ -30,13 +30,9 @@ const char *LVGLCore::LVGL_STATE_STR[7] = {
     "LV_STATE_EDITED",  "LV_STATE_HOVERED", "LV_STATE_PRESSED",
     "LV_STATE_DISABLED"};
 
-lv_style_t lv_style_scr;
-
 LVGLCore::LVGLCore(QObject *parent)
     : QObject(parent), m_defaultFont(nullptr), m_dispt(nullptr) {
   FT_Init_FreeType(&m_ft);
-  lv_style_init(&lv_style_scr);
-  lv_style_init(&m_screenStyle);
 }
 
 LVGLCore::~LVGLCore() {
@@ -77,7 +73,6 @@ void LVGLCore::init(int width, int height) {
   QImage pix(":/images/littlevgl_logo.png");
   m_default = lvgl->addImage(pix, "default");
 
-  lv_style_copy(&m_screenStyle, &lv_style_scr);
 #if LV_FONT_CHINESE_16
   m_fonts << new LVGLFontData("Chinese 16", "lv_font_chinese_16", 16,
                               &lv_font_chinese_16);
@@ -664,16 +659,11 @@ void LVGLCore::removeCustomFonts() {
   }
 }
 
-QString LVGLCore::baseStyleName(const lv_style_t *style) const {
-  if (style == &lv_style_scr) return "lv_style_scr";
-  return "";
-}
-
 void LVGLCore::setScreenColor(QColor color) {
-  lv_style_set_bg_color(&m_screenStyle, LV_STATE_DEFAULT, fromColor(color));
-  lv_style_set_bg_grad_color(&m_screenStyle, LV_STATE_DEFAULT,
-                             fromColor(color));
-  lv_obj_add_style(getdispt()->act_scr, 0, &m_screenStyle);
+  _lv_obj_set_style_local_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR,
+                                fromColor(color));
+  _lv_obj_set_style_local_color(getdispt()->act_scr, 0, LV_STYLE_BG_GRAD_COLOR,
+                                fromColor(color));
 }
 
 QColor LVGLCore::screenColor() const {

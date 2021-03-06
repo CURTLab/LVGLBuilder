@@ -102,8 +102,7 @@ bool LVGLProject::save(const QString &fileName) {
       {{"width", m_resolution.width()}, {"height", m_resolution.height()}});
   QJsonObject screen(
       {{"widgets", widgetArr}, {"name", m_name}, {"resolution", resolution}});
-  if (lvgl->screenColorChanged())
-    screen.insert("screen color", QVariant(lvgl->screenColor()).toString());
+  screen.insert("screen color", QVariant(lvgl->screenColor()).toString());
   QJsonObject lvgl(
       {{"lvgl", screen}, {"images", imageArr}, {"fonts", fontArr}});
   QJsonDocument doc(lvgl);

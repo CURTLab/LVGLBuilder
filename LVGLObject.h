@@ -53,7 +53,6 @@ class LVGLObject : public QObject {
 
   QJsonObject toJson();
   QJsonArray jsonStyles() const;
-  QStringList codeStyle(QString styleVar, int type) const;
   QStringList codeStyle(QString styleVar, lv_obj_t *obj1, lv_obj_t *obj2,
                         int partindex, int stateindex);
   void parseStyles(const QJsonArray &styles);

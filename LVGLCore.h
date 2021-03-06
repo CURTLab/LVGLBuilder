@@ -95,8 +95,6 @@ class LVGLCore : public QObject {
   QList<const LVGLFontData *> customFonts() const;
   void removeCustomFonts();
 
-  QString baseStyleName(const lv_style_t *style) const;
-
   void setScreenColor(QColor color);
   QColor screenColor() const;
   bool screenColorChanged() const;
@@ -135,7 +133,6 @@ class LVGLCore : public QObject {
   LVGLImageData *m_default;
   QList<LVGLObject *> m_objects;
   QList<LVGLFontData *> m_fonts;
-  lv_style_t m_screenStyle;
   const LVGLFontData *m_defaultFont;
 
   std::vector<lv_color_t> m_dispFrameBuf;
@@ -152,7 +149,6 @@ class LVGLCore : public QObject {
 };
 
 extern LVGLCore *lvgl;
-extern lv_style_t lv_style_scr;
 
 // cast helpers for internal models
 union LVGLImageDataCast {
