@@ -4,6 +4,7 @@
 
 #include "LVGLCore.h"
 #include "LVGLObject.h"
+#include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyTextList.h"
 
 class LVGLPropertyTabBtnPos : public LVGLPropertyEnum {
@@ -33,53 +34,49 @@ class LVGLPropertyTabBtnPos : public LVGLPropertyEnum {
   QStringList m_values;
 };
 
-class LVGLPropertyTabs : public LVGLPropertyTextList {
+class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
  public:
-  inline LVGLPropertyTabs(LVGLProperty *parent = nullptr)
-      : LVGLPropertyTextList(true, parent) {}
-
-  inline QString name() const { return "Add Tabs"; }
+  LVGLPropertyTabs(const AnyFuncColType arr[], int size)
+      : LVGLPropertyAnyFunc(arr, size) {}
+  QString name() const { return "Add Tabs"; }
 
  protected:
-  inline QStringList get(LVGLObject *obj) const {
-    QStringList ret;
-    lv_tabview_ext_t *ext =
-        reinterpret_cast<lv_tabview_ext_t *>(lv_obj_get_ext_attr(obj->obj()));
-    for (uint16_t i = 0; i < ext->tab_cnt; ++i)
-      ret << QString(ext->tab_name_ptr[i]);
-    return ret;
+  QStringList get(LVGLObject *obj) const {
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList();
   }
-
-  inline void set(LVGLObject *obj, QStringList list) {
-    lv_tabview_ext_t *ext =
-        reinterpret_cast<lv_tabview_ext_t *>(lv_obj_get_ext_attr(obj->obj()));
-    // rename
-    for (uint16_t i = 0;
-         i < qMin(ext->tab_cnt, static_cast<uint16_t>(list.size())); ++i) {
-      QByteArray name = list.at(i).toUtf8();
-      if (strcmp(ext->tab_name_ptr[i], name.data()) == 0) continue;
-
-      char *name_dm = reinterpret_cast<char *>(lv_mem_alloc(name.size()));
-      if (name_dm == nullptr) continue;
-
-      memcpy(name_dm, name, name.size());
-      name_dm[name.size()] = '\0';
-      ext->tab_name_ptr[i] = name_dm;
-
-      lv_btnmatrix_set_map(ext->btns, ext->tab_name_ptr);
-      lv_btnmatrix_set_btn_ctrl(ext->btns, ext->tab_cur,
-                                LV_BTNMATRIX_CTRL_NO_REPEAT);
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    for (int i = 0; i < m_list.size(); ++i) {
+      QStringList strlist = m_list[i].split('@');
+      int index = strlist[0].toInt();
+      m_tabNames[index] = strlist[1];
     }
 
-    // add new
-    for (uint16_t i = ext->tab_cnt; i < list.size(); ++i) {
-      lv_obj_t *page_obj =
-          lv_tabview_add_tab(obj->obj(), qUtf8Printable(list.at(i)));
-      LVGLObject *page =
-          new LVGLObject(page_obj, lvgl->widget("lv_page"), obj, false, i);
-      lvgl->addObject(page);
+    if (!m_tabNames.isEmpty()) {
+      if (m_result.size() > m_tabNames.size()) {
+      } else {
+        for (int i = 1; i <= m_tabNames.size(); ++i) {
+          auto byte = m_tabNames[i].toUtf8();
+          char *name = new char[byte.size() + 1];
+          name[byte.size()] = '\0';
+          strcpy(name, byte.data());
+          if (m_result.contains(i)) {
+            lv_tabview_set_tab_name(obj->obj(), i - 1, name);
+          } else {
+            m_result.insert(i);
+            lv_tabview_add_tab(obj->obj(), name);
+          }
+        }
+      }
     }
   }
+
+ private:
+  QStringList m_list;
+  QMap<int, QString> m_tabNames;
+  QSet<int> m_result;
+  ;
 };
 
 class LVGLPropertyTabCurrent : public LVGLPropertyInt {
@@ -160,16 +157,17 @@ LVGLTabview::LVGLTabview() {
   m_parts << LV_TABVIEW_PART_BG << LV_TABVIEW_PART_BG_SCROLLABLE
           << LV_TABVIEW_PART_TAB_BG << LV_TABVIEW_PART_TAB_BTN
           << LV_TABVIEW_PART_INDIC;
-  m_properties << new LVGLPropertyTabs;
+  static AnyFuncColType arr[] = {e_Seqlabel, e_QLineEdit};
+  m_properties << new LVGLPropertyTabs(arr, 2);
   m_properties << new LVGLPropertyTabBtnPos;
   m_properties << new LVGLPropertyTabCurrent;
   m_properties << new LVGLPropertyTabScrollbars;
 
-  m_editableStyles << LVGL::PageSCRL;     // LV_TABVIEW_PART_BG
-  m_editableStyles << LVGL::Button;       // LV_TABVIEW_PART_BG_SCROLLABLE
-  m_editableStyles << LVGL::Background;   // LV_TABVIEW_PART_TAB_BG
-  m_editableStyles << LVGL::TableTABBTN;  // LV_TABVIEW_PART_TAB_BTN
-  m_editableStyles << LVGL::Background;   // LV_TABVIEW_PART_INDIC
+  m_editableStyles << LVGL::BtnMatrixBTN;  // LV_TABVIEW_PART_BG
+  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_BG_SCROLLABLE
+  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BG
+  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BTN
+  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_INDIC
 }
 
 QString LVGLTabview::name() const { return "Tabview"; }

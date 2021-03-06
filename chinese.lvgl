@@ -60,49 +60,49 @@
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 6
@@ -130,7 +130,7 @@
                 "styles": [
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -138,7 +138,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -146,7 +146,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -154,7 +154,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -162,7 +162,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -170,7 +170,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -178,7 +178,7 @@
                     },
                     {
                         "Value": {
-                            "value_font": "lv_font_chinese_16",
+                            "value_font": "Chinese 16",
                             "value_str": "哈哈哈"
                         },
                         "part": 0,
@@ -194,8 +194,8 @@
                 "geometry": {
                     "height": 48,
                     "width": 160,
-                    "x": 16,
-                    "y": 200
+                    "x": 51,
+                    "y": 202
                 },
                 "locked": false,
                 "long mode": "Expand",
@@ -204,49 +204,49 @@
                 "styles": [
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
@@ -257,13 +257,17 @@
             },
             {
                 "accessible": false,
+                "add buttons": [
+                    "1@不好@",
+                    "2@不好@"
+                ],
                 "animation time": 200,
                 "class": "lv_msgbox",
                 "geometry": {
-                    "height": 52,
+                    "height": 128,
                     "width": 200,
-                    "x": 242,
-                    "y": 195
+                    "x": 278,
+                    "y": 196
                 },
                 "locked": false,
                 "name": "message_box_1",
@@ -271,55 +275,111 @@
                 "styles": [
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
                     }
                 ],
-                "text": "你确定吗",
+                "text": "你过得好吗",
                 "widget": "Message box"
             },
             {
@@ -331,8 +391,8 @@
                 "geometry": {
                     "height": 126,
                     "width": 162,
-                    "x": 267,
-                    "y": 267
+                    "x": 108,
+                    "y": 286
                 },
                 "locked": false,
                 "max length": 0,
@@ -345,49 +405,49 @@
                 "styles": [
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
@@ -525,8 +585,8 @@
                 "geometry": {
                     "height": 200,
                     "width": 416,
-                    "x": 33,
-                    "y": 484
+                    "x": 40,
+                    "y": 444
                 },
                 "locked": false,
                 "month names": [
@@ -576,98 +636,98 @@
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 6
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 2,
                         "state": 6
@@ -711,57 +771,57 @@
                 "geometry": {
                     "height": 28,
                     "width": 131,
-                    "x": 285,
-                    "y": 425
+                    "x": 308,
+                    "y": 403
                 },
                 "locked": false,
                 "name": "check_box_1",
                 "styles": [
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
@@ -779,8 +839,8 @@
                 "geometry": {
                     "height": 144,
                     "width": 90,
-                    "x": 78,
-                    "y": 295
+                    "x": 7,
+                    "y": 264
                 },
                 "locked": false,
                 "name": "roller_1",
@@ -791,7 +851,7 @@
                             "border_color": "0x01a2b1"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
@@ -801,7 +861,7 @@
                             "border_color": "0x01a2b1"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
@@ -811,14 +871,14 @@
                             "border_color": "0x44d1b6"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
@@ -828,7 +888,7 @@
                             "border_color": "0x01a2b1"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
@@ -838,7 +898,7 @@
                             "border_color": "0x01a2b1"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
@@ -848,56 +908,56 @@
                             "border_color": "0x01a2b1"
                         },
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 1,
                         "state": 6
@@ -913,9 +973,9 @@
                 "dir": "Down",
                 "geometry": {
                     "height": 40,
-                    "width": 213,
-                    "x": 114,
-                    "y": 705
+                    "width": 178,
+                    "x": 289,
+                    "y": 343
                 },
                 "locked": false,
                 "max height": 641,
@@ -924,55 +984,239 @@
                 "styles": [
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 0
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 1
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 2
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 3
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 4
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 5
                     },
                     {
                         "Text": {
-                            "text_font": "lv_font_chinese_16"
+                            "text_font": "Chinese 16"
                         },
                         "part": 0,
                         "state": 6
                     }
                 ],
                 "widget": "Dropdown"
+            },
+            {
+                "accessible": false,
+                "add tabs": [
+                    "1@第一页@",
+                    "2@第二页@",
+                    "3@第三页@"
+                ],
+                "class": "lv_tabview",
+                "current tab": 1,
+                "geometry": {
+                    "height": 195,
+                    "width": 480,
+                    "x": 0,
+                    "y": 660
+                },
+                "locked": false,
+                "name": "tabview_1",
+                "scrollbars": "Auto",
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "Chinese 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    },
+                    {
+                        "part": 3,
+                        "state": 0
+                    },
+                    {
+                        "part": 3,
+                        "state": 1
+                    },
+                    {
+                        "part": 3,
+                        "state": 2
+                    },
+                    {
+                        "part": 3,
+                        "state": 3
+                    },
+                    {
+                        "part": 3,
+                        "state": 4
+                    },
+                    {
+                        "part": 3,
+                        "state": 5
+                    },
+                    {
+                        "part": 3,
+                        "state": 6
+                    },
+                    {
+                        "part": 4,
+                        "state": 0
+                    },
+                    {
+                        "part": 4,
+                        "state": 1
+                    },
+                    {
+                        "part": 4,
+                        "state": 2
+                    },
+                    {
+                        "part": 4,
+                        "state": 3
+                    },
+                    {
+                        "part": 4,
+                        "state": 4
+                    },
+                    {
+                        "part": 4,
+                        "state": 5
+                    },
+                    {
+                        "part": 4,
+                        "state": 6
+                    }
+                ],
+                "tab position": "Top",
+                "widget": "Tabview"
             }
         ]
     }

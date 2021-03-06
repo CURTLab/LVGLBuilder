@@ -375,7 +375,7 @@ QVariant LVGLStyle::get(const LVGLStyleItem* item) const {
         m_curobj, m_part, (m_state << LV_STYLE_STATE_POS) | type);
     const int index = lvgl->indexOfFont(c);
     if (index == -1) {
-      const void* f = (void*)lvgl->font("lv_font_chinese_16");
+      const void* f = (void*)lvgl->font("Chinese 16");
       _lv_obj_set_style_local_ptr(m_curobj, m_part,
                                   (m_state << LV_STYLE_STATE_POS) | type, f);
       c = (lv_font_t*)_lv_obj_get_style_ptr(

@@ -10,33 +10,28 @@
 #include "properties/LVGLPropertyRange.h"
 #include "properties/LVGLPropertySeries.h"
 
-// class LVGLPropertyChartType : public LVGLPropertyFlags {
-// public:
-//  LVGLPropertyChartType()
-//      : LVGLPropertyFlags(
-//            {"None", "Line", "Columns", "Points", "Area", "Vertical lines"},
-//            {"LV_CHART_TYPE_NONE", "LV_CHART_TYPE_LINE",
-//            "LV_CHART_TYPE_COLUMN",
-//             "LV_CHART_TYPE_POINT", "LV_CHART_TYPE_AREA",
-//             "LV_CHART_TYPE_VERTICAL_LINE"},
-//            {LV_CHART_TYPE_NONE, LV_CHART_TYPE_LINE, LV_CHART_TYPE_COLUMN,
-//             LV_CHART_TYPE_POINT, LV_CHART_TYPE_AREA,
-//             LV_CHART_TYPE_VERTICAL_LINE}) {}
+class LVGLPropertyChartType : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyChartType()
+      : LVGLPropertyEnum({"None", "Line", "Columns"}),
+        m_valus({"LV_CHART_TYPE_NONE", "LV_CHART_TYPE_LINE",
+                 "LV_CHART_TYPE_COLUMN"}) {}
 
-//  QString name() const { return "Type"; }
+  QString name() const { return "Type"; }
 
-//  QStringList function(LVGLObject *obj) const {
-//    return QStringList() << QString("lv_chart_set_type(%1, %2);")
-//                                .arg(obj->codeName())
-//                                .arg(codeValue(obj));
-//  }
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_chart_set_type(%1, %2);")
+                                .arg(obj->codeName())
+                                .arg(m_valus.at(get(obj)));
+  }
 
-// protected:
-//  int get(LVGLObject *obj) const { return lv_chart_get_type(obj->obj()); }
-//  void set(LVGLObject *obj, int index) {
-//    lv_chart_set_type(obj->obj(), index & 0xff);
-//  }
-//};
+ protected:
+  int get(LVGLObject *obj) const { return lv_chart_get_type(obj->obj()); }
+  void set(LVGLObject *obj, int index) {
+    lv_chart_set_type(obj->obj(), index & 0xff);
+  }
+  QStringList m_valus;
+};
 
 class LVGLPropertyChartRange : public LVGLPropertyRange {
  public:
@@ -101,83 +96,6 @@ class LVGLPropertyChartYDiv : public LVGLPropertyInt {
                                 ext->vdiv_cnt);
   }
 };
-
-// class LVGLPropertyChartWidth : public LVGLPropertyCoord {
-// public:
-//  LVGLPropertyChartWidth(LVGLProperty *p) : LVGLPropertyCoord(p) {}
-
-//  QString name() const override { return "Width"; }
-
-// protected:
-//  virtual lv_coord_t get(LVGLObject *obj) const override {
-//    return lvchgets(obj->obj());
-//  }
-//  virtual void set(LVGLObject *obj, lv_coord_t value) override {
-//    lv_chart_set_series_width(obj->obj(), value);
-//  }
-//};
-
-// class LVGLPropertyChartOpa : public LVGLPropertyInt {
-// public:
-//  LVGLPropertyChartOpa(LVGLProperty *p) : LVGLPropertyInt(0, 255, p) {}
-
-//  QString name() const override { return "Opacity"; }
-
-// protected:
-//  virtual int get(LVGLObject *obj) const override {
-//    return lv_chart_get_series_opa(obj->obj());
-//  }
-//  virtual void set(LVGLObject *obj, int value) override {
-//    lv_chart_set_series_opa(obj->obj(), static_cast<lv_opa_t>(value));
-//  }
-//};
-
-// class LVGLPropertyChartDarking : public LVGLPropertyInt {
-// public:
-//  LVGLPropertyChartDarking(LVGLProperty *p) : LVGLPropertyInt(0, 255, p) {}
-
-//  QString name() const override { return "Dark fade"; }
-
-// protected:
-//  virtual int get(LVGLObject *obj) const override {
-//    return lv_chart_get_series_darking(obj->obj());
-//  }
-//  virtual void set(LVGLObject *obj, int value) override {
-//    lv_chart_set_series_darking(obj->obj(), static_cast<lv_opa_t>(value));
-//  }
-//};
-
-// class LVGLPropertyChartSeries : public LVGLProperty {
-//  LVGLPropertyChartWidth *m_w;
-//  LVGLPropertyChartOpa *m_opa;
-//  LVGLPropertyChartDarking *m_darking;
-
-// public:
-//  LVGLPropertyChartSeries()
-//      : m_w(new LVGLPropertyChartWidth(this)),
-//        m_opa(new LVGLPropertyChartOpa(this)),
-//        m_darking(new LVGLPropertyChartDarking(this)) {
-//    m_childs << m_w << m_opa << m_darking;
-//  }
-
-//  QString name() const override { return "Series"; }
-//};
-
-// class LVGLPropertyChartMargin : public LVGLPropertyInt {
-// public:
-//  LVGLPropertyChartMargin(LVGLProperty *p = nullptr)
-//      : LVGLPropertyInt(0, UINT16_MAX, p) {}
-
-//  QString name() const override { return "Margin"; }
-
-// protected:
-//  virtual int get(LVGLObject *obj) const override {
-//    return lv_chart_get_margin(obj->obj());
-//  }
-//  virtual void set(LVGLObject *obj, int value) override {
-//    lv_chart_set_margin(obj->obj(), static_cast<uint16_t>(value));
-//  }
-//};
 
 class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
  public:
@@ -253,7 +171,7 @@ LVGLChart::LVGLChart() {
   initStateStyles();
   m_parts << LV_CHART_PART_BG << LV_CHART_PART_SERIES_BG << LV_CHART_PART_SERIES
           << LV_CHART_PART_CURSOR;
-  //  m_properties << new LVGLPropertyChartType;
+  m_properties << new LVGLPropertyChartType;
   m_properties << new LVGLPropertyChartRange;
   m_properties << new LVGLPropertyChartXDiv;
   m_properties << new LVGLPropertyChartYDiv;

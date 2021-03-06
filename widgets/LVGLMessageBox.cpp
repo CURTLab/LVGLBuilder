@@ -3,39 +3,56 @@
 #include <QIcon>
 
 #include "LVGLObject.h"
+#include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyTextList.h"
 
-// class LVGLPropertyMBoxButtons : public LVGLPropertyTextList {
-// public:
-//  inline QString name() const override { return "Buttons"; }
-//  inline ~LVGLPropertyMBoxButtons() {}
+class LVGLPropertyMsgBoxButtons : public LVGLPropertyAnyFunc {
+ public:
+  LVGLPropertyMsgBoxButtons(const AnyFuncColType arr[], int size,
+                            LVGLMessageBox *msgB)
+      : LVGLPropertyAnyFunc(arr, size), m_msgb(msgB) {}
+  QString name() const { return "Add Buttons"; }
 
-// protected:
-//  inline QStringList get(LVGLObject *obj) const override {
-//    QStringList ret;
-//    lv_obj_t *btnm =
-//        reinterpret_cast<lv_msgbox_ext_t *>(lv_obj_get_ext_attr(obj->obj()))
-//            ->btnm;
-//    if (btnm == nullptr) return {};
+  QStringList function(LVGLObject *obj) const {
+    QStringList list;
+    return list;
+  }
 
-//    lv_msgbox_ext_t *ext =
-//        reinterpret_cast<lv_msgbox_ext_t *>(lv_obj_get_ext_attr(btnm));
-//    for (uint16_t i = 0; i < ext->btn_cnt; ++i) ret << QString(ext->map_p[i]);
-//    return ret;
-//  }
+ protected:
+  QStringList get(LVGLObject *obj) const {
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList();
+  }
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    m_btnNames.clear();
+    for (int i = 0; i < m_list.size(); ++i) {
+      QStringList strlist = list[i].split('@');
+      int index = strlist[0].toInt();
+      m_btnNames[index] = strlist[1];
+    }
+    const char **arr = new const char *[m_btnNames.size() + 1];
+    if (!m_btnNames.isEmpty()) {
+      for (int i = 1; i <= m_btnNames.size(); ++i) {
+        auto data = m_btnNames[i].toUtf8();
+        char *p = new char[data.size() + 1];
+        p[data.size()] = '\0';
+        strcpy(p, data.data());
+        arr[i - 1] = p;
+      }
+      arr[m_btnNames.size()] = "";
+      lv_msgbox_add_btns(obj->obj(), arr);
+      m_msgb->havebtn = true;
+      m_msgb->initStateStyles();
+    }
+  }
 
-//  inline void set(LVGLObject *obj, QStringList list) override {
-//    char **map = new char *[list.size() + 1];
-//    for (int i = 0; i < list.size(); ++i) {
-//      map[i] = new char[list[i].size() + 1];
-//      memcpy(map[i], qUtf8Printable(list[i]), list[i].size());
-//      map[i][list[i].size()] = '\0';
-//    }
-//    map[list.size()] = new char[1];
-//    map[list.size()][0] = '\0';
-//    lv_msgbox_add_btns(obj->obj(), const_cast<const char **>(map));
-//  }
-//};
+ private:
+  QStringList m_list;
+  QMap<int, QString> m_btnNames;
+  QMap<int, QStringList> m_coderesult;
+  LVGLMessageBox *m_msgb;
+};
 
 LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
   initStateStyles();
@@ -51,9 +68,12 @@ LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
                                        lv_msgbox_set_recolor,
                                        lv_msgbox_get_recolor);
 
-  m_editableStyles << LVGL::MsgboxMAIN  // LV_MSGBOX_PART_BG
-                   << LVGL::Background  // LV_MSGBOX_PART_BTN_BG
-                   << LVGL::Button;     // LV_MSGBOX_PART_BTN
+  static AnyFuncColType arr[] = {e_Seqlabel, e_QLineEdit};
+  m_properties << new LVGLPropertyMsgBoxButtons(arr, 2, this);
+
+  m_editableStyles << LVGL::MsgboxMAIN   // LV_MSGBOX_PART_BG
+                   << LVGL::Background   // LV_MSGBOX_PART_BTN_BG
+                   << LVGL::Background;  // LV_MSGBOX_PART_BTN
 }
 
 QString LVGLMessageBox::name() const { return "Message box"; }

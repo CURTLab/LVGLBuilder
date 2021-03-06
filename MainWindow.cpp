@@ -672,6 +672,8 @@ void MainWindow::initcodemap() {
   m_codemap[20] = lv_list_create(pt, NULL);
   m_codemap[21] = lv_linemeter_create(pt, NULL);
   m_codemap[22] = lv_msgbox_create(pt, NULL);
+  static const char *btns[] = {"Ok", "Cancel", ""};
+  lv_msgbox_add_btns(m_codemap[22], btns);
   m_codemap[23] = lv_objmask_create(pt, NULL);
   m_codemap[24] = lv_page_create(pt, NULL);
   m_codemap[25] = lv_roller_create(pt, NULL);
