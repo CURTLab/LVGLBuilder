@@ -9,6 +9,7 @@
             "height": 855,
             "width": 480
         },
+        "screen color": "#ffffff",
         "widgets": [
             {
                 "accessible": false,

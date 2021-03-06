@@ -50,10 +50,12 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->setupUi(this);
   m_ui->style_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
-      "#f2f2f2;}");
+      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
+      "border:1px solid #567dbc;color:black;}");
   m_ui->property_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
-      "#f2f2f2;}");
+      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
+      "border:1px solid #567dbc;color:black;}");
   m_propertyModel = new LVGLPropertyModel(this);
   m_ld1 = new ListDelegate(m_ui->list_widgets->getlistview());
   m_ld2 = new ListDelegate(m_ui->list_widgets_2->getlistview());
@@ -63,6 +65,11 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate(this));
   m_ui->button_remove_image->setEnabled(false);
   m_ui->button_remove_font->setEnabled(false);
+
+  m_ui->object_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
+                                     QAbstractItemView::CurrentChanged);
+  m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
+                                    QAbstractItemView::CurrentChanged);
 
   m_zoom_slider->setRange(-2, 2);
 
@@ -285,10 +292,8 @@ void MainWindow::loadProject(const QString &fileName) {
   delete m_project;
   m_project = nullptr;
   m_curSimulation->clear();
-  int msize = m_objectModel->rowCount();
-  for (int i = 0; i < msize; ++i) m_objectModel->removeRow(0);
-  msize = m_styleModel->rowCount();
-  for (int i = 0; i < msize; ++i) m_styleModel->removeRow(0);
+  revlvglConnect();
+  initlvglConnect();
   int index = m_ui->tabWidget->currentIndex();
   auto tab = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
   tab->setProject(LVGLProject::load(fileName));
@@ -340,7 +345,6 @@ void MainWindow::on_action_save_triggered() {
   QString fileName =
       QFileDialog::getSaveFileName(this, "Save lvgl", path, "LVGL (*.lvgl)");
   if (fileName.isEmpty()) return;
-  m_curSimulation->clear();
   if (!m_project->save(fileName)) {
     QMessageBox::critical(this, "Error", "Could not save lvgl file!");
   } else {
