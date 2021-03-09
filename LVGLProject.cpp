@@ -203,12 +203,9 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "{\n";
   if (lvgl->screenColorChanged()) {
     QString color = QVariant(lvgl->screenColor()).toString().replace("#", "0x");
-    stream << "\tlv_style_copy(&style_screen, &lv_style_scr);\n";
-    stream << "\tstyle_screen.body.main_color = lv_color_hex(" << color
-           << ");\n";
-    stream << "\tstyle_screen.body.grad_color = lv_color_hex(" << color
-           << ");\n";
-    stream << "\tlv_obj_set_style(parent, &style_screen);\n";
+    stream << "\t_lv_obj_set_style_local_color(parent,0,LV_STYLE_BG_COLOR,lv_"
+              "color_hex("
+           << color << "));\n";
   }
   stream << "\n";
 

@@ -261,7 +261,7 @@ void lv_img_set_offset_x(lv_obj_t * img, lv_coord_t x)
 
     lv_img_ext_t * ext = lv_obj_get_ext_attr(img);
 
-    x = x % ext->w;
+    if(ext->w != 0) x = x % ext->w;
 
     ext->offset.x = x;
     lv_obj_invalidate(img);
@@ -279,7 +279,7 @@ void lv_img_set_offset_y(lv_obj_t * img, lv_coord_t y)
 
     lv_img_ext_t * ext = lv_obj_get_ext_attr(img);
 
-    y = y % ext->h;
+    if(ext->h != 0) y = y % ext->h;
 
     ext->offset.y = y;
     lv_obj_invalidate(img);

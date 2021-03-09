@@ -217,6 +217,8 @@ void MainWindow::openNewProject() {
 void MainWindow::addImage(LVGLImageData *img, QString name) {
   LVGLImageDataCast cast;
   cast.ptr = img;
+  for (int i = 0; i < m_ui->list_images->count(); ++i)
+    if (m_ui->list_images->item(i)->text() == name) return;
 
   QListWidgetItem *item = new QListWidgetItem(img->icon(), name);
   item->setData(Qt::UserRole + 3, cast.i);
@@ -240,7 +242,8 @@ void MainWindow::updateImages() {
 void MainWindow::addFont(LVGLFontData *font, QString name) {
   LVGLFontDataCast cast;
   cast.ptr = font;
-
+  for (int i = 0; i < m_ui->list_fonts->count(); ++i)
+    if (m_ui->list_fonts->item(i)->text() == name) return;
   QListWidgetItem *item = new QListWidgetItem(name);
   item->setData(Qt::UserRole + 3, cast.i);
   m_ui->list_fonts->addItem(item);
