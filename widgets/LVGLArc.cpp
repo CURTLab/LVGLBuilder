@@ -31,13 +31,37 @@ class LVGLPropertyArcRotation : public LVGLPropertyInt {
   int m_rations;
 };
 
+class LVGLPropertyArcValue : public LVGLPropertyInt {
+ public:
+  LVGLPropertyArcValue() : LVGLPropertyInt(0, 360, "") {}
+
+  QString name() const { return "Value"; }
+
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_arc_set_value(%1,%2);")
+                                .arg(obj->codeName())
+                                .arg(get(obj));
+  }
+
+ protected:
+  int get(LVGLObject *obj) const { return lv_arc_get_value(obj->obj()); }
+  void set(LVGLObject *obj, int value) {
+    lv_arc_set_value(obj->obj(), static_cast<uint16_t>(value));
+  }
+};
+
 LVGLArc::LVGLArc() {
   initStateStyles();
   m_parts << LV_ARC_PART_BG << LV_ARC_PART_INDIC << LV_ARC_PART_KNOB;
   m_properties << new LVGLPropertyVal2UInt16(
+      0, 360, "Start", lv_arc_get_bg_angle_start, 0, 360, "End",
+      lv_arc_get_bg_angle_end, "lv_arc_set_bg_angles", lv_arc_set_bg_angles,
+      "BG Angles");
+  m_properties << new LVGLPropertyVal2UInt16(
       0, 360, "Start", lv_arc_get_angle_start, 0, 360, "End",
       lv_arc_get_angle_end, "lv_arc_set_angles", lv_arc_set_angles, "Angles");
 
+  // m_properties << new LVGLPropertyArcValue;
   m_properties << new LVGLPropertyArcRotation;
 
   m_editableStyles << LVGL::ArcBG     // LV_ARC_PART_BG
