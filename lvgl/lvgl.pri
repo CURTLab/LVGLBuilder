@@ -19,6 +19,36 @@ SOURCES += \
     $$PWD/lvgl/src/lv_draw/lv_img_cache.c \
     $$PWD/lvgl/src/lv_draw/lv_img_decoder.c \
     $$PWD/lvgl/src/lv_font/lv_font.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_100.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_12.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_120.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_14.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_16.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_18.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_20.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_22.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_24.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_28.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_30.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_32.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_34.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_36.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_46.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_60.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_80.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_12.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_14.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_18.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_20.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_22.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_24.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_26.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_28.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_30.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_32.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_34.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_36.c \
+    $$PWD/lvgl/src/lv_font/lv_font_chinese_38.c \
     $$PWD/lvgl/src/lv_font/lv_font_dejavu_16_persian_hebrew.c \
     $$PWD/lvgl/src/lv_font/lv_font_fmt_txt.c \
     $$PWD/lvgl/src/lv_font/lv_font_loader.c \

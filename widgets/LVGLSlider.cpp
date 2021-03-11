@@ -50,8 +50,8 @@ LVGLSlider::LVGLSlider() {
   initStateStyles();
   m_parts << LV_SLIDER_PART_BG << LV_SLIDER_PART_INDIC << LV_SLIDER_PART_KNOB;
 
-  m_properties << new LVGLPropertySliderValue;
   m_properties << new LVGLPropertySliderRange;
+  m_properties << new LVGLPropertySliderValue;
 
   m_editableStyles << LVGL::SliderBG;     // LV_SLIDER_PART_BG
   m_editableStyles << LVGL::SliderINDIC;  // LV_SLIDER_PART_INDIC

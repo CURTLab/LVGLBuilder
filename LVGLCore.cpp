@@ -73,30 +73,170 @@ void LVGLCore::init(int width, int height) {
   QImage pix(":/images/littlevgl_logo.png");
   m_default = lvgl->addImage(pix, "default");
 
+#if LV_FONT_123ABC_12
+  m_fonts << new LVGLFontData("123abc 12", "lv_font_123abc_12", 12,
+                              &lv_font_123abc_12);
+#endif
+
+#if LV_FONT_123ABC_14
+  m_fonts << new LVGLFontData("123abc 14", "lv_font_123abc_14", 14,
+                              &lv_font_123abc_14);
+#endif
+
+#if LV_FONT_123ABC_16
+  m_fonts << new LVGLFontData("123abc 16", "lv_font_123abc_16", 16,
+                              &lv_font_123abc_16);
+#endif
+
+#if LV_FONT_123ABC_18
+  m_fonts << new LVGLFontData("123abc 18", "lv_font_123abc_18", 18,
+                              &lv_font_123abc_18);
+#endif
+
+#if LV_FONT_123ABC_20
+  m_fonts << new LVGLFontData("123abc 20", "lv_font_123abc_20", 20,
+                              &lv_font_123abc_20);
+#endif
+
+#if LV_FONT_123ABC_22
+  m_fonts << new LVGLFontData("123abc 22", "lv_font_123abc_22", 22,
+                              &lv_font_123abc_22);
+#endif
+
+#if LV_FONT_123ABC_24
+  m_fonts << new LVGLFontData("123abc 24", "lv_font_123abc_24", 24,
+                              &lv_font_123abc_24);
+#endif
+  //#if LV_FONT_123ABC_26
+  //  m_fonts << new LVGLFontData("123abc 26", "lv_font_123abc_26", 26,
+  //                              &lv_font_123abc_26);
+  //#endif
+
+#if LV_FONT_123ABC_28
+  m_fonts << new LVGLFontData("123abc 28", "lv_font_123abc_28", 28,
+                              &lv_font_123abc_28);
+#endif
+
+#if LV_FONT_123ABC_30
+  m_fonts << new LVGLFontData("123abc 30", "lv_font_123abc_30", 30,
+                              &lv_font_123abc_30);
+#endif
+
+#if LV_FONT_123ABC_32
+  m_fonts << new LVGLFontData("123abc 32", "lv_font_123abc_32", 32,
+                              &lv_font_123abc_32);
+#endif
+
+#if LV_FONT_123ABC_34
+  m_fonts << new LVGLFontData("123abc 34", "lv_font_123abc_34", 34,
+                              &lv_font_123abc_34);
+#endif
+
+#if LV_FONT_123ABC_36
+  m_fonts << new LVGLFontData("123abc 36", "lv_font_123abc_36", 36,
+                              &lv_font_123abc_36);
+#endif
+
+#if LV_FONT_123ABC_46
+  m_fonts << new LVGLFontData("123abc 46", "lv_font_123abc_46", 46,
+                              &lv_font_123abc_46);
+#endif
+
+#if LV_FONT_123ABC_60
+  m_fonts << new LVGLFontData("123abc 60", "lv_font_123abc_60", 60,
+                              &lv_font_123abc_60);
+#endif
+
+#if LV_FONT_123ABC_80
+  m_fonts << new LVGLFontData("123abc 80", "lv_font_123abc_80", 80,
+                              &lv_font_123abc_80);
+#endif
+
+#if LV_FONT_123ABC_100
+  m_fonts << new LVGLFontData("123abc 100", "lv_font_123abc_100", 100,
+                              &lv_font_123abc_100);
+#endif
+
+#if LV_FONT_123ABC_120
+  m_fonts << new LVGLFontData("123abc 120", "lv_font_123abc_120", 120,
+                              &lv_font_123abc_120);
+#endif
+
+#if LV_FONT_CHINESE_12
+  m_fonts << new LVGLFontData("Chinese 12", "lv_font_chinese_12", 12,
+                              &lv_font_chinese_12);
+#endif
+
+#if LV_FONT_CHINESE_14
+  m_fonts << new LVGLFontData("Chinese 14", "lv_font_chinese_14", 14,
+                              &lv_font_chinese_14);
+#endif
+
 #if LV_FONT_CHINESE_16
   m_fonts << new LVGLFontData("Chinese 16", "lv_font_chinese_16", 16,
                               &lv_font_chinese_16);
 #endif
+
+#if LV_FONT_CHINESE_18
+  m_fonts << new LVGLFontData("Chinese 18", "lv_font_chinese_18", 18,
+                              &lv_font_chinese_18);
+#endif
+
+#if LV_FONT_CHINESE_20
+  m_fonts << new LVGLFontData("Chinese 20", "lv_font_chinese_20", 20,
+                              &lv_font_chinese_20);
+#endif
+
+#if LV_FONT_CHINESE_22
+  m_fonts << new LVGLFontData("Chinese 22", "lv_font_chinese_22", 22,
+                              &lv_font_chinese_22);
+#endif
+
+#if LV_FONT_CHINESE_24
+  m_fonts << new LVGLFontData("Chinese 24", "lv_font_chinese_24", 24,
+                              &lv_font_chinese_24);
+#endif
+
+#if LV_FONT_CHINESE_26
+  m_fonts << new LVGLFontData("Chinese 26", "lv_font_chinese_26", 26,
+                              &lv_font_chinese_26);
+#endif
+
+#if LV_FONT_CHINESE_28
+  m_fonts << new LVGLFontData("Chinese 28", "lv_font_chinese_28", 28,
+                              &lv_font_chinese_28);
+#endif
+
+#if LV_FONT_CHINESE_30
+  m_fonts << new LVGLFontData("Chinese 30", "lv_font_chinese_30", 30,
+                              &lv_font_chinese_30);
+#endif
+
+#if LV_FONT_CHINESE_32
+  m_fonts << new LVGLFontData("Chinese 32", "lv_font_chinese_32", 32,
+                              &lv_font_chinese_32);
+#endif
+
+#if LV_FONT_CHINESE_34
+  m_fonts << new LVGLFontData("Chinese 34", "lv_font_chinese_34", 34,
+                              &lv_font_chinese_34);
+#endif
+
+#if LV_FONT_CHINESE_36
+  m_fonts << new LVGLFontData("Chinese 36", "lv_font_chinese_36", 36,
+                              &lv_font_chinese_36);
+#endif
+
+#if LV_FONT_CHINESE_38
+  m_fonts << new LVGLFontData("Chinese 38", "lv_font_chinese_38", 38,
+                              &lv_font_chinese_38);
+#endif
+
 #if LV_FONT_SIMSUN_16_CJK
   m_fonts << new LVGLFontData("Simsun 16", "lv_font_simsun_16", 16,
                               &lv_font_simsun_16_cjk);
 #endif
-#if LV_FONT_ROBOTO_12
-  m_fonts << new LVGLFontData("Roboto 12", "lv_font_roboto_12", 12,
-                              &lv_font_roboto_12);
-#endif
-#if LV_FONT_ROBOTO_16
-  m_fonts << new LVGLFontData("Roboto 16", "lv_font_roboto_16", 16,
-                              &lv_font_roboto_16);
-#endif
-#if LV_FONT_ROBOTO_22
-  m_fonts << new LVGLFontData("Roboto 22", "lv_font_roboto_22", 22,
-                              &lv_font_roboto_22);
-#endif
-#if LV_FONT_ROBOTO_28
-  m_fonts << new LVGLFontData("Roboto 28", "lv_font_roboto_28", 28,
-                              &lv_font_roboto_28);
-#endif
+
 #if LV_FONT_UNSCII_8
   m_fonts << new LVGLFontData("UNSCII 8", "lv_font_unscii_8", 8,
                               &lv_font_unscii_8);
@@ -761,7 +901,6 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
     return new LVGLWindow;
   return nullptr;
 }
-
 void LVGLCore::tick() {
   lv_task_handler();
   lv_tick_inc(20);

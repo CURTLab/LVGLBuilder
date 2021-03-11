@@ -57,7 +57,6 @@ class LVGLPropertyLabelLongMode : public LVGLPropertyEnum {
  protected:
   int get(LVGLObject *obj) const { return lv_label_get_long_mode(obj->obj()); }
   void set(LVGLObject *obj, int index) {
-    LV_LABEL_LONG_SROLL_CIRC;
     lv_label_set_long_mode(obj->obj(), index & 0xff);
   }
 
@@ -97,7 +96,9 @@ class LVGLPropertyLabelText : public LVGLPropertyStringPlus {
         else
           str += "\\n";
       }
-      list << QString("lv_label_set(%1,\"%2\")").arg(obj->codeName()).arg(str);
+      list << QString("lv_label_set_text(%1,\"%2\");")
+                  .arg(obj->codeName())
+                  .arg(str);
     }
     return list;
   }

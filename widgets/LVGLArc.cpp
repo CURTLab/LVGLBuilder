@@ -3,7 +3,98 @@
 #include <QIcon>
 
 #include "LVGLObject.h"
+#include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyVal2.h"
+
+class LVGLPropertyArcBgAngle : public LVGLPropertyAnyFunc {
+ public:
+  LVGLPropertyArcBgAngle(const AnyFuncColType arr[], int size)
+      : LVGLPropertyAnyFunc(arr, size, true), m_frun(true) {}
+  QString name() const { return "Set Bg Angle"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QStringList list;
+    if (!m_list.isEmpty()) {
+      QStringList strlist = m_list[0].split('@');
+      int min = strlist[0].toInt();
+      int max = strlist[1].toInt();
+      list << QString("lv_arc_set_bg_angles(%1,%2,%3);")
+                  .arg(obj->codeName())
+                  .arg(min)
+                  .arg(max);
+    }
+    return list;
+  }
+
+ protected:
+  QStringList get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    if (m_frun) {
+      updateData(0, 0, false);
+      updateData(0, 360, true);
+      updateData(1, 0, false);
+      updateData(1, 360, true);
+    }
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList() << QString("135@45@");
+  }
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    QStringList strlist = m_list[0].split('@');
+    int min = strlist[0].toInt();
+    int max = strlist[1].toInt();
+    lv_arc_set_bg_angles(obj->obj(), min, max);
+  }
+
+ private:
+  QStringList m_list;
+  mutable bool m_frun;
+};
+
+class LVGLPropertyArcAngle : public LVGLPropertyAnyFunc {
+ public:
+  LVGLPropertyArcAngle(const AnyFuncColType arr[], int size)
+      : LVGLPropertyAnyFunc(arr, size, true), m_frun(true) {}
+  QString name() const { return "Set Angle"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QStringList list;
+    if (!m_list.isEmpty()) {
+      QStringList strlist = m_list[0].split('@');
+      int min = strlist[0].toInt();
+      int max = strlist[1].toInt();
+      list << QString("lv_arc_set_angles(%1,%2,%3);")
+                  .arg(obj->codeName())
+                  .arg(min)
+                  .arg(max);
+    }
+    return list;
+  }
+
+ protected:
+  QStringList get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    if (m_frun) {
+      updateData(0, 0, false);
+      updateData(0, 360, true);
+      updateData(1, 0, false);
+      updateData(1, 360, true);
+    }
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList() << QString("135@135@");
+  }
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    QStringList strlist = m_list[0].split('@');
+    int min = strlist[0].toInt();
+    int max = strlist[1].toInt();
+    lv_arc_set_angles(obj->obj(), min, max);
+  }
+
+ private:
+  QStringList m_list;
+  mutable bool m_frun;
+};
 
 class LVGLPropertyArcRotation : public LVGLPropertyInt {
  public:
@@ -53,13 +144,12 @@ class LVGLPropertyArcValue : public LVGLPropertyInt {
 LVGLArc::LVGLArc() {
   initStateStyles();
   m_parts << LV_ARC_PART_BG << LV_ARC_PART_INDIC << LV_ARC_PART_KNOB;
-  m_properties << new LVGLPropertyVal2UInt16(
-      0, 360, "Start", lv_arc_get_bg_angle_start, 0, 360, "End",
-      lv_arc_get_bg_angle_end, "lv_arc_set_bg_angles", lv_arc_set_bg_angles,
-      "BG Angles");
-  m_properties << new LVGLPropertyVal2UInt16(
-      0, 360, "Start", lv_arc_get_angle_start, 0, 360, "End",
-      lv_arc_get_angle_end, "lv_arc_set_angles", lv_arc_set_angles, "Angles");
+
+  static AnyFuncColType arr[2] = {e_QSpinBox, e_QSpinBox};
+  static AnyFuncColType arr1[2] = {e_QSpinBox, e_QSpinBox};
+
+  m_properties << new LVGLPropertyArcBgAngle(arr, 2);
+  m_properties << new LVGLPropertyArcAngle(arr, 2);
 
   // m_properties << new LVGLPropertyArcValue;
   m_properties << new LVGLPropertyArcRotation;

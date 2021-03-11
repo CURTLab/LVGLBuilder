@@ -6,6 +6,7 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
+#include <QTextCodec>
 #include <QTextStream>
 
 #include "LVGLCore.h"
@@ -120,6 +121,7 @@ bool LVGLProject::exportCode(const QString &path) const {
 
   QFile file;
   QTextStream stream;
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
   const QString name = m_name.toLower();
   const QString codeName = m_name.toLower().replace(" ", "_");
   const QString defName = m_name.toUpper().replace(" ", "_");
@@ -158,6 +160,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   file.setFileName(dir.path() + "/" + name + ".c");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
   stream << "#include \"" << name << ".h\"\n\n";
   // static variables
   stream << "/**********************\n";
@@ -230,7 +233,8 @@ bool LVGLProject::exportCode(const QString &path) const {
 
     if (IS_PAGE_OF_TABVIEW(o)) {
       for (LVGLProperty *p : o->widgetClass()->specialProperties()) {
-        for (const QString &fn : p->function(o)) stream << "\t" << fn << "\n";
+        for (const QString &fn : p->function(o))
+          stream << "\t" << fn.toUtf8() << "\n";
       }
     } else {
       if (o->isAccessible())

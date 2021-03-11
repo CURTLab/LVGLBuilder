@@ -559,7 +559,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           value.insert("value_opa", c);
         }
         if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
           value.insert("value_font", c);
         }
@@ -620,7 +620,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           text.insert("text_opa", c);
         }
         if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
           text.insert("text_font", c);
         }
@@ -1305,7 +1305,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+      auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
       ret << ("lv_style_set_value_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");
@@ -1377,7 +1377,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+      auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
       ret << ("lv_style_set_text_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");

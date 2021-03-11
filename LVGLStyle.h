@@ -28,7 +28,7 @@ enum StylePart {
   All = Mix | Padding | Margin | Background | Border | Outline | Shadow |
         Pattern | Value | Text | Line | Image | Transition | Scale,
   Body = Mix | Background | Border | Outline,
-  ArcBG = Background | Line | Padding | Margin,
+  ArcBG = Background | Line | Padding | Margin | Border,
   ArcINDIC = Mix | Line | Padding | Margin,
   ArcKNOB = Background | Padding | Margin,
   Button = Mix | Background | Border | Outline | Shadow | Value | Pattern |
