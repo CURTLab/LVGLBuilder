@@ -65,7 +65,9 @@ class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
             lv_tabview_set_tab_name(obj->obj(), i - 1, name);
           } else {
             m_result.insert(i);
-            lv_tabview_add_tab(obj->obj(), name);
+            lv_obj_t *page = lv_tabview_add_tab(obj->obj(), name);
+            lvgl->addObject(
+                new LVGLObject(page, lvgl->widget("lv_page"), obj, false, i));
           }
         }
       }

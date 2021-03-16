@@ -559,7 +559,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           value.insert("value_opa", c);
         }
         if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
           value.insert("value_font", c);
         }
@@ -590,7 +590,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         if (!value_ofs_y(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
           auto c = _lv_obj_get_style_int(
               s1, part, LV_STYLE_VALUE_OFS_Y | (state << LV_STYLE_STATE_POS));
-          value.insert("mix", c);
+          value.insert("value_ofs_y", c);
         }
         if (!value_blend_mode(obj1, obj2, part,
                               LVGLCore::LVGL_STATE[stateindex])) {
@@ -620,7 +620,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           text.insert("text_opa", c);
         }
         if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
           text.insert("text_font", c);
         }
@@ -641,7 +641,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         if (!text_decor(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
           auto c = _lv_obj_get_style_int(
               s1, part, LV_STYLE_TEXT_DECOR | (state << LV_STYLE_STATE_POS));
-          text.insert("mix", c);
+          text.insert("text_decor", c);
         }
         if (!text_sel_color(obj1, obj2, part,
                             LVGLCore::LVGL_STATE[stateindex])) {
@@ -2187,7 +2187,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
       }
     }
     if (style.contains("Transition")) {
-      QJsonObject mix = style["Mix"].toObject();
+      QJsonObject mix = style["Transition"].toObject();
       if (mix.contains("transition_time")) {
         auto c = mix["transition_time"].toInt();
         _lv_obj_set_style_local_int(
