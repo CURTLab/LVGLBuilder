@@ -189,7 +189,8 @@ QJsonArray LVGLObject::jsonStyles() const {
   for (int i = 0; i < m_widgetClass->styles().size(); ++i) {
     for (int j = 0; j < statestylesize; ++j) {
       QJsonObject style;
-      style.insert("part", i);
+      auto parts = m_widgetClass->parts();
+      style.insert("part", parts[i]);
       style.insert("state", j);
       int partindex = i;
       int stateindex = j;
