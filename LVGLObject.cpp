@@ -1281,7 +1281,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
           s1, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS));
       QString strname =
           "str_" + QString(QUuid::createUuid().toString()).mid(1, 7);
-      QString s = "static char* " + strname + " = " + c + ";\n";
+      QString s = "static char* " + strname + " = \"" + c + "\";\n";
       ret << s;
       ret << ("lv_style_set_value_value_str(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + "," + strname + ");");

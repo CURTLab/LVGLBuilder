@@ -37,9 +37,21 @@ class LVGLPropertyDropdownOptions : public LVGLPropertyStringPlus {
   QString name() const { return "Options"; }
 
   QStringList function(LVGLObject *obj) const {
-    return QStringList() << QString("lv_dropdown_set_options(%1, \"%2\");")
-                                .arg(obj->codeName())
-                                .arg(get(obj));
+    QString tmp = get(obj);
+    QStringList list;
+    if (!tmp.isEmpty()) {
+      QString str;
+      for (auto c : tmp) {
+        if (c != '\n')
+          str += c;
+        else
+          str += "\\n";
+      }
+      list << QString("lv_dropdown_set_options(%1,\"%2\");")
+                  .arg(obj->codeName())
+                  .arg(str);
+    }
+    return list;
   }
 
  protected:

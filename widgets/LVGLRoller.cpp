@@ -12,11 +12,22 @@ class LVGLPropertyRolleroptionsN : public LVGLPropertyStringPlus {
   QString name() const { return "Options"; }
 
   QStringList function(LVGLObject *obj) const {
-    return QStringList()
-           << QString(
-                  "lv_roller_set_options(%1, \"%2\",LV_ROLLER_MODE_NORMAL);")
+    QString tmp = get(obj);
+    QStringList list;
+    if (!tmp.isEmpty()) {
+      QString str;
+      for (auto c : tmp) {
+        if (c != '\n')
+          str += c;
+        else
+          str += "\\n";
+      }
+      list << QString(
+                  "lv_roller_set_options(%1, \"%2\", LV_ROLLER_MODE_NORMAL);")
                   .arg(obj->codeName())
-                  .arg(get(obj));
+                  .arg(str);
+    }
+    return list;
   }
 
  protected:

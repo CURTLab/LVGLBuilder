@@ -86,7 +86,7 @@ class LVGLPropertyLabelText : public LVGLPropertyStringPlus {
   QString name() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
-    QString tmp = lv_label_get_text(obj->obj());
+    QString tmp = get(obj);
     QStringList list;
     if (!tmp.isEmpty()) {
       QString str;
