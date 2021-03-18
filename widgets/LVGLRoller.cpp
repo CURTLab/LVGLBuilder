@@ -124,7 +124,7 @@ LVGLRoller::LVGLRoller() {
   m_properties << new LVGLPropertyRolleroptionsN << new LVGLPropertyRollerAlign;
   m_properties << new LVGLPropertyRollerVisibleRows;
   m_properties << new LVGLPropertyRollerAnimationTime;
-  m_properties << new LVGLPropertyBool("Auto fit", "lv_roller_set_fit",
+  m_properties << new LVGLPropertyBool("Auto fit", "lv_roller_set_auto_fit",
                                        lv_roller_set_auto_fit,
                                        lv_roller_get_auto_fit);
   m_parts << LV_ROLLER_PART_BG << LV_ROLLER_PART_SELECTED;

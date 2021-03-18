@@ -1283,7 +1283,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
           "str_" + QString(QUuid::createUuid().toString()).mid(1, 7);
       QString s = "static char* " + strname + " = \"" + c + "\";\n";
       ret << s;
-      ret << ("lv_style_set_value_value_str(&" + styleVar + "," +
+      ret << ("lv_style_set_value_str(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + "," + strname + ");");
     }
     if (!value_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
@@ -2415,6 +2415,10 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
             child.contains("index")) {
           LVGLObject *page = newObj->findChildByIndex(child["index"].toInt());
           page->setName(child["name"].toString());
+          // parse styles
+          if (child.contains("styles"))
+            page->parseStyles(child["styles"].toArray());
+
           // parse page props
           for (LVGLProperty *p : lvgl->widget("lv_page")->specialProperties()) {
             const QString pname = p->name().toLower();
@@ -2423,9 +2427,6 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
               if (!v.isNull()) p->setValue(page, v);
             }
           }
-          // parse styles
-          if (child.contains("styles"))
-            page->parseStyles(child["styles"].toArray());
           // parse children of page
           if (child.contains("children")) {
             QJsonArray page_childs = child["children"].toArray();

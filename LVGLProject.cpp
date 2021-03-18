@@ -259,21 +259,21 @@ bool LVGLProject::exportCode(const QString &path) const {
         }
       }
 
+      auto parts = o->widgetClass()->parts();
+      for (int i = 0; i < o->widgetClass()->styles().size(); ++i) {
+        QString style = o->styleCodeName(i);
+        stream << "\t"
+               << "lv_obj_add_style(" << o->codeName() << ", "
+               << QString::number(parts[i]) << ", &" << o->styleCodeName(i)
+               << ");\n";
+      }
+
       // generate properties for widget
       for (LVGLProperty *p : o->widgetClass()->properties()) {
         for (const QString &fn : p->function(o)) stream << "\t" << fn << "\n";
       }
+      stream << "\n";
     }
-
-    auto parts = o->widgetClass()->parts();
-    for (int i = 0; i < o->widgetClass()->styles().size(); ++i) {
-      QString style = o->styleCodeName(i);
-      stream << "\t"
-             << "lv_obj_add_style(" << o->codeName() << ", "
-             << QString::number(parts[i]) << ", &" << o->styleCodeName(i)
-             << ");\n";
-    }
-    stream << "\n";
   }
 
   stream << "}\n";
