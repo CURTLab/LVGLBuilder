@@ -36,10 +36,11 @@ QModelIndex LVGLObjectModel::parent(const QModelIndex &index) const {
   LVGLObject *p = o->parent();
 
   if (p == nullptr) return QModelIndex();
-
-  const int row = p->childs().indexOf(o);
-  if (row < 0 || row >= p->childs().size()) return QModelIndex();
-  return createIndex(row, 0, p);
+  if (!p->childs().isEmpty()) {
+    const int row = p->childs().indexOf(o);
+    if (row > 0 || row < p->childs().size()) return createIndex(row, 0, p);
+  }
+  return QModelIndex();
 }
 
 int LVGLObjectModel::rowCount(const QModelIndex &parent) const {

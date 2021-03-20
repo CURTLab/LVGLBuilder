@@ -612,6 +612,7 @@ void LVGLCore::removeObject(LVGLObject *object) {
   if (object->parent()) object->parent()->removeChild(object);
   m_objects.removeOne(object);
   delete object;
+  object = nullptr;
 }
 
 void LVGLCore::removeAllObjects() {

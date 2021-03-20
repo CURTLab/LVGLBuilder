@@ -161,7 +161,7 @@ void LVGLSimulator::mousePressEvent(QMouseEvent *event) {
           if (obj == m_selectedObject) setSelectedObject(nullptr);
         } else if (sel == remove) {
           if (obj == m_selectedObject) setSelectedObject(nullptr);
-          m_lvgl->removeObject(obj);
+          removeObject(obj);
         } else if (sel == mfore) {
           lv_obj_move_foreground(obj->obj());
         } else if (sel == mback) {
@@ -374,6 +374,7 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
   if (keyEvent->key() == Qt::Key_Delete) {
     LVGLObject *obj = m_sim->selectedObject();
     m_sim->removeObject(obj);
+    m_sim->setSelectedObject(nullptr);
     return true;
   } else if (keyEvent->key() == Qt::Key_Left) {
     m_sim->moveObject(m_sim->selectedObject(), -1, 0);
