@@ -13,8 +13,9 @@ class LVGLPropertyImgBtnSrc : public LVGLPropertyImage {
         m_values({"Released", "Pressed", "Disabled", "Checked released",
                   "Checked pressed", "Checked Disabled"}),
         m_types({"LV_BTN_STATE_RELEASED", "LV_BTN_STATE_PRESSED",
-                 "LV_BTN_STATE_CHECKED_RELEASED",
-                 "LV_BTN_STATE_CHECKED_PRESSED", "LV_BTNMATRIX_CTRL_DISABLED"}),
+                 "LV_BTN_STATE_DISABLED", "LV_BTN_STATE_CHECKED_RELEASED",
+                 "LV_BTN_STATE_CHECKED_PRESSED",
+                 "LV_BTN_STATE_CHECKED_DISABLED"}),
         m_state(state) {}
 
   QString name() const override { return "Source " + m_values.at(m_state); }

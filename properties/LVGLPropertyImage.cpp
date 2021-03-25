@@ -12,6 +12,7 @@ bool LVGLPropertyImage::hasEditor() const { return true; }
 
 QWidget *LVGLPropertyImage::editor(QWidget *parent) {
   m_widget = new QComboBox(parent);
+  m_widget->addItem("default");
   m_widget->addItems(lvgl->imageNames());
   return m_widget;
 }

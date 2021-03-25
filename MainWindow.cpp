@@ -665,6 +665,7 @@ void MainWindow::initcodemap() {
   m_codemap[8] = lv_cont_create(pt, NULL);
   m_codemap[9] = lv_cpicker_create(pt, NULL);
   m_codemap[10] = lv_dropdown_create(pt, NULL);
+  lv_dropdown_open(m_codemap[10]);
   m_codemap[11] = lv_gauge_create(pt, NULL);
   m_codemap[12] = lv_img_create(pt, NULL);
   m_codemap[13] = lv_imgbtn_create(pt, NULL);
