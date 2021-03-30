@@ -196,6 +196,10 @@ QJsonArray LVGLObject::jsonStyles() const {
       int stateindex = j;
       auto obj1 = this->obj();
       auto obj2 = codemap[m_widgetClass->type()];
+      if (this->widgetClass()->name() == "Dropdown") {
+        lv_dropdown_open(obj1);
+        lv_dropdown_open(obj2);
+      }
       const LVGL::StyleParts editableParts =
           m_widgetClass->editableStyles(partindex);
       auto part = m_widgetClass->parts().at(partindex);
@@ -868,6 +872,9 @@ QJsonArray LVGLObject::jsonStyles() const {
       QString TypeName = QString("PSS%1%2").arg(i).arg(j);
       styles.append(style);
     }
+  }
+  if (this->widgetClass()->name() == "Dropdown") {
+    lv_dropdown_close(this->obj());
   }
   return styles;
 }

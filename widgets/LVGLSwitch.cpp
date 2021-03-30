@@ -31,7 +31,7 @@ LVGLSwitch::LVGLSwitch() {
 
 QString LVGLSwitch::name() const { return "Switch"; }
 
-QString LVGLSwitch::className() const { return "lv_sw"; }
+QString LVGLSwitch::className() const { return "lv_switch"; }
 
 LVGLWidget::Type LVGLSwitch::type() const { return Switch; }
 

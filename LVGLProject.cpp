@@ -277,7 +277,7 @@ bool LVGLProject::exportCode(const QString &path) const {
       for (LVGLProperty *p : o->widgetClass()->properties()) {
         for (const QString &fn : p->function(o)) stream << "\t" << fn << "\n";
       }
-      stream << "\n";
+      stream << "\n\n";
     }
   }
 

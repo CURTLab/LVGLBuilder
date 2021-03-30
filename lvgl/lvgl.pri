@@ -20,22 +20,69 @@ SOURCES += \
     $$PWD/lvgl/src/lv_draw/lv_img_decoder.c \
     $$PWD/lvgl/src/lv_font/lv_font.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_100.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_100B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_110.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_110B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_12.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_120.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_120B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_12B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_14.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_14B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_16.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_16B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_18.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_18B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_20.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_20B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_22.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_22B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_24.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_24B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_26.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_26B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_28.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_28B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_30.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_30B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_32.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_32B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_34.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_34B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_36.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_36B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_38.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_38B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_40.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_40B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_42.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_42B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_44.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_44B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_46.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_46B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_48.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_48B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_50.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_50B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_55.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_55B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_60.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_60B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_65.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_65B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_70.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_70B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_75.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_75B.c \
     $$PWD/lvgl/src/lv_font/lv_font_123abc_80.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_80B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_85.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_85B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_90.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_90B.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_95.c \
+    $$PWD/lvgl/src/lv_font/lv_font_123abc_95B.c \
     $$PWD/lvgl/src/lv_font/lv_font_chinese_12.c \
     $$PWD/lvgl/src/lv_font/lv_font_chinese_14.c \
     $$PWD/lvgl/src/lv_font/lv_font_chinese_18.c \

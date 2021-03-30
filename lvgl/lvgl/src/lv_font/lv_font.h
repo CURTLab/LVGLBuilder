@@ -183,24 +183,208 @@ LV_FONT_DECLARE(lv_font_123abc_34)
 LV_FONT_DECLARE(lv_font_123abc_36)
 #endif
 
+#if LV_FONT_123ABC_38
+LV_FONT_DECLARE(lv_font_123abc_38)
+#endif
+
+#if LV_FONT_123ABC_40
+LV_FONT_DECLARE(lv_font_123abc_40)
+#endif
+
+#if LV_FONT_123ABC_42
+LV_FONT_DECLARE(lv_font_123abc_42)
+#endif
+
+#if LV_FONT_123ABC_44
+LV_FONT_DECLARE(lv_font_123abc_44)
+#endif
+
 #if LV_FONT_123ABC_46
 LV_FONT_DECLARE(lv_font_123abc_46)
+#endif
+
+#if LV_FONT_123ABC_48
+LV_FONT_DECLARE(lv_font_123abc_48)
+#endif
+
+#if LV_FONT_123ABC_50
+LV_FONT_DECLARE(lv_font_123abc_50)
+#endif
+
+#if LV_FONT_123ABC_55
+LV_FONT_DECLARE(lv_font_123abc_55)
 #endif
 
 #if LV_FONT_123ABC_60
 LV_FONT_DECLARE(lv_font_123abc_60)
 #endif
 
+#if LV_FONT_123ABC_65
+LV_FONT_DECLARE(lv_font_123abc_65)
+#endif
+
+#if LV_FONT_123ABC_70
+LV_FONT_DECLARE(lv_font_123abc_70)
+#endif
+
+#if LV_FONT_123ABC_75
+LV_FONT_DECLARE(lv_font_123abc_75)
+#endif
+
 #if LV_FONT_123ABC_80
 LV_FONT_DECLARE(lv_font_123abc_80)
+#endif
+
+#if LV_FONT_123ABC_85
+LV_FONT_DECLARE(lv_font_123abc_85)
+#endif
+
+#if LV_FONT_123ABC_90
+LV_FONT_DECLARE(lv_font_123abc_90)
+#endif
+
+#if LV_FONT_123ABC_95
+LV_FONT_DECLARE(lv_font_123abc_95)
 #endif
 
 #if LV_FONT_123ABC_100
 LV_FONT_DECLARE(lv_font_123abc_100)
 #endif
 
+#if LV_FONT_123ABC_110
+LV_FONT_DECLARE(lv_font_123abc_110)
+#endif
+
 #if LV_FONT_123ABC_120
 LV_FONT_DECLARE(lv_font_123abc_120)
+#endif
+
+#if LV_FONT_123ABC_12B
+LV_FONT_DECLARE(lv_font_123abc_12B)
+#endif
+
+#if LV_FONT_123ABC_14B
+LV_FONT_DECLARE(lv_font_123abc_14B)
+#endif
+
+#if LV_FONT_123ABC_16B
+LV_FONT_DECLARE(lv_font_123abc_16B)
+#endif
+
+#if LV_FONT_123ABC_18B
+LV_FONT_DECLARE(lv_font_123abc_18B)
+#endif
+
+#if LV_FONT_123ABC_20B
+LV_FONT_DECLARE(lv_font_123abc_20B)
+#endif
+
+#if LV_FONT_123ABC_22B
+LV_FONT_DECLARE(lv_font_123abc_22B)
+#endif
+
+#if LV_FONT_123ABC_24B
+LV_FONT_DECLARE(lv_font_123abc_24B)
+#endif
+
+#if LV_FONT_123ABC_26B
+LV_FONT_DECLARE(lv_font_123abc_26B)
+#endif
+
+#if LV_FONT_123ABC_28B
+LV_FONT_DECLARE(lv_font_123abc_28B)
+#endif
+
+#if LV_FONT_123ABC_30B
+LV_FONT_DECLARE(lv_font_123abc_30B)
+#endif
+
+#if LV_FONT_123ABC_32B
+LV_FONT_DECLARE(lv_font_123abc_32B)
+#endif
+
+#if LV_FONT_123ABC_34B
+LV_FONT_DECLARE(lv_font_123abc_34B)
+#endif
+
+#if LV_FONT_123ABC_36B
+LV_FONT_DECLARE(lv_font_123abc_36B)
+#endif
+
+#if LV_FONT_123ABC_38B
+LV_FONT_DECLARE(lv_font_123abc_38B)
+#endif
+
+#if LV_FONT_123ABC_40B
+LV_FONT_DECLARE(lv_font_123abc_40B)
+#endif
+
+#if LV_FONT_123ABC_42B
+LV_FONT_DECLARE(lv_font_123abc_42B)
+#endif
+
+#if LV_FONT_123ABC_44B
+LV_FONT_DECLARE(lv_font_123abc_44B)
+#endif
+
+#if LV_FONT_123ABC_46B
+LV_FONT_DECLARE(lv_font_123abc_46B)
+#endif
+
+#if LV_FONT_123ABC_48B
+LV_FONT_DECLARE(lv_font_123abc_48B)
+#endif
+
+#if LV_FONT_123ABC_50B
+LV_FONT_DECLARE(lv_font_123abc_50B)
+#endif
+
+#if LV_FONT_123ABC_55B
+LV_FONT_DECLARE(lv_font_123abc_55B)
+#endif
+
+#if LV_FONT_123ABC_60B
+LV_FONT_DECLARE(lv_font_123abc_60B)
+#endif
+
+#if LV_FONT_123ABC_65B
+LV_FONT_DECLARE(lv_font_123abc_65B)
+#endif
+
+#if LV_FONT_123ABC_70B
+LV_FONT_DECLARE(lv_font_123abc_70B)
+#endif
+
+#if LV_FONT_123ABC_75B
+LV_FONT_DECLARE(lv_font_123abc_75B)
+#endif
+
+#if LV_FONT_123ABC_80B
+LV_FONT_DECLARE(lv_font_123abc_80B)
+#endif
+
+#if LV_FONT_123ABC_85B
+LV_FONT_DECLARE(lv_font_123abc_85B)
+#endif
+
+#if LV_FONT_123ABC_90B
+LV_FONT_DECLARE(lv_font_123abc_90B)
+#endif
+
+#if LV_FONT_123ABC_95B
+LV_FONT_DECLARE(lv_font_123abc_95B)
+#endif
+
+#if LV_FONT_123ABC_100B
+LV_FONT_DECLARE(lv_font_123abc_100B)
+#endif
+
+#if LV_FONT_123ABC_110B
+LV_FONT_DECLARE(lv_font_123abc_110B)
+#endif
+
+#if LV_FONT_123ABC_120B
+LV_FONT_DECLARE(lv_font_123abc_120B)
 #endif
 
 #if LV_FONT_CHINESE_12

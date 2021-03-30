@@ -73,9 +73,31 @@ void LVGLCore::init(int width, int height) {
   QImage pix(":/images/littlevgl_logo.png");
   m_default = lvgl->addImage(pix, "default");
 
+  initfont();
+
+  // search for default font name
+  for (const LVGLFontData *f : m_fonts) {
+    if (f->font() == LV_FONT_DEFAULT) {
+      m_defaultFont = f;
+      break;
+    }
+  }
+  Q_ASSERT(m_defaultFont != nullptr);
+
+  setScreenColor(Qt::white);
+  changeResolution({width, height});
+  // lv_log_register_print_cb(logCb);
+}
+
+void LVGLCore::initfont() {
 #if LV_FONT_123ABC_12
   m_fonts << new LVGLFontData("123abc 12", "lv_font_123abc_12", 12,
                               &lv_font_123abc_12);
+#endif
+
+#if LV_FONT_123ABC_12B
+  m_fonts << new LVGLFontData("123abc 12B", "lv_font_123abc_12B", 12,
+                              &lv_font_123abc_12B);
 #endif
 
 #if LV_FONT_123ABC_14
@@ -83,9 +105,19 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_14);
 #endif
 
+#if LV_FONT_123ABC_14B
+  m_fonts << new LVGLFontData("123abc 14B", "lv_font_123abc_14B", 14,
+                              &lv_font_123abc_14B);
+#endif
+
 #if LV_FONT_123ABC_16
   m_fonts << new LVGLFontData("123abc 16", "lv_font_123abc_16", 16,
                               &lv_font_123abc_16);
+#endif
+
+#if LV_FONT_123ABC_16B
+  m_fonts << new LVGLFontData("123abc 16B", "lv_font_123abc_16B", 16,
+                              &lv_font_123abc_16B);
 #endif
 
 #if LV_FONT_123ABC_18
@@ -93,9 +125,19 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_18);
 #endif
 
+#if LV_FONT_123ABC_18B
+  m_fonts << new LVGLFontData("123abc 18B", "lv_font_123abc_18B", 18,
+                              &lv_font_123abc_18B);
+#endif
+
 #if LV_FONT_123ABC_20
   m_fonts << new LVGLFontData("123abc 20", "lv_font_123abc_20", 20,
                               &lv_font_123abc_20);
+#endif
+
+#if LV_FONT_123ABC_20B
+  m_fonts << new LVGLFontData("123abc 20B", "lv_font_123abc_20B", 20,
+                              &lv_font_123abc_20B);
 #endif
 
 #if LV_FONT_123ABC_22
@@ -103,18 +145,39 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_22);
 #endif
 
+#if LV_FONT_123ABC_22B
+  m_fonts << new LVGLFontData("123abc 22B", "lv_font_123abc_22B", 22,
+                              &lv_font_123abc_22B);
+#endif
+
 #if LV_FONT_123ABC_24
   m_fonts << new LVGLFontData("123abc 24", "lv_font_123abc_24", 24,
                               &lv_font_123abc_24);
 #endif
-  //#if LV_FONT_123ABC_26
-  //  m_fonts << new LVGLFontData("123abc 26", "lv_font_123abc_26", 26,
-  //                              &lv_font_123abc_26);
-  //#endif
+
+#if LV_FONT_123ABC_24B
+  m_fonts << new LVGLFontData("123abc 24B", "lv_font_123abc_24B", 24,
+                              &lv_font_123abc_24B);
+#endif
+
+#if LV_FONT_123ABC_26
+  m_fonts << new LVGLFontData("123abc 26", "lv_font_123abc_26", 26,
+                              &lv_font_123abc_26);
+#endif
+
+#if LV_FONT_123ABC_26B
+  m_fonts << new LVGLFontData("123abc 26B", "lv_font_123abc_26B", 26,
+                              &lv_font_123abc_26B);
+#endif
 
 #if LV_FONT_123ABC_28
   m_fonts << new LVGLFontData("123abc 28", "lv_font_123abc_28", 28,
                               &lv_font_123abc_28);
+#endif
+
+#if LV_FONT_123ABC_28B
+  m_fonts << new LVGLFontData("123abc 28B", "lv_font_123abc_28B", 28,
+                              &lv_font_123abc_28B);
 #endif
 
 #if LV_FONT_123ABC_30
@@ -122,9 +185,19 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_30);
 #endif
 
+#if LV_FONT_123ABC_30B
+  m_fonts << new LVGLFontData("123abc 30B", "lv_font_123abc_30B", 30,
+                              &lv_font_123abc_30B);
+#endif
+
 #if LV_FONT_123ABC_32
   m_fonts << new LVGLFontData("123abc 32", "lv_font_123abc_32", 32,
                               &lv_font_123abc_32);
+#endif
+
+#if LV_FONT_123ABC_32B
+  m_fonts << new LVGLFontData("123abc 32B", "lv_font_123abc_32B", 32,
+                              &lv_font_123abc_32B);
 #endif
 
 #if LV_FONT_123ABC_34
@@ -132,9 +205,59 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_34);
 #endif
 
+#if LV_FONT_123ABC_34B
+  m_fonts << new LVGLFontData("123abc 34B", "lv_font_123abc_34B", 34,
+                              &lv_font_123abc_34B);
+#endif
+
 #if LV_FONT_123ABC_36
   m_fonts << new LVGLFontData("123abc 36", "lv_font_123abc_36", 36,
                               &lv_font_123abc_36);
+#endif
+
+#if LV_FONT_123ABC_36B
+  m_fonts << new LVGLFontData("123abc 36B", "lv_font_123abc_36B", 36,
+                              &lv_font_123abc_36B);
+#endif
+
+#if LV_FONT_123ABC_38
+  m_fonts << new LVGLFontData("123abc 38", "lv_font_123abc_38", 38,
+                              &lv_font_123abc_38);
+#endif
+
+#if LV_FONT_123ABC_38B
+  m_fonts << new LVGLFontData("123abc 38B", "lv_font_123abc_38B", 38,
+                              &lv_font_123abc_38B);
+#endif
+
+#if LV_FONT_123ABC_40
+  m_fonts << new LVGLFontData("123abc 40", "lv_font_123abc_40", 40,
+                              &lv_font_123abc_40);
+#endif
+
+#if LV_FONT_123ABC_40B
+  m_fonts << new LVGLFontData("123abc 40B", "lv_font_123abc_40B", 40,
+                              &lv_font_123abc_40B);
+#endif
+
+#if LV_FONT_123ABC_42
+  m_fonts << new LVGLFontData("123abc 42", "lv_font_123abc_42", 42,
+                              &lv_font_123abc_42);
+#endif
+
+#if LV_FONT_123ABC_42B
+  m_fonts << new LVGLFontData("123abc 42B", "lv_font_123abc_42B", 42,
+                              &lv_font_123abc_42B);
+#endif
+
+#if LV_FONT_123ABC_44
+  m_fonts << new LVGLFontData("123abc 44", "lv_font_123abc_44", 44,
+                              &lv_font_123abc_44);
+#endif
+
+#if LV_FONT_123ABC_44B
+  m_fonts << new LVGLFontData("123abc 44B", "lv_font_123abc_44B", 44,
+                              &lv_font_123abc_44B);
 #endif
 
 #if LV_FONT_123ABC_46
@@ -142,9 +265,79 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_46);
 #endif
 
+#if LV_FONT_123ABC_46B
+  m_fonts << new LVGLFontData("123abc 46B", "lv_font_123abc_46B", 46,
+                              &lv_font_123abc_46B);
+#endif
+
+#if LV_FONT_123ABC_48
+  m_fonts << new LVGLFontData("123abc 48", "lv_font_123abc_48", 48,
+                              &lv_font_123abc_48);
+#endif
+
+#if LV_FONT_123ABC_48B
+  m_fonts << new LVGLFontData("123abc 48B", "lv_font_123abc_48B", 48,
+                              &lv_font_123abc_48B);
+#endif
+
+#if LV_FONT_123ABC_50
+  m_fonts << new LVGLFontData("123abc 50", "lv_font_123abc_50", 50,
+                              &lv_font_123abc_50);
+#endif
+
+#if LV_FONT_123ABC_50B
+  m_fonts << new LVGLFontData("123abc 50B", "lv_font_123abc_50B", 50,
+                              &lv_font_123abc_50B);
+#endif
+
+#if LV_FONT_123ABC_55
+  m_fonts << new LVGLFontData("123abc 55", "lv_font_123abc_55", 55,
+                              &lv_font_123abc_55);
+#endif
+
+#if LV_FONT_123ABC_55B
+  m_fonts << new LVGLFontData("123abc 55B", "lv_font_123abc_55B", 55,
+                              &lv_font_123abc_55B);
+#endif
+
 #if LV_FONT_123ABC_60
   m_fonts << new LVGLFontData("123abc 60", "lv_font_123abc_60", 60,
                               &lv_font_123abc_60);
+#endif
+
+#if LV_FONT_123ABC_60B
+  m_fonts << new LVGLFontData("123abc 60B", "lv_font_123abc_60B", 60,
+                              &lv_font_123abc_60B);
+#endif
+
+#if LV_FONT_123ABC_65
+  m_fonts << new LVGLFontData("123abc 65", "lv_font_123abc_65", 65,
+                              &lv_font_123abc_65);
+#endif
+
+#if LV_FONT_123ABC_65B
+  m_fonts << new LVGLFontData("123abc 65B", "lv_font_123abc_65B", 65,
+                              &lv_font_123abc_65B);
+#endif
+
+#if LV_FONT_123ABC_70
+  m_fonts << new LVGLFontData("123abc 70", "lv_font_123abc_70", 70,
+                              &lv_font_123abc_70);
+#endif
+
+#if LV_FONT_123ABC_70B
+  m_fonts << new LVGLFontData("123abc 70B", "lv_font_123abc_70B", 70,
+                              &lv_font_123abc_70B);
+#endif
+
+#if LV_FONT_123ABC_75
+  m_fonts << new LVGLFontData("123abc 75", "lv_font_123abc_75", 75,
+                              &lv_font_123abc_75);
+#endif
+
+#if LV_FONT_123ABC_75B
+  m_fonts << new LVGLFontData("123abc 75B", "lv_font_123abc_75B", 75,
+                              &lv_font_123abc_75B);
 #endif
 
 #if LV_FONT_123ABC_80
@@ -152,14 +345,69 @@ void LVGLCore::init(int width, int height) {
                               &lv_font_123abc_80);
 #endif
 
+#if LV_FONT_123ABC_80B
+  m_fonts << new LVGLFontData("123abc 80B", "lv_font_123abc_80B", 80,
+                              &lv_font_123abc_80B);
+#endif
+
+#if LV_FONT_123ABC_85
+  m_fonts << new LVGLFontData("123abc 85", "lv_font_123abc_85", 85,
+                              &lv_font_123abc_85);
+#endif
+
+#if LV_FONT_123ABC_85B
+  m_fonts << new LVGLFontData("123abc 85B", "lv_font_123abc_85B", 85,
+                              &lv_font_123abc_85B);
+#endif
+
+#if LV_FONT_123ABC_90
+  m_fonts << new LVGLFontData("123abc 90", "lv_font_123abc_90", 90,
+                              &lv_font_123abc_90);
+#endif
+
+#if LV_FONT_123ABC_90B
+  m_fonts << new LVGLFontData("123abc 90B", "lv_font_123abc_90B", 90,
+                              &lv_font_123abc_90B);
+#endif
+
+#if LV_FONT_123ABC_95
+  m_fonts << new LVGLFontData("123abc 95", "lv_font_123abc_95", 95,
+                              &lv_font_123abc_95);
+#endif
+
+#if LV_FONT_123ABC_95B
+  m_fonts << new LVGLFontData("123abc 95B", "lv_font_123abc_95B", 95,
+                              &lv_font_123abc_95B);
+#endif
+
 #if LV_FONT_123ABC_100
   m_fonts << new LVGLFontData("123abc 100", "lv_font_123abc_100", 100,
                               &lv_font_123abc_100);
 #endif
 
+#if LV_FONT_123ABC_100B
+  m_fonts << new LVGLFontData("123abc 100B", "lv_font_123abc_100B", 100,
+                              &lv_font_123abc_100B);
+#endif
+
+#if LV_FONT_123ABC_110
+  m_fonts << new LVGLFontData("123abc 110", "lv_font_123abc_110", 110,
+                              &lv_font_123abc_110);
+#endif
+
+#if LV_FONT_123ABC_110B
+  m_fonts << new LVGLFontData("123abc 110B", "lv_font_123abc_110B", 110,
+                              &lv_font_123abc_110B);
+#endif
+
 #if LV_FONT_123ABC_120
   m_fonts << new LVGLFontData("123abc 120", "lv_font_123abc_120", 120,
                               &lv_font_123abc_120);
+#endif
+
+#if LV_FONT_123ABC_120B
+  m_fonts << new LVGLFontData("123abc 120B", "lv_font_123abc_120B", 120,
+                              &lv_font_123abc_120B);
 #endif
 
 #if LV_FONT_CHINESE_12
@@ -241,19 +489,6 @@ void LVGLCore::init(int width, int height) {
   m_fonts << new LVGLFontData("UNSCII 8", "lv_font_unscii_8", 8,
                               &lv_font_unscii_8);
 #endif
-
-  // search for default font name
-  for (const LVGLFontData *f : m_fonts) {
-    if (f->font() == LV_FONT_DEFAULT) {
-      m_defaultFont = f;
-      break;
-    }
-  }
-  Q_ASSERT(m_defaultFont != nullptr);
-
-  setScreenColor(Qt::white);
-  changeResolution({width, height});
-  // lv_log_register_print_cb(logCb);
 }
 
 bool LVGLCore::changeResolution(QSize size) {

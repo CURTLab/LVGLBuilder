@@ -23,6 +23,7 @@ class LVGLCore : public QObject {
   ~LVGLCore();
 
   void init(int width, int height);
+  void initfont();
 
   void initw(const QHash<QString, const LVGLWidget *> &w) { m_widgets = w; }
   void initwDP(const QHash<QString, const LVGLWidget *> &w) {

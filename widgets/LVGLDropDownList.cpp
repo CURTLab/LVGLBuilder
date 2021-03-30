@@ -72,7 +72,7 @@ class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
                                        << "Right"
                                        << "None"),
         m_values({"LV_SYMBOL_DOWN", "LV_SYMBOL_UP", "LV_SYMBOL_LEFT",
-                  "LV_SYMBOL_RIGHT", "None"}) {}
+                  "LV_SYMBOL_RIGHT", "NULL"}) {}
 
   QString name() const { return "Arrow"; }
 
@@ -131,6 +131,9 @@ class LVGLPropertyDropdownMaxHeight : public LVGLPropertyInt {
   QString name() const { return "Max height"; }
 
   QStringList function(LVGLObject *obj) const {
+    lv_dropdown_open(obj->obj());
+    m_value = lv_dropdown_get_max_height(obj->obj());
+    lv_dropdown_close(obj->obj());
     return QStringList() << QString("lv_dropdown_set_max_height(%1,%2);")
                                 .arg(obj->codeName())
                                 .arg(m_value);
@@ -138,8 +141,7 @@ class LVGLPropertyDropdownMaxHeight : public LVGLPropertyInt {
 
  protected:
   int get(LVGLObject *obj) const {
-    m_value = lv_dropdown_get_max_height(obj->obj());
-    return m_value;
+    return lv_dropdown_get_max_height(obj->obj());
   }
   void set(LVGLObject *obj, int value) {
     lv_dropdown_set_max_height(obj->obj(), static_cast<uint16_t>(value));
@@ -157,15 +159,18 @@ class LVGLPropertyDPOpen : public LVGLPropertyBool {
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
-    if (false != m_bool)
+    lv_dropdown_ext_t *ext =
+        (lv_dropdown_ext_t *)lv_obj_get_ext_attr(obj->obj());
+    if (ext->page != NULL)
       list << QString("lv_dropdown_open(%1);").arg(obj->codeName());
     return list;
   }
 
  protected:
   bool get(LVGLObject *obj) const {
-    Q_UNUSED(obj)
-    return m_bool;
+    lv_dropdown_ext_t *ext =
+        (lv_dropdown_ext_t *)lv_obj_get_ext_attr(obj->obj());
+    return ext->page == NULL ? false : true;
   }
   void set(LVGLObject *obj, bool boolean) {
     m_bool = boolean;
