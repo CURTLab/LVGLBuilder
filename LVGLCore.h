@@ -110,6 +110,8 @@ class LVGLCore : public QObject {
   static const lv_state_t LVGL_STATE[7];
   static const char *LVGL_STATE_STR[7];
 
+  QSet<QString> &getSaveFontName() { return m_saveFontN; }
+
  private slots:
   void tick();
 
@@ -144,6 +146,7 @@ class LVGLCore : public QObject {
   lv_disp_t *m_dispt;
 
   lv_indev_data_t m_inputData;
+  QSet<QString> m_saveFontN;
 
   struct FT_LibraryRec_ *m_ft;
   friend class LVGLFontData;

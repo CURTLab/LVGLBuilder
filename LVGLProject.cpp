@@ -1,5 +1,7 @@
 #include "LVGLProject.h"
 
+#include <QApplication>
+#include <QDebug>
 #include <QDir>
 #include <QFile>
 #include <QJsonArray>
@@ -284,6 +286,20 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "}\n";
 
   file.close();
+
+  // output font file
+  QString fontdir = QDir::currentPath() + "/font/";
+  QStringList fontfilelist;
+  QSet<QString> &fontname = lvgl->getSaveFontName();
+  auto itor = fontname.begin();
+  for (; itor != fontname.end(); ++itor) fontfilelist.push_back(*itor + ".c");
+  for (auto x : fontfilelist) {
+    QString filepath = fontdir + x;
+    QString copyfilepath = path + "/" + x;
+
+    QFile file(filepath);
+    file.copy(copyfilepath);
+  }
 
   return true;
 }

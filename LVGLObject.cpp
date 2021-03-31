@@ -888,6 +888,8 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
   auto part = m_widgetClass->parts().at(partindex);
   auto state = LVGLCore::LVGL_STATE[stateindex];
   auto s1 = obj1;
+  QSet<QString> &fontset = lvgl->getSaveFontName();
+  fontset.clear();
 
   if (editableParts & LVGL::Mix) {
     // mix
@@ -1315,6 +1317,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
+      fontset.insert(c);
       ret << ("lv_style_set_value_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");
     }
@@ -1387,6 +1390,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
+      fontset.insert(c);
       ret << ("lv_style_set_text_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");
     }
