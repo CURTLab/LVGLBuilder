@@ -3,6 +3,7 @@
 #include <QComboBox>
 
 class MainWindow;
+class LVGLObject;
 
 class LVGLHelper {
  public:
@@ -18,6 +19,9 @@ class LVGLHelper {
   const QString generateFileName() {
     return QString("Page_%1").arg(++m_filecount);
   }
+  QStringList& pageName();
+  QMap<LVGLObject*, int>& getBtnGoPage() { return m_btnGoPage; }
+  bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
@@ -28,5 +32,7 @@ class LVGLHelper {
   static LVGLHelper* m_instance;
   MainWindow* m_pMainW;
   int m_filecount;
+  QStringList pagelist;
+  QMap<LVGLObject*, int> m_btnGoPage;
 };
 #endif

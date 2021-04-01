@@ -138,6 +138,7 @@ void LVGLSimulator::changeResolution(QSize size) {
 void LVGLSimulator::mousePressEvent(QMouseEvent *event) {
   const QPoint pos = mapToScene(event->pos()).toPoint();
   if (m_mouseEnabled) {
+    emit objPressed(selectObject(objectsUnderCoords(pos, true), false));
     m_lvgl->sendMouseEvent(pos.x(), pos.y(), event->buttons() & Qt::LeftButton);
   } else {
     if (event->button() == Qt::RightButton) {

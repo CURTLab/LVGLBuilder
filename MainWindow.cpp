@@ -131,6 +131,8 @@ MainWindow::~MainWindow() {
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
+QTabWidget *MainWindow::getTabW() { return m_ui->tabWidget; }
+
 void MainWindow::updateProperty() {
   LVGLObject *o = m_curSimulation->selectedObject();
   if (o == nullptr) return;
@@ -802,6 +804,8 @@ void MainWindow::initlvglConnect() {
           &ListViewItem::slot_toshowtab);
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_3,
           &ListViewItem::slot_toshowtab);
+  connect(m_curSimulation, &LVGLSimulator::objPressed, this,
+          &MainWindow::onObjPressed);
 
   if (m_filter != nullptr) delete m_filter;
   m_filter = new LVGLKeyPressEventFilter(m_curSimulation, qApp);
@@ -844,6 +848,8 @@ void MainWindow::revlvglConnect() {
              &LVGLObjectModel::setCurrentObject);
   disconnect(m_zoom_slider, &QSlider::valueChanged, m_curSimulation,
              &LVGLSimulator::setZoomLevel);
+  disconnect(m_curSimulation, &LVGLSimulator::objPressed, this,
+             &MainWindow::onObjPressed);
 }
 
 void MainWindow::on_combo_state_currentIndexChanged(int index) {
@@ -863,6 +869,7 @@ void MainWindow::tabChanged(int index) {
   if (index != m_curTabWIndex && index >= 0) {
     if (nullptr != m_curSimulation) m_curSimulation->setSelectedObject(nullptr);
     m_curSimulation = m_listTabW[index]->getSimulator();
+    m_ui->action_run->setChecked(m_curSimulation->getMouseEnable());
     lvgl = m_listTabW[index]->getCore();
     m_project = m_listTabW[index]->getProject();  // dont need
     initlvglConnect();
@@ -871,5 +878,14 @@ void MainWindow::tabChanged(int index) {
     m_curSimulation->changeResolution(m_coreRes[lvgl]);
     m_curSimulation->repaint();
     m_curTabWIndex = index;
+  }
+}
+
+void MainWindow::onObjPressed(LVGLObject *obj) {
+  QMap<LVGLObject *, int> &bgp = LVGLHelper::getInstance().getBtnGoPage();
+  if (bgp.contains(obj)) {
+    int index = bgp[obj];
+    m_curSimulation->setSelectedObject(nullptr);
+    m_ui->tabWidget->setCurrentIndex(index);
   }
 }

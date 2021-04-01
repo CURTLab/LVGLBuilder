@@ -120,7 +120,6 @@ bool LVGLProject::save(const QString &fileName) {
 
 bool LVGLProject::exportCode(const QString &path) const {
   QDir dir(path);
-
   QFile file;
   QTextStream stream;
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
@@ -163,7 +162,13 @@ bool LVGLProject::exportCode(const QString &path) const {
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
-  stream << "#include \"" << name << ".h\"\n\n";
+  if (LVGLHelper::getInstance().IsBtngoPageEmpty()) {
+    stream << "#include \"" << name << ".h\"\n\n";
+  } else {
+    stream << "#include \"" << name << ".h\"\n";
+    stream << "#include \"app.h\"\n\n";
+  }
+
   // static variables
   stream << "/**********************\n";
   stream << " *       WIDGETS\n";
@@ -179,15 +184,6 @@ bool LVGLProject::exportCode(const QString &path) const {
   if (lvgl->screenColorChanged()) {
     stream << "static lv_style_t style_screen;\n";
   }
-
-  // need change
-  //  for (LVGLObject *o : objects) {
-  //    for (int i = 0; i < o->widgetClass()->styles().size(); ++i) {
-  //      if (o->hasCustomStyle(i))
-  //        stream << "static lv_style_t " << o->styleCodeName(i) << ";\n";
-  //    }
-  //  }
-  //  stream << "\n";
 
   auto images = lvgl->images();
   for (LVGLImageData *img : images) {
@@ -214,6 +210,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   }
   stream << "\n";
 
+  QMap<LVGLObject *, int> &btp = LVGLHelper::getInstance().getBtnGoPage();
   int lvglStateType = 7;
   for (LVGLObject *o : objects) {
     for (int index = 0; index < o->widgetClass()->styles().size(); ++index) {
@@ -279,6 +276,15 @@ bool LVGLProject::exportCode(const QString &path) const {
       for (LVGLProperty *p : o->widgetClass()->properties()) {
         for (const QString &fn : p->function(o)) stream << "\t" << fn << "\n";
       }
+
+      if (btp.contains(o)) {
+        QString pageName =
+            LVGLHelper::getInstance().getMainW()->getTabW()->tabText(btp[o]);
+        stream << "\t"
+               << "lv_obj_set_event_cb(" << o->codeName() << ", event_page"
+               << QString::number(btp[o] + 1) << ");\n";
+      }
+
       stream << "\n\n";
     }
   }
@@ -300,6 +306,86 @@ bool LVGLProject::exportCode(const QString &path) const {
     QFile file(filepath);
     file.copy(copyfilepath);
   }
+  if (!LVGLHelper::getInstance().IsBtngoPageEmpty()) {
+    return exportCodePlus(path);
+  }
+
+  return true;
+}
+
+bool LVGLProject::exportCodePlus(const QString &path) const {
+  QDir dir(path);
+  QFile file;
+  const QString name = "app";
+  file.setFileName(dir.path() + "/" + name + ".h");
+  if (!file.open(QIODevice::WriteOnly)) return false;
+
+  QTextStream stream;
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setDevice(&file);
+
+  stream << "#ifndef APP_H\n";
+  stream << "#define APP_H\n\n";
+  stream << "#include \"lvgl/lvgl.h\"";
+
+  QSet<QString> &fontname = lvgl->getSaveFontName();
+  auto itor = fontname.begin();
+  for (; itor != fontname.end(); ++itor)
+    stream << "LV_FONT_DECLARE(" + *itor + ");\n";
+
+  stream << "\n";
+  auto tabW = LVGLHelper::getInstance().getMainW()->getTabW();
+  for (int i = 0; i < tabW->count(); ++i) {
+    stream << "void event_page" + QString::number(i + 1) +
+                  "(lv_obj_t *obj, lv_event_t event);\n";
+  }
+
+  stream << "\n";
+  stream << "void app();\n";
+  stream << "#endif";
+  file.close();
+
+  file.setFileName(dir.path() + "/" + name + ".c");
+  if (!file.open(QIODevice::WriteOnly)) return false;
+  stream.setDevice(&file);
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+
+  stream << "#include \"app.h\"\n";
+  for (int i = 0; i < tabW->count(); ++i) {
+    stream << "#include \"page_" << QString::number(i + 1) << ".h\"\n";
+  }
+
+  stream << "\n";
+  for (int i = 0; i < tabW->count(); ++i) {
+    stream << "static lv_obj_t *page" + QString::number(i + 1) + ";\n";
+  }
+
+  stream << "\n";
+  for (int i = 0; i < tabW->count(); ++i) {
+    stream << "void event_page" + QString::number(i + 1) +
+                  "(lv_obj_t *obj,lv_event_t evnet){\n";
+    stream << "\t"
+           << "if(event == LV_EVENT_CLICKED) {\n";
+    stream << "\t\t"
+           << "lv_scr_load(page" << QString::number(i + 1) << ");\n";
+    stream << "\t"
+           << "}\n";
+    stream << "}\n";
+  }
+
+  stream << "\n";
+  stream << "void app(){\n";
+
+  for (int i = 0; i < tabW->count(); ++i) {
+    stream << "\t"
+           << "page" << QString::number(i + 1) << " = page_"
+           << QString::number(i + 1) << "create();\n";
+  }
+
+  stream << "\n";
+  stream << "\t"
+         << "lv_scr_load(page1);\n";
+  stream << "}";
 
   return true;
 }

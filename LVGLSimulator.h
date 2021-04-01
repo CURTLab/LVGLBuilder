@@ -49,6 +49,7 @@ class LVGLSimulator : public QGraphicsView {
   void removeObject(LVGLObject *obj);
 
   void setObjectModel(LVGLObjectModel *objectModel);
+  bool getMouseEnable() { return m_mouseEnabled; }
 
  public slots:
   void setSelectedObject(LVGLObject *obj);
@@ -61,6 +62,7 @@ class LVGLSimulator : public QGraphicsView {
   void objectSelected(LVGLObject *obj);
   void objectPositionChanged();
   void objectAdded(LVGLObject *obj);
+  void objPressed(LVGLObject *obj);
 
  protected:
   void mousePressEvent(QMouseEvent *event) override;

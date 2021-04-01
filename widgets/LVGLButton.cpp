@@ -2,7 +2,10 @@
 
 #include <QIcon>
 
+#include "LVGLHelper.h"
 #include "LVGLObject.h"
+#include "MainWindow.h"
+#include "properties/LVGLPropertyAnyFunc.h"
 
 class LVGLPropertyButtonState : public LVGLPropertyEnum {
  public:
@@ -97,6 +100,43 @@ class LVGLPropertyButtonFit : public LVGLPropertyEnum {
   int m_index;
 };
 
+class LVGLPropertyButtonGo : public LVGLPropertyAnyFunc {
+ public:
+  LVGLPropertyButtonGo(const AnyFuncColType arr[], int size)
+      : LVGLPropertyAnyFunc(arr, size, true) {}
+  QString name() const { return "Go to"; }
+
+ protected:
+  QStringList get(LVGLObject *obj) const {
+    QStringList &pagelist = LVGLHelper::getInstance().pageName();
+    if (!pagelist.isEmpty()) updateData(0, pagelist);
+
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList();
+  }
+  void set(LVGLObject *obj, QStringList list) {
+    m_list = list;
+    for (int i = 0; i < m_list.size(); ++i) {
+      QStringList strlist = list[i].split('@');
+      QString pagename = strlist[0];
+      int gotopage = 0;
+      auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+      for (int i = 0; i < tabw->count(); ++i) {
+        if (pagename == tabw->tabText(i)) {
+          gotopage = i;
+          break;
+        }
+      }
+      QMap<LVGLObject *, int> &btngopage =
+          LVGLHelper::getInstance().getBtnGoPage();
+      btngopage[obj] = gotopage;
+    }
+  }
+
+ private:
+  QStringList m_list;
+};
+
 LVGLButton::LVGLButton() {
   //  lv_fit_t t;
   initStateStyles();
@@ -107,6 +147,8 @@ LVGLButton::LVGLButton() {
                                        lv_btn_get_checkable);
   m_properties << new LVGLPropertyButtonLayout;
   m_properties << new LVGLPropertyButtonFit;
+  static AnyFuncColType arr[1] = {e_QComboBox};
+  m_properties << new LVGLPropertyButtonGo(arr, 1);
 
   m_editableStyles << LVGL::Button;  // LV_BTN_PART_MAIN
 }

@@ -40,6 +40,7 @@ class MainWindow : public QMainWindow {
   QHash<QString, const LVGLWidget *> &getWDP() { return m_widgetsDisplayW; }
   QHash<QString, const LVGLWidget *> &getWIP() { return m_widgetsInputW; }
   QMap<int, lv_obj_t *> &getCodeMap() { return m_codemap; }
+  QTabWidget *getTabW();
 
  private slots:
   void updateProperty();
@@ -67,6 +68,7 @@ class MainWindow : public QMainWindow {
   void on_combo_state_currentIndexChanged(int index);
 
   void tabChanged(int index);
+  void onObjPressed(LVGLObject *obj);
 
  protected:
   void showEvent(QShowEvent *event);
