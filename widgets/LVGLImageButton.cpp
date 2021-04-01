@@ -123,10 +123,10 @@ LVGLImageButton::LVGLImageButton() {
                                        lv_imgbtn_get_checkable);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_RELEASED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_PRESSED);
-  m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_DISABLED);
+  // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_DISABLED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_RELEASED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_PRESSED);
-  m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_DISABLED);
+  // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_DISABLED);
   static AnyFuncColType arr[1] = {e_QComboBox};
   m_properties << new LVGLPropertyImageButtonGo(arr, 1);
 

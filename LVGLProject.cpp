@@ -326,7 +326,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
 
   stream << "#ifndef APP_H\n";
   stream << "#define APP_H\n\n";
-  stream << "#include \"lvgl/lvgl.h\"";
+  stream << "#include \"lvgl/lvgl.h\"\n\n";
 
   QSet<QString> &fontname = lvgl->getSaveFontName();
   auto itor = fontname.begin();
@@ -363,7 +363,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "void event_page" + QString::number(i + 1) +
-                  "(lv_obj_t *obj,lv_event_t evnet){\n";
+                  "(lv_obj_t *obj,lv_event_t event){\n";
     stream << "\t"
            << "if(event == LV_EVENT_CLICKED) {\n";
     stream << "\t\t"
@@ -379,7 +379,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "\t"
            << "page" << QString::number(i + 1) << " = page_"
-           << QString::number(i + 1) << "create();\n";
+           << QString::number(i + 1) << "_create();\n";
   }
 
   stream << "\n";
