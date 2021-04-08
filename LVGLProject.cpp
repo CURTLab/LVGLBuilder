@@ -209,6 +209,8 @@ bool LVGLProject::exportCode(const QString &path) const {
            << color << "));\n";
   }
   stream << "\n";
+  QSet<QString> &fontset = lvgl->getSaveFontName();
+  fontset.clear();
 
   QMap<LVGLObject *, int> &btp = LVGLHelper::getInstance().getBtnGoPage();
   int lvglStateType = 7;

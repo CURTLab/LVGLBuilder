@@ -889,7 +889,6 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
   auto state = LVGLCore::LVGL_STATE[stateindex];
   auto s1 = obj1;
   QSet<QString> &fontset = lvgl->getSaveFontName();
-  fontset.clear();
 
   if (editableParts & LVGL::Mix) {
     // mix

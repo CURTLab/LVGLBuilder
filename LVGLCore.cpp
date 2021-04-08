@@ -1123,7 +1123,7 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
     return new LVGLSpinbox;
   else if (name == "lv_spinner")
     return new LVGLSpinner;
-  else if (name == "lv_sw")
+  else if (name == "lv_switch")
     return new LVGLSwitch;
   else if (name == "lv_table")
     return new LVGLTable;
