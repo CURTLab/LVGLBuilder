@@ -1,6 +1,7 @@
 #ifndef LVGLHELPER_H
 #define LVGLHELPER_H
 #include <QComboBox>
+#include <QSet>
 
 class MainWindow;
 class LVGLObject;
@@ -22,6 +23,7 @@ class LVGLHelper {
   QStringList& pageName();
   QMap<LVGLObject*, int>& getBtnGoPage() { return m_btnGoPage; }
   bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
+  QSet<QString>& getSaveFontName() { return m_saveFontN; }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
@@ -34,5 +36,6 @@ class LVGLHelper {
   int m_filecount;
   QStringList pagelist;
   QMap<LVGLObject*, int> m_btnGoPage;
+  QSet<QString> m_saveFontN;
 };
 #endif

@@ -209,8 +209,6 @@ bool LVGLProject::exportCode(const QString &path) const {
            << color << "));\n";
   }
   stream << "\n";
-  QSet<QString> &fontset = lvgl->getSaveFontName();
-  fontset.clear();
 
   QMap<LVGLObject *, int> &btp = LVGLHelper::getInstance().getBtnGoPage();
   int lvglStateType = 7;
@@ -298,7 +296,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   // output font file
   QString fontdir = QDir::currentPath() + "/font/";
   QStringList fontfilelist;
-  QSet<QString> &fontname = lvgl->getSaveFontName();
+  QSet<QString> &fontname = LVGLHelper::getInstance().getSaveFontName();
   auto itor = fontname.begin();
   for (; itor != fontname.end(); ++itor) fontfilelist.push_back(*itor + ".c");
   for (auto x : fontfilelist) {
@@ -308,11 +306,8 @@ bool LVGLProject::exportCode(const QString &path) const {
     QFile file(filepath);
     file.copy(copyfilepath);
   }
-  if (!LVGLHelper::getInstance().IsBtngoPageEmpty()) {
-    return exportCodePlus(path);
-  }
 
-  return true;
+  return exportCodePlus(path);
 }
 
 bool LVGLProject::exportCodePlus(const QString &path) const {
@@ -330,7 +325,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "#define APP_H\n\n";
   stream << "#include \"lvgl/lvgl.h\"\n\n";
 
-  QSet<QString> &fontname = lvgl->getSaveFontName();
+  QSet<QString> &fontname = LVGLHelper::getInstance().getSaveFontName();
   auto itor = fontname.begin();
   for (; itor != fontname.end(); ++itor)
     stream << "LV_FONT_DECLARE(" + *itor + ");\n";
