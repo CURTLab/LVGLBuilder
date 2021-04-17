@@ -140,10 +140,6 @@ LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
 QTabWidget *MainWindow::getTabW() { return m_ui->tabWidget; }
 
-void MainWindow::new_file() { openNewProject(); }
-
-void MainWindow::read_file() { on_action_load_triggered(); }
-
 void MainWindow::updateProperty() {
   LVGLObject *o = m_curSimulation->selectedObject();
   if (o == nullptr) return;
