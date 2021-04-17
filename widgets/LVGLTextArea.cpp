@@ -58,37 +58,6 @@ class LVGLPropertyTACursorPos : public LVGLPropertyInt {
   }
 };
 
-// class LVGLPropertyTACursorType : public LVGLPropertyEnum {
-// public:
-//  LVGLPropertyTACursorType()
-//      : LVGLPropertyEnum(QStringList() << "None"
-//                                       << "Line"
-//                                       << "Block"
-//                                       << "Outline"
-//                                       << "Underline"),
-//        m_values({"LV_CURSOR_NONE", "LV_CURSOR_LINE", "LV_CURSOR_BLOCK",
-//                  "LV_CURSOR_OUTLINE", "LV_CURSOR_UNDERLINE"}) {}
-
-//  QString name() const { return "Cursor type"; }
-
-//  QStringList function(LVGLObject *obj) const {
-//    return QStringList() << QString("lv_ta_set_cursor_type(%1, %2);")
-//                                .arg(obj->codeName())
-//                                .arg(m_values.at(get(obj)));
-//  }
-
-// protected:
-//  int get(LVGLObject *obj) const {
-//    return lv_textarea_get_cursor_type(obj->obj()) & 0x7f;
-//  }
-//  void set(LVGLObject *obj, int index) {
-//      lv_textareagetcur
-//    lv_textarea_set_cursor_type(obj->obj(), index & 0x7f);
-//  }
-
-//  QStringList m_values;
-//};
-
 class LVGLPropertyTACursorBlinkTime : public LVGLPropertyInt {
  public:
   LVGLPropertyTACursorBlinkTime() : LVGLPropertyInt(0, UINT16_MAX) {}
@@ -268,12 +237,12 @@ LVGLTextArea::LVGLTextArea() {
   m_editableStyles << LVGL::PageSCROLLBAR;  // LV_TEXTAREA_PART_SCROLLBAR
   m_editableStyles << LVGL::PageEDGEFLASH;  // LV_TEXTAREA_PART_EDGE_FLASH
   m_editableStyles << LVGL::Body;           // LV_TEXTAREA_PART_CURSOR
-  m_editableStyles << LVGL::Body;           // LV_TEXTAREA_PART_PLACEHOLDER
+  m_editableStyles << LVGL::TextPlaceHode;  // LV_TEXTAREA_PART_PLACEHOLDER
 }
 
 QString LVGLTextArea::name() const { return "Text area"; }
 
-QString LVGLTextArea::className() const { return "lv_ta"; }
+QString LVGLTextArea::className() const { return "lv_textarea"; }
 
 LVGLWidget::Type LVGLTextArea::type() const { return TextArea; }
 

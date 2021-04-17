@@ -69,6 +69,9 @@ class MainWindow : public QMainWindow {
 
   void tabChanged(int index);
   void onObjPressed(LVGLObject *obj);
+  void ontabclose(int index);
+
+  void on_eaction_export_triggered();
 
  protected:
   void showEvent(QShowEvent *event);
@@ -128,5 +131,6 @@ class MainWindow : public QMainWindow {
   QHash<QString, const LVGLWidget *> m_widgetsDisplayW;
   QHash<QString, const LVGLWidget *> m_widgetsInputW;
   bool m_isrun;
+  QList<QWidget *> m_needdelete;
 };
 #endif  // MAINWINDOW_H

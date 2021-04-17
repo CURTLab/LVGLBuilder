@@ -15,7 +15,7 @@ bool LVGLPropertyAssignTextArea::hasEditor() const { return true; }
 QWidget *LVGLPropertyAssignTextArea::editor(QWidget *parent) {
   m_widget = new QComboBox(parent);
   QStringList list = QStringList() << "None";
-  for (LVGLObject *o : lvgl->objectsByType("lv_ta")) list << o->name();
+  for (LVGLObject *o : lvgl->objectsByType("lv_textarea")) list << o->name();
   m_widget->addItems(list);
   return m_widget;
 }

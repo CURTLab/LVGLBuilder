@@ -153,7 +153,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "/**********************\n";
   stream << " * GLOBAL PROTOTYPES\n";
   stream << " **********************/\n\n";
-  stream << "void " << codeName << "_create(lv_obj_t *parent);\n\n";
+  stream << "lv_obj_t* " << codeName << "_create();\n\n";
   stream << "#ifdef __cplusplus\n} /* extern \"C\" */\n#endif\n\n";
   stream << "#endif /*" << defName << "_H*/";
   file.close();
@@ -200,8 +200,10 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "\n";
 
   // application
-  stream << "void " << codeName << "_create(lv_obj_t *parent)\n";
-  stream << "{\n";
+  stream << "lv_obj_t* " << codeName << "_create(){\n";
+  stream << "\t"
+         << "lv_obj_t *parent = lv_obj_create(NULL, NULL);\n";
+
   if (lvgl->screenColorChanged()) {
     QString color = QVariant(lvgl->screenColor()).toString().replace("#", "0x");
     stream << "\t_lv_obj_set_style_local_color(parent,0,LV_STYLE_BG_COLOR,lv_"
@@ -289,6 +291,8 @@ bool LVGLProject::exportCode(const QString &path) const {
     }
   }
 
+  stream << "\t"
+         << "return parent;\n";
   stream << "}\n";
 
   file.close();

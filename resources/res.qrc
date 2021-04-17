@@ -52,5 +52,6 @@
         <file>Button.png</file>
         <file>x.png</file>
         <file>arrows.png</file>
+        <file>export.jpg</file>
     </qresource>
 </RCC>

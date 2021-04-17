@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1780</width>
+    <width>1792</width>
     <height>1165</height>
    </rect>
   </property>
@@ -38,6 +38,12 @@
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
        <widget class="QTabWidget" name="tabWidget">
+        <property name="minimumSize">
+         <size>
+          <width>1310</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="currentIndex">
          <number>-1</number>
         </property>
@@ -52,8 +58,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1780</width>
-     <height>26</height>
+     <width>1792</width>
+     <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuLittlevGL_Builder">
@@ -75,6 +81,7 @@
     <addaction name="action_load"/>
     <addaction name="action_save"/>
     <addaction name="separator"/>
+    <addaction name="eaction_export"/>
     <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="menu_resent_filess"/>
@@ -120,6 +127,8 @@
    <addaction name="action_new"/>
    <addaction name="action_load"/>
    <addaction name="action_save"/>
+   <addaction name="separator"/>
+   <addaction name="eaction_export"/>
    <addaction name="separator"/>
    <addaction name="action_run"/>
   </widget>
@@ -261,8 +270,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>439</height>
+          <width>76</width>
+          <height>396</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -583,6 +592,9 @@
    <property name="text">
     <string>New</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
+   </property>
   </action>
   <action name="action_load">
    <property name="icon">
@@ -594,6 +606,9 @@
    </property>
    <property name="toolTip">
     <string>Load file</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+L</string>
    </property>
   </action>
   <action name="actionWidget_Box">
@@ -628,6 +643,9 @@
    <property name="text">
     <string>Save ...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+S</string>
+   </property>
   </action>
   <action name="action_run">
    <property name="checkable">
@@ -640,10 +658,28 @@
    <property name="text">
     <string>Run ...</string>
    </property>
+   <property name="shortcut">
+    <string>Ctrl+R</string>
+   </property>
   </action>
   <action name="action_export_c">
    <property name="text">
     <string>C Project ...</string>
+   </property>
+  </action>
+  <action name="eaction_export">
+   <property name="icon">
+    <iconset resource="resources/res.qrc">
+     <normaloff>:/icons/export.jpg</normaloff>:/icons/export.jpg</iconset>
+   </property>
+   <property name="text">
+    <string>Export</string>
+   </property>
+   <property name="toolTip">
+    <string>Export code</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+E</string>
    </property>
   </action>
  </widget>

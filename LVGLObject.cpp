@@ -2408,49 +2408,99 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
       newObj->generateName();
     lvgl->addObject(newObj);
 
-    for (LVGLProperty *p : widgetClass->properties()) {
-      QString pname = p->name().toLower();
-      if (pname == "name") continue;
-      if (object.contains(pname)) {
-        QVariant v = object[pname].toVariant();
-        if (!v.isNull()) p->setValue(newObj, v);
-      }
-    }
+    if (className == "lv_roller" || className == "lv_page") {
+      if (object.contains("styles"))
+        newObj->parseStyles(object["styles"].toArray());
 
-    if (object.contains("children")) {
-      QJsonArray childs = object["children"].toArray();
-      for (int i = 0; i < childs.size(); ++i) {
-        QJsonObject child = childs[i].toObject();
-        if (widgetClass->type() == LVGLWidget::TabView &&
-            child.contains("index")) {
-          LVGLObject *page = newObj->findChildByIndex(child["index"].toInt());
-          page->setName(child["name"].toString());
-          // parse styles
-          if (child.contains("styles"))
-            page->parseStyles(child["styles"].toArray());
-
-          // parse page props
-          for (LVGLProperty *p : lvgl->widget("lv_page")->specialProperties()) {
-            const QString pname = p->name().toLower();
-            if (child.contains(pname)) {
-              QVariant v = child[pname].toVariant();
-              if (!v.isNull()) p->setValue(page, v);
-            }
-          }
-          // parse children of page
-          if (child.contains("children")) {
-            QJsonArray page_childs = child["children"].toArray();
-            for (int j = 0; j < page_childs.size(); ++j)
-              parse(page_childs[j].toObject(), page);
-          }
-        } else {
-          parse(child, newObj);
+      for (LVGLProperty *p : widgetClass->properties()) {
+        QString pname = p->name().toLower();
+        if (pname == "name") continue;
+        if (object.contains(pname)) {
+          QVariant v = object[pname].toVariant();
+          if (!v.isNull()) p->setValue(newObj, v);
         }
       }
+
+      if (object.contains("children")) {
+        QJsonArray childs = object["children"].toArray();
+        for (int i = 0; i < childs.size(); ++i) {
+          QJsonObject child = childs[i].toObject();
+          if (widgetClass->type() == LVGLWidget::TabView &&
+              child.contains("index")) {
+            LVGLObject *page = newObj->findChildByIndex(child["index"].toInt());
+            page->setName(child["name"].toString());
+            // parse styles
+            if (child.contains("styles"))
+              page->parseStyles(child["styles"].toArray());
+
+            // parse page props
+            for (LVGLProperty *p :
+                 lvgl->widget("lv_page")->specialProperties()) {
+              const QString pname = p->name().toLower();
+              if (child.contains(pname)) {
+                QVariant v = child[pname].toVariant();
+                if (!v.isNull()) p->setValue(page, v);
+              }
+            }
+            // parse children of page
+            if (child.contains("children")) {
+              QJsonArray page_childs = child["children"].toArray();
+              for (int j = 0; j < page_childs.size(); ++j)
+                parse(page_childs[j].toObject(), page);
+            }
+          } else {
+            parse(child, newObj);
+          }
+        }
+      }
+
+    } else {
+      for (LVGLProperty *p : widgetClass->properties()) {
+        QString pname = p->name().toLower();
+        if (pname == "name") continue;
+        if (object.contains(pname)) {
+          QVariant v = object[pname].toVariant();
+          if (!v.isNull()) p->setValue(newObj, v);
+        }
+      }
+
+      if (object.contains("children")) {
+        QJsonArray childs = object["children"].toArray();
+        for (int i = 0; i < childs.size(); ++i) {
+          QJsonObject child = childs[i].toObject();
+          if (widgetClass->type() == LVGLWidget::TabView &&
+              child.contains("index")) {
+            LVGLObject *page = newObj->findChildByIndex(child["index"].toInt());
+            page->setName(child["name"].toString());
+            // parse styles
+            if (child.contains("styles"))
+              page->parseStyles(child["styles"].toArray());
+
+            // parse page props
+            for (LVGLProperty *p :
+                 lvgl->widget("lv_page")->specialProperties()) {
+              const QString pname = p->name().toLower();
+              if (child.contains(pname)) {
+                QVariant v = child[pname].toVariant();
+                if (!v.isNull()) p->setValue(page, v);
+              }
+            }
+            // parse children of page
+            if (child.contains("children")) {
+              QJsonArray page_childs = child["children"].toArray();
+              for (int j = 0; j < page_childs.size(); ++j)
+                parse(page_childs[j].toObject(), page);
+            }
+          } else {
+            parse(child, newObj);
+          }
+        }
+      }
+
+      if (object.contains("styles"))
+        newObj->parseStyles(object["styles"].toArray());
     }
 
-    if (object.contains("styles"))
-      newObj->parseStyles(object["styles"].toArray());
     return newObj;
   }
   return nullptr;

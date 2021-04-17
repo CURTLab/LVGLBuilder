@@ -9,14 +9,14 @@
 #include "LVGLCore.h"
 
 LVGLImageData::LVGLImageData()
-    : m_size(0), m_data(nullptr), m_colorFormat(LV_COLOR_24Bit) {}
+    : m_size(0), m_data(nullptr), m_colorFormat(LV_COLOR_32Bit) {}
 
 LVGLImageData::LVGLImageData(QImage image, QString fileName, QString name)
     : m_size(static_cast<uint32_t>(image.width() * image.height() * 4)),
       m_data(new uint8_t[m_size]),
       m_name(name),
       m_fileName(fileName),
-      m_colorFormat(LV_COLOR_24Bit) {
+      m_colorFormat(LV_COLOR_32Bit) {
   QImage img = image.convertToFormat(QImage::Format_ARGB32);
   memcpy(m_data, img.bits(), m_size);
 
@@ -47,7 +47,7 @@ LVGLImageData::LVGLImageData(QString fileName, QString name)
       m_data(nullptr),
       m_name(name),
       m_fileName(fileName),
-      m_colorFormat(LV_COLOR_24Bit) {
+      m_colorFormat(LV_COLOR_32Bit) {
   if (!QFile(fileName).exists()) return;
 
   memset(&m_img_dsc, 0, sizeof(m_img_dsc));

@@ -54,7 +54,7 @@ enum StylePart {
   ImgMAIN = Background | Image | Padding,
   KeyboardBTN = Background | Text,
   Label = Background | Padding | Text,
-  PageBG = Background | Padding | Margin | Text,
+  PageBG = Background | Padding | Margin | Text | Border | Mix,
   PageSCRL = Background | Padding,
   PageSCROLLBAR = Background | Padding,
   PageEDGEFLASH = Background,
@@ -68,6 +68,7 @@ enum StylePart {
   SpinboxCURSOR = Text,
   TableCELL = Background | Line,
   TableTABBTN = Button | Text,
+  TextPlaceHode = Text,
   WindowHEAD = Background | Text | Padding | Margin,
 };
 Q_DECLARE_FLAGS(StyleParts, StylePart)

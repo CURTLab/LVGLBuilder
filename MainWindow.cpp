@@ -34,10 +34,10 @@ MainWindow::MainWindow(QWidget *parent)
       m_ui(new Ui::MainWindow),
       m_zoom_slider(new QSlider(Qt::Horizontal)),
       m_project(nullptr),
+      m_objectModel(nullptr),
       m_maxFileNr(5),
       m_curSimulation(nullptr),
       m_proxyModel(nullptr),
-      m_objectModel(nullptr),
       m_proxyModelDPW(nullptr),
       m_proxyModelIPW(nullptr),
       m_widgetModel(nullptr),
@@ -113,6 +113,12 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::tabChanged);
 
   LVGLHelper::getInstance().setMainW(this);
+  m_ui->tabWidget->setTabsClosable(true);
+  connect(m_ui->tabWidget, &QTabWidget::tabCloseRequested, this,
+          &MainWindow::ontabclose);
+  m_ui->style_tree->setColumnWidth(0, 200);
+  m_ui->property_tree->setColumnWidth(0, 200);
+  m_ui->object_tree->setColumnWidth(0, 120);
 }
 
 MainWindow::~MainWindow() {
@@ -127,11 +133,16 @@ MainWindow::~MainWindow() {
   qDeleteAll(m_widgetsInputW);
   for (int i = 0; i < 35; ++i)
     if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
+  qDeleteAll(m_needdelete);
 }
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
 QTabWidget *MainWindow::getTabW() { return m_ui->tabWidget; }
+
+void MainWindow::new_file() { openNewProject(); }
+
+void MainWindow::read_file() { on_action_load_triggered(); }
 
 void MainWindow::updateProperty() {
   LVGLObject *o = m_curSimulation->selectedObject();
@@ -311,6 +322,7 @@ void MainWindow::loadProject(const QString &fileName) {
     m_ui->tabWidget->setTabText(index, m_project->name());
     adjustForCurrentFile(fileName);
     lvgl->changeResolution(m_project->resolution());
+    m_coreRes[lvgl] = m_project->resolution();
     m_curSimulation->changeResolution(m_project->resolution());
     setEnableBuilder(true);
   }
@@ -867,16 +879,17 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
 
 void MainWindow::tabChanged(int index) {
   if (index != m_curTabWIndex && index >= 0) {
-    if (nullptr != m_curSimulation) m_curSimulation->setSelectedObject(nullptr);
+    if (nullptr != m_curSimulation) {
+      m_curSimulation->setSelectedObject(nullptr);
+      m_propertyModel->setObject(nullptr);
+    }
     m_curSimulation = m_listTabW[index]->getSimulator();
     m_ui->action_run->setChecked(m_curSimulation->getMouseEnable());
     lvgl = m_listTabW[index]->getCore();
     m_project = m_listTabW[index]->getProject();  // dont need
     initlvglConnect();
-
     lvgl->changeResolution(m_coreRes[lvgl]);
     m_curSimulation->changeResolution(m_coreRes[lvgl]);
-    m_curSimulation->repaint();
     m_curTabWIndex = index;
   }
 }
@@ -888,4 +901,36 @@ void MainWindow::onObjPressed(LVGLObject *obj) {
     m_curSimulation->setSelectedObject(nullptr);
     m_ui->tabWidget->setCurrentIndex(index);
   }
+}
+
+void MainWindow::ontabclose(int index) {
+  int count = m_ui->tabWidget->count();
+  if (count > 1) {
+    // get p
+    auto w = m_ui->tabWidget->widget(index);
+
+    int curindex = m_ui->tabWidget->currentIndex();
+    m_curSimulation->setSelectedObject(nullptr);
+    m_propertyModel->setObject(nullptr);
+    if (index == curindex) {
+      m_curSimulation->clear();
+      revlvglConnect();
+      int nindex = index == 0 ? 1 : index - 1;
+      m_ui->tabWidget->setCurrentIndex(nindex);
+    }
+
+    // recoder
+    m_coreRes.remove(m_listTabW[index]->getCore());
+    m_listTabW[index]->getSimulator()->clear();
+
+    // order
+    for (int i = index + 1; i < count; ++i) m_listTabW[i - 1] = m_listTabW[i];
+    m_listTabW.removeLast();
+    m_ui->tabWidget->removeTab(index);
+    m_needdelete.push_back(w);
+  }
+}
+
+void MainWindow::on_eaction_export_triggered() {
+  on_action_export_c_triggered();
 }

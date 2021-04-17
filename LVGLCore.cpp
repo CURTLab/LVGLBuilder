@@ -857,6 +857,7 @@ void LVGLCore::removeAllObjects() {
       c = nullptr;
     }
   }
+  m_objects.clear();
 }
 
 QList<LVGLObject *> LVGLCore::allObjects() const { return m_objects; }
@@ -1129,7 +1130,7 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
     return new LVGLTable;
   else if (name == "lv_tabview")
     return new LVGLTabview;
-  else if (name == "lv_ta")
+  else if (name == "lv_textarea")
     return new LVGLTextArea;
   else if (name == "lv_tileview")
     return new LVGLTileView;
