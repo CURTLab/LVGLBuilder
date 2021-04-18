@@ -904,6 +904,7 @@ void MainWindow::tabChanged(int index) {
     lvgl->changeResolution(m_coreRes[lvgl]);
     m_curSimulation->changeResolution(m_coreRes[lvgl]);
     m_curTabWIndex = index;
+    lv_set_cur_disp(lvgl->getdispt());
   }
 }
 

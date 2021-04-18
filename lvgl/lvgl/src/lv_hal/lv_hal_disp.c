@@ -472,3 +472,8 @@ lv_disp_rot_t lv_disp_get_rotation(lv_disp_t * disp)
 /**********************
  *   STATIC FUNCTIONS
  **********************/
+
+void lv_set_cur_disp(lv_disp_t *disp)
+{
+    disp_def = disp;
+}

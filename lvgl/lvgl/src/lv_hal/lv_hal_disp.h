@@ -197,6 +197,8 @@ typedef enum {
  * GLOBAL PROTOTYPES
  **********************/
 
+void lv_set_cur_disp(lv_disp_t *disp);
+
 /**
  * Initialize a display driver with default values.
  * It is used to have known values in the fields and not junk in memory.
