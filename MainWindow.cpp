@@ -188,6 +188,7 @@ void MainWindow::loadRecent() {
 
 void MainWindow::openNewProject() {
   LVGLNewDialog dialog(this);
+  dialog.setFocus();
   m_isrun = true;
   if (dialog.exec() == QDialog::Accepted) {
     if (m_curSimulation != nullptr) revlvglConnect();
@@ -538,6 +539,19 @@ void MainWindow::showEvent(QShowEvent *event) {
   QMainWindow::showEvent(event);
   if (m_project == nullptr && !m_isrun)
     QTimer::singleShot(50, this, SLOT(openNewProject()));
+}
+
+void MainWindow::keyPressEvent(QKeyEvent *e) {
+  int key = e->key();
+  if (key >= Qt::Key_1 && key <= Qt::Key_9) {
+    int count = m_ui->tabWidget->count();
+    int index = key - Qt::Key_1;
+    if (count > 1 && index < count) {
+      m_ui->tabWidget->setCurrentIndex(index);
+    }
+  }
+
+  QMainWindow::keyPressEvent(e);
 }
 
 QPixmap MainWindow::getPix(int type) {

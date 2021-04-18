@@ -74,7 +74,8 @@ class MainWindow : public QMainWindow {
   void on_eaction_export_triggered();
 
  protected:
-  void showEvent(QShowEvent *event);
+  void showEvent(QShowEvent *event) override;
+  void keyPressEvent(QKeyEvent *e) override;
 
  private:
   QPixmap getPix(int type);

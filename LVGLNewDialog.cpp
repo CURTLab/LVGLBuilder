@@ -1,6 +1,7 @@
 #include "LVGLNewDialog.h"
 
 #include <QDebug>
+#include <QMessageBox>
 #include <QPixmap>
 #include <QSettings>
 
@@ -19,7 +20,7 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
   m_ui->pushButton_2->setText("Cancel");
   m_ui->combo_resolution->addItem(tr("Costume"));
   m_ui->lineEdit->setText(LVGLHelper::getInstance().generateFileName());
-  setWindowFlags(Qt::FramelessWindowHint);
+  setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
   setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
   m_ui->close->setStyleSheet(
       "QPushButton{background-color: #D8D8D8;border:0px;}QPushButton:hover "
@@ -108,11 +109,28 @@ QSize LVGLNewDialog::selectedResolution() const {
 }
 
 void LVGLNewDialog::accept() {
+  if (m_ui->lineEdit->text().isEmpty()) {
+    QMessageBox::warning(this, tr("Error"), tr("Project name is empty!"));
+    return;
+  }
+  if (0 == m_ui->spin_width->value()) {
+    QMessageBox::warning(this, tr("Error"), tr("Width can't set 0"));
+    return;
+  }
+  if (0 == m_ui->spin_height->value()) {
+    QMessageBox::warning(this, tr("Error"), tr("Height can't set 0"));
+    return;
+  }
   QSettings settings("at.fhooe.lvgl", "LVGL Builder");
   settings.setValue("resolution index", m_ui->combo_resolution->currentIndex());
   settings.setValue("resolution", QSize(m_ui->spin_width->value(),
                                         m_ui->spin_height->value()));
   QDialog::accept();
+}
+
+void LVGLNewDialog::keyPressEvent(QKeyEvent *e) {
+  if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) accept();
+  QDialog::keyPressEvent(e);
 }
 
 void LVGLNewDialog::resolutionChanged(int index) {

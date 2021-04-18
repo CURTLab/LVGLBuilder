@@ -22,6 +22,9 @@ class LVGLNewDialog : public QDialog {
  public slots:
   virtual void accept() override;
 
+ protected:
+  void keyPressEvent(QKeyEvent *e) override;
+
  private slots:
   void resolutionChanged(int index);
 

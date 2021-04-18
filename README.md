@@ -10,7 +10,7 @@
 
 Tested:
  * Windows 10 + MSVC 2019 + Qt 5.15.1
- * Windows 10 + MinGW 8.1 + Qt 5.15.2
+ * Windows 10 + MinGW 8.1 + Qt 5.12.9
  * Ubuntu 18.04.4 + Qt 5.14.2
 
 ### Build
@@ -37,6 +37,7 @@ Building with QtCreator:
  * Save and load a project as json file using the menu or tool buttons
  * Mark widgets within the property editor as accessable via the c header
  * Export the project as c code using the menu (File -> Export -> C Project ...)
+ * Support keyboard shortcuts
 
 ### ToDo General
 - [x] Saving GUI as JSON
@@ -45,10 +46,10 @@ Building with QtCreator:
 - [x] Change style of single widgets
 - [x] Support different display formats
 - [x] Fix object inspector (insertion and deletion of widgets)
-- [ ] Fix absolute and relative positions of widgets
+- [x] Fix absolute and relative positions of widgets
 - [ ] Undo and redo
-- [ ] Default values for widgets
-- [ ] Support multiple screens
+- [x] Default values for widgets
+- [x] Support multiple screens
 - [ ] Dialog for changing keyboard layout
 - [x] Preview for widgets
 - [x] Icons for widgets
@@ -83,7 +84,7 @@ Building with QtCreator:
 - [x] Preloader (lv_preload)
 - [x] Roller (lv_roller)
 - [x] Slider (lv_slider)
-- [ ] Spinbox (lv_spinbox)
+- [x] Spinbox (lv_spinbox)
 - [x] Switch (lv_sw)
 - [ ] Table (lv_table)
 - [x] Tabview (lv_tabview)
