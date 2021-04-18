@@ -50,6 +50,8 @@ class LVGLSimulator : public QGraphicsView {
 
   void setObjectModel(LVGLObjectModel *objectModel);
   bool getMouseEnable() { return m_mouseEnabled; }
+  void threadstop();
+  void restartconnect();
 
  public slots:
   void setSelectedObject(LVGLObject *obj);
@@ -89,6 +91,7 @@ class LVGLSimulator : public QGraphicsView {
   LVGLItem *m_item;
   LVGLObjectModel *m_objectModel;
   LVGLCore *m_lvgl;
+  volatile bool m_isrunning;
 };
 
 class LVGLKeyPressEventFilter : public QObject {

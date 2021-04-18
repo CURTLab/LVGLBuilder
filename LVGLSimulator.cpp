@@ -75,7 +75,8 @@ LVGLSimulator::LVGLSimulator(LVGLCore *lvgl, QWidget *parent)
       m_mouseEnabled(false),
       m_item(new LVGLItem),
       m_objectModel(nullptr),
-      m_lvgl(lvgl) {
+      m_lvgl(lvgl),
+      m_isrunning(true) {
   // setMinimumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   // setMaximumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   m_scene->setlvgl(m_lvgl);
@@ -277,12 +278,12 @@ void LVGLSimulator::dragMoveEvent(QDragMoveEvent *event) {
 
 void LVGLSimulator::dragEnterEvent(QDragEnterEvent *event) {
   if (m_mouseEnabled) return;
-
   event->acceptProposedAction();
 }
 
 void LVGLSimulator::update() {
-  m_scene->invalidate(m_scene->sceneRect(), QGraphicsScene::BackgroundLayer);
+  if (m_isrunning)
+    m_scene->invalidate(m_scene->sceneRect(), QGraphicsScene::BackgroundLayer);
 }
 
 LVGLObject *LVGLSimulator::selectObject(QList<LVGLObject *> objs,
@@ -314,6 +315,16 @@ QList<LVGLObject *> LVGLSimulator::objectsUnderCoords(
 
 void LVGLSimulator::setObjectModel(LVGLObjectModel *objectModel) {
   m_objectModel = objectModel;
+}
+
+void LVGLSimulator::threadstop() {
+  m_isrunning = false;
+  // qInfo() << "AxsGL Thread stoped";
+}
+
+void LVGLSimulator::restartconnect() {
+  m_isrunning = true;
+  // qInfo() << "AxsGL Thread restarted";
 }
 
 LVGLItem *LVGLSimulator::item() const { return m_item; }

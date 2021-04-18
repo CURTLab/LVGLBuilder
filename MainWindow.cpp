@@ -875,11 +875,14 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
 
 void MainWindow::tabChanged(int index) {
   if (index != m_curTabWIndex && index >= 0) {
-    if (nullptr != m_curSimulation) {
+    if (m_curSimulation &&
+        m_curSimulation != m_listTabW[index]->getSimulator()) {
+      m_curSimulation->threadstop();
       m_curSimulation->setSelectedObject(nullptr);
       m_propertyModel->setObject(nullptr);
     }
     m_curSimulation = m_listTabW[index]->getSimulator();
+    m_curSimulation->restartconnect();
     m_ui->action_run->setChecked(m_curSimulation->getMouseEnable());
     lvgl = m_listTabW[index]->getCore();
     m_project = m_listTabW[index]->getProject();  // dont need
@@ -903,27 +906,24 @@ void MainWindow::ontabclose(int index) {
   int count = m_ui->tabWidget->count();
   if (count > 1) {
     // get p
-    auto w = m_ui->tabWidget->widget(index);
-
+    auto w = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
     int curindex = m_ui->tabWidget->currentIndex();
     m_curSimulation->setSelectedObject(nullptr);
     m_propertyModel->setObject(nullptr);
+    w->getSimulator()->clear();
     if (index == curindex) {
-      m_curSimulation->clear();
+      m_curSimulation->threadstop();
       revlvglConnect();
       int nindex = index == 0 ? 1 : index - 1;
       m_ui->tabWidget->setCurrentIndex(nindex);
     }
-
     // recoder
-    m_coreRes.remove(m_listTabW[index]->getCore());
-    m_listTabW[index]->getSimulator()->clear();
-
+    m_coreRes.remove(w->getCore());
     // order
     for (int i = index + 1; i < count; ++i) m_listTabW[i - 1] = m_listTabW[i];
     m_listTabW.removeLast();
-    m_ui->tabWidget->removeTab(index);
     m_needdelete.push_back(w);
+    m_ui->tabWidget->removeTab(index);
   }
 }
 

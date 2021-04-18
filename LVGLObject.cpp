@@ -2336,7 +2336,7 @@ QString LVGLObject::styleCodeName(int type) const {
 
 QList<LVGLObject *> LVGLObject::childs() const { return m_childs; }
 
-void LVGLObject::removeChild(LVGLObject *child) { m_childs.removeOne(child); }
+void LVGLObject::removeChild(LVGLObject *child) { m_childs.removeAt(0); }
 
 bool LVGLObject::isAccessible() const { return m_accessible; }
 
