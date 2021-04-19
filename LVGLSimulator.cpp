@@ -117,7 +117,7 @@ void LVGLSimulator::setSelectedObject(LVGLObject *obj) {
 void LVGLSimulator::setZoomLevel(int level) {
   QTransform transform;
   const qreal zoom =
-      (level < 0 ? -1.0 / (level - 1) : (level == 0 ? 1 : 1.0 + 0.5 * level));
+      (level < 0 ? -1.0 / (level - 1) : (level == 0 ? 1 : 1.0 + 0.125 * level));
   transform.scale(zoom, zoom);
   qDebug() << "Zoom:" << zoom;
   setTransform(transform);

@@ -593,7 +593,7 @@
     <string>New</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+N</string>
+    <string>Ctrl+F</string>
    </property>
   </action>
   <action name="action_load">
@@ -608,7 +608,7 @@
     <string>Load file</string>
    </property>
    <property name="shortcut">
-    <string>Ctrl+L</string>
+    <string>Ctrl+W</string>
    </property>
   </action>
   <action name="actionWidget_Box">

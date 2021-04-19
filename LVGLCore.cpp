@@ -59,6 +59,7 @@ void LVGLCore::init(int width, int height) {
   m_dispDrv.flush_cb = flushCb;
   m_dispDrv.buffer = &m_dispBuf;
   m_dispt = lv_disp_drv_register(&m_dispDrv);
+  lv_set_cur_disp(m_dispt);
 
   // to be sure that there is no button press at the start
   m_inputData.state = LV_INDEV_STATE_REL;
