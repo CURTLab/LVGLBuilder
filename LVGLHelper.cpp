@@ -13,3 +13,5 @@ QStringList &LVGLHelper::pageName() {
   }
   return pagelist;
 }
+
+LVGLSimulator *LVGLHelper::getcursim() { return m_pMainW->simulator(); }

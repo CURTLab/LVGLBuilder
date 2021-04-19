@@ -1,6 +1,8 @@
 #ifndef LVGLCOMMANDS_H
 #define LVGLCOMMANDS_H
 
+#include <QJsonArray>
+#include <QJsonObject>
 #include <QUndoCommand>
 
 #include "LVGLCore.h"
@@ -20,7 +22,7 @@ class AddWidgetCommand : public QUndoCommand {
   LVGLObject *m_obj;
   QString m_widgetName;
   QString m_widgetClassName;
-  LVGLObject *m_objWidgetparent;
+  QString m_objWidgetparent;
   lv_obj_t *m_objParent;
   QRect m_widgetRect;
 };
@@ -37,9 +39,61 @@ class RemoveWidgetCommand : public QUndoCommand {
   LVGLObject *m_obj;
   QString m_widgetName;
   QString m_widgetClassName;
-  LVGLObject *m_objWidgetparent;
+  QString m_objWidgetparent;
   lv_obj_t *m_objParent;
   QRect m_widgetRect;
+};
+
+class SetWidgetRectCommand : public QUndoCommand {
+ public:
+  explicit SetWidgetRectCommand(LVGLSimulator *sim, LVGLObject *obj, QRect rect,
+                                QUndoCommand *parent = nullptr);
+  explicit SetWidgetRectCommand(LVGLSimulator *sim, LVGLObject *obj,
+                                QRect oldRect, QRect newRect,
+                                QUndoCommand *parent = nullptr);
+  void undo() override;
+  void redo() override;
+
+ private:
+  LVGLSimulator *m_sim;
+  LVGLObject *m_obj;
+  QString m_widgetName;
+  QRect m_oldRect;
+  QRect m_newRect;
+};
+
+class SetWidgetPropCommand : public QUndoCommand {
+ public:
+  explicit SetWidgetPropCommand(LVGLSimulator *sim, LVGLObject *obj,
+                                QJsonArray oldWidgetArr,
+                                QJsonArray newWidgetArr,
+                                QUndoCommand *parent = nullptr);
+  void undo() override;
+  void redo() override;
+
+ private:
+  LVGLSimulator *m_sim;
+  LVGLObject *m_obj;
+  QString m_widgetName;
+  QJsonArray m_oldWidgetArr;
+  QJsonArray m_newWidgetArr;
+};
+
+class SetWidgetStyleCommand : public QUndoCommand {
+ public:
+  explicit SetWidgetStyleCommand(LVGLSimulator *sim, LVGLObject *obj,
+                                 QJsonArray oldWidgetArr,
+                                 QJsonArray newWidgetArr,
+                                 QUndoCommand *parent = nullptr);
+  void undo() override;
+  void redo() override;
+
+ private:
+  LVGLSimulator *m_sim;
+  LVGLObject *m_obj;
+  QString m_widgetName;
+  QJsonArray m_oldWidgetArr;
+  QJsonArray m_newWidgetArr;
 };
 
 #endif  // LVGLCOMMANDS_H

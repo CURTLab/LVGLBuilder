@@ -5,6 +5,7 @@
 
 class MainWindow;
 class LVGLObject;
+class LVGLSimulator;
 
 class LVGLHelper {
  public:
@@ -24,6 +25,7 @@ class LVGLHelper {
   QMap<LVGLObject*, int>& getBtnGoPage() { return m_btnGoPage; }
   bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
   QSet<QString>& getSaveFontName() { return m_saveFontN; }
+  LVGLSimulator* getcursim();
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }

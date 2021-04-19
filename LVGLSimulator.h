@@ -96,6 +96,9 @@ class LVGLSimulator : public QGraphicsView {
   LVGLCore *m_lvgl;
   volatile bool m_isrunning;
   QUndoStack *m_undoStack;
+  bool m_mousePressed;
+  QString selectobjName;
+  QRect selectobjRect;
 };
 
 class LVGLKeyPressEventFilter : public QObject {

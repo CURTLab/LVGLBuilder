@@ -79,7 +79,8 @@ LVGLSimulator::LVGLSimulator(LVGLCore *lvgl, QWidget *parent)
       m_objectModel(nullptr),
       m_lvgl(lvgl),
       m_isrunning(true),
-      m_undoStack(new QUndoStack(this)) {
+      m_undoStack(new QUndoStack(this)),
+      m_mousePressed(false) {
   // setMinimumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   // setMaximumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   m_scene->setlvgl(m_lvgl);
@@ -185,8 +186,15 @@ void LVGLSimulator::mousePressEvent(QMouseEvent *event) {
           m_lvgl->setScreenColor(dialog.selectedColor());
       }
     } else if (event->button() == Qt::LeftButton) {
-      if (!m_item->isManipolating())
-        setSelectedObject(selectObject(objectsUnderCoords(pos, false), false));
+      auto obj = selectObject(objectsUnderCoords(pos, false), false);
+      if (!m_item->isManipolating()) setSelectedObject(obj);
+      if (obj) {
+        if (!m_mousePressed) {
+          m_mousePressed = true;
+          selectobjName = obj->name();
+          selectobjRect = obj->geometry();
+        }
+      }
     }
   }
   QGraphicsView::mousePressEvent(event);
@@ -208,6 +216,15 @@ void LVGLSimulator::mouseReleaseEvent(QMouseEvent *event) {
   if (m_mouseEnabled) {
     const QPoint pos = mapToScene(event->pos()).toPoint();
     m_lvgl->sendMouseEvent(pos.x(), pos.y(), false);
+  } else {
+    if (m_mousePressed) {
+      m_mousePressed = false;
+      auto obj = findObject(selectobjName);
+      QRect newRect = obj->geometry();
+      if (newRect != selectobjRect)
+        m_undoStack->push(
+            new SetWidgetRectCommand(this, obj, selectobjRect, newRect));
+    }
   }
   QGraphicsView::mouseReleaseEvent(event);
 }
