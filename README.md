@@ -47,7 +47,7 @@ Building with QtCreator:
 - [x] Support different display formats
 - [x] Fix object inspector (insertion and deletion of widgets)
 - [x] Fix absolute and relative positions of widgets
-- [ ] Undo and redo
+- [x] Undo and redo
 - [x] Default values for widgets
 - [x] Support multiple screens
 - [ ] Dialog for changing keyboard layout

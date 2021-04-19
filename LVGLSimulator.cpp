@@ -15,7 +15,9 @@
 #include <QMouseEvent>
 #include <QTextStream>
 #include <QThread>
+#include <QUndoStack>
 
+#include "LVGLCommands.h"
 #include "LVGLCore.h"
 #include "LVGLFontData.h"
 #include "LVGLItem.h"
@@ -76,7 +78,8 @@ LVGLSimulator::LVGLSimulator(LVGLCore *lvgl, QWidget *parent)
       m_item(new LVGLItem),
       m_objectModel(nullptr),
       m_lvgl(lvgl),
-      m_isrunning(true) {
+      m_isrunning(true),
+      m_undoStack(new QUndoStack(this)) {
   // setMinimumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   // setMaximumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
   m_scene->setlvgl(m_lvgl);
@@ -163,7 +166,7 @@ void LVGLSimulator::mousePressEvent(QMouseEvent *event) {
           if (obj == m_selectedObject) setSelectedObject(nullptr);
         } else if (sel == remove) {
           if (obj == m_selectedObject) setSelectedObject(nullptr);
-          removeObject(obj);
+          m_undoStack->push(new RemoveWidgetCommand(this, obj));
         } else if (sel == mfore) {
           lv_obj_move_foreground(obj->obj());
         } else if (sel == mback) {
@@ -262,6 +265,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
 
     qDebug().noquote() << "Class:" << wclass->className()
                        << "Id:" << newObj->name();
+    m_undoStack->push(new AddWidgetCommand(this, newObj));
     addObject(newObj);
   }
 }
@@ -327,6 +331,8 @@ void LVGLSimulator::restartconnect() {
   // qInfo() << "AxsGL Thread restarted";
 }
 
+QUndoStack *LVGLSimulator::undoStack() const { return m_undoStack; }
+
 LVGLItem *LVGLSimulator::item() const { return m_item; }
 
 void LVGLSimulator::moveObject(LVGLObject *obj, int dx, int dy) {
@@ -359,13 +365,16 @@ void LVGLSimulator::addObject(LVGLObject *obj) {
 }
 
 void LVGLSimulator::removeObject(LVGLObject *obj) {
-  setSelectedObject(nullptr);
+  if (obj) {
+    setSelectedObject(nullptr);
+    if (m_objectModel) m_objectModel->beginRemoveObject(obj);
+    m_lvgl->removeObject(obj);
+    if (m_objectModel) m_objectModel->endRemoveObject();
+  }
+}
 
-  if (m_objectModel) m_objectModel->beginRemoveObject(obj);
-
-  m_lvgl->removeObject(obj);
-
-  if (m_objectModel) m_objectModel->endRemoveObject();
+LVGLObject *LVGLSimulator::findObject(const QString &objname) {
+  return m_lvgl->findObjByName(objname);
 }
 
 LVGLObject *LVGLSimulator::selectedObject() const { return m_selectedObject; }
@@ -385,7 +394,7 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
   QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
   if (keyEvent->key() == Qt::Key_Delete) {
     LVGLObject *obj = m_sim->selectedObject();
-    m_sim->removeObject(obj);
+    m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
     m_sim->setSelectedObject(nullptr);
     return true;
   } else if (keyEvent->key() == Qt::Key_Left) {
@@ -407,8 +416,11 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
     if (obj) {
       QJsonDocument doc(obj->toJson());
       QApplication::clipboard()->setText(doc.toJson(QJsonDocument::Compact));
-      if (keyEvent->key() == Qt::Key_X) m_sim->removeObject(obj);
+      if (keyEvent->key() == Qt::Key_X) {
+        m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
+      }
     }
+
     return true;
   } else if (keyEvent->modifiers() & Qt::ControlModifier &&
              keyEvent->key() == Qt::Key_V) {
@@ -423,6 +435,7 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
       for (const LVGLObject *child : newObj->childs())
         connect(child, &LVGLObject::positionChanged, m_sim->item(),
                 &LVGLItem::updateGeometry);
+      m_sim->undoStack()->push(new AddWidgetCommand(m_sim, newObj));
       m_sim->setSelectedObject(newObj);
       m_sim->setFocus();
     }

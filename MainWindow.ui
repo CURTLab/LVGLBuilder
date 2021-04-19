@@ -584,6 +584,60 @@
     </layout>
    </widget>
   </widget>
+  <widget class="QDockWidget" name="UndoEditor">
+   <property name="windowTitle">
+    <string>Undo Stack</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>2</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_7">
+    <layout class="QVBoxLayout" name="verticalLayout_8">
+     <property name="leftMargin">
+      <number>1</number>
+     </property>
+     <property name="topMargin">
+      <number>1</number>
+     </property>
+     <property name="rightMargin">
+      <number>1</number>
+     </property>
+     <property name="bottomMargin">
+      <number>1</number>
+     </property>
+     <item>
+      <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <item>
+        <spacer name="horizontalSpacer_3">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>40</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item>
+        <widget class="QLabel" name="undolabel">
+         <property name="text">
+          <string>Undo limit</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QSpinBox" name="undoSpin"/>
+       </item>
+      </layout>
+     </item>
+     <item>
+      <widget class="QUndoView" name="undoView"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
   <action name="action_new">
    <property name="icon">
     <iconset resource="resources/res.qrc">

@@ -53,5 +53,8 @@
         <file>x.png</file>
         <file>arrows.png</file>
         <file>export.jpg</file>
+        <file>ok.png</file>
+        <file>redo.png</file>
+        <file>undo.png</file>
     </qresource>
 </RCC>

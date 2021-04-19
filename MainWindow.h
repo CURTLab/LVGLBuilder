@@ -21,6 +21,7 @@ class LVGLCore;
 class TabWidget;
 class ListDelegate;
 class LVGLWidget;
+class QUndoGroup;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -98,6 +99,7 @@ class MainWindow : public QMainWindow {
   void loadProject(const QString &fileName);
   void setEnableBuilder(bool enable);
   void updateItemDelegate();
+  void setUndoStack();
 
   Ui::MainWindow *m_ui;
   QSlider *m_zoom_slider;
@@ -133,5 +135,6 @@ class MainWindow : public QMainWindow {
   QHash<QString, const LVGLWidget *> m_widgetsInputW;
   bool m_isrun;
   QList<QWidget *> m_needdelete;
+  QUndoGroup *m_undoGroup;
 };
 #endif  // MAINWINDOW_H

@@ -628,6 +628,12 @@ void LVGLCore::removeAllImages() {
   m_images.clear();
 }
 
+LVGLObject *LVGLCore::findObjByName(const QString &objname) {
+  for (auto o : m_objects)
+    if (o->name() == objname) return o;
+  return nullptr;
+}
+
 QStringList LVGLCore::symbolNames() const {
   return QStringList() << "LV_SYMBOL_AUDIO"
                        << "LV_SYMBOL_VIDEO"
@@ -850,17 +856,17 @@ void LVGLCore::removeObject(LVGLObject *object) {
     childs = object->childs();
   }
   if (object->parent()) object->parent()->removeChild(object);
+  m_objects.removeOne(object);
   delete object;
   object = nullptr;
 }
 
 void LVGLCore::removeAllObjects() {
-  int size = m_objects.size();
-  for (int i = 0; i < size; ++i)
-    if (m_objects[i])
-      if (m_objects[i]->parent() == nullptr) removeObject(m_objects[i]);
-
-  m_objects.clear();
+  auto objs = m_objects;
+  while (!objs.isEmpty()) {
+    if (objs.at(0) && !objs.at(0)->parent()) removeObject(m_objects.at(0));
+    objs = m_objects;
+  }
 }
 
 QList<LVGLObject *> LVGLCore::allObjects() const { return m_objects; }

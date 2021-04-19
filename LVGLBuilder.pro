@@ -53,6 +53,7 @@ UI_DIR = build/ui
 
 SOURCES += \
     ColorPick.cpp \
+    LVGLCommands.cpp \
     LVGLCore.cpp \
     LVGLDialog.cpp \
     LVGLFontData.cpp \
@@ -131,6 +132,7 @@ SOURCES += \
 
 HEADERS += \
     ColorPick.h \
+    LVGLCommands.h \
     LVGLCore.h \
     LVGLDialog.h \
     LVGLFontData.h \

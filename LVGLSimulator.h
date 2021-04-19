@@ -9,6 +9,7 @@ class LVGLObject;
 class LVGLItem;
 class LVGLObjectModel;
 class LVGLCore;
+class QUndoStack;
 
 class LVGLScene : public QGraphicsScene {
   Q_OBJECT
@@ -47,11 +48,13 @@ class LVGLSimulator : public QGraphicsView {
   void moveObject(LVGLObject *obj, int dx, int dy);
   void addObject(LVGLObject *obj);
   void removeObject(LVGLObject *obj);
+  LVGLObject *findObject(const QString &objname);
 
   void setObjectModel(LVGLObjectModel *objectModel);
   bool getMouseEnable() { return m_mouseEnabled; }
   void threadstop();
   void restartconnect();
+  QUndoStack *undoStack() const;
 
  public slots:
   void setSelectedObject(LVGLObject *obj);
@@ -92,6 +95,7 @@ class LVGLSimulator : public QGraphicsView {
   LVGLObjectModel *m_objectModel;
   LVGLCore *m_lvgl;
   volatile bool m_isrunning;
+  QUndoStack *m_undoStack;
 };
 
 class LVGLKeyPressEventFilter : public QObject {

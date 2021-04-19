@@ -55,6 +55,7 @@ class LVGLCore : public QObject {
   LVGLImageData *imageByDesc(const lv_img_dsc_t *img_dsc) const;
   bool removeImage(LVGLImageData *img);
   void removeAllImages();
+  LVGLObject *findObjByName(const QString &objname);
 
   QStringList symbolNames() const;
   const char *symbol(const QString &name) const;

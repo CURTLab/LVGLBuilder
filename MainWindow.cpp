@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QSortFilterProxyModel>
+#include <QUndoGroup>
 
 #include "LVGLDialog.h"
 #include "LVGLFontData.h"
@@ -46,7 +47,8 @@ MainWindow::MainWindow(QWidget *parent)
       m_filter(nullptr),
       m_curTabWIndex(-1),
       m_frun(true),
-      m_isrun(false) {
+      m_isrun(false),
+      m_undoGroup(new QUndoGroup(this)) {
   m_ui->setupUi(this);
   m_ui->style_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
@@ -100,6 +102,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   // add style editor dock to property dock and show the property dock
   tabifyDockWidget(m_ui->PropertyEditor, m_ui->ObjecInspector);
+  tabifyDockWidget(m_ui->StyleEditor, m_ui->UndoEditor);
   m_ui->PropertyEditor->raise();
   m_ui->StyleEditor->raise();
 
@@ -119,6 +122,14 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->style_tree->setColumnWidth(0, 200);
   m_ui->property_tree->setColumnWidth(0, 200);
   m_ui->object_tree->setColumnWidth(0, 120);
+  m_ui->undoView->setGroup(m_undoGroup);
+  QAction *undoAction = m_undoGroup->createUndoAction(this);
+  QAction *redoAction = m_undoGroup->createRedoAction(this);
+  undoAction->setIcon(QIcon(":/icons/undo.png"));
+  redoAction->setIcon(QIcon(":/icons/redo.png"));
+
+  m_ui->toolBar->addAction(undoAction);
+  m_ui->toolBar->addAction(redoAction);
 }
 
 MainWindow::~MainWindow() {
@@ -342,6 +353,11 @@ void MainWindow::updateItemDelegate() {
   if (nullptr != it) delete it;
   m_ui->style_tree->setItemDelegate(
       new LVGLStyleDelegate(m_styleModel->styleBase()));
+}
+
+void MainWindow::setUndoStack() {
+  m_undoGroup->addStack(m_curSimulation->undoStack());
+  m_undoGroup->setActiveStack(m_curSimulation->undoStack());
 }
 
 void MainWindow::on_action_load_triggered() {
@@ -905,6 +921,7 @@ void MainWindow::tabChanged(int index) {
     m_curSimulation->changeResolution(m_coreRes[lvgl]);
     m_curTabWIndex = index;
     lv_set_cur_disp(lvgl->getdispt());
+    setUndoStack();
   }
 }
 
