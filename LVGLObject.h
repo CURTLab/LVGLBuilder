@@ -52,7 +52,10 @@ class LVGLObject : public QObject {
   void setHeight(int height);
 
   QJsonObject toJson();
+  QJsonObject propToJson();
+  QJsonObject styleToJson();
   QJsonArray jsonStyles() const;
+  QJsonArray jsonAllStyles() const;
   QStringList codeStyle(QString styleVar, lv_obj_t *obj1, lv_obj_t *obj2,
                         int partindex, int stateindex);
   void parseStyles(const QJsonArray &styles);
@@ -81,6 +84,8 @@ class LVGLObject : public QObject {
   void generateName();
 
   static LVGLObject *parse(QJsonObject object, LVGLObject *parent);
+  static void parseProp(QJsonObject object, LVGLObject *obj);
+  static void parseStyle(QJsonObject object, LVGLObject *obj);
 
   int index() const;
 

@@ -23,6 +23,8 @@ class LVGLNewDialog : public QDialog {
   virtual void accept() override;
 
  protected:
+  void mousePressEvent(QMouseEvent *e) override;
+  void mouseMoveEvent(QMouseEvent *e) override;
   void keyPressEvent(QKeyEvent *e) override;
 
  private slots:
@@ -33,6 +35,7 @@ class LVGLNewDialog : public QDialog {
  private:
   Ui::LVGLNewDialog *m_ui;
   QVector<QPair<lv_coord_t, lv_coord_t>> m_resolutions;
+  QPoint m_curPos;
 };
 
 #endif  // LVGLNEWDIALOG_H

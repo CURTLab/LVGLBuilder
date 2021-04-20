@@ -6,6 +6,7 @@
 
 class LVGLPropertyTAText : public LVGLPropertyString {
  public:
+  LVGLPropertyTAText() : LVGLPropertyString(true) {}
   QString name() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
@@ -25,6 +26,7 @@ class LVGLPropertyTAText : public LVGLPropertyString {
 
 class LVGLPropertyTAPlaceholder : public LVGLPropertyString {
  public:
+  LVGLPropertyTAPlaceholder() : LVGLPropertyString(true) {}
   QString name() const { return "Placeholder"; }
 
   QStringList function(LVGLObject *obj) const {

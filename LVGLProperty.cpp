@@ -296,7 +296,8 @@ LVGLPropertyString::LVGLPropertyString(QString title, QString functionName,
     : LVGLPropertyType<QString>(parent),
       m_widget(nullptr),
       m_title(title),
-      m_functionName(functionName) {}
+      m_functionName(functionName),
+      m_enable(true) {}
 
 LVGLPropertyString::LVGLPropertyString(
     QString title, QString functionName,
@@ -307,7 +308,11 @@ LVGLPropertyString::LVGLPropertyString(
       m_title(title),
       m_functionName(functionName),
       m_setter(setter),
-      m_getter(getter) {}
+      m_getter(getter),
+      m_enable(true) {}
+
+LVGLPropertyString::LVGLPropertyString(bool b, LVGLProperty *parent)
+    : LVGLPropertyType<QString>(parent), m_enable(b) {}
 
 QString LVGLPropertyString::name() const { return m_title; }
 
@@ -317,6 +322,8 @@ QWidget *LVGLPropertyString::editor(QWidget *parent) {
 }
 
 void LVGLPropertyString::updateEditor(LVGLObject *obj) {
+  if (!m_enable) m_widget->setDisabled(true);
+
   m_widget->setText(get(obj));
 }
 

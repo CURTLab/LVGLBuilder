@@ -131,14 +131,15 @@ class LVGLStyle : public LVGLStyleItem {
  public:
   LVGLStyle();
   ~LVGLStyle();
-
   QVariant get(const LVGLStyleItem *item) const;
+  LVGLObject *getLvglObj() { return m_lvglobj; }
   lv_border_side_t getBorderPart(const LVGLStyleItem *item) const;
   void set(const LVGLStyleItem *item, QVariant value);
 
   lv_style_t *style() const;
   void setStyle(lv_style_t *style);
   void setCurobj(lv_obj_t *obj) { m_curobj = obj; }
+  void setLvglObj(LVGLObject *obj) { m_lvglobj = obj; }
   void setState(lv_state_t state) { m_state = state; }
   void setPart(lv_obj_part_t part) { m_part = part; }
 
@@ -170,6 +171,7 @@ class LVGLStyle : public LVGLStyleItem {
   LVGLStyleItem *m_image;
   LVGLStyleItem *m_transition;
   LVGLStyleItem *m_scale;
+  LVGLObject *m_lvglobj;
 };
 
 #endif  // LVGLSTYLE_H

@@ -116,30 +116,71 @@ void SetWidgetRectCommand::redo() {
 }
 
 SetWidgetPropCommand::SetWidgetPropCommand(LVGLSimulator *sim, LVGLObject *obj,
-                                           QJsonArray oldWidgetArr,
-                                           QJsonArray newWidgetArr,
+                                           QJsonObject oldWidgetArr,
+                                           QJsonObject newWidgetArr,
+                                           QString propName,
                                            QUndoCommand *parent)
     : QUndoCommand(parent),
       m_sim(sim),
       m_obj(obj),
+      m_widgetName(obj->name()),
       m_oldWidgetArr(oldWidgetArr),
-      m_newWidgetArr(newWidgetArr) {}
+      m_newWidgetArr(newWidgetArr) {
+  setText(QObject::tr("Change %1's %2").arg(m_widgetName).arg(propName));
+}
 
-void SetWidgetPropCommand::undo() {}
+void SetWidgetPropCommand::undo() {
+  auto obj = m_sim->findObject(m_widgetName);
+  if (obj) {
+    LVGLObject::parseProp(m_oldWidgetArr, obj);
+    if (m_sim->selectedObject()->name() == m_widgetName)
+      emit m_sim->objectSelected(obj);
+    else
+      m_sim->setSelectedObject(obj);
+  }
+}
 
-void SetWidgetPropCommand::redo() {}
+void SetWidgetPropCommand::redo() {
+  auto obj = m_sim->findObject(m_widgetName);
+  if (obj) {
+    LVGLObject::parseProp(m_newWidgetArr, obj);
+    if (m_sim->selectedObject()->name() == m_widgetName)
+      emit m_sim->objectSelected(obj);
+    else
+      m_sim->setSelectedObject(obj);
+  }
+}
 
-SetWidgetStyleCommand::SetWidgetStyleCommand(LVGLSimulator *sim,
-                                             LVGLObject *obj,
-                                             QJsonArray oldWidgetArr,
-                                             QJsonArray newWidgetArr,
-                                             QUndoCommand *parent)
+SetWidgetStyleCommand::SetWidgetStyleCommand(
+    LVGLSimulator *sim, LVGLObject *obj, QJsonObject oldWidgetStyle,
+    QJsonObject newWidgetStyle, QString styleName, QUndoCommand *parent)
     : QUndoCommand(parent),
       m_sim(sim),
       m_obj(obj),
-      m_oldWidgetArr(oldWidgetArr),
-      m_newWidgetArr(newWidgetArr) {}
+      m_widgetName(obj->name()),
+      m_oldWidgetStyle(oldWidgetStyle),
+      m_newWidgetStyle(newWidgetStyle) {
+  setText(QObject::tr("Change %1's %2").arg(m_widgetName).arg(styleName));
+}
 
-void SetWidgetStyleCommand::undo() {}
+void SetWidgetStyleCommand::undo() {
+  auto obj = m_sim->findObject(m_widgetName);
+  if (obj) {
+    LVGLObject::parseStyle(m_oldWidgetStyle, obj);
+    if (m_sim->selectedObject()->name() == m_widgetName)
+      emit m_sim->objectSelected(obj);
+    else
+      m_sim->setSelectedObject(obj);
+  }
+}
 
-void SetWidgetStyleCommand::redo() {}
+void SetWidgetStyleCommand::redo() {
+  auto obj = m_sim->findObject(m_widgetName);
+  if (obj) {
+    LVGLObject::parseStyle(m_newWidgetStyle, obj);
+    if (m_sim->selectedObject()->name() == m_widgetName)
+      emit m_sim->objectSelected(obj);
+    else
+      m_sim->setSelectedObject(obj);
+  }
+}

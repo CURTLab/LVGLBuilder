@@ -6,6 +6,7 @@
 
 class LVGLPropertyName : public LVGLPropertyString {
  public:
+  LVGLPropertyName() : LVGLPropertyString(false) {}
   inline QString name() const override { return "Name"; }
 
  protected:

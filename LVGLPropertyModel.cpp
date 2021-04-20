@@ -5,7 +5,10 @@
 #include <QLineEdit>
 #include <QSpinBox>
 
+#include "LVGLCommands.h"
 #include "LVGLCore.h"
+#include "LVGLHelper.h"
+#include "LVGLSimulator.h"
 #include "widgets/LVGLWidget.h"
 
 LVGLPropertyModel::LVGLPropertyModel(QObject *parent)
@@ -167,7 +170,19 @@ void LVGLPropertyDelegate::setModelData(QWidget *editor,
   auto prop = reinterpret_cast<LVGLProperty *>(index.internalPointer());
   cast.i = index.data(Qt::UserRole + 1).toLongLong();
   if ((cast.ptr == nullptr) || (prop == nullptr)) return;
+  LVGLObject *obj = cast.ptr;
+  auto sim = LVGLHelper::getInstance().getcursim();
+  auto oldprop = obj->propToJson();
   prop->updateWidget(cast.ptr);
+  if (prop->name() != "Geometry" || prop->name() != "x" ||
+      prop->name() != "y" || prop->name() != "Width" ||
+      prop->name() != "Height") {
+    auto obj = cast.ptr;
+    auto sim = LVGLHelper::getInstance().getcursim();
+    auto newprop = obj->propToJson();
+    sim->undoStack()->push(
+        new SetWidgetPropCommand(sim, obj, oldprop, newprop, prop->name()));
+  }
   emit model->dataChanged(index, index);
 };
 

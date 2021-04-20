@@ -128,8 +128,22 @@ void LVGLNewDialog::accept() {
   QDialog::accept();
 }
 
+void LVGLNewDialog::mousePressEvent(QMouseEvent *e) {
+  if (e->button() & Qt::LeftButton)
+    m_curPos = e->globalPos() - frameGeometry().topLeft();
+
+  QDialog::mousePressEvent(e);
+}
+
+void LVGLNewDialog::mouseMoveEvent(QMouseEvent *e) {
+  if (e->buttons() & Qt::LeftButton) move(e->globalPos() - m_curPos);
+
+  QDialog::mouseMoveEvent(e);
+}
+
 void LVGLNewDialog::keyPressEvent(QKeyEvent *e) {
   if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) accept();
+
   QDialog::keyPressEvent(e);
 }
 

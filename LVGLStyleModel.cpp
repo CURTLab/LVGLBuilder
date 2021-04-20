@@ -9,8 +9,11 @@
 #include <QVBoxLayout>
 #include <QtDebug>
 
+#include "LVGLCommands.h"
 #include "LVGLCore.h"
+#include "LVGLHelper.h"
 #include "LVGLObject.h"
+#include "LVGLSimulator.h"
 
 LVGLStyleModel::LVGLStyleModel(QObject *parent)
     : QAbstractItemModel(parent), m_styleBase(new LVGLStyle) {}
@@ -280,7 +283,9 @@ void LVGLStyleDelegate::setEditorData(QWidget *editor,
 void LVGLStyleDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
                                      const QModelIndex &index) const {
   if (!index.isValid()) return;
-
+  //  auto obj = m_styleBase->getLvglObj();
+  //  auto sim = LVGLHelper::getInstance().getcursim();
+  //  auto oldstyle = obj->styleToJson();
   LVGLStyleModel *m = qobject_cast<LVGLStyleModel *>(model);
   LVGLStyleItem *item =
       reinterpret_cast<LVGLStyleItem *>(index.internalPointer());
@@ -331,4 +336,8 @@ void LVGLStyleDelegate::setModelData(QWidget *editor, QAbstractItemModel *model,
     emit m->styleChanged();
     emit m->dataChanged(index, index);
   }
+  //  auto newstyle = obj->styleToJson();
+  //  sim->undoStack()->push(
+  //      new SetWidgetStyleCommand(sim, obj, oldstyle, newstyle,
+  //      item->name()));
 }

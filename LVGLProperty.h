@@ -219,6 +219,7 @@ class LVGLPropertyString : public LVGLPropertyType<QString> {
                      std::function<void(lv_obj_t *, const char *)> setter,
                      std::function<const char *(lv_obj_t *)> getter,
                      LVGLProperty *parent = nullptr);
+  LVGLPropertyString(bool b = true, LVGLProperty *parent = nullptr);
 
   QString name() const override;
 
@@ -237,6 +238,7 @@ class LVGLPropertyString : public LVGLPropertyType<QString> {
   QString m_functionName;
   std::function<void(lv_obj_t *, const char *)> m_setter;
   std::function<const char *(lv_obj_t *)> m_getter;
+  bool m_enable;
 };
 
 class LVGLPropertyStringPlus : public LVGLPropertyType<QString> {

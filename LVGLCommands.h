@@ -65,8 +65,8 @@ class SetWidgetRectCommand : public QUndoCommand {
 class SetWidgetPropCommand : public QUndoCommand {
  public:
   explicit SetWidgetPropCommand(LVGLSimulator *sim, LVGLObject *obj,
-                                QJsonArray oldWidgetArr,
-                                QJsonArray newWidgetArr,
+                                QJsonObject oldWidgetArr,
+                                QJsonObject newWidgetArr, QString propName,
                                 QUndoCommand *parent = nullptr);
   void undo() override;
   void redo() override;
@@ -75,15 +75,15 @@ class SetWidgetPropCommand : public QUndoCommand {
   LVGLSimulator *m_sim;
   LVGLObject *m_obj;
   QString m_widgetName;
-  QJsonArray m_oldWidgetArr;
-  QJsonArray m_newWidgetArr;
+  QJsonObject m_oldWidgetArr;
+  QJsonObject m_newWidgetArr;
 };
 
 class SetWidgetStyleCommand : public QUndoCommand {
  public:
   explicit SetWidgetStyleCommand(LVGLSimulator *sim, LVGLObject *obj,
-                                 QJsonArray oldWidgetArr,
-                                 QJsonArray newWidgetArr,
+                                 QJsonObject oldWidgetStyle,
+                                 QJsonObject newWidgetStyle, QString styleName,
                                  QUndoCommand *parent = nullptr);
   void undo() override;
   void redo() override;
@@ -92,8 +92,8 @@ class SetWidgetStyleCommand : public QUndoCommand {
   LVGLSimulator *m_sim;
   LVGLObject *m_obj;
   QString m_widgetName;
-  QJsonArray m_oldWidgetArr;
-  QJsonArray m_newWidgetArr;
+  QJsonObject m_oldWidgetStyle;
+  QJsonObject m_newWidgetStyle;
 };
 
 #endif  // LVGLCOMMANDS_H

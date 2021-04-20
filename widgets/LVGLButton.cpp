@@ -1,5 +1,6 @@
 #include "LVGLButton.h"
 
+#include <QDebug>
 #include <QIcon>
 
 #include "LVGLHelper.h"

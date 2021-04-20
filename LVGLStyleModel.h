@@ -39,6 +39,7 @@ class LVGLStyleModel : public QAbstractItemModel {
                 LVGL::StyleParts editableStyles = LVGL::None);
 
   void setObj(lv_obj_t *obj) { m_styleBase->setCurobj(obj); }
+  void setLvglObj(LVGLObject *obj) { m_styleBase->setLvglObj(obj); }
   void setState(lv_state_t state) { m_styleBase->setState(state); }
   void setPart(lv_obj_part_t part) { m_styleBase->setPart(part); }
 
