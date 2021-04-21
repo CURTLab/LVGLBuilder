@@ -25,6 +25,7 @@ class AddWidgetCommand : public QUndoCommand {
   QString m_objWidgetparent;
   lv_obj_t *m_objParent;
   QRect m_widgetRect;
+  QString m_lastobj;
 };
 
 class RemoveWidgetCommand : public QUndoCommand {
@@ -42,6 +43,7 @@ class RemoveWidgetCommand : public QUndoCommand {
   QString m_objWidgetparent;
   lv_obj_t *m_objParent;
   QRect m_widgetRect;
+  QString m_lastobj;
 };
 
 class SetWidgetRectCommand : public QUndoCommand {
@@ -60,6 +62,7 @@ class SetWidgetRectCommand : public QUndoCommand {
   QString m_widgetName;
   QRect m_oldRect;
   QRect m_newRect;
+  QString m_lastobj;
 };
 
 class SetWidgetPropCommand : public QUndoCommand {
@@ -77,6 +80,7 @@ class SetWidgetPropCommand : public QUndoCommand {
   QString m_widgetName;
   QJsonObject m_oldWidgetArr;
   QJsonObject m_newWidgetArr;
+  QString m_lastobj;
 };
 
 class SetWidgetStyleCommand : public QUndoCommand {
@@ -94,6 +98,7 @@ class SetWidgetStyleCommand : public QUndoCommand {
   QString m_widgetName;
   QJsonObject m_oldWidgetStyle;
   QJsonObject m_newWidgetStyle;
+  QString m_lastobj;
 };
 
 #endif  // LVGLCOMMANDS_H

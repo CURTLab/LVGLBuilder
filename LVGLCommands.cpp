@@ -28,9 +28,13 @@ AddWidgetCommand::AddWidgetCommand(LVGLSimulator *sim, LVGLObject *obj,
 void AddWidgetCommand::undo() {
   m_sim->removeObject(m_sim->findObject(m_widgetName));
   m_obj = nullptr;
+  if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+    m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
 }
 
 void AddWidgetCommand::redo() {
+  if (m_sim->selectedObject() && m_lastobj.isEmpty())
+    m_lastobj = m_sim->selectedObject()->name();
   if (!m_obj) {
     auto wc = lvgl->widget(m_widgetClassName);
     if (!m_objWidgetparent.isEmpty())
@@ -67,9 +71,13 @@ void RemoveWidgetCommand::undo() {
     m_obj->setGeometry(m_widgetRect);
     m_sim->addObject(m_obj);
   }
+  if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+    m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
 }
 
 void RemoveWidgetCommand::redo() {
+  if (m_sim->selectedObject() && m_lastobj.isEmpty())
+    m_lastobj = m_sim->selectedObject()->name();
   m_sim->removeObject(m_sim->findObject(m_widgetName));
   m_obj = nullptr;
 }
@@ -104,9 +112,13 @@ void SetWidgetRectCommand::undo() {
     emit m_sim->objectSelected(m_sim->findObject(m_widgetName));
   else
     m_sim->setSelectedObject(m_sim->findObject(m_widgetName));
+  if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+    m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
 }
 
 void SetWidgetRectCommand::redo() {
+  if (m_sim->selectedObject() && m_lastobj.isEmpty())
+    m_lastobj = m_sim->selectedObject()->name();
   m_sim->findObject(m_widgetName)->setGeometry(m_newRect);
   if (m_sim->selectedObject() != nullptr &&
       m_sim->selectedObject()->name() == m_widgetName)
@@ -132,19 +144,27 @@ SetWidgetPropCommand::SetWidgetPropCommand(LVGLSimulator *sim, LVGLObject *obj,
 void SetWidgetPropCommand::undo() {
   auto obj = m_sim->findObject(m_widgetName);
   if (obj) {
+    auto curobj = m_sim->selectedObject();
     LVGLObject::parseProp(m_oldWidgetArr, obj);
-    if (m_sim->selectedObject()->name() == m_widgetName)
+    if (curobj && curobj->name() == m_widgetName)
       emit m_sim->objectSelected(obj);
     else
       m_sim->setSelectedObject(obj);
+    if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+      m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
   }
+  if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+    m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
 }
 
 void SetWidgetPropCommand::redo() {
+  if (m_sim->selectedObject() && m_lastobj.isEmpty())
+    m_lastobj = m_sim->selectedObject()->name();
   auto obj = m_sim->findObject(m_widgetName);
   if (obj) {
+    auto curobj = m_sim->selectedObject();
     LVGLObject::parseProp(m_newWidgetArr, obj);
-    if (m_sim->selectedObject()->name() == m_widgetName)
+    if (curobj && curobj->name() == m_widgetName)
       emit m_sim->objectSelected(obj);
     else
       m_sim->setSelectedObject(obj);
@@ -166,19 +186,25 @@ SetWidgetStyleCommand::SetWidgetStyleCommand(
 void SetWidgetStyleCommand::undo() {
   auto obj = m_sim->findObject(m_widgetName);
   if (obj) {
+    auto curobj = m_sim->selectedObject();
     LVGLObject::parseStyle(m_oldWidgetStyle, obj);
-    if (m_sim->selectedObject()->name() == m_widgetName)
+    if (curobj && curobj->name() == m_widgetName)
       emit m_sim->objectSelected(obj);
     else
       m_sim->setSelectedObject(obj);
   }
+  if (!m_lastobj.isEmpty() && m_lastobj != m_widgetName)
+    m_sim->setSelectedObject(m_sim->findObject(m_lastobj));
 }
 
 void SetWidgetStyleCommand::redo() {
+  if (m_sim->selectedObject() && m_lastobj.isEmpty())
+    m_lastobj = m_sim->selectedObject()->name();
   auto obj = m_sim->findObject(m_widgetName);
   if (obj) {
+    auto curobj = m_sim->selectedObject();
     LVGLObject::parseStyle(m_newWidgetStyle, obj);
-    if (m_sim->selectedObject()->name() == m_widgetName)
+    if (curobj && curobj->name() == m_widgetName)
       emit m_sim->objectSelected(obj);
     else
       m_sim->setSelectedObject(obj);
