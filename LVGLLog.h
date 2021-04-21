@@ -21,22 +21,29 @@ class LVGLLog {
     static LVGLLog loginstance;
     return loginstance;
   }
-  void log(const QString& logStr, const char* file, int line, const char* func);
-  void log(eLogType logtype, const QString& logStr, const char* file, int line,
-           const char* func);
-  void log_trace(const QString& logStr, const char* file, int line,
-                 const char* func);
-  void log_info(const QString& logStr, const char* file, int line,
-                const char* func);
-  void log_warn(const QString& logStr, const char* file, int line,
-                const char* func);
-  void log_error(const QString& logStr, const char* file, int line,
-                 const char* func);
+
+  static void log(const QString& logStr, const char* file, int line,
+                  const char* func);
+
+  static void log(eLogType logtype, const QString& logStr, const char* file,
+                  int line, const char* func);
+
+  static void log_trace(const QString& logStr, const char* file, int line,
+                        const char* func);
+
+  static void log_info(const QString& logStr, const char* file, int line,
+                       const char* func);
+
+  static void log_warn(const QString& logStr, const char* file, int line,
+                       const char* func);
+
+  static void log_error(const QString& logStr, const char* file, int line,
+                        const char* func);
 
  private:
   LVGLLog();
-  void logToFile(const QString& logStr, const char* file, int line,
-                 const char* func);
+  static void logToFile(const QString& logStr, const char* file, int line,
+                        const char* func);
 };
 
 extern LVGLLog::eLogType LogType;

@@ -140,7 +140,7 @@ MainWindow::MainWindow(QWidget *parent)
       "QListWidget::Item:selected{background-color:#CEE3F6;}";
   m_ui->list_images->setStyleSheet(styless);
   m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
-  LVGLLog::getInstance().log_trace("Main start", __FILE__, __LINE__, __func__);
+  LVGLLog::log_trace("Main started", __FILE__, __LINE__, __func__);
 }
 
 MainWindow::~MainWindow() {
@@ -156,7 +156,7 @@ MainWindow::~MainWindow() {
   for (int i = 0; i < 35; ++i)
     if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
   qDeleteAll(m_needdelete);
-  LVGLLog::getInstance().log_trace("Main delete", __FILE__, __LINE__, __func__);
+  LVGLLog::log_trace("Main deleted", __FILE__, __LINE__, __func__);
 }
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
@@ -181,8 +181,8 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
   m_propertyModel->setObject(obj);
   m_styleModel->setState(LV_STATE_DEFAULT);
   if (obj) {
-    LVGLLog::getInstance().log_trace(QString("%1 selected").arg(obj->name()),
-                                     __FILE__, __LINE__, __func__);
+    LVGLLog::log_trace(QString("%1 selected").arg(obj->name()), __FILE__,
+                       __LINE__, __func__);
     auto parts = obj->widgetClass()->parts();
     m_styleModel->setPart(parts[0]);
     m_styleModel->setLvglObj(obj);
@@ -326,8 +326,8 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 }
 
 void MainWindow::loadProject(const QString &fileName) {
-  LVGLLog::getInstance().log_trace(QString("%1 load").arg(fileName), __FILE__,
-                                   __LINE__, __func__);
+  LVGLLog::log_trace(QString("%1 load").arg(fileName), __FILE__, __LINE__,
+                     __func__);
   delete m_project;
   m_project = nullptr;
   m_curSimulation->clear();
@@ -398,8 +398,8 @@ void MainWindow::on_action_save_triggered() {
         __func__);
   } else {
     adjustForCurrentFile(fileName);
-    LVGLLog::getInstance().log_trace(QString("%1 save").arg(fileName), __FILE__,
-                                     __LINE__, __func__);
+    LVGLLog::log_trace(QString("%1 save").arg(fileName), __FILE__, __LINE__,
+                       __func__);
   }
 }
 
