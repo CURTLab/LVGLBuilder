@@ -51,6 +51,14 @@ OBJECTS_DIR = build/obj
 RCC_DIR = build/rcc
 UI_DIR = build/ui
 
+
+#CONFIG(debug,debug|release){
+#    INCLUDEPATH += C:/vld/include
+#    DEPENDPATH += C:/vld/include
+#    LIBS += -LC:/vld/lib/Win64 -lvld
+#}
+
+
 SOURCES += \
     ColorPick.cpp \
     LVGLCommands.cpp \

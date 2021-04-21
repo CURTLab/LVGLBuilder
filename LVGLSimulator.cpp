@@ -112,6 +112,8 @@ LVGLSimulator::~LVGLSimulator() {
   m_patintThread->wait();
   delete m_paintTime;
   delete m_patintThread;
+  delete m_item;
+  delete m_scene;
 }
 
 void LVGLSimulator::setSelectedObject(LVGLObject *obj) {

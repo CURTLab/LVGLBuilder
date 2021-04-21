@@ -15,6 +15,7 @@ class LVGLStyleModel : public QAbstractItemModel {
 
  public:
   explicit LVGLStyleModel(QObject *parent = nullptr);
+  ~LVGLStyleModel();
 
   // Header:
   QVariant headerData(int section, Qt::Orientation orientation,

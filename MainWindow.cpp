@@ -83,7 +83,7 @@ MainWindow::MainWindow(QWidget *parent)
           &MainWindow::styleChanged);
   m_ui->style_tree->setModel(m_styleModel);
   m_ui->style_tree->setItemDelegate(
-      new LVGLStyleDelegate(m_styleModel->styleBase()));
+      new LVGLStyleDelegate(m_styleModel->styleBase(), this));
   m_ui->style_tree->expandAll();
 
   connect(m_ui->action_new, &QAction::triggered, this,
@@ -144,6 +144,10 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
+    auto w = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
+    w->getSimulator()->clear();
+  }
   int n = m_ui->list_images->count();
   for (int i = 0; i < n; ++i) {
     auto item = m_ui->list_images->item(0);
@@ -156,6 +160,9 @@ MainWindow::~MainWindow() {
   for (int i = 0; i < 35; ++i)
     if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
   qDeleteAll(m_needdelete);
+  delete m_ld1;
+  delete m_ld2;
+  delete m_ld3;
   LVGLLog::log_trace("Main deleted", __FILE__, __LINE__, __func__);
 }
 
@@ -367,7 +374,7 @@ void MainWindow::updateItemDelegate() {
   auto it = m_ui->style_tree->itemDelegate();
   if (nullptr != it) delete it;
   m_ui->style_tree->setItemDelegate(
-      new LVGLStyleDelegate(m_styleModel->styleBase()));
+      new LVGLStyleDelegate(m_styleModel->styleBase(), this));
 }
 
 void MainWindow::setUndoStack() {

@@ -323,20 +323,39 @@ LVGLStyle::LVGLStyle()
 }
 
 LVGLStyle::~LVGLStyle() {
+  deleteitemchild(m_mixed);
   delete m_mixed;
+  deleteitemchild(m_padding);
   delete m_padding;
+  deleteitemchild(m_margin);
   delete m_margin;
+  deleteitemchild(m_background);
   delete m_background;
+  deleteitemchild(m_border);
   delete m_border;
+  deleteitemchild(m_outline);
   delete m_outline;
+  deleteitemchild(m_shadow);
   delete m_shadow;
+  deleteitemchild(m_pattern);
   delete m_pattern;
+  deleteitemchild(m_value);
   delete m_value;
+  deleteitemchild(m_text);
   delete m_text;
+  deleteitemchild(m_line);
   delete m_line;
+  deleteitemchild(m_image);
   delete m_image;
+  deleteitemchild(m_transition);
   delete m_transition;
+  deleteitemchild(m_scale);
   delete m_scale;
+}
+
+void LVGLStyle::deleteitemchild(LVGLStyleItem* item) {
+  int total = item->count();
+  for (int i = 0; i < total; ++i) delete item->child(i);
 }
 
 QVariant LVGLStyle::get(const LVGLStyleItem* item) const {

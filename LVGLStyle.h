@@ -131,6 +131,7 @@ class LVGLStyle : public LVGLStyleItem {
  public:
   LVGLStyle();
   ~LVGLStyle();
+  void deleteitemchild(LVGLStyleItem *item);
   QVariant get(const LVGLStyleItem *item) const;
   LVGLObject *getLvglObj() { return m_lvglobj; }
   lv_border_side_t getBorderPart(const LVGLStyleItem *item) const;

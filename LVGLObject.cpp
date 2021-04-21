@@ -63,6 +63,7 @@ LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
 
 LVGLObject::~LVGLObject() {
   lv_obj_del(m_obj);
+  delete m_widgetClass;
   for (auto s : m_liststyles) delete s;
 }
 
