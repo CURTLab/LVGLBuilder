@@ -10,6 +10,8 @@ class LVGLItem;
 class LVGLObjectModel;
 class LVGLCore;
 class QUndoStack;
+class QTimer;
+class LVGLPaintTimer;
 
 class LVGLScene : public QGraphicsScene {
   Q_OBJECT
@@ -68,6 +70,8 @@ class LVGLSimulator : public QGraphicsView {
   void objectPositionChanged();
   void objectAdded(LVGLObject *obj);
   void objPressed(LVGLObject *obj);
+  void startPaint();
+  void stopPaint();
 
  protected:
   void mousePressEvent(QMouseEvent *event) override;
@@ -94,11 +98,12 @@ class LVGLSimulator : public QGraphicsView {
   LVGLItem *m_item;
   LVGLObjectModel *m_objectModel;
   LVGLCore *m_lvgl;
-  volatile bool m_isrunning;
   QUndoStack *m_undoStack;
   bool m_mousePressed;
   QString selectobjName;
   QRect selectobjRect;
+  QThread *m_patintThread;
+  LVGLPaintTimer *m_paintTime;
 };
 
 class LVGLKeyPressEventFilter : public QObject {
@@ -112,6 +117,21 @@ class LVGLKeyPressEventFilter : public QObject {
 
  private:
   LVGLSimulator *m_sim;
+};
+
+class LVGLPaintTimer : public QObject {
+  Q_OBJECT
+ public:
+  explicit LVGLPaintTimer(QObject *parent = nullptr);
+  ~LVGLPaintTimer();
+  void startrun();
+  void stop();
+
+ signals:
+  void timeout();
+
+ private:
+  QTimer *m_timer;
 };
 
 #endif  // LVGLSIMULATOR_H

@@ -261,7 +261,7 @@ bool LVGLProject::exportCode(const QString &path) const {
               (child->index() >= 0))
             stream << "\tlv_obj_t *" << child->codeName()
                    << " = lv_tabview_add_tab(" << o->codeName() << ", \""
-                   << ext->tab_name_ptr[child->index()] << "\");\n";
+                   << ext->tab_name_ptr[child->index() - 1] << "\");\n";
         }
       }
 

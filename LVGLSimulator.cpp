@@ -46,13 +46,15 @@ void LVGLScene::drawBackground(QPainter *painter, const QRectF &rect) {
   if (m_hoverObject != nullptr) {
     painter->setPen(QPen(Qt::red, 2));
     painter->setBrush(Qt::NoBrush);
-    if (m_hoverObject->widgetType() == LVGLWidget::TabView) {
-      lv_obj_t *obj = m_hoverObject->obj();
-      lv_obj_t *tab = lv_tabview_get_tab(obj, lv_tabview_get_tab_act(obj));
-      painter->drawRect(m_lvgl->get_object_rect(tab));
-    } else {
-      painter->drawRect(m_hoverObject->geometry());
-    }
+    //    if (m_hoverObject->widgetType() == LVGLWidget::TabView) {
+    //      lv_obj_t *obj = m_hoverObject->obj();
+    //      lv_obj_t *tab = lv_tabview_get_tab(obj,
+    //      lv_tabview_get_tab_act(obj));
+    //      painter->drawRect(m_lvgl->get_object_rect(tab));
+    //    } else {
+    //      painter->drawRect(m_hoverObject->geometry());
+    //    }
+    painter->drawRect(m_hoverObject->geometry());
   }
   painter->setPen(Qt::black);
   painter->setBrush(Qt::NoBrush);
@@ -78,11 +80,10 @@ LVGLSimulator::LVGLSimulator(LVGLCore *lvgl, QWidget *parent)
       m_item(new LVGLItem),
       m_objectModel(nullptr),
       m_lvgl(lvgl),
-      m_isrunning(true),
       m_undoStack(new QUndoStack(this)),
-      m_mousePressed(false) {
-  // setMinimumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
-  // setMaximumSize(LV_HOR_RES_MAX, LV_VER_RES_MAX);
+      m_mousePressed(false),
+      m_patintThread(new QThread),
+      m_paintTime(new LVGLPaintTimer) {
   m_scene->setlvgl(m_lvgl);
 
   connect(m_item, &LVGLItem::geometryChanged, this, &LVGLSimulator::update);
@@ -93,18 +94,25 @@ LVGLSimulator::LVGLSimulator(LVGLCore *lvgl, QWidget *parent)
   setScene(m_scene);
   m_scene->addItem(m_item);
 
-  QThread *thread = new QThread;
-  LVGLSimulator *self = this;
-  connect(thread, &QThread::started, [=]() {
-    qInfo() << "LVGL Thread started";
-    QTimer *timer = new QTimer;
-    connect(timer, &QTimer::timeout, self, &LVGLSimulator::update);
-    timer->start(20);
-  });
-  thread->start();
+  m_paintTime->moveToThread(m_patintThread);
+  QObject::connect(m_paintTime, &LVGLPaintTimer::timeout, this,
+                   &LVGLSimulator::update);
+  QObject::connect(this, &LVGLSimulator::startPaint, m_paintTime,
+                   &LVGLPaintTimer::startrun);
+  QObject::connect(this, &LVGLSimulator::stopPaint, m_paintTime,
+                   &LVGLPaintTimer::stop);
+  m_patintThread->start();
 }
 
-LVGLSimulator::~LVGLSimulator() {}
+LVGLSimulator::~LVGLSimulator() {
+  emit stopPaint();
+  QThread::msleep(100);
+  m_patintThread->requestInterruption();
+  m_patintThread->exit(0);
+  m_patintThread->wait();
+  delete m_paintTime;
+  delete m_patintThread;
+}
 
 void LVGLSimulator::setSelectedObject(LVGLObject *obj) {
   if (m_selectedObject == obj) return;
@@ -303,8 +311,7 @@ void LVGLSimulator::dragEnterEvent(QDragEnterEvent *event) {
 }
 
 void LVGLSimulator::update() {
-  if (m_isrunning)
-    m_scene->invalidate(m_scene->sceneRect(), QGraphicsScene::BackgroundLayer);
+  m_scene->invalidate(m_scene->sceneRect(), QGraphicsScene::BackgroundLayer);
 }
 
 LVGLObject *LVGLSimulator::selectObject(QList<LVGLObject *> objs,
@@ -338,15 +345,9 @@ void LVGLSimulator::setObjectModel(LVGLObjectModel *objectModel) {
   m_objectModel = objectModel;
 }
 
-void LVGLSimulator::threadstop() {
-  m_isrunning = false;
-  // qInfo() << "AxsGL Thread stoped";
-}
+void LVGLSimulator::threadstop() { emit stopPaint(); }
 
-void LVGLSimulator::restartconnect() {
-  m_isrunning = true;
-  // qInfo() << "AxsGL Thread restarted";
-}
+void LVGLSimulator::restartconnect() { emit startPaint(); }
 
 QUndoStack *LVGLSimulator::undoStack() const { return m_undoStack; }
 
@@ -459,4 +460,26 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
     return true;
   }
   return QObject::eventFilter(obj, event);
+}
+
+LVGLPaintTimer::LVGLPaintTimer(QObject *parent)
+    : QObject(parent), m_timer(nullptr) {}
+
+LVGLPaintTimer::~LVGLPaintTimer() {}
+
+void LVGLPaintTimer::startrun() {
+  if (!m_timer) {
+    m_timer = new QTimer;
+    connect(m_timer, &QTimer::timeout, this, &LVGLPaintTimer::timeout);
+  }
+
+  m_timer->start(20);
+}
+
+void LVGLPaintTimer::stop() {
+  if (m_timer) {
+    m_timer->stop();
+    delete m_timer;
+    m_timer = nullptr;
+  }
 }

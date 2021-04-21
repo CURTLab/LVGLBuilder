@@ -130,6 +130,15 @@ MainWindow::MainWindow(QWidget *parent)
 
   m_ui->toolBar->addAction(undoAction);
   m_ui->toolBar->addAction(redoAction);
+  m_ui->list_images->setMovement(QListWidget::Static);
+  m_ui->list_images->setIconSize(QSize(60, 60));
+  QString styless =
+      "QListWidget{background-color:#F2F2F2;}"
+      "QListWidget::Item{background-color:#ffffff;}"
+      "QListWidget::Item:hover,"
+      "QListWidget::Item:selected{background-color:#CEE3F6;}";
+  m_ui->list_images->setStyleSheet(styless);
+  m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
 }
 
 MainWindow::~MainWindow() {
@@ -167,10 +176,10 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
   m_ui->combo_style->clear();
   m_ui->combo_state->setCurrentIndex(0);
   m_propertyModel->setObject(obj);
+  m_styleModel->setState(LV_STATE_DEFAULT);
   if (obj) {
     auto parts = obj->widgetClass()->parts();
     m_styleModel->setPart(parts[0]);
-    m_styleModel->setState(LV_STATE_DEFAULT);
     m_styleModel->setLvglObj(obj);
     m_styleModel->setObj(obj->obj());
     m_ui->combo_style->addItems(obj->widgetClass()->styles());
@@ -187,8 +196,6 @@ void MainWindow::styleChanged() {
   if (obj) {
     int index = m_ui->combo_style->currentIndex();
     obj->widgetClass()->setStyle(obj->obj(), index, obj->style(index));
-    // refresh_children_style(obj->obj());
-    // lv_obj_refresh_style(obj->obj());
   }
 }
 
