@@ -60,6 +60,7 @@ SOURCES += \
     LVGLFontDialog.cpp \
     LVGLHelper.cpp \
     LVGLImageData.cpp \
+    LVGLLog.cpp \
     LVGLNewDialog.cpp \
     LVGLObject.cpp \
     LVGLObjectModel.cpp \
@@ -139,6 +140,7 @@ HEADERS += \
     LVGLFontDialog.h \
     LVGLHelper.h \
     LVGLImageData.h \
+    LVGLLog.h \
     LVGLNewDialog.h \
     LVGLObject.h \
     LVGLObjectModel.h \
