@@ -62,9 +62,11 @@ class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
           name[byte.size()] = '\0';
           strcpy(name, byte.data());
           if (m_result.contains(i)) {
-            lv_tabview_set_tab_name(obj->obj(), i - 1, name);
+            if (m_resultstr[i] != QString(name))
+              lv_tabview_set_tab_name(obj->obj(), i - 1, name);
           } else {
             m_result.insert(i);
+            m_resultstr[i] = QString(name);
             lv_obj_t *page = lv_tabview_add_tab(obj->obj(), name);
             lvgl->addObject(
                 new LVGLObject(page, lvgl->widget("lv_page"), obj, false, i));
@@ -78,7 +80,7 @@ class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
   QStringList m_list;
   QMap<int, QString> m_tabNames;
   QSet<int> m_result;
-  ;
+  QMap<int, QString> m_resultstr;
 };
 
 class LVGLPropertyTabCurrent : public LVGLPropertyInt {
@@ -159,9 +161,10 @@ LVGLTabview::LVGLTabview() {
   m_parts << LV_TABVIEW_PART_BG << LV_TABVIEW_PART_BG_SCROLLABLE
           << LV_TABVIEW_PART_TAB_BG << LV_TABVIEW_PART_TAB_BTN
           << LV_TABVIEW_PART_INDIC;
+  m_properties << new LVGLPropertyTabBtnPos;
   static AnyFuncColType arr[] = {e_Seqlabel, e_QLineEdit};
   m_properties << new LVGLPropertyTabs(arr, 2);
-  m_properties << new LVGLPropertyTabBtnPos;
+
   m_properties << new LVGLPropertyTabCurrent;
   m_properties << new LVGLPropertyTabScrollbars;
 

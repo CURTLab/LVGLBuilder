@@ -362,12 +362,14 @@ void MainWindow::loadProject(const QString &fileName) {
 
 void MainWindow::setEnableBuilder(bool enable) {
   m_ui->action_save->setEnabled(enable);
+  m_ui->action_load->setEnabled(enable);
   m_ui->action_export_c->setEnabled(enable);
   m_ui->action_run->setEnabled(enable);
 
   m_ui->WidgeBox->setEnabled(enable);
   m_ui->ImageEditor->setEnabled(enable);
   m_ui->FontEditor->setEnabled(enable);
+  m_ui->eaction_export->setEnabled(enable);
 }
 
 void MainWindow::updateItemDelegate() {
