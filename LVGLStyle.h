@@ -27,7 +27,7 @@ enum StylePart {
   Scale = 0x2000,
   All = Mix | Padding | Margin | Background | Border | Outline | Shadow |
         Pattern | Value | Text | Line | Image | Transition | Scale,
-  Body = Mix | Background | Border | Outline,
+  Body = Mix | Background | Border | Outline | Padding | Margin,
   ArcBG = Background | Line | Padding | Margin | Border,
   ArcINDIC = Mix | Line | Padding | Margin,
   ArcKNOB = Background | Padding | Margin,
