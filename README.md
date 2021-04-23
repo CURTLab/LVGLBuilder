@@ -12,6 +12,7 @@ Tested:
  * Windows 10 + MSVC 2019 + Qt 5.15.1
  * Windows 10 + MinGW 8.1 + Qt 5.15.2
  * Ubuntu 18.04.4 + Qt 5.14.2
+ * Ubuntu 20.04 + Qt 5.12.8
 
 ### Build
 Building with console:

@@ -5,6 +5,7 @@
 #include <QComboBox>
 #include <QLineEdit>
 #include <QSpinBox>
+#include <QDebug>
 
 #include "LVGLObject.h"
 
