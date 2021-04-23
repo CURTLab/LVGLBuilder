@@ -1,3 +1,10 @@
+#New
+Now, the dev-7 branch based on lvgl7.11.0 has completed most of the todo list, so everyone can switch to the dev-7 branch for testing.
+
+![Preview1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview1.png)
+![Preview2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview2.png)
+![Preview3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/preview3.png)
+
 # LVGLBuilder
  GUI Builder for littlevgl release 6.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
 
