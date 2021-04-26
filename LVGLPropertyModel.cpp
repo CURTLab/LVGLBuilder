@@ -173,9 +173,9 @@ void LVGLPropertyDelegate::setModelData(QWidget *editor,
   LVGLObject *obj = cast.ptr;
   auto oldprop = obj->propToJson();
   prop->updateWidget(cast.ptr);
-  if (prop->name() != "Geometry" || prop->name() != "X" ||
-      prop->name() != "Y" || prop->name() != "Width" ||
-      prop->name() != "Height") {
+  auto str = prop->name();
+  if (str != "Geometry" && str != "x" && str != "y" && str != "Width" &&
+      str != "Height") {
     auto sim = LVGLHelper::getInstance().getcursim();
     auto newprop = obj->propToJson();
     sim->undoStack()->push(

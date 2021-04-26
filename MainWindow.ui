@@ -231,6 +231,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="WidgeBox">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <property name="baseSize">
     <size>
      <width>330</width>
@@ -465,7 +471,7 @@
   </widget>
   <widget class="QDockWidget" name="StyleEditor">
    <property name="sizePolicy">
-    <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>

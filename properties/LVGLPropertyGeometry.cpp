@@ -49,6 +49,7 @@ class LVGLPropertyWidth : public LVGLPropertyCoord {
     return lv_obj_get_width(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
+    if (0 == value) value = 1;
     static_cast<const LVGLPropertyGeometry *>(this->parent())->setw(obj, value);
   }
 };
@@ -64,6 +65,7 @@ class LVGLPropertyHeight : public LVGLPropertyCoord {
     return lv_obj_get_height(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
+    if (0 == value) value = 1;
     static_cast<const LVGLPropertyGeometry *>(this->parent())->seth(obj, value);
   }
 };
