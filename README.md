@@ -3,7 +3,16 @@
 
 ![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/preview.png)
 
+
+
+# Qt Setting
+
+![setting](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/QtSetting.png)
+
+
+
 ### Prerequisites
+
 * [Qt 5.11+](https://www.qt.io/) - The Qt framework
 * C++11
 * LVGL 7.11  (included in source since a few adaptions are applied)
