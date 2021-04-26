@@ -106,6 +106,7 @@ SOURCES += \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
     events/LVGLEvent.cpp \
+    events/LVGLEventScreen.cpp \
     events/LVGLEventWidgetBasic.cpp \
     events/LVGLPropertyEvent.cpp \
     properties/LVGLPropertyAnyFunc.cpp \
@@ -192,6 +193,7 @@ HEADERS += \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \
     events/LVGLEvent.h \
+    events/LVGLEventScreen.h \
     events/LVGLEventWidgetBasic.h \
     events/LVGLPropertyEvent.h \
     properties/LVGLPropertyAnyFunc.h \

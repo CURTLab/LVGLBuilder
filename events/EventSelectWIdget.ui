@@ -19,7 +19,7 @@
   <property name="font">
    <font>
     <family>Arial Black</family>
-    <pointsize>12</pointsize>
+    <pointsize>9</pointsize>
     <weight>75</weight>
     <bold>true</bold>
    </font>
@@ -32,6 +32,14 @@
     <layout class="QGridLayout" name="gridLayout">
      <item row="0" column="0">
       <widget class="QLabel" name="namelab">
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Name</string>
        </property>
@@ -45,10 +53,26 @@
          <height>35</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </widget>
      </item>
      <item row="1" column="0">
       <widget class="QLabel" name="triggerlab">
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Trigger</string>
        </property>
@@ -62,10 +86,26 @@
          <height>30</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </widget>
      </item>
      <item row="2" column="0">
       <widget class="QLabel" name="typelab">
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Type</string>
        </property>
@@ -79,10 +119,26 @@
          <height>35</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
       </widget>
      </item>
      <item row="3" column="0">
       <widget class="QLabel" name="objectlab">
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Object</string>
        </property>
@@ -95,6 +151,14 @@
          <width>0</width>
          <height>35</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
       </widget>
      </item>
@@ -117,6 +181,20 @@
      </item>
      <item>
       <widget class="QPushButton" name="selectbtn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Select</string>
        </property>
@@ -137,6 +215,20 @@
      </item>
      <item>
       <widget class="QPushButton" name="cancelbtn">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string>Cancel</string>
        </property>

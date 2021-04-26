@@ -2,6 +2,7 @@
 #define EVENTSLISTWIDGET_H
 
 #include <QDialog>
+class EventSelectWIdget;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -19,7 +20,14 @@ class EventsListWIdget : public QDialog {
   void setTextList(const QStringList &list);
   inline QStringList textList() const;
 
+ private slots:
+  void on_toolButton_clicked();
+  void on_toolButton_2_clicked();
+  void slotSelectWFinished();
+
  private:
   Ui::EventsListWIdget *ui;
+  EventSelectWIdget *m_selectW;
+  QStringList m_resultlist;
 };
 #endif  // EVENTSLISTWIDGET_H

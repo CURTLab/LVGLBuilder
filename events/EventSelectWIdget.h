@@ -4,6 +4,7 @@
 #include <QDialog>
 
 class EventSettingWidgeet;
+extern int Index;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,11 +19,12 @@ class EventSelectWIdget : public QDialog {
   EventSelectWIdget(QWidget *parent = nullptr);
   ~EventSelectWIdget();
   void setTextList(const QStringList &list);
-  inline QStringList textList() const;
+  QStringList textList();
 
  private slots:
   void on_selectbtn_clicked();
   void on_cancelbtn_clicked();
+  void slotSetWFinished();
 
  private:
   Ui::EventSelectWIdget *ui;
