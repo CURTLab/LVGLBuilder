@@ -1,6 +1,7 @@
 #include "LVGLWidget.h"
 
 #include "LVGLObject.h"
+#include "events/LVGLPropertyEvent.h"
 #include "lvgl/lvgl.h"
 #include "properties/LVGLPropertyGeometry.h"
 
@@ -40,12 +41,23 @@ class LVGLPropertyLocked : public LVGLPropertyBool {
   }
 };
 
+class LVGLPropertySetEvent : public LVGLPropertyEvent {
+ public:
+  inline LVGLPropertySetEvent() : LVGLPropertyEvent() {}
+  inline QString name() const override { return "Set Event"; }
+
+ protected:
+  inline QStringList get(LVGLObject *obj) const { return QStringList(); }
+  inline void set(LVGLObject *obj, QStringList list) override {}
+};
+
 LVGLWidget::LVGLWidget() {
   m_geometryProp = new LVGLPropertyGeometry;
   m_properties << new LVGLPropertyName;
   m_properties << new LVGLPropertyAccessible;
   m_properties << new LVGLPropertyLocked;
   m_properties << m_geometryProp;
+  m_properties << new LVGLPropertySetEvent;
 }
 
 LVGLWidget::~LVGLWidget() {

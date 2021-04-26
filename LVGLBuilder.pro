@@ -102,6 +102,12 @@ SOURCES += \
     ListDelegate.cpp \
     ListViewItem.cpp \
     TabWidget.cpp \
+    events/EventSelectWIdget.cpp \
+    events/EventSettingWidgeet.cpp \
+    events/EventsListWIdget.cpp \
+    events/LVGLEvent.cpp \
+    events/LVGLEventWidgetBasic.cpp \
+    events/LVGLPropertyEvent.cpp \
     properties/LVGLPropertyAnyFunc.cpp \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
@@ -182,6 +188,12 @@ HEADERS += \
     ListDelegate.h \
     ListViewItem.h \
     TabWidget.h \
+    events/EventSelectWIdget.h \
+    events/EventSettingWidgeet.h \
+    events/EventsListWIdget.h \
+    events/LVGLEvent.h \
+    events/LVGLEventWidgetBasic.h \
+    events/LVGLPropertyEvent.h \
     properties/LVGLPropertyAnyFunc.h \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
@@ -245,7 +257,10 @@ FORMS += \
     LVGLFontDialog.ui \
     LVGLNewDialog.ui \
     ListViewItem.ui \
-    MainWindow.ui
+    MainWindow.ui \
+    events/EventSelectWIdget.ui \
+    events/EventSettingWidgeet.ui \
+    events/EventsListWIdget.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

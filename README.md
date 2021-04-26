@@ -1,4 +1,13 @@
+# New Todo List
+- [ ] Add Event
+
+- [ ] Add Animation
+
+- [ ] Dialog for changing keyboard layout
+
+
 # LVGLBuilder
+
  GUI Builder for littlevgl release 7.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
 
 ![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/preview.png)
@@ -59,7 +68,6 @@ Building with QtCreator:
 - [x] Undo and redo
 - [x] Default values for widgets
 - [x] Support multiple screens
-- [ ] Dialog for changing keyboard layout
 - [x] Preview for widgets
 - [x] Icons for widgets
 - [x] Support for lvgl 7.x
