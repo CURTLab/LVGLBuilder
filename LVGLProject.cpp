@@ -298,7 +298,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   file.close();
 
   // output font file
-  QString fontdir = QDir::currentPath() + "/font/";
+  QString fontdir = QDir::currentPath() + "/../../../font/";
   QStringList fontfilelist;
   QSet<QString> &fontname = LVGLHelper::getInstance().getSaveFontName();
   auto itor = fontname.begin();

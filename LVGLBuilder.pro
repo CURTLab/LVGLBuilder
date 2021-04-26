@@ -46,11 +46,32 @@ include(freetype/freetype.pri)
 
 RC_FILE = resources/icon.rc
 
-MOC_DIR = build/moc
-OBJECTS_DIR = build/obj
-RCC_DIR = build/rcc
-UI_DIR = build/ui
-
+greaterThan(QT_MAJOR_VERSION,4){
+        TARGET_ARCH=$${QT_ARCH}
+}else{
+        TARGET_ARCH=$${QMAKE_HOST.arch}
+}
+contains(TARGET_ARCH, x86_64){
+    MOC_DIR = build/x64/moc
+    OBJECTS_DIR = build/x64/obj
+    RCC_DIR = build/x64/rcc
+    UI_DIR = build/x64/ui
+    CONFIG(debug, debug|release){
+        DESTDIR = bin/x64/debug
+    }else{
+        DESTDIR = bin/x64/release
+    }
+}else{
+    MOC_DIR = build/win32/moc
+    OBJECTS_DIR = build/win32/obj
+    RCC_DIR = build/win32/rcc
+    UI_DIR = build/win32/ui
+    CONFIG(debug, debug|release){
+        DESTDIR = bin/win32/debug
+    }else{
+        DESTDIR = bin/win32/release
+    }
+}
 
 #CONFIG(debug,debug|release){
 #    INCLUDEPATH += C:/vld/include
