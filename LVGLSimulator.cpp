@@ -230,10 +230,12 @@ void LVGLSimulator::mouseReleaseEvent(QMouseEvent *event) {
     if (m_mousePressed) {
       m_mousePressed = false;
       auto obj = findObject(selectobjName);
-      QRect newRect = obj->geometry();
-      if (newRect != selectobjRect)
-        m_undoStack->push(
-            new SetWidgetRectCommand(this, obj, selectobjRect, newRect));
+      if (obj) {
+        QRect newRect = obj->geometry();
+        if (newRect != selectobjRect)
+          m_undoStack->push(
+              new SetWidgetRectCommand(this, obj, selectobjRect, newRect));
+      }
     }
   }
   QGraphicsView::mouseReleaseEvent(event);

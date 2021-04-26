@@ -924,11 +924,12 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
   LVGLObject *obj = m_curSimulation->selectedObject();
   if (obj && (index >= 0)) {
     auto parts = obj->widgetClass()->parts();
-    m_styleModel->setPart(parts[m_ui->combo_style->currentIndex()]);
+    auto cindex = m_ui->combo_style->currentIndex();
+    if (cindex >= parts.size() || cindex < 0) cindex = 0;
+    m_styleModel->setPart(parts[cindex]);
     m_styleModel->setState(m_liststate[index]);
-    m_styleModel->setStyle(
-        obj->style(m_ui->combo_style->currentIndex(), index),
-        obj->widgetClass()->editableStyles(m_ui->combo_style->currentIndex()));
+    m_styleModel->setStyle(obj->style(cindex, index),
+                           obj->widgetClass()->editableStyles(cindex));
     updateItemDelegate();
   }
 }

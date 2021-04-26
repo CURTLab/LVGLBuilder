@@ -46,7 +46,7 @@ Building with QtCreator:
  * Save and load a project as json file using the menu or tool buttons
  * Mark widgets within the property editor as accessable via the c header
  * Export the project as c code using the menu (File -> Export -> C Project ...)
- * Support keyboard shortcuts
+ * Support keyboard shortcuts: Ctrl+F new file; Ctrl+W load file; Ctrl+E export c code;1 to page1; 2 to page2; etc...
 
 ### ToDo General
 - [x] Saving GUI as JSON
