@@ -8,7 +8,10 @@
 int Index = 1;
 
 EventSelectWIdget::EventSelectWIdget(QWidget *parent)
-    : QDialog(parent), ui(new Ui::EventSelectWIdget), m_setWidget(nullptr) {
+    : QDialog(parent),
+      ui(new Ui::EventSelectWIdget),
+      m_setWidget(nullptr),
+      m_ev(nullptr) {
   ui->setupUi(this);
   ui->nameEdit->setText(QString("Event%1").arg(Index));
   QStringList triggerlist = QStringList() << "Pressed"
@@ -53,12 +56,17 @@ QStringList EventSelectWIdget::textList() {
 
 void EventSelectWIdget::on_selectbtn_clicked() {
   int index = ui->objectcomb->currentIndex();
-  LVGLEvent *ev = nullptr;
-  switch (index) {
-    default:
-      ev = new LVGLEventWidgetBasic;
+  int type = ui->typecomb->currentIndex();
+  if (m_ev) {
+    delete m_ev;
+    m_ev = nullptr;
   }
-  m_setWidget = new EventSettingWidgeet(ev, this);
+  switch (type) {
+    case 0:
+      getEvent(m_ev, index);
+      break;
+  }
+  m_setWidget = new EventSettingWidgeet(m_ev, type, this);
   connect(m_setWidget, &QDialog::finished, this,
           &EventSelectWIdget::slotSetWFinished);
   m_setWidget->open();
@@ -70,5 +78,17 @@ void EventSelectWIdget::slotSetWFinished() {
   if (QDialog::Accepted == m_setWidget->result()) {
     ++Index;
     emit accept();
+  }
+}
+
+void EventSelectWIdget::getEvent(LVGLEvent *&ev, int index) {
+  switch (index) {
+    case 0:
+      ev = new LVGLEventWidgetBasic;
+      break;
+    case 1:
+      break;
+    default:
+      break;
   }
 }

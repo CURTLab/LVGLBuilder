@@ -20,3 +20,7 @@ LVGLEventWidgetBasic::LVGLEventWidgetBasic() {
                                  << "Dragable";
   m_valueList = QStringList() << QObject::tr("On") << QObject::tr("Off");
 }
+
+LVGLEvent::WIDGETTYPE LVGLEventWidgetBasic::whichwidget() {
+  return LVGLEvent::e_LINEEDIT;
+}

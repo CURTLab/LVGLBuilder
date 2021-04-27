@@ -416,8 +416,10 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
   QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
   if (keyEvent->key() == Qt::Key_Delete) {
     LVGLObject *obj = m_sim->selectedObject();
-    m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
-    m_sim->setSelectedObject(nullptr);
+    if (obj) {
+      m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
+      m_sim->setSelectedObject(nullptr);
+    }
     return true;
   } else if (keyEvent->key() == Qt::Key_Left) {
     m_sim->moveObject(m_sim->selectedObject(), -1, 0);
@@ -477,7 +479,7 @@ void LVGLPaintTimer::startrun() {
     connect(m_timer, &QTimer::timeout, this, &LVGLPaintTimer::timeout);
   }
 
-  m_timer->start(20);
+  m_timer->start(110);
 }
 
 void LVGLPaintTimer::stop() {

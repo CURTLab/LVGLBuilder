@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>482</width>
-    <height>200</height>
+    <width>622</width>
+    <height>439</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -47,7 +47,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Object</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -86,7 +86,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Property</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -125,7 +125,7 @@
         </font>
        </property>
        <property name="text">
-        <string>Value</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -158,7 +158,7 @@
         </font>
        </property>
        <property name="text">
-        <string>value</string>
+        <string/>
        </property>
       </widget>
      </item>
@@ -177,6 +177,29 @@
          <weight>75</weight>
          <bold>true</bold>
         </font>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0">
+      <widget class="QLabel" name="value3lab">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="1">
+      <widget class="QLineEdit" name="value3edit">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
        </property>
       </widget>
      </item>

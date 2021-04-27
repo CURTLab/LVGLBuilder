@@ -4,6 +4,8 @@
 #include <QDialog>
 
 class EventSettingWidgeet;
+class LVGLEvent;
+
 extern int Index;
 
 QT_BEGIN_NAMESPACE
@@ -27,7 +29,11 @@ class EventSelectWIdget : public QDialog {
   void slotSetWFinished();
 
  private:
+  void getEvent(LVGLEvent *&ev, int index);
+
+ private:
   Ui::EventSelectWIdget *ui;
   EventSettingWidgeet *m_setWidget;
+  LVGLEvent *m_ev;
 };
 #endif  // EVENTSELECTWIDGET_H

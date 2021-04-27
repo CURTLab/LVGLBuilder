@@ -5,6 +5,7 @@
 class LVGLEventWidgetBasic : public LVGLEvent {
  public:
   LVGLEventWidgetBasic();
+  WIDGETTYPE whichwidget() override;
 };
 
 #endif  // LVGLEVENTWIDGETBASIC_H

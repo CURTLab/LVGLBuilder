@@ -141,11 +141,10 @@ LVGLWidget::Type LVGLImage::type() const { return Image; }
 
 QIcon LVGLImage::icon() const { return QIcon(); }
 
-QSize LVGLImage::minimumSize() const { return QSize(50, 50); }
+QSize LVGLImage::minimumSize() const { return QSize(60, 60); }
 
 lv_obj_t *LVGLImage::newObject(lv_obj_t *parent) const {
   lv_obj_t *obj = lv_img_create(parent, nullptr);
-  lv_img_set_src(obj, lvgl->defaultImage());
   return obj;
 }
 
