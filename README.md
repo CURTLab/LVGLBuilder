@@ -15,8 +15,14 @@
 
 
 # Qt Setting
-
+window
 ![setting](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/QtSetting.png)
+ubuntu
+![ubuntuSetting](https://user-images.githubusercontent.com/37052865/116019312-85701900-a676-11eb-8e70-45df873e94e1.jpg)
+maxos
+![macSetting](https://user-images.githubusercontent.com/37052865/116173418-23c7b180-a73f-11eb-9e53-daf3b777263b.jpg)
+![macSetting2](https://user-images.githubusercontent.com/37052865/116173424-24f8de80-a73f-11eb-894e-d1a6b15601a9.jpg)
+
 
 
 
