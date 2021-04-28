@@ -188,6 +188,14 @@
          <height>30</height>
         </size>
        </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
+       </property>
        <property name="text">
         <string/>
        </property>
@@ -200,6 +208,14 @@
          <width>0</width>
          <height>30</height>
         </size>
+       </property>
+       <property name="font">
+        <font>
+         <family>Arial Black</family>
+         <pointsize>12</pointsize>
+         <weight>75</weight>
+         <bold>true</bold>
+        </font>
        </property>
       </widget>
      </item>

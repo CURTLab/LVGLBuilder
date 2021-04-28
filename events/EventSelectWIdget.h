@@ -27,6 +27,7 @@ class EventSelectWIdget : public QDialog {
   void on_selectbtn_clicked();
   void on_cancelbtn_clicked();
   void slotSetWFinished();
+  void slotTypeChanged(int index);
 
  private:
   void getEvent(LVGLEvent *&ev, int index);

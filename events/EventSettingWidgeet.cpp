@@ -1,6 +1,7 @@
 #include "EventSettingWidgeet.h"
 
 #include "LVGLEvent.h"
+#include "QMessageBox"
 #include "ui_EventSettingWidgeet.h"
 
 EventSettingWidgeet::EventSettingWidgeet(LVGLEvent *event, int type,
@@ -28,13 +29,24 @@ QStringList EventSettingWidgeet::textList() {
     else
       list << ui->valueedit->text() + "@";
   } else if (1 == m_type) {
+    list << ui->objcomb->currentIndex() + "@";
+    list << ui->propcomb->currentText() + "@";
+    list << ui->valueedit->text() + "@";
+    list << ui->value3edit->text() + "@";
   } else if (2 == m_type) {
   } else if (3 == m_type) {
   }
   return list;
 }
 
-void EventSettingWidgeet::on_pushButton_clicked() { emit accept(); }
+void EventSettingWidgeet::on_pushButton_clicked() {
+  if (0 == ui->objcomb->count()) {
+    auto str = ui->objectlab->text();
+    QMessageBox::warning(NULL, tr("Error"), str + tr(" can't be empty!"));
+    return;
+  }
+  emit accept();
+}
 
 void EventSettingWidgeet::on_pushButton_2_clicked() { emit reject(); }
 
@@ -68,6 +80,8 @@ void EventSettingWidgeet::init() {
       ui->value2comb->hide();
       ui->objcomb->addItems(m_event->getScreenName());
       ui->propcomb->addItems(m_event->getFadeModeList());
+      ui->valueedit->setText("500");
+      ui->value3edit->setText("0");
     } break;
     case 2:
       break;

@@ -5,6 +5,7 @@
 class LVGLEventScreen : public LVGLEvent {
  public:
   LVGLEventScreen();
+  WIDGETTYPE whichwidget() override;
 };
 
 #endif  // LVGLEVENTSCREEN_H

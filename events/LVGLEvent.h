@@ -5,7 +5,7 @@
 
 class LVGLEvent {
  public:
-  enum WIDGETTYPE { e_LINEEDIT = 0, e_COMBOBOX };
+  enum WIDGETTYPE { e_NONE = 0, e_LINEEDIT, e_COMBOBOX };
 
  public:
   LVGLEvent();

@@ -1,5 +1,7 @@
 # New Todo List
-- [ ] Add Event
+- [ ]  (First) Add Event
+
+- [ ] (Second) Redesign the multi-page function, a single page can simulate all pages 
 
 - [ ] Add Animation
 

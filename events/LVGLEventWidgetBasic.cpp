@@ -10,15 +10,15 @@ LVGLEventWidgetBasic::LVGLEventWidgetBasic() {
 
   for (auto o : objs) m_objName << o->name();
 
-  m_propertyList = QStringList() << "X"
-                                 << "Y"
-                                 << "Width"
-                                 << "Height"
-                                 << "Clickable"
-                                 << "Hidden"
-                                 << "Disabled"
-                                 << "Dragable";
-  m_valueList = QStringList() << QObject::tr("On") << QObject::tr("Off");
+  m_propertyList << "X"
+                 << "Y"
+                 << "Width"
+                 << "Height"
+                 << "Clickable"
+                 << "Hidden"
+                 << "Disabled"
+                 << "Dragable";
+  m_valueList << QObject::tr("On") << QObject::tr("Off");
 }
 
 LVGLEvent::WIDGETTYPE LVGLEventWidgetBasic::whichwidget() {

@@ -2,6 +2,7 @@
 
 #include "EventSettingWidgeet.h"
 #include "LVGLEvent.h"
+#include "LVGLEventScreen.h"
 #include "LVGLEventWidgetBasic.h"
 #include "ui_EventSelectWIdget.h"
 
@@ -37,6 +38,8 @@ EventSelectWIdget::EventSelectWIdget(QWidget *parent)
                                       << "Chart"
                                       << "CheckBox";
   ui->objectcomb->addItems(objlist);
+  connect(ui->typecomb, SIGNAL(currentIndexChanged(int)), this,
+          SLOT(slotTypeChanged(int)));
 }
 
 EventSelectWIdget::~EventSelectWIdget() { delete ui; }
@@ -65,6 +68,9 @@ void EventSelectWIdget::on_selectbtn_clicked() {
     case 0:
       getEvent(m_ev, index);
       break;
+    case 1:
+      m_ev = new LVGLEventScreen;
+      break;
   }
   m_setWidget = new EventSettingWidgeet(m_ev, type, this);
   connect(m_setWidget, &QDialog::finished, this,
@@ -78,6 +84,16 @@ void EventSelectWIdget::slotSetWFinished() {
   if (QDialog::Accepted == m_setWidget->result()) {
     ++Index;
     emit accept();
+  }
+}
+
+void EventSelectWIdget::slotTypeChanged(int index) {
+  if (0 == index) {
+    ui->objectlab->show();
+    ui->objectcomb->show();
+  } else {
+    ui->objectlab->hide();
+    ui->objectcomb->hide();
   }
 }
 
