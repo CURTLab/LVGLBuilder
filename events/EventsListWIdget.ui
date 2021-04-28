@@ -10,6 +10,12 @@
     <height>262</height>
    </rect>
   </property>
+  <property name="minimumSize">
+   <size>
+    <width>478</width>
+    <height>262</height>
+   </size>
+  </property>
   <property name="windowTitle">
    <string>EventsListWIdget</string>
   </property>
