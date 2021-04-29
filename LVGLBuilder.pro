@@ -28,6 +28,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
 
+CONFIG+=sdk_no_version_check
+
 TARGET = LVGLBuilder
 
 # The following define makes your compiler emit warnings if you use
@@ -63,6 +65,7 @@ SOURCES += \
     LVGLProject.cpp \
     LVGLStyle.cpp \
     LVGLStyleModel.cpp \
+    LVGLTabWidget.cpp \
     LVGLWidgetListView.cpp \
     properties/LVGLPropertyAssignTextArea.cpp \
     properties/LVGLPropertyColor.cpp \
@@ -128,6 +131,7 @@ HEADERS += \
     LVGLProject.h \
     LVGLStyle.h \
     LVGLStyleModel.h \
+    LVGLTabWidget.h \
     LVGLWidgetListView.h \
     properties/LVGLPropertyAssignTextArea.h \
     properties/LVGLPropertyColor.h \
