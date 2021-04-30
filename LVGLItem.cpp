@@ -255,9 +255,11 @@ bool LVGLItem::isManipolating() const { return m_direction.any(); }
 
 void LVGLItem::updateGeometry() {
   if (m_object == nullptr) return;
-  if (m_object->parent())
-    setPos(m_object->absolutePosition());
-  else
-    setPos(m_object->position());
+  if (m_object->position() != pos()) {
+    if (m_object->parent())
+      setPos(m_object->absolutePosition());
+    else
+      setPos(m_object->position());
+  }
   update();
 }

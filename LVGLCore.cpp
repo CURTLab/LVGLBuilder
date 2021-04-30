@@ -462,12 +462,6 @@ void LVGLCore::poll() {
   m_time.restart();
 }
 
-void LVGLCore::clear() {
-  m_objects.clear();
-  m_images.clear();
-  m_fonts.clear();
-}
-
 void LVGLCore::objsclear() { m_objects.clear(); }
 
 void LVGLCore::sendMouseEvent(int x, int y, bool pressed) {
@@ -519,10 +513,6 @@ void LVGLCore::removeAllObjects() {
     objs = m_objects;
   }
 }
-
-QHash<QString, LVGLImageData *> LVGLCore::allImages() const { return m_images; }
-
-QList<LVGLFontData *> LVGLCore::allFonts() const { return m_fonts; }
 
 QList<LVGLObject *> LVGLCore::allObjects() const { return m_objects; }
 

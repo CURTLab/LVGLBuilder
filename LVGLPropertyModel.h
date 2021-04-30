@@ -36,8 +36,6 @@ class LVGLPropertyModel : public QAbstractItemModel {
   QModelIndex propIndex(const LVGLProperty *prop, const LVGLWidget *widget,
                         int column);
 
-  void setCurobj(LVGLObject *obj) { m_obj = obj; }
-
  public slots:
   void setObject(LVGLObject *obj);
 

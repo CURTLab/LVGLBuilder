@@ -51,7 +51,6 @@ class LVGLCore : public QObject {
   const char *symbol(const QString &name) const;
 
   void poll();
-  void clear();
   void objsclear();
   void sendMouseEvent(int x, int y, bool pressed);
 
@@ -64,11 +63,7 @@ class LVGLCore : public QObject {
   void removeAllObjects();
 
   void setAllObjects(QList<LVGLObject *> objs) { m_objects = objs; }
-  void setAllImages(QHash<QString, LVGLImageData *> imgs) { m_images = imgs; }
-  void setAllFonts(QList<LVGLFontData *> fonts) { m_fonts = fonts; }
 
-  QHash<QString, LVGLImageData *> allImages() const;
-  QList<LVGLFontData *> allFonts() const;
   QList<LVGLObject *> allObjects() const;
   QList<LVGLObject *> topLevelObjects() const;
   QList<LVGLObject *> objectsByType(QString className) const;
