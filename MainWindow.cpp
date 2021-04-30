@@ -144,7 +144,7 @@ void MainWindow::updateProperty() {
 
 void MainWindow::setCurrentObject(LVGLObject *obj) {
   m_ui->combo_style->clear();
-  m_propertyModel->setObject(nullptr);
+  m_propertyModel->setObject(obj);
   if (obj) {
     m_ui->combo_style->addItems(obj->widgetClass()->styles());
     m_styleModel->setStyle(obj->style(0),
