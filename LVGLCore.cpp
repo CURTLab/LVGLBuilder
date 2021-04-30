@@ -815,7 +815,7 @@ const char *LVGLCore::symbol(const QString &name) const {
 
 void LVGLCore::poll() {
   lv_task_handler();
-  lv_tick_inc(static_cast<uint32_t>(m_time.elapsed()));
+  lv_tick_inc(10);
   m_time.restart();
 }
 
@@ -1149,7 +1149,7 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
 }
 void LVGLCore::tick() {
   lv_task_handler();
-  lv_tick_inc(20);
+  lv_tick_inc(10);
 }
 
 void LVGLCore::flushHandler(lv_disp_drv_t *disp, const lv_area_t *area,

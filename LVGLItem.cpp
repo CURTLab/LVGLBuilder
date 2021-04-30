@@ -32,34 +32,43 @@ void LVGLItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
                      QWidget *widget) {
   Q_UNUSED(option)
   Q_UNUSED(widget)
+
   if (m_object) {
     painter->save();
+    if (m_objSize != m_object->size()) {
+      m_obj = QRectF(QPointF(0, 0), m_object->size());
+      m_tl = QRectF(0, 0, 10, 10);
+      m_tr = QRectF(m_obj.width() - 10, 0, 10, 10);
+      m_bl = QRectF(0, m_obj.height() - 10, 10, 10);
+      m_br = QRectF(m_obj.width() - 10, m_obj.height() - 10, 10, 10);
 
-    QRectF obj(QPointF(0, 0), m_object->size());
-    QRectF tl(0, 0, 6, 6);
-    QRectF tr(obj.width() - 6, 0, 6, 6);
-    QRectF bl(0, obj.height() - 6, 6, 6);
-    QRectF br(obj.width() - 6, obj.height() - 6, 6, 6);
-
-    const double centerH = obj.width() * 0.5;
-    const double centerV = obj.height() * 0.5;
-    QRectF ct(centerH - 3, 0, 6, 6);
-    QRectF cb(centerH - 3, obj.height() - 6, 6, 6);
-    QRectF cl(0, centerV - 3, 6, 6);
-    QRectF cr(obj.width() - 6, centerV - 3, 6, 6);
+      const double centerH = m_obj.width() * 0.5;
+      const double centerV = m_obj.height() * 0.5;
+      m_ct = QRectF(centerH - 5, 0, 10, 10);
+      m_cb = QRectF(centerH - 5, m_obj.height() - 10, 10, 10);
+      m_cl = QRectF(0, centerV - 5, 10, 10);
+      m_cr = QRectF(m_obj.width() - 10, centerV - 5, 10, 10);
+      m_objSize = m_object->size();
+    }
 
     painter->setPen(m_object->isMovable() ? Qt::blue : Qt::darkGray);
     painter->setBrush(QColor(160, 160, 160));
-    painter->drawRect(tl);
-    painter->drawRect(tr);
-    painter->drawRect(bl);
-    painter->drawRect(br);
+    painter->drawRect(m_tl);
+    painter->drawRect(m_tr);
+    painter->drawRect(m_bl);
+    painter->drawRect(m_br);
 
     painter->setBrush(m_object->isMovable() ? Qt::black : Qt::darkGray);
-    painter->drawRect(ct);
-    painter->drawRect(cb);
-    painter->drawRect(cl);
-    painter->drawRect(cr);
+    painter->drawRect(m_ct);
+    painter->drawRect(m_cb);
+    painter->drawRect(m_cl);
+    painter->drawRect(m_cr);
+
+    auto pic = lvgl->framebuffer().copy(m_object->absolutePosition().x(),
+                                        m_object->absolutePosition().y(),
+                                        m_object->width(), m_object->height());
+
+    painter->drawPixmap(0, 0, m_object->width(), m_object->height(), pic);
 
     painter->restore();
   }
@@ -83,8 +92,9 @@ QVariant LVGLItem::itemChange(QGraphicsItem::GraphicsItemChange change,
       rect = QRect(QPoint(0, 0), lvgl->size() - m_object->size());
     }
 
-    newPos.setX(qBound(rect.left(), newPos.x(), rect.right()));
-    newPos.setY(qBound(rect.top(), newPos.y(), rect.bottom()));
+    newPos.setX(qBound(rect.left(), newPos.x() - offset.x(), rect.right()));
+    newPos.setY(qBound(rect.top(), newPos.y() - offset.y(), rect.bottom()));
+
     // important use lv_obj_set_pos not setPosition since it has a signal
     lv_obj_set_pos(m_object->obj(), static_cast<lv_coord_t>(newPos.x()),
                    static_cast<lv_coord_t>(newPos.y()));
@@ -171,6 +181,7 @@ void LVGLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     const QPointF &pos = event->pos();
     QRect bounds = (m_object->parent() ? m_object->parent()->geometry()
                                        : QRect(QPoint(), lvgl->size()));
+
     if (m_direction.horizontal == ResizeDirections::Right) {
       const QPoint abs = m_object->absolutePosition();
       const auto delta = pos.x() - m_start.x();
@@ -193,6 +204,7 @@ void LVGLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
       m_object->setWidth(newWidth);
       emit geometryChanged();
     }
+
     if (m_direction.vertical == ResizeDirections::Bottom) {
       const QPoint abs = m_object->absolutePosition();
       const auto delta = pos.y() - m_start.y();
@@ -254,6 +266,11 @@ bool LVGLItem::isManipolating() const { return m_direction.any(); }
 
 void LVGLItem::updateGeometry() {
   if (m_object == nullptr) return;
-  if (m_object->position() != pos()) setPos(m_object->position());
+  if (m_object->position() != pos()) {
+    if (m_object->parent())
+      setPos(m_object->absolutePosition());
+    else
+      setPos(m_object->position());
+  }
   update();
 }

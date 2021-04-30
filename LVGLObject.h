@@ -44,6 +44,7 @@ class LVGLObject : public QObject {
 
   QSize size() const;
   QRect geometry() const;
+  QRect relgeometry() const;
   void setGeometry(QRect geometry);
 
   int width() const;

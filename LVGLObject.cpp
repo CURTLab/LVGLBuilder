@@ -145,6 +145,8 @@ QSize LVGLObject::size() const {
 
 QRect LVGLObject::geometry() const { return QRect(absolutePosition(), size()); }
 
+QRect LVGLObject::relgeometry() const { return QRect(position(), size()); }
+
 void LVGLObject::setGeometry(QRect geometry) {
   setPosition(geometry.topLeft());
   lv_obj_set_size(m_obj, static_cast<lv_coord_t>(geometry.width()),

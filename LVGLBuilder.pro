@@ -96,6 +96,7 @@ SOURCES += \
     LVGLProject.cpp \
     LVGLStyle.cpp \
     LVGLStyleModel.cpp \
+    LVGLTabWidget.cpp \
     LVGLWidgetListView.cpp \
     LVGLWidgetModelDisplay.cpp \
     LVGLWidgetModelInput.cpp \
@@ -183,6 +184,7 @@ HEADERS += \
     LVGLProject.h \
     LVGLStyle.h \
     LVGLStyleModel.h \
+    LVGLTabWidget.h \
     LVGLWidgetListView.h \
     LVGLWidgetModelDisplay.h \
     LVGLWidgetModelInput.h \

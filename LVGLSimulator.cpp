@@ -202,7 +202,7 @@ void LVGLSimulator::mousePressEvent(QMouseEvent *event) {
         if (!m_mousePressed) {
           m_mousePressed = true;
           selectobjName = obj->name();
-          selectobjRect = obj->geometry();
+          selectobjRect = obj->relgeometry();
         }
       }
     }
@@ -231,7 +231,7 @@ void LVGLSimulator::mouseReleaseEvent(QMouseEvent *event) {
       m_mousePressed = false;
       auto obj = findObject(selectobjName);
       if (obj) {
-        QRect newRect = obj->geometry();
+        QRect newRect = obj->relgeometry();
         if (newRect != selectobjRect)
           m_undoStack->push(
               new SetWidgetRectCommand(this, obj, selectobjRect, newRect));
@@ -479,7 +479,7 @@ void LVGLPaintTimer::startrun() {
     connect(m_timer, &QTimer::timeout, this, &LVGLPaintTimer::timeout);
   }
 
-  m_timer->start(110);
+  m_timer->start(200);
 }
 
 void LVGLPaintTimer::stop() {
