@@ -1,10 +1,10 @@
 #include "EventSettingWidgeet.h"
 
-#include "LVGLEvent.h"
+#include "LVGLEventType.h"
 #include "QMessageBox"
 #include "ui_EventSettingWidgeet.h"
 
-EventSettingWidgeet::EventSettingWidgeet(LVGLEvent *event, int type,
+EventSettingWidgeet::EventSettingWidgeet(LVGLEventType *event, int type,
                                          QWidget *parent)
     : QDialog(parent),
       ui(new Ui::EventSettingWidgeet),
@@ -22,17 +22,18 @@ void EventSettingWidgeet::setTextList(const QStringList &list) {}
 QStringList EventSettingWidgeet::textList() {
   QStringList list;
   if (0 == m_type) {
-    list << ui->objcomb->currentText() + "@";
-    list << ui->propcomb->currentText() + "@";
+    list << ui->objcomb->currentText() + "#";
+    list << ui->propcomb->currentText() + "#";
+    list << ui->Sendercomb->currentText() + "#";
     if (m_iscomb)
-      list << ui->value2comb->currentText() + "@";
+      list << ui->value2comb->currentText() + "#";
     else
-      list << ui->valueedit->text() + "@";
+      list << ui->valueedit->text() + "#";
   } else if (1 == m_type) {
-    list << ui->objcomb->currentIndex() + "@";
-    list << ui->propcomb->currentText() + "@";
-    list << ui->valueedit->text() + "@";
-    list << ui->value3edit->text() + "@";
+    list << ui->objcomb->currentText() + "#";
+    list << ui->propcomb->currentText() + "#";
+    list << ui->valueedit->text() + "#";
+    list << ui->value3edit->text() + "#";
   } else if (2 == m_type) {
   } else if (3 == m_type) {
   }
@@ -57,12 +58,16 @@ void EventSettingWidgeet::init() {
       ui->objcomb->addItems(m_event->getObjName());
       ui->proplab->setText(tr("Property"));
       ui->propcomb->addItems(m_event->getPropertyList());
-      int wtype = m_event->whichwidget();
-      if (LVGLEvent::e_LINEEDIT == wtype) {
+      ui->Senderlab->setText(tr("Sender Value"));
+      ui->Sendercomb->addItem(tr("Not use"));
+      ui->Sendercomb->addItem(tr("Use"));
+
+      int Role = m_event->getRole();
+      if (Role == 0) {
         ui->value2lab->hide();
         ui->value2comb->hide();
         ui->valuelab->setText(tr("Value"));
-      } else if (LVGLEvent::e_COMBOBOX == wtype) {
+      } else if (Role == 1) {
         ui->valuelab->hide();
         ui->valueedit->hide();
         ui->value2lab->setText(tr("Value"));
@@ -80,8 +85,10 @@ void EventSettingWidgeet::init() {
       ui->value2comb->hide();
       ui->objcomb->addItems(m_event->getScreenName());
       ui->propcomb->addItems(m_event->getFadeModeList());
-      ui->valueedit->setText("500");
+      ui->valueedit->setText("150");
       ui->value3edit->setText("0");
+      ui->Sendercomb->hide();
+      ui->Senderlab->hide();
     } break;
     case 2:
       break;

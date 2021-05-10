@@ -4,7 +4,8 @@
 #include <QDialog>
 
 class EventSettingWidgeet;
-class LVGLEvent;
+class LVGLEventType;
+class LVGLWidget;
 
 extern int Index;
 
@@ -18,7 +19,7 @@ class EventSelectWIdget : public QDialog {
   Q_OBJECT
 
  public:
-  EventSelectWIdget(QWidget *parent = nullptr);
+  EventSelectWIdget(LVGLWidget *w, QWidget *parent = nullptr);
   ~EventSelectWIdget();
   void setTextList(const QStringList &list);
   QStringList textList();
@@ -30,11 +31,11 @@ class EventSelectWIdget : public QDialog {
   void slotTypeChanged(int index);
 
  private:
-  void getEvent(LVGLEvent *&ev, int index);
+  void getEventType(LVGLEventType *&ev, int index);
 
  private:
   Ui::EventSelectWIdget *ui;
   EventSettingWidgeet *m_setWidget;
-  LVGLEvent *m_ev;
+  LVGLEventType *m_ev;
 };
 #endif  // EVENTSELECTWIDGET_H

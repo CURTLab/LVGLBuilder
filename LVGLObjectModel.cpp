@@ -26,7 +26,7 @@ QModelIndex LVGLObjectModel::index(int row, int column,
         static_cast<const LVGLObject *>(parent.internalPointer());
     return createIndex(row, column, p->childs().at(row));
   }
-  return createIndex(row, column, lvgl->topLevelObjects().at(row));
+  return createIndex(row, column, lvgl.topLevelObjects().at(row));
 }
 
 QModelIndex LVGLObjectModel::parent(const QModelIndex &index) const {
@@ -51,7 +51,7 @@ int LVGLObjectModel::rowCount(const QModelIndex &parent) const {
     // qDebug() << size;
     return size;
   }
-  auto top = lvgl->topLevelObjects();
+  auto top = lvgl.topLevelObjects();
   const int size = top.size();
   // qDebug() << size;
   return size;
@@ -128,5 +128,5 @@ QModelIndex LVGLObjectModel::objIndex(LVGLObject *obj, int col) const {
 
   LVGLObject *p = obj->parent();
   if (p) return createIndex(p->childs().indexOf(obj), col, obj);
-  return createIndex(lvgl->topLevelObjects().indexOf(obj), col, obj);
+  return createIndex(lvgl.topLevelObjects().indexOf(obj), col, obj);
 }

@@ -3,31 +3,25 @@
 
 #include <QObject>
 
+#include "lvgl/lvgl/src/lv_core/lv_obj.h"
+
 class LVGLEvent {
  public:
-  enum WIDGETTYPE { e_NONE = 0, e_LINEEDIT, e_COMBOBOX };
-
  public:
   LVGLEvent();
   virtual ~LVGLEvent();
-  inline QStringList getObjName() const { return m_objName; }
-  inline QStringList getPropertyList() const { return m_propertyList; }
-  inline QStringList getValuelist() const { return m_valueList; }
-  inline QStringList getAmName() const { return m_amName; }
-  inline QStringList getScreenName() const { return m_screenName; }
-  inline QStringList getOpaName() const { return m_opaName; }
-  inline QStringList getFadeModeList() const { return m_fademodelist; }
 
-  virtual WIDGETTYPE whichwidget() = 0;
+  inline QStringList getResult() { return m_result; }
+  inline void setResule(QStringList res) { m_result = res; }
+
+  virtual void eventRun(lv_obj_t* obj) = 0;
+  virtual QStringList objCode(const QString& objName) = 0;
+  virtual QString eventHeadCode() = 0;
+  virtual QStringList eventCode() = 0;
 
  protected:
-  QStringList m_objName;
-  QStringList m_propertyList;
-  QStringList m_valueList;
-  QStringList m_amName;
-  QStringList m_screenName;
-  QStringList m_opaName;
-  QStringList m_fademodelist;
+  QStringList m_result;
+  QString m_eventHeadCode;
 };
 
 #endif  // LVGLEVENT_H

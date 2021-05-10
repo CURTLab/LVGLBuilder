@@ -22,7 +22,7 @@ AddWidgetCommand::AddWidgetCommand(LVGLSimulator *sim, LVGLObject *obj,
               m_obj->geometry().width(), m_obj->geometry().height());
   } else
     m_widgetRect = m_obj->geometry();
-  m_objParent = lvgl->getdispt()->act_scr;
+  m_objParent = lv_scr_act();
 }
 
 void AddWidgetCommand::undo() {
@@ -36,7 +36,7 @@ void AddWidgetCommand::redo() {
   if (m_sim->selectedObject() && m_lastobj.isEmpty())
     m_lastobj = m_sim->selectedObject()->name();
   if (!m_obj) {
-    auto wc = lvgl->widget(m_widgetClassName);
+    auto wc = lvgl.widget(m_widgetClassName);
     if (!m_objWidgetparent.isEmpty())
       m_obj = new LVGLObject(wc, m_widgetName,
                              m_sim->findObject(m_objWidgetparent));
@@ -55,14 +55,14 @@ RemoveWidgetCommand::RemoveWidgetCommand(LVGLSimulator *sim, LVGLObject *obj,
   m_widgetName = m_obj->name();
   m_widgetClassName = m_obj->widgetClass()->className();
   if (m_obj->parent()) m_objWidgetparent = m_obj->parent()->name();
-  m_objParent = lvgl->getdispt()->act_scr;
+  m_objParent = lv_scr_act();
   m_widgetRect = m_obj->geometry();
   setText(QObject::tr("Remove %1").arg(m_obj->name()));
 }
 
 void RemoveWidgetCommand::undo() {
   if (!m_obj) {
-    auto wc = lvgl->widget(m_widgetClassName);
+    auto wc = lvgl.widget(m_widgetClassName);
     if (!m_objWidgetparent.isEmpty())
       m_obj = new LVGLObject(wc, m_widgetName,
                              m_sim->findObject(m_objWidgetparent));
@@ -137,7 +137,8 @@ SetWidgetPropCommand::SetWidgetPropCommand(LVGLSimulator *sim, LVGLObject *obj,
       m_obj(obj),
       m_widgetName(obj->name()),
       m_oldWidgetArr(oldWidgetArr),
-      m_newWidgetArr(newWidgetArr) {
+      m_newWidgetArr(newWidgetArr),
+      m_firstRun(true) {
   setText(QObject::tr("Change %1's %2").arg(m_widgetName).arg(propName));
 }
 
@@ -158,6 +159,10 @@ void SetWidgetPropCommand::undo() {
 }
 
 void SetWidgetPropCommand::redo() {
+  if (m_firstRun) {
+    m_firstRun = false;
+    return;
+  }
   if (m_sim->selectedObject() && m_lastobj.isEmpty())
     m_lastobj = m_sim->selectedObject()->name();
   auto obj = m_sim->findObject(m_widgetName);

@@ -81,6 +81,7 @@ class SetWidgetPropCommand : public QUndoCommand {
   QJsonObject m_oldWidgetArr;
   QJsonObject m_newWidgetArr;
   QString m_lastobj;
+  bool m_firstRun;
 };
 
 class SetWidgetStyleCommand : public QUndoCommand {

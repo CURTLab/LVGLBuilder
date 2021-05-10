@@ -20,13 +20,13 @@
 #include "LVGLPropertyModel.h"
 #include "LVGLSimulator.h"
 #include "LVGLStyleModel.h"
+#include "LVGLTabWidget.h"
 #include "LVGLWidgetListView.h"
 #include "LVGLWidgetModel.h"
 #include "LVGLWidgetModelDisplay.h"
 #include "LVGLWidgetModelInput.h"
 #include "ListDelegate.h"
 #include "ListViewItem.h"
-#include "TabWidget.h"
 #include "lvgl/lvgl.h"
 #include "ui_MainWindow.h"
 #include "widgets/LVGLWidgets.h"
@@ -38,7 +38,7 @@ MainWindow::MainWindow(QWidget *parent)
       m_project(nullptr),
       m_objectModel(nullptr),
       m_maxFileNr(5),
-      m_curSimulation(nullptr),
+      m_curSimulation(new LVGLSimulator(this)),
       m_proxyModel(nullptr),
       m_proxyModelDPW(nullptr),
       m_proxyModelIPW(nullptr),
@@ -49,8 +49,10 @@ MainWindow::MainWindow(QWidget *parent)
       m_curTabWIndex(-1),
       m_frun(true),
       m_isrun(false),
-      m_undoGroup(new QUndoGroup(this)) {
+      m_undoGroup(new QUndoGroup(this)),
+      m_lastindex(-1) {
   m_ui->setupUi(this);
+  lvgl.init(320, 480);
   m_ui->style_tree->setStyleSheet(
       "QTreeView::item{border:1px solid "
       "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
@@ -144,25 +146,30 @@ MainWindow::MainWindow(QWidget *parent)
 }
 
 MainWindow::~MainWindow() {
+  m_ui->tabWidget->setCurrentIndex(0);
   for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
-    auto w = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
-    w->getSimulator()->clear();
+    if (index != m_ui->tabWidget->currentIndex()) {
+      auto w = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+      w->removeAll();
+    }
   }
+
   int n = m_ui->list_images->count();
   for (int i = 0; i < n; ++i) {
     auto item = m_ui->list_images->item(0);
     delete item;
   }
+
   delete m_ui;
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
   qDeleteAll(m_widgetsInputW);
   for (int i = 0; i < 35; ++i)
     if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
-  qDeleteAll(m_needdelete);
   delete m_ld1;
   delete m_ld2;
   delete m_ld3;
+  delete m_project;
   LVGLLog::log_trace("Main deleted", __FILE__, __LINE__, __func__);
 }
 
@@ -187,6 +194,8 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
   m_ui->combo_state->setCurrentIndex(0);
   m_propertyModel->setObject(obj);
   m_styleModel->setState(LV_STATE_DEFAULT);
+  m_styleModel->setLvglObj(obj);
+  m_styleModel->setObj(nullptr);
   if (obj) {
     LVGLLog::log_trace(QString("%1 selected").arg(obj->name()), __FILE__,
                        __LINE__, __func__);
@@ -198,6 +207,7 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
     m_styleModel->setStyle(obj->style(0, 0),
                            obj->widgetClass()->editableStyles(0));
     updateItemDelegate();
+    m_ui->style_tree->expandAll();
   } else {
     m_styleModel->setStyle(nullptr);
   }
@@ -220,33 +230,38 @@ void MainWindow::loadRecent() {
 void MainWindow::openNewProject() {
   LVGLNewDialog dialog(this);
   dialog.setFocus();
+  if (m_ui->tabWidget->count() < 1)
+    dialog.setoptenable(true);
+  else
+    dialog.setoptenable(false);
   m_isrun = true;
   if (dialog.exec() == QDialog::Accepted) {
-    if (m_curSimulation != nullptr) revlvglConnect();
-    TabWidget *tabw = new TabWidget(dialog.selectName(), this);
-    lvgl = tabw->getCore();
-    const auto res = dialog.selectedResolution();
-    lvgl->init(res.width(), res.height());
+    LVGLTabWidget *tabW = new LVGLTabWidget(this);
     if (m_frun) {
       m_frun = false;
       initNewWidgets();
       initcodemap();
+      lvgl.initw(m_widgets);
+      lvgl.initwDP(m_widgetsDisplayW);
+      lvgl.initwIP(m_widgetsInputW);
+      m_project =
+          new LVGLProject(dialog.selectName(), dialog.selectedResolution());
+      const auto res = dialog.selectedResolution();
+      initlvglConnect();
+      lvgl.changeResolution(res);
+      m_curSimulation->changeResolution(res);
+      m_curSimulation->restartconnect();
+      setUndoStack();
+      tabW->setAllImages(lvgl.allImages());
+      tabW->setAllFonts(lvgl.allFonts());
     }
 
-    lvgl->initw(m_widgets);
-    lvgl->initwDP(m_widgetsDisplayW);
-    lvgl->initwIP(m_widgetsInputW);
-
-    m_coreRes[lvgl] = res;
-    m_listTabW.push_back(tabw);
-    m_ui->tabWidget->addTab(tabw, tabw->getName());
-    m_ui->tabWidget->setCurrentIndex(m_listTabW.size() - 1);
-
     setEnableBuilder(true);
-    m_curSimulation->clear();
-    m_project = tabw->getProject();
-    m_project->setres(res);
-    lvgl->changeResolution(res);
+    tabW->setname(dialog.selectName());
+    m_curSimulation->setobjParent(tabW->getparent());
+    m_ui->tabWidget->addTab(tabW, dialog.selectName());
+    m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
+    auto imgs = lvgl.images();
   } else {
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
@@ -268,15 +283,12 @@ void MainWindow::addImage(LVGLImageData *img, QString name) {
 
 void MainWindow::updateImages() {
   m_ui->list_images->clear();
-  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
-    auto tabW = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
-    auto tmplvgl = tabW->getCore();
-    for (LVGLImageData *i : tmplvgl->images()) {
-      if (i->fileName().isEmpty()) continue;
-      QString name = QFileInfo(i->fileName()).baseName() +
-                     QString(" [%1x%2]").arg(i->width()).arg(i->height());
-      addImage(i, name);
-    }
+  auto imgs = lvgl.images();
+  for (LVGLImageData *i : lvgl.images()) {
+    if (i->fileName().isEmpty()) continue;
+    QString name = QFileInfo(i->fileName()).baseName() +
+                   QString(" [%1x%2]").arg(i->width()).arg(i->height());
+    addImage(i, name);
   }
 }
 
@@ -293,9 +305,7 @@ void MainWindow::addFont(LVGLFontData *font, QString name) {
 void MainWindow::updateFonts() {
   m_ui->list_fonts->clear();
   for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
-    auto tabW = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
-    auto tmplvgl = tabW->getCore();
-    for (const LVGLFontData *f : tmplvgl->customFonts())
+    for (const LVGLFontData *f : lvgl.customFonts())
       addFont(const_cast<LVGLFontData *>(f), f->name());
   }
 }
@@ -337,13 +347,14 @@ void MainWindow::loadProject(const QString &fileName) {
                      __func__);
   delete m_project;
   m_project = nullptr;
-  m_curSimulation->clear();
-  revlvglConnect();
-  initlvglConnect();
   int index = m_ui->tabWidget->currentIndex();
-  auto tab = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
-  tab->setProject(LVGLProject::load(fileName));
-  m_project = tab->getProject();
+  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  tabw->removeAllObjects();
+  tabw->removeAllImages();
+  lvgl.removeAllImages();
+  lvgl.removeAllObjects();
+  m_curSimulation->clear();
+  m_project = LVGLProject::load(fileName);
   setWindowTitle("LVGL Builder");
   if (m_project == nullptr) {
     QMessageBox::critical(this, "Error", "Could not load lvgl file!");
@@ -351,8 +362,7 @@ void MainWindow::loadProject(const QString &fileName) {
   } else {
     m_ui->tabWidget->setTabText(index, m_project->name());
     adjustForCurrentFile(fileName);
-    lvgl->changeResolution(m_project->resolution());
-    m_coreRes[lvgl] = m_project->resolution();
+    lvgl.changeResolution(m_project->resolution());
     m_curSimulation->changeResolution(m_project->resolution());
     setEnableBuilder(true);
   }
@@ -457,7 +467,7 @@ void MainWindow::on_button_add_image_clicked() {
     }
 
     QString name = QFileInfo(fileName).baseName();
-    LVGLImageData *i = lvgl->addImage(fileName, name);
+    LVGLImageData *i = lvgl.addImage(fileName, name);
     name += QString(" [%1x%2]").arg(i->width()).arg(i->height());
     addImage(i, name);
   }
@@ -471,7 +481,7 @@ void MainWindow::on_button_remove_image_clicked() {
   LVGLImageDataCast cast;
   cast.i = item->data(Qt::UserRole + 3).toLongLong();
 
-  if (lvgl->removeImage(cast.ptr)) m_ui->list_images->takeItem(row);
+  if (lvgl.removeImage(cast.ptr)) m_ui->list_images->takeItem(row);
 }
 
 void MainWindow::on_list_images_customContextMenuRequested(const QPoint &pos) {
@@ -525,7 +535,7 @@ void MainWindow::on_button_add_font_clicked() {
   LVGLFontDialog dialog(this);
   if (dialog.exec() != QDialog::Accepted) return;
   LVGLFontData *f =
-      lvgl->addFont(dialog.selectedFontPath(), dialog.selectedFontSize());
+      lvgl.addFont(dialog.selectedFontPath(), dialog.selectedFontSize());
   if (f)
     addFont(f, f->name());
   else
@@ -540,7 +550,7 @@ void MainWindow::on_button_remove_font_clicked() {
   LVGLFontDataCast cast;
   cast.i = item->data(Qt::UserRole + 3).toLongLong();
 
-  if (lvgl->removeFont(cast.ptr)) m_ui->list_fonts->takeItem(row);
+  if (lvgl.removeFont(cast.ptr)) m_ui->list_fonts->takeItem(row);
 }
 
 void MainWindow::on_list_fonts_customContextMenuRequested(const QPoint &pos) {
@@ -773,20 +783,20 @@ void MainWindow::initNewWidgets() {
   addWidgetDisplayW(new LVGLLabel);
   addWidgetDisplayW(new LVGLLED);
   addWidgetDisplayW(new LVGLMessageBox);
-  addWidgetDisplayW(new LVGLObjectMask);
+  // addWidgetDisplayW(new LVGLObjectMask);
   addWidgetDisplayW(new LVGLPage);
-  addWidgetDisplayW(new LVGLTable);
+  // addWidgetDisplayW(new LVGLTable);
   addWidgetDisplayW(new LVGLTabview);
-  addWidgetDisplayW(new LVGLTileView);
+  // addWidgetDisplayW(new LVGLTileView);
   addWidgetDisplayW(new LVGLTextArea);
-  addWidgetDisplayW(new LVGLWindow);
+  // addWidgetDisplayW(new LVGLWindow);
 
   addWidgetInputW(new LVGLCalendar);
-  addWidgetInputW(new LVGLCanvas);
+  // addWidgetInputW(new LVGLCanvas);
   addWidgetInputW(new LVGLChart);
   addWidgetInputW(new LVGLCheckBox);
   addWidgetInputW(new LVGLColorPicker);
-  addWidgetInputW(new LVGLContainer);
+  // addWidgetInputW(new LVGLContainer);
   addWidgetInputW(new LVGLDropDownList);
   addWidgetInputW(new LVGLGauge);
   addWidgetInputW(new LVGLKeyboard);
@@ -891,35 +901,6 @@ void MainWindow::initlvglConnect() {
   m_ui->combo_state->addItems(statelist);
 }
 
-void MainWindow::revlvglConnect() {
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModel,
-             &QSortFilterProxyModel::setFilterWildcard);
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModelDPW,
-             &QSortFilterProxyModel::setFilterWildcard);
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModelIPW,
-             &QSortFilterProxyModel::setFilterWildcard);
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets,
-             &ListViewItem::slot_toshowtab);
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_2,
-             &ListViewItem::slot_toshowtab);
-  disconnect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_3,
-             &ListViewItem::slot_toshowtab);
-  disconnect(m_curSimulation, &LVGLSimulator::objectSelected, this,
-             &MainWindow::setCurrentObject);
-  disconnect(m_curSimulation, &LVGLSimulator::objectSelected,
-             m_ui->property_tree, &QTreeView::expandAll);
-  disconnect(m_curSimulation->item(), &LVGLItem::geometryChanged, this,
-             &MainWindow::updateProperty);
-  disconnect(m_curSimulation, &LVGLSimulator::objectAdded, m_ui->object_tree,
-             &QTreeView::expandAll);
-  disconnect(m_curSimulation, &LVGLSimulator::objectSelected, m_objectModel,
-             &LVGLObjectModel::setCurrentObject);
-  disconnect(m_zoom_slider, &QSlider::valueChanged, m_curSimulation,
-             &LVGLSimulator::setZoomLevel);
-  disconnect(m_curSimulation, &LVGLSimulator::objPressed, this,
-             &MainWindow::onObjPressed);
-}
-
 void MainWindow::on_combo_state_currentIndexChanged(int index) {
   LVGLObject *obj = m_curSimulation->selectedObject();
   if (obj && (index >= 0)) {
@@ -935,58 +916,68 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
 }
 
 void MainWindow::tabChanged(int index) {
-  if (index != m_curTabWIndex && index >= 0) {
-    if (m_curSimulation &&
-        m_curSimulation != m_listTabW[index]->getSimulator()) {
-      m_curSimulation->threadstop();
-      m_curSimulation->setSelectedObject(nullptr);
-      m_propertyModel->setObject(nullptr);
+  if (-1 == index) return;
+  if (m_lastindex != -1) {
+    auto oldtabw =
+        static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(m_lastindex));
+    auto objs = lvgl.allObjects();
+    oldtabw->setAllObjects(lvgl.allObjects());
+    oldtabw->setAllImages(lvgl.allImages());
+    // oldtabw->setAllFonts(lvgl.allFonts());
+    for (int i = 0; i < objs.count(); ++i) {
+      m_objectModel->beginRemoveObject(objs[i]);
+      m_objectModel->endRemoveObject();
     }
-    m_curSimulation = m_listTabW[index]->getSimulator();
-    m_curSimulation->restartconnect();
-    m_ui->action_run->setChecked(m_curSimulation->getMouseEnable());
-    lvgl = m_listTabW[index]->getCore();
-    m_project = m_listTabW[index]->getProject();  // dont need
-    initlvglConnect();
-    lvgl->changeResolution(m_coreRes[lvgl]);
-    m_curSimulation->changeResolution(m_coreRes[lvgl]);
-    m_curTabWIndex = index;
-    lv_set_cur_disp(lvgl->getdispt());
-    setUndoStack();
+    lvgl.objsclear();
   }
+  m_lastindex = index;
+  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  m_curSimulation->setobjParent(tabw->getparent());
+  tabw->setSimulator(m_curSimulation);
+  auto objs = tabw->allObject();
+  lvgl.setAllObjects(objs);
+  lvgl.setAllImages(tabw->allImages());
+  // lvgl.setAllFonts(tabw->allFonts());
+  m_project->setName(tabw->getname());
+  for (int i = 0; i < objs.count(); ++i) {
+    m_objectModel->beginInsertObject(objs[i]);
+    m_objectModel->endInsertObject();
+  }
+  m_ui->object_tree->update();
+  if (!objs.isEmpty())
+    m_curSimulation->setSelectedObject(lvgl.allObjects().at(0));
+  m_curSimulation->setSelectedObject(nullptr);  // need it
+  updateImages();
+  updateFonts();
 }
 
-void MainWindow::onObjPressed(LVGLObject *obj) {
-  QMap<LVGLObject *, int> &bgp = LVGLHelper::getInstance().getBtnGoPage();
-  if (bgp.contains(obj)) {
-    int index = bgp[obj];
-    m_curSimulation->setSelectedObject(nullptr);
-    m_ui->tabWidget->setCurrentIndex(index);
-  }
-}
+void MainWindow::onObjPressed(LVGLObject *obj) { Q_UNUSED(obj) }
 
 void MainWindow::ontabclose(int index) {
   int count = m_ui->tabWidget->count();
   if (count > 1) {
-    // get p
-    auto w = static_cast<TabWidget *>(m_ui->tabWidget->widget(index));
+    auto w = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
     int curindex = m_ui->tabWidget->currentIndex();
     m_curSimulation->setSelectedObject(nullptr);
     m_propertyModel->setObject(nullptr);
-    w->getSimulator()->clear();
     if (index == curindex) {
-      m_curSimulation->threadstop();
-      revlvglConnect();
       int nindex = index == 0 ? 1 : index - 1;
       m_ui->tabWidget->setCurrentIndex(nindex);
+    } else {
+      auto oldtabw =
+          static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(curindex));
+      auto objs = lvgl.allObjects();
+      oldtabw->setAllObjects(lvgl.allObjects());
+      oldtabw->setAllImages(lvgl.allImages());
+      // oldtabw->setAllFonts(lvgl.allFonts());
+      for (int i = 0; i < objs.count(); ++i) {
+        m_objectModel->beginRemoveObject(objs[i]);
+        m_objectModel->endRemoveObject();
+      }
+      m_lastindex = -1;
+      w->removeAll();
+      delete w;
     }
-    // recoder
-    m_coreRes.remove(w->getCore());
-    // order
-    for (int i = index + 1; i < count; ++i) m_listTabW[i - 1] = m_listTabW[i];
-    m_listTabW.removeLast();
-    m_needdelete.push_back(w);
-    m_ui->tabWidget->removeTab(index);
   }
 }
 

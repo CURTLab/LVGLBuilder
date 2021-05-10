@@ -102,12 +102,27 @@ SOURCES += \
     LVGLWidgetModelInput.cpp \
     ListDelegate.cpp \
     ListViewItem.cpp \
-    TabWidget.cpp \
     events/EventSelectWIdget.cpp \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
     events/LVGLEvent.cpp \
+    events/LVGLEventArc.cpp \
+    events/LVGLEventBar.cpp \
+    events/LVGLEventButton.cpp \
+    events/LVGLEventCheckBox.cpp \
+    events/LVGLEventDDList.cpp \
+    events/LVGLEventImage.cpp \
+    events/LVGLEventImageButton.cpp \
+    events/LVGLEventLabel.cpp \
+    events/LVGLEventLed.cpp \
+    events/LVGLEventLine.cpp \
+    events/LVGLEventRoller.cpp \
     events/LVGLEventScreen.cpp \
+    events/LVGLEventSlider.cpp \
+    events/LVGLEventSpinbox.cpp \
+    events/LVGLEventSwitch.cpp \
+    events/LVGLEventTextArea.cpp \
+    events/LVGLEventType.cpp \
     events/LVGLEventWidgetBasic.cpp \
     events/LVGLPropertyEvent.cpp \
     properties/LVGLPropertyAnyFunc.cpp \
@@ -190,13 +205,29 @@ HEADERS += \
     LVGLWidgetModelInput.h \
     ListDelegate.h \
     ListViewItem.h \
-    TabWidget.h \
     events/EventSelectWIdget.h \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \
     events/LVGLEvent.h \
+    events/LVGLEventArc.h \
+    events/LVGLEventBar.h \
+    events/LVGLEventButton.h \
+    events/LVGLEventCheckBox.h \
+    events/LVGLEventDDList.h \
+    events/LVGLEventImage.h \
+    events/LVGLEventImageButton.h \
+    events/LVGLEventLabel.h \
+    events/LVGLEventLed.h \
+    events/LVGLEventLine.h \
+    events/LVGLEventRoller.h \
     events/LVGLEventScreen.h \
+    events/LVGLEventSlider.h \
+    events/LVGLEventSpinbox.h \
+    events/LVGLEventSwitch.h \
+    events/LVGLEventTextArea.h \
+    events/LVGLEventType.h \
     events/LVGLEventWidgetBasic.h \
+    events/LVGLEventWidgts.h \
     events/LVGLPropertyEvent.h \
     properties/LVGLPropertyAnyFunc.h \
     properties/LVGLPropertyAssignTextArea.h \

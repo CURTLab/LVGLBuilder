@@ -16,6 +16,7 @@
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
 #include "MainWindow.h"
+#include "events/LVGLEvent.h"
 
 #define IS_PAGE_OF_TABVIEW(o)                                    \
   ((o->widgetType() == LVGLWidget::Page) && (o->index() >= 0) && \
@@ -53,7 +54,7 @@ LVGLProject *LVGLProject::load(const QString &fileName) {
   for (int i = 0; i < imageArr.size(); ++i) {
     LVGLImageData *img = new LVGLImageData(imageArr[i].toObject());
     if (img->isValid()) {
-      lvgl->addImage(img);
+      lvgl.addImage(img);
     } else {
       QMessageBox::critical(
           nullptr, "Error",
@@ -65,11 +66,11 @@ LVGLProject *LVGLProject::load(const QString &fileName) {
   QJsonArray fontArr = doc["fonts"].toArray();
   for (int i = 0; i < fontArr.size(); ++i) {
     QJsonObject object = fontArr[i].toObject();
-    lvgl->addFont(LVGLFontData::parse(object));
+    lvgl.addFont(LVGLFontData::parse(object));
   }
 
   if (lvglObj.contains("screen color"))
-    lvgl->setScreenColor(lvglObj["screen color"].toVariant().value<QColor>());
+    lvgl.setScreenColor(lvglObj["screen color"].toVariant().value<QColor>());
   QJsonArray widgetArr = lvglObj["widgets"].toArray();
   for (int i = 0; i < widgetArr.size(); ++i) {
     QJsonObject object = widgetArr[i].toObject();
@@ -86,7 +87,7 @@ bool LVGLProject::save(const QString &fileName) {
   if (!file.open(QIODevice::WriteOnly)) return false;
 
   QJsonArray widgetArr;
-  for (LVGLObject *o : lvgl->allObjects()) {
+  for (LVGLObject *o : lvgl.allObjects()) {
     if (o->parent() == nullptr) {
       if (o->doesNameExists()) o->generateName();
       widgetArr.append(o->toJson());
@@ -94,18 +95,18 @@ bool LVGLProject::save(const QString &fileName) {
   }
 
   QJsonArray imageArr;
-  for (LVGLImageData *i : lvgl->images()) {
+  for (LVGLImageData *i : lvgl.images()) {
     if (!i->fileName().isEmpty()) imageArr.append(i->toJson());
   }
 
   QJsonArray fontArr;
-  for (const LVGLFontData *f : lvgl->customFonts()) fontArr.append(f->toJson());
+  for (const LVGLFontData *f : lvgl.customFonts()) fontArr.append(f->toJson());
 
   QJsonObject resolution(
       {{"width", m_resolution.width()}, {"height", m_resolution.height()}});
   QJsonObject screen(
       {{"widgets", widgetArr}, {"name", m_name}, {"resolution", resolution}});
-  screen.insert("screen color", QVariant(lvgl->screenColor()).toString());
+  screen.insert("screen color", QVariant(lvgl.screenColor()).toString());
   QJsonObject lvgl(
       {{"lvgl", screen}, {"images", imageArr}, {"fonts", fontArr}});
   QJsonDocument doc(lvgl);
@@ -131,7 +132,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
 
-  auto objects = lvgl->allObjects();
+  auto objects = lvgl.allObjects();
 
   stream << "#ifndef " << defName << "_H\n#define " << defName << "_H\n\n";
   stream << "#ifdef __cplusplus\nextern \"C\" {\n#endif\n\n";
@@ -181,18 +182,18 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "/**********************\n";
   stream << " *  STATIC VARIABLES\n";
   stream << " **********************/\n";
-  if (lvgl->screenColorChanged()) {
+  if (lvgl.screenColorChanged()) {
     stream << "static lv_style_t style_screen;\n";
   }
 
-  auto images = lvgl->images();
+  auto images = lvgl.images();
   for (LVGLImageData *img : images) {
     img->saveAsCode(dir.path() + "/" + img->codeName() + ".c");
     stream << "LV_IMG_DECLARE(" << img->codeName() << ");\n";
   }
   stream << "\n";
 
-  auto fonts = lvgl->customFonts();
+  auto fonts = lvgl.customFonts();
   for (const LVGLFontData *f : fonts) {
     f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
     stream << "LV_FONT_DECLARE(" << f->codeName() << ");\n";
@@ -204,15 +205,17 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "\t"
          << "lv_obj_t *parent = lv_obj_create(NULL, NULL);\n";
 
-  if (lvgl->screenColorChanged()) {
-    QString color = QVariant(lvgl->screenColor()).toString().replace("#", "0x");
+  if (lvgl.screenColorChanged()) {
+    QString color = QVariant(lvgl.screenColor()).toString().replace("#", "0x");
     stream << "\t_lv_obj_set_style_local_color(parent,0,LV_STYLE_BG_COLOR,lv_"
               "color_hex("
            << color << "));\n";
   }
   stream << "\n";
 
-  QMap<LVGLObject *, int> &btp = LVGLHelper::getInstance().getBtnGoPage();
+  QMap<lv_obj_t *, QList<LVGLEvent *>> &objev =
+      LVGLHelper::getInstance().getObjEvents();
+
   int lvglStateType = 7;
   for (LVGLObject *o : objects) {
     for (int index = 0; index < o->widgetClass()->styles().size(); ++index) {
@@ -279,12 +282,16 @@ bool LVGLProject::exportCode(const QString &path) const {
         for (const QString &fn : p->function(o)) stream << "\t" << fn << "\n";
       }
 
-      if (btp.contains(o)) {
-        QString pageName =
-            LVGLHelper::getInstance().getMainW()->getTabW()->tabText(btp[o]);
+      if (objev.contains(o->obj())) {
         stream << "\t"
-               << "lv_obj_set_event_cb(" << o->codeName() << ", event_page"
-               << QString::number(btp[o] + 1) << ");\n";
+               << QString("lv_obj_set_click(%1, true);").arg(o->codeName())
+               << "\n";
+
+        QList<LVGLEvent *> &listev = objev[o->obj()];
+        for (auto e : listev) {
+          auto strlist = e->objCode(o->codeName());
+          for (auto s : strlist) stream << s;
+        }
       }
 
       stream << "\n\n";
@@ -335,10 +342,16 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
     stream << "LV_FONT_DECLARE(" + *itor + ");\n";
 
   stream << "\n";
-  auto tabW = LVGLHelper::getInstance().getMainW()->getTabW();
-  for (int i = 0; i < tabW->count(); ++i) {
-    stream << "void event_page" + QString::number(i + 1) +
-                  "(lv_obj_t *obj, lv_event_t event);\n";
+  auto objs = lvgl.allObjects();
+  QMap<lv_obj_t *, QList<LVGLEvent *>> &objevs =
+      LVGLHelper::getInstance().getObjEvents();
+  for (auto o : objs) {
+    if (objevs.contains(o->obj())) {
+      QList<LVGLEvent *> &listev = objevs[o->obj()];
+      for (auto e : listev) {
+        stream << e->eventHeadCode();
+      }
+    }
   }
 
   stream << "\n";
@@ -351,6 +364,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream.setDevice(&file);
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
+  auto tabW = LVGLHelper::getInstance().getMainW()->getTabW();
   stream << "#include \"app.h\"\n";
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "#include \"page_" << QString::number(i + 1) << ".h\"\n";
@@ -362,16 +376,14 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   }
 
   stream << "\n";
-  for (int i = 0; i < tabW->count(); ++i) {
-    stream << "void event_page" + QString::number(i + 1) +
-                  "(lv_obj_t *obj,lv_event_t event){\n";
-    stream << "\t"
-           << "if(event == LV_EVENT_CLICKED) {\n";
-    stream << "\t\t"
-           << "lv_scr_load(page" << QString::number(i + 1) << ");\n";
-    stream << "\t"
-           << "}\n";
-    stream << "}\n";
+  for (auto o : objs) {
+    if (objevs.contains(o->obj())) {
+      QList<LVGLEvent *> &listev = objevs[o->obj()];
+      for (auto e : listev) {
+        auto strlist = e->eventCode();
+        for (auto s : strlist) stream << s;
+      }
+    }
   }
 
   stream << "\n";

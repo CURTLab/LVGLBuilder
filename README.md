@@ -1,11 +1,13 @@
 # New Todo List
 - [ ]  (First) Add Event
 
-- [ ] (Second) Redesign the multi-page function, a single page can simulate all pages 
+- [x] (Second) Redesign the multi-page function, a single page can simulate all pages 
 
 - [ ] Add Animation
 
 - [ ] Dialog for changing keyboard layout
+
+- [ ] Refactor the code related to the style of the widget
 
 
 # LVGLBuilder

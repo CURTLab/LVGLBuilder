@@ -24,7 +24,7 @@ class LVGLPropertyImgBtnSrc : public LVGLPropertyImage {
   QString name() const override { return "Source " + m_values.at(m_state); }
 
   QStringList function(LVGLObject *obj) const override {
-    LVGLImageData *img = lvgl->imageByDesc(get(obj));
+    LVGLImageData *img = lvgl.imageByDesc(get(obj));
     if (img == nullptr) return QStringList();
     return QStringList() << QString("lv_imgbtn_set_src(%1, %2, &%3);")
                                 .arg(obj->codeName())
@@ -127,8 +127,8 @@ LVGLImageButton::LVGLImageButton() {
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_RELEASED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_PRESSED);
   // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_DISABLED);
-  static AnyFuncColType arr[1] = {e_QComboBox};
-  m_properties << new LVGLPropertyImageButtonGo(arr, 1);
+  // static AnyFuncColType arr[1] = {e_QComboBox};
+  // m_properties << new LVGLPropertyImageButtonGo(arr, 1);
 
   m_editableStyles << LVGL::ImgMAIN;  // LV_IMGBTN_PART_MAIN
 }

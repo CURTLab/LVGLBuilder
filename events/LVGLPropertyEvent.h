@@ -3,10 +3,11 @@
 
 #include "LVGLProperty.h"
 class EventsListWIdget;
+class LVGLWidget;
 
 class LVGLPropertyEvent : public LVGLProperty {
  public:
-  LVGLPropertyEvent(LVGLProperty *parent = nullptr);
+  LVGLPropertyEvent(LVGLWidget *w, LVGLProperty *parent = nullptr);
   bool hasEditor() const;
   QWidget *editor(QWidget *parent);
   void updateEditor(LVGLObject *obj);
@@ -24,6 +25,7 @@ class LVGLPropertyEvent : public LVGLProperty {
   virtual void set(LVGLObject *obj, QStringList list) = 0;
 
  private:
+  LVGLWidget *m_w;
 };
 
 #endif  // LVGLPROPERTYEVENT_H

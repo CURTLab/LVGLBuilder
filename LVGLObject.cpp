@@ -20,7 +20,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
       m_parent(parent) {
   if (parent) parent->m_childs.append(this);
   if (m_name.isEmpty()) generateName();
-}
+  }
 
 LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
                        lv_obj_t *parent)
@@ -33,7 +33,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
       m_index(-1),
       m_parent(nullptr) {
   if (m_name.isEmpty()) generateName();
-}
+  }
 
 LVGLObject::LVGLObject(const LVGLWidget *widgetClass, LVGLObject *parent,
                        lv_obj_t *parentObj)
@@ -45,7 +45,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, LVGLObject *parent,
       m_index(-1),
       m_parent(parent) {
   generateName();
-}
+  }
 
 LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
                        LVGLObject *parent, bool movable, int index)
@@ -59,7 +59,7 @@ LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
   Q_ASSERT(m_widgetClass);
   if (parent) parent->m_childs.append(this);
   generateName();
-}
+  }
 
 LVGLObject::~LVGLObject() {
   lv_obj_del(m_obj);
@@ -101,7 +101,7 @@ QPoint LVGLObject::absolutePosition() const {
   int y = lv_obj_get_y(m_obj);
   lv_obj_t *parent = lv_obj_get_parent(m_obj);
   while (parent) {
-    if (parent == lvgl->getdispt()->act_scr) break;
+    if (parent == lv_scr_act()) break;
     x += lv_obj_get_x(parent);
     y += lv_obj_get_y(parent);
     parent = lv_obj_get_parent(parent);
@@ -346,7 +346,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         QJsonObject background;
         if (!bg_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
           auto c =
-              QVariant(lvgl->toColor(_lv_obj_get_style_color(
+              QVariant(lvgl.toColor(_lv_obj_get_style_color(
                            s1, part,
                            LV_STYLE_BG_COLOR | (state << LV_STYLE_STATE_POS))))
                   .toString()
@@ -360,7 +360,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         }
         if (!bg_grad_color(obj1, obj2, part,
                            LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_BG_GRAD_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -396,7 +396,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         // border
         QJsonObject border;
         if (!border_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_BORDER_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -439,7 +439,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         QJsonObject outline;
         if (!outline_color(obj1, obj2, part,
                            LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_OUTLINE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -477,7 +477,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         // shadow
         QJsonObject shadow;
         if (!shadow_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SHADOW_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -534,7 +534,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         }
         if (!pattern_recolor(obj1, obj2, part,
                              LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_PATTERN_RECOLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -575,7 +575,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           value.insert("value_str", c);
         }
         if (!value_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_VALUE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -590,7 +590,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           value.insert("value_opa", c);
         }
         if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl.fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
           value.insert("value_font", c);
         }
@@ -636,7 +636,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         // text
         QJsonObject text;
         if (!text_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -651,7 +651,7 @@ QJsonArray LVGLObject::jsonStyles() const {
           text.insert("text_opa", c);
         }
         if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl.fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
           text.insert("text_font", c);
         }
@@ -676,7 +676,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         }
         if (!text_sel_color(obj1, obj2, part,
                             LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_SEL_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -687,7 +687,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         }
         if (!text_sel_bg_color(obj1, obj2, part,
                                LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_SEL_BG_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -708,7 +708,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         // line
         QJsonObject line;
         if (!line_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_LINE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -759,7 +759,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         QJsonObject image;
         if (!image_recolor(obj1, obj2, part,
                            LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_IMAGE_RECOLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -854,7 +854,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         QJsonObject scale;
         if (!scale_grad_color(obj1, obj2, part,
                               LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SCALE_GRAD_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -865,7 +865,7 @@ QJsonArray LVGLObject::jsonStyles() const {
         }
         if (!scale_end_color(obj1, obj2, part,
                              LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SCALE_END_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1038,7 +1038,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         QJsonObject background;
         if (true) {
           auto c =
-              QVariant(lvgl->toColor(_lv_obj_get_style_color(
+              QVariant(lvgl.toColor(_lv_obj_get_style_color(
                            s1, part,
                            LV_STYLE_BG_COLOR | (state << LV_STYLE_STATE_POS))))
                   .toString()
@@ -1051,7 +1051,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           background.insert("bg_opa", c);
         }
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_BG_GRAD_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1086,7 +1086,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         // border
         QJsonObject border;
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_BORDER_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1127,7 +1127,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         // outline
         QJsonObject outline;
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_OUTLINE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1163,7 +1163,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         // shadow
         QJsonObject shadow;
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SHADOW_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1218,7 +1218,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         }
         if (!pattern_recolor(obj1, obj2, part,
                              LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_PATTERN_RECOLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1259,7 +1259,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           value.insert("value_str", c);
         }
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_VALUE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1274,7 +1274,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           value.insert("value_opa", c);
         }
         if (true) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl.fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
           value.insert("value_font", c);
         }
@@ -1317,7 +1317,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         // text
         QJsonObject text;
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1332,7 +1332,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           text.insert("text_opa", c);
         }
         if (true) {
-          auto c = lvgl->fontName((lv_font_t *)_lv_obj_get_style_ptr(
+          auto c = lvgl.fontName((lv_font_t *)_lv_obj_get_style_ptr(
               s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
           text.insert("text_font", c);
         }
@@ -1354,7 +1354,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           text.insert("text_decor", c);
         }
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_SEL_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1364,7 +1364,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
           text.insert("text_sel_color", c);
         }
         if (true) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_TEXT_SEL_BG_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1384,7 +1384,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         // line
         QJsonObject line;
         if (!line_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_LINE_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1435,7 +1435,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         QJsonObject image;
         if (!image_recolor(obj1, obj2, part,
                            LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_IMAGE_RECOLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1530,7 +1530,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         QJsonObject scale;
         if (!scale_grad_color(obj1, obj2, part,
                               LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SCALE_GRAD_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1541,7 +1541,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
         }
         if (!scale_end_color(obj1, obj2, part,
                              LVGLCore::LVGL_STATE[stateindex])) {
-          auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                                 s1, part,
                                 LV_STYLE_SCALE_END_COLOR |
                                     (state << LV_STYLE_STATE_POS))))
@@ -1723,7 +1723,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
   if (editableParts & LVGL::Background) {
     // background
     if (!bg_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_BG_COLOR | (state << LV_STYLE_STATE_POS))))
                    .toString()
@@ -1742,7 +1742,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     }
     if (!bg_grad_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_BG_GRAD_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -1785,7 +1785,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // border
     if (!border_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_BORDER_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -1836,7 +1836,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // outline
     if (!outline_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_OUTLINE_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -1881,7 +1881,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // shadow
     if (!shadow_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_SHADOW_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -1947,7 +1947,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!pattern_recolor(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_PATTERN_RECOLOR |
                                 (state << LV_STYLE_STATE_POS))))
@@ -1998,7 +1998,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     }
     if (!value_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_VALUE_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -2016,7 +2016,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
+      auto c = lvgl.fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
       fontset.insert(c);
       ret << ("lv_style_set_value_font(&" + styleVar + "," +
@@ -2071,7 +2071,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // text
     if (!text_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_TEXT_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -2089,7 +2089,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = lvgl->fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
+      auto c = lvgl.fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
       fontset.insert(c);
       ret << ("lv_style_set_text_font(&" + styleVar + "," +
@@ -2118,7 +2118,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               ");");
     }
     if (!text_sel_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_TEXT_SEL_COLOR |
                                 (state << LV_STYLE_STATE_POS))))
@@ -2131,7 +2131,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     }
     if (!text_sel_bg_color(obj1, obj2, part,
                            LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_TEXT_SEL_BG_COLOR |
                                 (state << LV_STYLE_STATE_POS))))
@@ -2154,7 +2154,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // line
     if (!line_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_LINE_COLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -2211,7 +2211,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     // image
     if (!image_recolor(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c =
-          QVariant(lvgl->toColor(_lv_obj_get_style_color(
+          QVariant(lvgl.toColor(_lv_obj_get_style_color(
                        s1, part,
                        LV_STYLE_IMAGE_RECOLOR | (state << LV_STYLE_STATE_POS))))
               .toString()
@@ -2312,7 +2312,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
   if (editableParts & LVGL::Scale) {
     // scale
     if (!scale_grad_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_SCALE_GRAD_COLOR |
                                 (state << LV_STYLE_STATE_POS))))
@@ -2324,7 +2324,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
               "));");
     }
     if (!scale_end_color(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
-      auto c = QVariant(lvgl->toColor(_lv_obj_get_style_color(
+      auto c = QVariant(lvgl.toColor(_lv_obj_get_style_color(
                             s1, part,
                             LV_STYLE_SCALE_END_COLOR |
                                 (state << LV_STYLE_STATE_POS))))
@@ -2502,7 +2502,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Background")) {
       QJsonObject mix = style["Background"].toObject();
       if (mix.contains("bg_color")) {
-        auto c = lvgl->fromColor(
+        auto c = lvgl.fromColor(
             QColor(QString("#%1").arg(mix["bg_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_BG_COLOR | (state << LV_STYLE_STATE_POS), c);
@@ -2513,7 +2513,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             m_obj, part, LV_STYLE_BG_OPA | (state << LV_STYLE_STATE_POS), c);
       }
       if (mix.contains("bg_grad_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["bg_grad_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_BG_GRAD_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2547,7 +2547,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Border")) {
       QJsonObject mix = style["Border"].toObject();
       if (mix.contains("border_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["border_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_BORDER_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2587,7 +2587,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Outline")) {
       QJsonObject mix = style["Outline"].toObject();
       if (mix.contains("outline_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["outline_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_OUTLINE_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2621,7 +2621,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Shadow")) {
       QJsonObject mix = style["Shadow"].toObject();
       if (mix.contains("shadow_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["shadow_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_SHADOW_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2679,7 +2679,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             c);
       }
       if (mix.contains("pattern_recolor")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["pattern_recolor"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part,
@@ -2715,7 +2715,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS), p);
       }
       if (mix.contains("value_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["value_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_VALUE_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2727,7 +2727,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             m_obj, part, LV_STYLE_VALUE_OPA | (state << LV_STYLE_STATE_POS), c);
       }
       if (mix.contains("value_font")) {
-        auto c = lvgl->font(mix["value_font"].toString());
+        auto c = lvgl.font(mix["value_font"].toString());
         _lv_obj_set_style_local_ptr(
             m_obj, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS),
             c);
@@ -2772,7 +2772,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Text")) {
       QJsonObject mix = style["Text"].toObject();
       if (mix.contains("text_color")) {
-        auto c = lvgl->fromColor(
+        auto c = lvgl.fromColor(
             QColor(QString("#%1").arg(mix["text_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_TEXT_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2784,7 +2784,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             m_obj, part, LV_STYLE_TEXT_OPA | (state << LV_STYLE_STATE_POS), c);
       }
       if (mix.contains("text_font")) {
-        const lv_font_t *c = lvgl->font(mix["text_font"].toString());
+        const lv_font_t *c = lvgl.font(mix["text_font"].toString());
         _lv_obj_set_style_local_ptr(
             m_obj, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS), c);
       }
@@ -2807,14 +2807,14 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
             c);
       }
       if (mix.contains("text_sel_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["text_sel_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part,
             LV_STYLE_TEXT_SEL_COLOR | (state << LV_STYLE_STATE_POS), c);
       }
       if (mix.contains("text_sel_bg_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["text_sel_bg_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part,
@@ -2830,7 +2830,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Line")) {
       QJsonObject mix = style["Line"].toObject();
       if (mix.contains("line_color")) {
-        auto c = lvgl->fromColor(
+        auto c = lvgl.fromColor(
             QColor(QString("#%1").arg(mix["line_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_LINE_COLOR | (state << LV_STYLE_STATE_POS),
@@ -2875,7 +2875,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Image")) {
       QJsonObject mix = style["Image"].toObject();
       if (mix.contains("image_recolor")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["image_recolor"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part, LV_STYLE_IMAGE_RECOLOR | (state << LV_STYLE_STATE_POS),
@@ -2953,14 +2953,14 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Scale")) {
       QJsonObject mix = style["Scale"].toObject();
       if (mix.contains("scale_grad_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["scale_grad_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part,
             LV_STYLE_SCALE_GRAD_COLOR | (state << LV_STYLE_STATE_POS), c);
       }
       if (mix.contains("scale_end_color")) {
-        auto c = lvgl->fromColor(QColor(
+        auto c = lvgl.fromColor(QColor(
             QString("#%1").arg(mix["scale_end_color"].toString().mid(2, 7))));
         _lv_obj_set_style_local_color(
             m_obj, part,
@@ -3045,7 +3045,7 @@ bool LVGLObject::isAccessible() const { return m_accessible; }
 void LVGLObject::setAccessible(bool accessible) { m_accessible = accessible; }
 
 bool LVGLObject::doesNameExists() const {
-  for (LVGLObject *o : lvgl->allObjects()) {
+  for (LVGLObject *o : lvgl.allObjects()) {
     if (o == this) continue;
     if (o->name() == m_name) return true;
   }
@@ -3053,7 +3053,7 @@ bool LVGLObject::doesNameExists() const {
 }
 
 bool LVGLObject::doesNameExists(const QString &name, LVGLObject *except) {
-  for (LVGLObject *o : lvgl->allObjects()) {
+  for (LVGLObject *o : lvgl.allObjects()) {
     if (except && (except == o)) continue;
     if (o->name() == name) return true;
   }
@@ -3065,7 +3065,7 @@ void LVGLObject::generateName() {
   QList<int> numbers;
   const QString prefix = m_widgetClass->name().toLower().replace(' ', '_');
 
-  for (LVGLObject *o : lvgl->allObjects()) {
+  for (LVGLObject *o : lvgl.allObjects()) {
     if (o->widgetType() == m_widgetClass->type() &&
         o->name().startsWith(prefix)) {
       const int index = o->name().lastIndexOf('_');
@@ -3097,18 +3097,18 @@ void LVGLObject::generateName() {
 
 LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
   QString className = object["class"].toString();
-  const LVGLWidget *widgetClass = lvgl->widget(className);
+  const LVGLWidget *widgetClass = lvgl.widget(className);
   if (widgetClass) {
     LVGLObject *newObj;
     QString name = object["name"].toString();
     if (parent)
       newObj = new LVGLObject(widgetClass, name, parent);
     else
-      newObj = new LVGLObject(widgetClass, name, lvgl->getdispt()->act_scr);
+      newObj = new LVGLObject(widgetClass, name, lv_scr_act());
     // generate name if nessessary
     if (newObj->name().isEmpty() || doesNameExists(name, newObj))
       newObj->generateName();
-    lvgl->addObject(newObj);
+    lvgl.addObject(newObj);
 
     if (className == "lv_roller" || className == "lv_page") {
       if (object.contains("styles"))
@@ -3137,7 +3137,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
 
             // parse page props
             for (LVGLProperty *p :
-                 lvgl->widget("lv_page")->specialProperties()) {
+                 lvgl.widget("lv_page")->specialProperties()) {
               const QString pname = p->name().toLower();
               if (child.contains(pname)) {
                 QVariant v = child[pname].toVariant();
@@ -3180,7 +3180,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
 
             // parse page props
             for (LVGLProperty *p :
-                 lvgl->widget("lv_page")->specialProperties()) {
+                 lvgl.widget("lv_page")->specialProperties()) {
               const QString pname = p->name().toLower();
               if (child.contains(pname)) {
                 QVariant v = child[pname].toVariant();

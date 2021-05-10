@@ -148,8 +148,8 @@ LVGLButton::LVGLButton() {
                                        lv_btn_get_checkable);
   m_properties << new LVGLPropertyButtonLayout;
   m_properties << new LVGLPropertyButtonFit;
-  static AnyFuncColType arr[1] = {e_QComboBox};
-  m_properties << new LVGLPropertyButtonGo(arr, 1);
+  // static AnyFuncColType arr[1] = {e_QComboBox};
+  // m_properties << new LVGLPropertyButtonGo(arr, 1);
 
   m_editableStyles << LVGL::Button;  // LV_BTN_PART_MAIN
 }

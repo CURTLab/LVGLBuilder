@@ -166,7 +166,7 @@ lv_obj_t *LVGLBar::newObject(lv_obj_t *parent) const {
   _lv_obj_set_style_local_color(
       obj, LV_BAR_PART_BG,
       (LV_STATE_DEFAULT << LV_STYLE_STATE_POS) | LV_STYLE_BG_COLOR,
-      lvgl->fromColor(QColor("#c6c6c6")));
+      lvgl.fromColor(QColor("#c6c6c6")));
   return obj;
 }
 
@@ -207,7 +207,7 @@ void LVGLBar::initStateStyles() {
     lv_style_init(pr);
     lv_style_init(di);
     lv_style_set_bg_color(de, LV_STATE_DEFAULT,
-                          lvgl->fromColor(QColor("#c6c6c6")));
+                          lvgl.fromColor(QColor("#c6c6c6")));
     QList<lv_style_t *> stateStyles;
     stateStyles << de << ch << fo << ed << ho << pr << di;
     m_partsStyles[i] = stateStyles;

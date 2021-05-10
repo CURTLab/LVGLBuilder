@@ -18,6 +18,7 @@ class LVGLNewDialog : public QDialog {
 
   QString selectName() const;
   QSize selectedResolution() const;
+  void setoptenable(bool able);
 
  public slots:
   virtual void accept() override;

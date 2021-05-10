@@ -54,13 +54,41 @@ class LVGLPropertyMsgBoxButtons : public LVGLPropertyAnyFunc {
   LVGLMessageBox *m_msgb;
 };
 
+class LVGLPropertyMsgContent : public LVGLPropertyStringPlus {
+ public:
+  QString name() const { return "Content"; }
+
+  QStringList function(LVGLObject *obj) const {
+    QString tmp = get(obj);
+    QStringList list;
+    if (!tmp.isEmpty()) {
+      QString str;
+      for (auto c : tmp) {
+        if (c != '\n')
+          str += c;
+        else
+          str += "\\n";
+      }
+      list << QString("lv_msgbox_set_text(%1,\"%2\");")
+                  .arg(obj->codeName())
+                  .arg(str);
+    }
+    return list;
+  }
+
+ protected:
+  QString get(LVGLObject *obj) const { return lv_msgbox_get_text(obj->obj()); }
+  void set(LVGLObject *obj, QString string) {
+    lv_msgbox_set_text(obj->obj(), qUtf8Printable(string));
+  }
+};
+
 LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
   initStateStyles();
   m_parts << LV_MSGBOX_PART_BG << LV_MSGBOX_PART_BTN_BG << LV_MSGBOX_PART_BTN;
 
   // m_properties << new LVGLPropertyMBoxButtons;
-  m_properties << new LVGLPropertyString(
-      "Text", "lv_msgbox_set_text", lv_msgbox_set_text, lv_msgbox_get_text);
+  m_properties << new LVGLPropertyMsgContent;
   m_properties << new LVGLPropertyValUInt16(
       0, UINT16_MAX, "Animation time", "lv_msgbox_set_anim_time",
       lv_msgbox_set_anim_time, lv_msgbox_get_anim_time);

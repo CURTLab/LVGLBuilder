@@ -372,7 +372,7 @@ QVariant LVGLStyle::get(const LVGLStyleItem* item) const {
   } else if (item->type() == Color) {
     lv_color_t c = _lv_obj_get_style_color(
         m_curobj, m_part, (m_state << LV_STYLE_STATE_POS) | type);
-    return lvgl->toColor(c);
+    return lvgl.toColor(c);
   } else if (item->type() == BorderPart) {
     lv_border_side_t c = _lv_obj_get_style_int(
         m_curobj, m_part, (m_state << LV_STYLE_STATE_POS) | type);
@@ -392,17 +392,17 @@ QVariant LVGLStyle::get(const LVGLStyleItem* item) const {
   } else if (item->type() == Font) {
     const lv_font_t* c = (lv_font_t*)_lv_obj_get_style_ptr(
         m_curobj, m_part, (m_state << LV_STYLE_STATE_POS) | type);
-    const int index = lvgl->indexOfFont(c);
+    const int index = lvgl.indexOfFont(c);
     if (index == -1) {
-      const void* f = (void*)lvgl->font("Chinese 16");
+      const void* f = (void*)lvgl.font("Chinese 16");
       _lv_obj_set_style_local_ptr(m_curobj, m_part,
                                   (m_state << LV_STYLE_STATE_POS) | type, f);
       c = (lv_font_t*)_lv_obj_get_style_ptr(
           m_curobj, m_part, (m_state << LV_STYLE_STATE_POS) | type);
-      const int index2 = lvgl->indexOfFont(c);
-      return lvgl->fontNames().at(index2);
+      const int index2 = lvgl.indexOfFont(c);
+      return lvgl.fontNames().at(index2);
     } else
-      return lvgl->fontNames().at(index);
+      return lvgl.fontNames().at(index);
   } else if (item->type() == BoolType) {
     bool b = _lv_obj_get_style_int(m_curobj, m_part,
                                    (m_state << LV_STYLE_STATE_POS) | type);
@@ -468,11 +468,11 @@ void LVGLStyle::set(const LVGLStyleItem* item, QVariant value) {
     _lv_obj_set_style_local_opa(m_curobj, m_part,
                                 type | (m_state << LV_STYLE_STATE_POS), c);
   } else if (item->type() == Color) {
-    lv_color_t c = lvgl->fromColor(value);
+    lv_color_t c = lvgl.fromColor(value);
     _lv_obj_set_style_local_color(m_curobj, m_part,
                                   type | (m_state << LV_STYLE_STATE_POS), c);
   } else if (item->type() == Font) {
-    const lv_font_t* font = lvgl->font(value.toString());
+    const lv_font_t* font = lvgl.font(value.toString());
     _lv_obj_set_style_local_ptr(m_curobj, m_part,
                                 type | (m_state << LV_STYLE_STATE_POS), font);
   } else if (item->type() == BorderPart) {

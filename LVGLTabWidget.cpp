@@ -14,6 +14,12 @@ void LVGLTabWidget::setSimulator(LVGLSimulator *sim) {
   glayout->addWidget(sim, 0, 0, 1, 1);
 }
 
+void LVGLTabWidget::removeAll() {
+  removeAllObjects();
+  removeAllImages();
+  // qDeleteAll(m_fonts);
+}
+
 void LVGLTabWidget::removeObject(LVGLObject *object) {
   auto childs = object->childs();
   while (!childs.isEmpty()) {
@@ -33,3 +39,5 @@ void LVGLTabWidget::removeAllObjects() {
     objs = m_objects;
   }
 }
+
+void LVGLTabWidget::removeAllImages() { qDeleteAll(m_images); }

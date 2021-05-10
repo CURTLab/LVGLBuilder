@@ -18,7 +18,6 @@ class LVGLWidgetModelDisplay;
 class LVGLWidgetModelInput;
 class LVGLKeyPressEventFilter;
 class LVGLCore;
-class TabWidget;
 class ListDelegate;
 class LVGLWidget;
 class QUndoGroup;
@@ -127,14 +126,12 @@ class MainWindow : public QMainWindow {
   int m_curTabWIndex;
   bool m_frun;
 
-  QList<TabWidget *> m_listTabW;
-  QMap<LVGLCore *, QSize> m_coreRes;
   QMap<int, lv_obj_t *> m_codemap;
   QHash<QString, const LVGLWidget *> m_widgets;
   QHash<QString, const LVGLWidget *> m_widgetsDisplayW;
   QHash<QString, const LVGLWidget *> m_widgetsInputW;
   bool m_isrun;
-  QList<QWidget *> m_needdelete;
   QUndoGroup *m_undoGroup;
+  int m_lastindex;
 };
 #endif  // MAINWINDOW_H

@@ -107,7 +107,7 @@ class LVGLPropertyImgSource : public LVGLPropertyImage {
   inline QString name() const override { return "Source"; }
 
   QStringList function(LVGLObject *obj) const override {
-    LVGLImageData *img = lvgl->imageByDesc(get(obj));
+    LVGLImageData *img = lvgl.imageByDesc(get(obj));
     if (img == nullptr) return QStringList();
     return QStringList() << QString("lv_img_set_src(%1, &%2);")
                                 .arg(obj->codeName())

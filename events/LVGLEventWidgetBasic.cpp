@@ -5,22 +5,14 @@
 #include "LVGLCore.h"
 #include "LVGLSimulator.h"
 
-LVGLEventWidgetBasic::LVGLEventWidgetBasic() {
-  auto objs = lvgl->allObjects();
+LVGLEventWidgetBasic::LVGLEventWidgetBasic() {}
 
-  for (auto o : objs) m_objName << o->name();
+void LVGLEventWidgetBasic::eventRun(lv_obj_t *obj) {}
 
-  m_propertyList << "X"
-                 << "Y"
-                 << "Width"
-                 << "Height"
-                 << "Clickable"
-                 << "Hidden"
-                 << "Disabled"
-                 << "Dragable";
-  m_valueList << QObject::tr("On") << QObject::tr("Off");
+QStringList LVGLEventWidgetBasic::objCode(const QString& objName) {
+  return QStringList();
 }
 
-LVGLEvent::WIDGETTYPE LVGLEventWidgetBasic::whichwidget() {
-  return LVGLEvent::e_LINEEDIT;
-}
+QString LVGLEventWidgetBasic::eventHeadCode() { return QString(); }
+
+QStringList LVGLEventWidgetBasic::eventCode() { return QStringList(); }

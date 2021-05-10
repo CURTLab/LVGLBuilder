@@ -60,7 +60,7 @@ QWidget *LVGLPropertyPointsDelegate::createEditor(
   Q_UNUSED(option)
   if (index.isValid()) {
     QSpinBox *widget = new QSpinBox(parent);
-    widget->setRange(0, index.column() == 0 ? lvgl->width() : lvgl->height());
+    widget->setRange(0, index.column() == 0 ? lvgl.width() : lvgl.height());
     return widget;
   }
   return nullptr;

@@ -44,7 +44,7 @@ class LVGLPropertySeriesDelegate : public QStyledItemDelegate {
     Q_UNUSED(option)
     if (index.isValid()) {
       QSpinBox *widget = new QSpinBox(parent);
-      widget->setRange(0, std::min(lvgl->width(), lvgl->height()));
+      widget->setRange(0, std::min(lvgl.width(), lvgl.height()));
       return widget;
     }
     return nullptr;
@@ -207,7 +207,7 @@ void LVGLPropertySeries::updateEditor(LVGLObject *obj) {
                            _lv_ll_get_prev(&ext->series_ll, ser)),
       ++i) {
     LVGLChartSeries series;
-    series.color = lvgl->toColor(ser->color);
+    series.color = lvgl.toColor(ser->color);
     const uint16_t ctx = ser->start_point == 0 ? lv_chart_get_point_cnt(chart)
                                                : ser->start_point;
     for (uint16_t j = 0; j < ctx; ++j) series.points << ser->points[j];
@@ -242,7 +242,7 @@ void LVGLPropertySeries::updateWidget(LVGLObject *obj) {
   lv_chart_set_point_count(chart, static_cast<uint16_t>(maxPoints));
   for (const auto &s : m_widget->m_series) {
     lv_chart_series_t *ser =
-        lv_chart_add_series(chart, lvgl->fromColor(s.color));
+        lv_chart_add_series(chart, lvgl.fromColor(s.color));
     for (int i = 0; i < s.points.size(); ++i)
       lv_chart_set_next(chart, ser, s.points[i]);
   }
@@ -267,7 +267,7 @@ QStringList LVGLPropertySeries::function(LVGLObject *obj) const {
     const QString codeSerName =
         QString("ser_%1_%2").arg(obj->codeName()).arg(i);
     const QString color =
-        QVariant(lvgl->toColor(ser->color)).toString().replace("#", "0x");
+        QVariant(lvgl.toColor(ser->color)).toString().replace("#", "0x");
     ret << QString(
                "lv_chart_series_t * %1 = lv_chart_add_series(%2, "
                "lv_color_hex(%3));")
@@ -305,7 +305,7 @@ QJsonValue LVGLPropertySeries::toJson(LVGLObject *obj) const {
                                                : ser->start_point;
     for (uint16_t j = 0; j < ctx; ++j) values.append(ser->points[j]);
     QJsonObject series(
-        {{"color", lvgl->colorToJson(ser->color)}, {"values", values}});
+        {{"color", lvgl.colorToJson(ser->color)}, {"values", values}});
     ret.append(series);
   }
   return ret;
@@ -323,7 +323,7 @@ void LVGLPropertySeries::setValue(LVGLObject *obj, QVariant value) {
       QVariantMap map = s.toMap();
       if (!map.contains("color") || !map.contains("values")) continue;
       LVGLChartSeries item;
-      item.ser = lv_chart_add_series(chart, lvgl->fromColor(map["color"]));
+      item.ser = lv_chart_add_series(chart, lvgl.fromColor(map["color"]));
       for (const QVariant &v : map["values"].toList()) {
         item.points << static_cast<lv_coord_t>(v.toInt());
 

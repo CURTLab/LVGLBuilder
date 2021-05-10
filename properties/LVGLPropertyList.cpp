@@ -28,8 +28,8 @@ class LVGLPropertyListDelegate : public QStyledItemDelegate {
     } else if (index.column() == 1) {
       QComboBox *editor = new QComboBox(parent);
       editor->addItem("None");
-      editor->addItems(lvgl->imageNames());
-      editor->addItems(lvgl->symbolNames());
+      editor->addItems(lvgl.imageNames());
+      editor->addItems(lvgl.symbolNames());
       return editor;
     }
 
@@ -113,7 +113,7 @@ void LVGLPropertyListDialog::setListItems(QList<LVGLListItem> items) {
     if (i.image_src != nullptr) {
       const lv_img_dsc_t *img =
           reinterpret_cast<const lv_img_dsc_t *>(i.image_src);
-      const LVGLImageData *img_data = lvgl->imageByDesc(img);
+      const LVGLImageData *img_data = lvgl.imageByDesc(img);
       if (img_data) img_name = img_data->name();
     }
     item->setText(1, img_name);
@@ -128,9 +128,9 @@ QList<LVGLListItem> LVGLPropertyListDialog::listItems() const {
     QTreeWidgetItem *item = m_list->topLevelItem(i);
     void *img_src = nullptr;
     if (item->text(1) != "None") {
-      img_src = lvgl->image(item->text(1));
+      img_src = lvgl.image(item->text(1));
       if (img_src == nullptr)
-        img_src = const_cast<char *>(lvgl->symbol(item->text(1)));
+        img_src = const_cast<char *>(lvgl.symbol(item->text(1)));
     }
     ret << LVGLListItem{item->text(0), img_src};
   }
@@ -181,7 +181,7 @@ void LVGLPropertyList::setValue(LVGLObject *obj, QVariant value) {
       QVariantMap m = v.toMap();
       void *img_src = nullptr;
       if (m["img"].toString() != "None")
-        img_src = lvgl->image(m["img"].toString());
+        img_src = lvgl.image(m["img"].toString());
       lv_list_add_btn(obj->obj(), img_src,
                       qUtf8Printable(m["name"].toString()));
     }
@@ -209,7 +209,7 @@ QJsonValue LVGLPropertyList::toJson(LVGLObject *obj) const {
       if (img_src != nullptr) {
         const lv_img_dsc_t *img =
             reinterpret_cast<const lv_img_dsc_t *>(img_src);
-        const LVGLImageData *img_data = lvgl->imageByDesc(img);
+        const LVGLImageData *img_data = lvgl.imageByDesc(img);
         if (img_data) img_name = img_data->name();
       }
     }
@@ -232,7 +232,7 @@ QStringList LVGLPropertyList::function(LVGLObject *obj) const {
       if (img_src != nullptr) {
         const lv_img_dsc_t *img =
             reinterpret_cast<const lv_img_dsc_t *>(img_src);
-        const LVGLImageData *img_data = lvgl->imageByDesc(img);
+        const LVGLImageData *img_data = lvgl.imageByDesc(img);
         if (img_data) img_name = "&" + img_data->codeName();
       }
     }

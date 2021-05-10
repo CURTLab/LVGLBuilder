@@ -3,9 +3,12 @@
 #include <QComboBox>
 #include <QSet>
 
+#include "lvgl/lvgl.h"
+
 class MainWindow;
 class LVGLObject;
 class LVGLSimulator;
+class LVGLEvent;
 
 class LVGLHelper {
  public:
@@ -26,7 +29,7 @@ class LVGLHelper {
   bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
   QSet<QString>& getSaveFontName() { return m_saveFontN; }
   LVGLSimulator* getcursim();
-
+  QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void reduceFileindex() { --m_filecount; }
@@ -39,5 +42,6 @@ class LVGLHelper {
   QStringList pagelist;
   QMap<LVGLObject*, int> m_btnGoPage;
   QSet<QString> m_saveFontN;
+  QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
 };
 #endif

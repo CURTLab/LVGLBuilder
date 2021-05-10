@@ -90,12 +90,12 @@ void LVGLPropertyEnum::updateWidget(LVGLObject *obj) {
 
 LVGLPropertyCoord::LVGLPropertyCoord(LVGLProperty *parent)
     : LVGLPropertyType(parent),
-      m_max(std::min(lvgl->width(), lvgl->height())) {}
+      m_max(std::min(lvgl.width(), lvgl.height())) {}
 
 LVGLPropertyCoord::LVGLPropertyCoord(Qt::Orientation orientation,
                                      LVGLProperty *parent)
     : LVGLPropertyType(parent),
-      m_max(orientation == Qt::Horizontal ? lvgl->width() : lvgl->height()) {}
+      m_max(orientation == Qt::Horizontal ? lvgl.width() : lvgl.height()) {}
 
 QWidget *LVGLPropertyCoord::editor(QWidget *parent) {
   m_widget = new QSpinBox(parent);
@@ -141,29 +141,29 @@ LVGLPropertyFont::LVGLPropertyFont(LVGLProperty *parent)
     : LVGLProperty(parent) {}
 
 QVariant LVGLPropertyFont::value(LVGLObject *obj) const {
-  const int index = lvgl->indexOfFont(get(obj));
-  return lvgl->fontNames().at(index);
+  const int index = lvgl.indexOfFont(get(obj));
+  return lvgl.fontNames().at(index);
 }
 
 void LVGLPropertyFont::setValue(LVGLObject *obj, QVariant value) {
-  const int index = lvgl->fontNames().indexOf(value.toString());
-  set(obj, lvgl->font(index));
+  const int index = lvgl.fontNames().indexOf(value.toString());
+  set(obj, lvgl.font(index));
 }
 
 bool LVGLPropertyFont::hasEditor() const { return true; }
 
 QWidget *LVGLPropertyFont::editor(QWidget *parent) {
   m_widget = new QComboBox(parent);
-  m_widget->addItems(lvgl->fontNames());
+  m_widget->addItems(lvgl.fontNames());
   return m_widget;
 }
 
 void LVGLPropertyFont::updateEditor(LVGLObject *obj) {
-  m_widget->setCurrentIndex(lvgl->indexOfFont(get(obj)));
+  m_widget->setCurrentIndex(lvgl.indexOfFont(get(obj)));
 }
 
 void LVGLPropertyFont::updateWidget(LVGLObject *obj) {
-  set(obj, lvgl->font(m_widget->currentIndex()));
+  set(obj, lvgl.font(m_widget->currentIndex()));
 }
 
 template <class T>

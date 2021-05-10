@@ -16,13 +16,13 @@
 
 #include "EventsListWIdget.h"
 
-LVGLPropertyEvent::LVGLPropertyEvent(LVGLProperty *parent)
-    : LVGLProperty(parent) {}
+LVGLPropertyEvent::LVGLPropertyEvent(LVGLWidget *w, LVGLProperty *parent)
+    : LVGLProperty(parent), m_w(w) {}
 
 bool LVGLPropertyEvent::hasEditor() const { return true; }
 
 QWidget *LVGLPropertyEvent::editor(QWidget *parent) {
-  m_widget = new EventsListWIdget(parent);
+  m_widget = new EventsListWIdget(m_w, parent);
 
   return m_widget;
 }
@@ -33,8 +33,7 @@ void LVGLPropertyEvent::updateEditor(LVGLObject *obj) {
 }
 
 void LVGLPropertyEvent::updateWidget(LVGLObject *obj) {
-  //  if (m_widget->result() == QDialog::Accepted) set(obj,
-  //  m_widget->textList());
+  if (m_widget->result() == QDialog::Accepted) set(obj, m_widget->textList());
 }
 
 QVariant LVGLPropertyEvent::value(LVGLObject *obj) const {

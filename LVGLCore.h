@@ -42,8 +42,6 @@ class LVGLCore : public QObject {
   int height() const;
   QSize size() const;
 
-  lv_disp_t *getdispt() const { return m_dispt; }
-
   LVGLImageData *addImage(QImage image, QString name);
   LVGLImageData *addImage(QString fileName, QString name = QString());
   void addImage(LVGLImageData *image);
@@ -72,6 +70,9 @@ class LVGLCore : public QObject {
   void removeAllObjects();
 
   QList<LVGLObject *> allObjects() const;
+  QHash<QString, LVGLImageData *> allImages() const;
+  QList<LVGLFontData *> allFonts() const;
+
   QList<LVGLObject *> topLevelObjects() const;
   QList<LVGLObject *> objectsByType(QString className) const;
   LVGLObject *object(QString name) const;
@@ -111,6 +112,11 @@ class LVGLCore : public QObject {
   static const lv_state_t LVGL_STATE[7];
   static const char *LVGL_STATE_STR[7];
 
+  void objsclear();
+  void setAllObjects(QList<LVGLObject *> objs);
+  void setAllImages(QHash<QString, LVGLImageData *> imgs);
+  void setAllFonts(QList<LVGLFontData *> fonts);
+
  private slots:
   void tick();
 
@@ -142,7 +148,6 @@ class LVGLCore : public QObject {
   std::vector<lv_color_t> m_buf2;
   lv_disp_buf_t m_dispBuf;
   lv_disp_drv_t m_dispDrv;
-  lv_disp_t *m_dispt;
 
   lv_indev_data_t m_inputData;
 
@@ -150,7 +155,7 @@ class LVGLCore : public QObject {
   friend class LVGLFontData;
 };
 
-extern LVGLCore *lvgl;
+extern LVGLCore lvgl;
 
 // cast helpers for internal models
 union LVGLImageDataCast {

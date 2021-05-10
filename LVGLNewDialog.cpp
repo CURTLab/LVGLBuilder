@@ -108,6 +108,12 @@ QSize LVGLNewDialog::selectedResolution() const {
   return QSize(w, h);
 }
 
+void LVGLNewDialog::setoptenable(bool able) {
+  m_ui->spin_height->setEnabled(able);
+  m_ui->spin_width->setEnabled(able);
+  m_ui->combo_resolution->setEnabled(able);
+}
+
 void LVGLNewDialog::accept() {
   if (m_ui->lineEdit->text().isEmpty()) {
     QMessageBox::warning(this, tr("Error"), tr("Project name is empty!"));

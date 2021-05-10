@@ -13,7 +13,7 @@
 #include "MainWindow.h"
 #include "widgets/LVGLWidgets.h"
 
-LVGLCore *lvgl(nullptr);
+LVGLCore lvgl(nullptr);
 
 const char *LVGLCore::DEFAULT_DAYS[7] = {"Su", "Mo", "Tu", "We",
                                          "Th", "Fr", "Sa"};
@@ -30,14 +30,14 @@ const char *LVGLCore::LVGL_STATE_STR[7] = {
     "LV_STATE_EDITED",  "LV_STATE_HOVERED", "LV_STATE_PRESSED",
     "LV_STATE_DISABLED"};
 
-LVGLCore::LVGLCore(QObject *parent)
-    : QObject(parent), m_defaultFont(nullptr), m_dispt(nullptr) {
+LVGLCore::LVGLCore(QObject *parent) : QObject(parent), m_defaultFont(nullptr) {
   FT_Init_FreeType(&m_ft);
 }
 
 LVGLCore::~LVGLCore() {
   FT_Done_FreeType(m_ft);
-
+  removeAllObjects();
+  removeAllImages();
   qDeleteAll(m_images);
   qDeleteAll(m_fonts);
 }
@@ -58,8 +58,7 @@ void LVGLCore::init(int width, int height) {
   m_dispDrv.user_data = this;
   m_dispDrv.flush_cb = flushCb;
   m_dispDrv.buffer = &m_dispBuf;
-  m_dispt = lv_disp_drv_register(&m_dispDrv);
-  lv_set_cur_disp(m_dispt);
+  lv_disp_drv_register(&m_dispDrv);
 
   // to be sure that there is no button press at the start
   m_inputData.state = LV_INDEV_STATE_REL;
@@ -70,9 +69,6 @@ void LVGLCore::init(int width, int height) {
   indev_drv.read_cb = inputCb;
   indev_drv.user_data = this;
   lv_indev_drv_register(&indev_drv);
-
-  QImage pix(":/images/littlevgl_logo.png");
-  m_default = lvgl->addImage(pix, "default");
 
   initfont();
 
@@ -503,15 +499,15 @@ bool LVGLCore::changeResolution(QSize size) {
 
   m_dispDrv.hor_res = static_cast<lv_coord_t>(size.width());
   m_dispDrv.ver_res = static_cast<lv_coord_t>(size.height());
-  lv_disp_drv_update(m_dispt, &m_dispDrv);
+  lv_disp_drv_update(lv_disp_get_default(), &m_dispDrv);
 
   return false;
 }
 
 QPixmap LVGLCore::framebuffer() const {
-  auto width = lv_disp_get_hor_res(m_dispt);
-  auto height = lv_disp_get_ver_res(m_dispt);
-  ;
+  auto disp = lv_disp_get_default();
+  auto width = lv_disp_get_hor_res(disp);
+  auto height = lv_disp_get_ver_res(disp);
 
   QImage img(width, height, QImage::Format_ARGB32);
   memcpy(img.bits(), m_dispFrameBuf.data(),
@@ -520,7 +516,8 @@ QPixmap LVGLCore::framebuffer() const {
 }
 
 QPixmap LVGLCore::grab(const QRect &region) const {
-  const auto stride = lv_disp_get_hor_res(m_dispt);
+  auto disp = lv_disp_get_default();
+  const auto stride = lv_disp_get_hor_res(disp);
 
   QImage img(region.width(), region.height(), QImage::Format_ARGB32);
   for (auto y = 0; y < region.height(); ++y)
@@ -536,12 +533,17 @@ QPixmap LVGLCore::grab(const QRect &region) const {
   return pix;
 }
 
-int LVGLCore::width() const { return lv_disp_get_hor_res(m_dispt); }
+int LVGLCore::width() const {
+  return lv_disp_get_hor_res(lv_disp_get_default());
+}
 
-int LVGLCore::height() const { return lv_disp_get_ver_res(m_dispt); }
+int LVGLCore::height() const {
+  return lv_disp_get_ver_res(lv_disp_get_default());
+}
 
 QSize LVGLCore::size() const {
-  return QSize(lv_disp_get_hor_res(m_dispt), lv_disp_get_ver_res(m_dispt));
+  return QSize(lv_disp_get_hor_res(lv_disp_get_default()),
+               lv_disp_get_ver_res(lv_disp_get_default()));
 }
 
 LVGLImageData *LVGLCore::addImage(QImage image, QString name) {
@@ -826,12 +828,12 @@ void LVGLCore::sendMouseEvent(int x, int y, bool pressed) {
 }
 
 QPoint LVGLCore::get_absolute_position(const lv_obj_t *obj) const {
-  if (obj == getdispt()->act_scr) return QPoint(0, 0);
+  if (obj == lv_scr_act()) return QPoint(0, 0);
   int x = lv_obj_get_x(obj);
   int y = lv_obj_get_y(obj);
   lv_obj_t *parent = lv_obj_get_parent(obj);
   while (parent) {
-    if (parent == getdispt()->act_scr) break;
+    if (parent == lv_scr_act()) break;
     x += lv_obj_get_x(parent);
     y += lv_obj_get_y(parent);
     parent = lv_obj_get_parent(parent);
@@ -870,6 +872,10 @@ void LVGLCore::removeAllObjects() {
 }
 
 QList<LVGLObject *> LVGLCore::allObjects() const { return m_objects; }
+
+QHash<QString, LVGLImageData *> LVGLCore::allImages() const { return m_images; }
+
+QList<LVGLFontData *> LVGLCore::allFonts() const { return m_fonts; }
 
 QList<LVGLObject *> LVGLCore::topLevelObjects() const {
   QList<LVGLObject *> ret;
@@ -1046,21 +1052,19 @@ void LVGLCore::removeCustomFonts() {
 }
 
 void LVGLCore::setScreenColor(QColor color) {
-  _lv_obj_set_style_local_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR,
+  _lv_obj_set_style_local_color(lv_scr_act(), 0, LV_STYLE_BG_COLOR,
                                 fromColor(color));
-  _lv_obj_set_style_local_color(getdispt()->act_scr, 0, LV_STYLE_BG_GRAD_COLOR,
+  _lv_obj_set_style_local_color(lv_scr_act(), 0, LV_STYLE_BG_GRAD_COLOR,
                                 fromColor(color));
 }
 
 QColor LVGLCore::screenColor() const {
-  lv_color_t res =
-      _lv_obj_get_style_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR);
+  lv_color_t res = _lv_obj_get_style_color(lv_scr_act(), 0, LV_STYLE_BG_COLOR);
   return toColor(res);
 }
 
 bool LVGLCore::screenColorChanged() const {
-  lv_color_t res =
-      _lv_obj_get_style_color(getdispt()->act_scr, 0, LV_STYLE_BG_COLOR);
+  lv_color_t res = _lv_obj_get_style_color(lv_scr_act(), 0, LV_STYLE_BG_COLOR);
   QColor c = toColor(res);
   if (0xff == c.red() && 0xff == c.blue() && 0xff == c.green()) return false;
   return true;
@@ -1147,6 +1151,17 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
     return new LVGLWindow;
   return nullptr;
 }
+
+void LVGLCore::objsclear() { m_objects.clear(); }
+
+void LVGLCore::setAllObjects(QList<LVGLObject *> objs) { m_objects = objs; }
+
+void LVGLCore::setAllImages(QHash<QString, LVGLImageData *> imgs) {
+  m_images = imgs;
+}
+
+void LVGLCore::setAllFonts(QList<LVGLFontData *> fonts) { m_fonts = fonts; }
+
 void LVGLCore::tick() {
   lv_task_handler();
   lv_tick_inc(10);

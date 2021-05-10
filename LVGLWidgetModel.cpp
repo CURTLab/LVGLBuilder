@@ -11,11 +11,11 @@ LVGLWidgetModel::LVGLWidgetModel(QObject *parent)
 
 int LVGLWidgetModel::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent)
-  return lvgl->widgets().size();
+  return lvgl.widgets().size();
 }
 
 QVariant LVGLWidgetModel::data(const QModelIndex &index, int role) const {
-  if (role == Qt::DisplayRole) return lvgl->widgets().at(index.row())->name();
+  if (role == Qt::DisplayRole) return lvgl.widgets().at(index.row())->name();
   return QVariant();
 }
 
@@ -39,7 +39,7 @@ QMimeData *LVGLWidgetModel::mimeData(const QModelIndexList &indexes) const {
   QDataStream stream(&encodedData, QIODevice::WriteOnly);
   for (const QModelIndex &index : indexes) {
     if (index.isValid() && index.column() == 0) {
-      cast.ptr = const_cast<LVGLWidget *>(lvgl->widgets().at(index.row()));
+      cast.ptr = const_cast<LVGLWidget *>(lvgl.widgets().at(index.row()));
       stream << cast.i;
     }
   }

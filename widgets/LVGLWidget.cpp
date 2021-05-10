@@ -1,9 +1,36 @@
 #include "LVGLWidget.h"
 
+#include "LVGLHelper.h"
 #include "LVGLObject.h"
+#include "LVGLTabWidget.h"
+#include "MainWindow.h"
+#include "events/LVGLEventScreen.h"
+#include "events/LVGLEventWidgts.h"
 #include "events/LVGLPropertyEvent.h"
 #include "lvgl/lvgl.h"
 #include "properties/LVGLPropertyGeometry.h"
+
+static void obj_events(lv_obj_t *obj, lv_event_t event) {
+  QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists =
+      LVGLHelper::getInstance().getObjEvents();
+  if (event == LV_EVENT_PRESSED) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Pressed") e->eventRun(obj);
+      }
+    }
+  } else if (event == LV_EVENT_CLICKED) {
+  } else if (event == LV_EVENT_LONG_PRESSED) {
+  } else if (event == LV_EVENT_VALUE_CHANGED) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Value_Changed") e->eventRun(obj);
+      }
+    }
+  }
+}
 
 class LVGLPropertyName : public LVGLPropertyString {
  public:
@@ -41,14 +68,116 @@ class LVGLPropertyLocked : public LVGLPropertyBool {
   }
 };
 
+static LVGLEvent *getWidgetEvent(QString name) {
+  LVGLEvent *ev = nullptr;
+  if (name == "Basic") {
+    ev = new LVGLEventWidgetBasic;
+  } else if (name == "Arc") {
+    ev = new LVGLEventArc;
+  } else if (name == "Bar") {
+    ev = new LVGLEventBar;
+  } else if (name == "Button") {
+    ev = new LVGLEventButton;
+  } else if (name == "CheckBox") {
+    ev = new LVGLEventCheckBox;
+  } else if (name == "DropDownList") {
+    ev = new LVGLEventDDList;
+  } else if (name == "Image") {
+    ev = new LVGLEventImage;
+  } else if (name == "Image Button") {
+    ev = new LVGLEventImageButton;
+  } else if (name == "Label") {
+    ev = new LVGLEventLabel;
+  } else if (name == "Led") {
+    ev = new LVGLEventLed;
+  } else if (name == "Line") {
+    ev = new LVGLEventLine;
+  } else if (name == "Roller") {
+    ev = new LVGLEventRoller;
+  } else if (name == "Slider") {
+    ev = new LVGLEventSlider;
+  } else if (name == "Spinbox") {
+    ev = new LVGLEventSpinbox;
+  } else if (name == "Switch") {
+    ev = new LVGLEventSwitch;
+  } else if (name == "TextArea") {
+    ev = new LVGLEventTextArea;
+  }
+  return ev;
+}
+
 class LVGLPropertySetEvent : public LVGLPropertyEvent {
  public:
-  inline LVGLPropertySetEvent() : LVGLPropertyEvent() {}
+  inline LVGLPropertySetEvent(LVGLWidget *w)
+      : LVGLPropertyEvent(w), m_firstRun(true) {}
   inline QString name() const override { return "Set Event"; }
 
  protected:
-  inline QStringList get(LVGLObject *obj) const { return QStringList(); }
-  inline void set(LVGLObject *obj, QStringList list) override {}
+  inline QStringList get(LVGLObject *obj) const override {
+    Q_UNUSED(obj)
+    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+    return QStringList();
+  }
+  inline void set(LVGLObject *obj, QStringList list) override {
+    m_list = list;
+    QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists =
+        LVGLHelper::getInstance().getObjEvents();
+    if (objevlists.contains(obj->obj())) {
+      QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+      qDeleteAll(listev);
+      objevlists.clear();
+    }
+
+    for (int i = 0; i < m_list.size(); ++i) {
+      QStringList strlist = m_list.at(i).split('#');
+      QString eventType = strlist[2];
+      if (m_firstRun) {
+        m_firstRun = false;
+        lv_obj_set_click(obj->obj(), true);
+        lv_obj_set_event_cb(obj->obj(), obj_events);
+      }
+      if (eventType == "Change Screen") {
+        if (objevlists.contains(obj->obj())) {
+          QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+          for (auto s : listev)
+            if (s->getResult().at(3) == strlist[3]) return;
+          LVGLEventScreen *screen = new LVGLEventScreen;
+          screen->setResule(strlist);
+          listev.push_back(screen);
+        } else {
+          QList<LVGLEvent *> listev;
+          LVGLEventScreen *screen = new LVGLEventScreen;
+          screen->setResule(strlist);
+          listev.push_back(screen);
+          objevlists[obj->obj()] = listev;
+        }
+      } else if (eventType == "Set Property") {
+        if (objevlists.contains(obj->obj())) {
+          QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+          // maybe need it
+          //          for (auto s : listev)
+          //            if (s->getResult().at(4) == strlist[4]) {
+          //              listev.removeOne(s);
+          //              delete s;
+          //              break;
+          //            }
+          LVGLEvent *ev = getWidgetEvent(strlist[3]);
+          ev->setResule(strlist);
+          listev.push_back(ev);
+        } else {
+          QList<LVGLEvent *> listev;
+          LVGLEvent *ev = getWidgetEvent(strlist[3]);
+          ev->setResule(strlist);
+          listev.push_back(ev);
+          objevlists[obj->obj()] = listev;
+        }
+      }
+    }
+  }
+
+ private:
+  QStringList m_list;
+  bool m_firstRun;
 };
 
 LVGLWidget::LVGLWidget() {
@@ -57,7 +186,7 @@ LVGLWidget::LVGLWidget() {
   m_properties << new LVGLPropertyAccessible;
   m_properties << new LVGLPropertyLocked;
   m_properties << m_geometryProp;
-  m_properties << new LVGLPropertySetEvent;
+  m_properties << new LVGLPropertySetEvent(this);
 }
 
 LVGLWidget::~LVGLWidget() {

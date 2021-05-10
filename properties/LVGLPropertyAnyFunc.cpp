@@ -289,7 +289,7 @@ QVariant LVGLPropertyAnyFunc::value(LVGLObject *obj) const {
 }
 
 void LVGLPropertyAnyFunc::setValue(LVGLObject *obj, QVariant value) {
-  if (value.type() == QVariant::List) {
+  if (value.type() == QVariant::List || value.type() == QVariant::StringList) {
     QVariantList list = value.toList();
     QStringList items;
     for (const QVariant &p : list) {

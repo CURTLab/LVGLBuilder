@@ -34,7 +34,7 @@ LVGLFontData *LVGLFontData::parse(const QString &fileName, uint8_t size,
                                   uint8_t bpp, uint32_t unicodeFirst,
                                   uint32_t unicodeLast) {
   FT_Face face;
-  int error = FT_New_Face(lvgl->m_ft, qUtf8Printable(fileName), 0, &face);
+  int error = FT_New_Face(lvgl.m_ft, qUtf8Printable(fileName), 0, &face);
   if (error == FT_Err_Unknown_File_Format) {
     qCritical() << "LVGLFontData: Unkown file format";
     return nullptr;

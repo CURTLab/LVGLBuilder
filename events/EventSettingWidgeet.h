@@ -2,7 +2,7 @@
 #define EVENTSETTINGWIDGEET_H
 
 #include <QDialog>
-class LVGLEvent;
+class LVGLEventType;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -14,7 +14,8 @@ class EventSettingWidgeet : public QDialog {
   Q_OBJECT
 
  public:
-  EventSettingWidgeet(LVGLEvent *event, int type, QWidget *parent = nullptr);
+  EventSettingWidgeet(LVGLEventType *event, int type,
+                      QWidget *parent = nullptr);
   ~EventSettingWidgeet();
 
   void setTextList(const QStringList &list);
@@ -29,7 +30,7 @@ class EventSettingWidgeet : public QDialog {
 
  private:
   Ui::EventSettingWidgeet *ui;
-  LVGLEvent *m_event;
+  LVGLEventType *m_event;
   bool m_iscomb;
   int m_type;
 };

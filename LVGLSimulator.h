@@ -5,6 +5,8 @@
 #include <QGraphicsView>
 #include <QTextStream>
 
+#include "lvgl/lvgl.h"
+
 class LVGLObject;
 class LVGLItem;
 class LVGLObjectModel;
@@ -23,8 +25,6 @@ class LVGLScene : public QGraphicsScene {
   LVGLObject *hoverObject() const;
   void setHoverObject(LVGLObject *hoverObject);
 
-  void setlvgl(LVGLCore *lvgl) { m_lvgl = lvgl; }
-
  public slots:
   void setSelected(LVGLObject *selected);
 
@@ -34,13 +34,12 @@ class LVGLScene : public QGraphicsScene {
  private:
   LVGLObject *m_selected;
   LVGLObject *m_hoverObject;
-  LVGLCore *m_lvgl;
 };
 
 class LVGLSimulator : public QGraphicsView {
   Q_OBJECT
  public:
-  explicit LVGLSimulator(LVGLCore *lvgl, QWidget *parent = nullptr);
+  explicit LVGLSimulator(QWidget *parent = nullptr);
   ~LVGLSimulator() override;
 
   LVGLObject *selectedObject() const;
@@ -52,6 +51,7 @@ class LVGLSimulator : public QGraphicsView {
   void removeObject(LVGLObject *obj);
   LVGLObject *findObject(const QString &objname);
 
+  void setobjParent(lv_obj_t *parent);
   void setObjectModel(LVGLObjectModel *objectModel);
   bool getMouseEnable() { return m_mouseEnabled; }
   void threadstop();
@@ -97,13 +97,13 @@ class LVGLSimulator : public QGraphicsView {
   bool m_mouseEnabled;
   LVGLItem *m_item;
   LVGLObjectModel *m_objectModel;
-  LVGLCore *m_lvgl;
   QUndoStack *m_undoStack;
   bool m_mousePressed;
   QString selectobjName;
   QRect selectobjRect;
   QThread *m_patintThread;
   LVGLPaintTimer *m_paintTime;
+  lv_obj_t *m_parent;
 };
 
 class LVGLKeyPressEventFilter : public QObject {

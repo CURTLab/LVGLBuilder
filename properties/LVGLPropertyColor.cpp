@@ -23,17 +23,17 @@ QWidget *LVGLPropertyColor::editor(QWidget *parent) {
 
 void LVGLPropertyColor::updateEditor(LVGLObject *obj) {
   lv_color_t c = get(obj);
-  m_widget->setCurrentColor(lvgl->toColor(c));
+  m_widget->setCurrentColor(lvgl.toColor(c));
 }
 
 void LVGLPropertyColor::updateWidget(LVGLObject *obj) {
   QColor c = m_widget->selectedColor();
-  set(obj, lvgl->fromColor(c));
+  set(obj, lvgl.fromColor(c));
 }
 
 QVariant LVGLPropertyColor::value(LVGLObject *obj) const {
   lv_color_t c = get(obj);
-  return QVariant::fromValue<QColor>(lvgl->toColor(c));
+  return QVariant::fromValue<QColor>(lvgl.toColor(c));
 }
 
 void LVGLPropertyColor::setValue(LVGLObject *obj, QVariant value) {

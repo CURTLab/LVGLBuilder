@@ -64,7 +64,7 @@ void LVGLItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawRect(m_cl);
     painter->drawRect(m_cr);
 
-    auto pic = lvgl->framebuffer().copy(m_object->absolutePosition().x(),
+    auto pic = lvgl.framebuffer().copy(m_object->absolutePosition().x(),
                                         m_object->absolutePosition().y(),
                                         m_object->width(), m_object->height());
 
@@ -85,11 +85,11 @@ QVariant LVGLItem::itemChange(QGraphicsItem::GraphicsItemChange change,
     QPoint offset(0, 0);
     lv_obj_t *parent = lv_obj_get_parent(m_object->obj());
     if (parent) {
-      offset = lvgl->get_absolute_position(parent);
+      offset = lvgl.get_absolute_position(parent);
       rect =
-          QRect(QPoint(0, 0), lvgl->get_object_size(parent) - m_object->size());
+          QRect(QPoint(0, 0), lvgl.get_object_size(parent) - m_object->size());
     } else {
-      rect = QRect(QPoint(0, 0), lvgl->size() - m_object->size());
+      rect = QRect(QPoint(0, 0), lvgl.size() - m_object->size());
     }
 
     newPos.setX(qBound(rect.left(), newPos.x() - offset.x(), rect.right()));
@@ -180,7 +180,7 @@ void LVGLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
     lv_obj_t *obj = m_object->obj();
     const QPointF &pos = event->pos();
     QRect bounds = (m_object->parent() ? m_object->parent()->geometry()
-                                       : QRect(QPoint(), lvgl->size()));
+                                       : QRect(QPoint(), lvgl.size()));
 
     if (m_direction.horizontal == ResizeDirections::Right) {
       const QPoint abs = m_object->absolutePosition();
@@ -188,7 +188,7 @@ void LVGLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
       const lv_coord_t newSize =
           static_cast<lv_coord_t>(m_start.width() + delta);
       const lv_coord_t maximumWidth =
-          static_cast<lv_coord_t>(lvgl->width() - abs.x());
+          static_cast<lv_coord_t>(lvgl.width() - abs.x());
       m_object->setWidth(qBound(m_minimumWidth, newSize, maximumWidth));
     } else if (m_direction.horizontal == ResizeDirections::Left) {
       int delta = pos.toPoint().x() - m_start.toRect().x();
@@ -211,7 +211,7 @@ void LVGLItem::mouseMoveEvent(QGraphicsSceneMouseEvent *event) {
       const lv_coord_t newSize =
           static_cast<lv_coord_t>(m_start.height() + delta);
       const lv_coord_t maximumWidth =
-          static_cast<lv_coord_t>(lvgl->height() - abs.y());
+          static_cast<lv_coord_t>(lvgl.height() - abs.y());
       m_object->setHeight(qBound(m_minimumHeight, newSize, maximumWidth));
     } else if (m_direction.vertical == ResizeDirections::Top) {
       int delta = pos.toPoint().y() - m_start.toRect().y();

@@ -11,13 +11,13 @@ LVGLWidgetModelDisplay::LVGLWidgetModelDisplay(QObject *parent)
 
 int LVGLWidgetModelDisplay::rowCount(const QModelIndex &parent) const {
   Q_UNUSED(parent)
-  return lvgl->widgetsDisplayW().size();
+  return lvgl.widgetsDisplayW().size();
 }
 
 QVariant LVGLWidgetModelDisplay::data(const QModelIndex &index,
                                       int role) const {
   if (role == Qt::DisplayRole)
-    return lvgl->widgetsDisplayW().at(index.row())->name();
+    return lvgl.widgetsDisplayW().at(index.row())->name();
   return QVariant();
 }
 
@@ -43,7 +43,7 @@ QMimeData *LVGLWidgetModelDisplay::mimeData(
   for (const QModelIndex &index : indexes) {
     if (index.isValid() && index.column() == 0) {
       cast.ptr =
-          const_cast<LVGLWidget *>(lvgl->widgetsDisplayW().at(index.row()));
+          const_cast<LVGLWidget *>(lvgl.widgetsDisplayW().at(index.row()));
       stream << cast.i;
     }
   }

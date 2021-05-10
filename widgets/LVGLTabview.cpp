@@ -68,8 +68,8 @@ class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
             m_result.insert(i);
             m_resultstr[i] = QString(name);
             lv_obj_t *page = lv_tabview_add_tab(obj->obj(), name);
-            lvgl->addObject(
-                new LVGLObject(page, lvgl->widget("lv_page"), obj, false, i));
+            lvgl.addObject(
+                new LVGLObject(page, lvgl.widget("lv_page"), obj, false, i));
           }
         }
       }
@@ -156,6 +156,23 @@ class LVGLPropertyTabScrollbars : public LVGLPropertyEnum {
   QStringList m_values;
 };
 
+class LVGLPropertyTabWidthZoom : public LVGLPropertyInt {
+ public:
+  LVGLPropertyTabWidthZoom() : LVGLPropertyInt(0, UINT16_MAX) {}
+
+  QString name() const { return "Tab Width Zoom"; }
+
+  QStringList function(LVGLObject *obj) const { return QStringList(); }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    return lv_tabview_get_tab_width_zoom(obj->obj());
+  }
+  void set(LVGLObject *obj, int value) {
+    lv_tabview_set_tab_width_zoom(obj->obj(), value);
+  }
+};
+
 LVGLTabview::LVGLTabview() {
   initStateStyles();
   m_parts << LV_TABVIEW_PART_BG << LV_TABVIEW_PART_BG_SCROLLABLE
@@ -167,12 +184,13 @@ LVGLTabview::LVGLTabview() {
 
   m_properties << new LVGLPropertyTabCurrent;
   m_properties << new LVGLPropertyTabScrollbars;
+  m_properties << new LVGLPropertyTabWidthZoom;
 
   m_editableStyles << LVGL::BtnMatrixBTN;  // LV_TABVIEW_PART_BG
   m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_BG_SCROLLABLE
   m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BG
   m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BTN
-  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_INDIC
+  m_editableStyles << LVGL::TABINDIC;      // LV_TABVIEW_PART_INDIC
 }
 
 QString LVGLTabview::name() const { return "Tabview"; }
@@ -185,6 +203,7 @@ QIcon LVGLTabview::icon() const { return QIcon(); }
 
 lv_obj_t *LVGLTabview::newObject(lv_obj_t *parent) const {
   lv_obj_t *obj = lv_tabview_create(parent, nullptr);
+  lv_obj_set_style_local_bg_color(obj, 0, 0, lv_color_hex(0xeaeff3));
   return obj;
 }
 
@@ -227,6 +246,9 @@ void LVGLTabview::initStateStyles() {
     lv_style_init(ho);
     lv_style_init(pr);
     lv_style_init(di);
+    if (i == 0) {
+      lv_style_set_bg_color(de, 0, lv_color_hex(0xeaeff3));
+    }
     QList<lv_style_t *> stateStyles;
     stateStyles << de << ch << fo << ed << ho << pr << di;
     m_partsStyles[i] = stateStyles;

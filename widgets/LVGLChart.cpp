@@ -148,7 +148,7 @@ class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
                                         m_colorresult[index] != strlist[1])) {
         m_colorresult[index] = strlist[1];
         m_sermap[index] = lv_chart_add_series(
-            obj->obj(), lvgl->fromColor(QColor(strlist[1])));
+            obj->obj(), lvgl.fromColor(QColor(strlist[1])));
       } else
         lv_chart_clear_serie(obj->obj(), m_sermap[index]);
 

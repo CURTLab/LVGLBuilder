@@ -213,7 +213,7 @@ QWidget *LVGLStyleDelegate::createEditor(QWidget *parent,
     return dialog;
   } else if (item->type() == LVGLStyleItem::Font) {
     QComboBox *editor = new QComboBox(parent);
-    editor->addItems(lvgl->fontNames());
+    editor->addItems(lvgl.fontNames());
     return editor;
   } else if (item->type() == LVGLStyleItem::BorderPart) {
     LVGLBodyPartDialog *dialog = new LVGLBodyPartDialog(parent);
@@ -262,7 +262,7 @@ void LVGLStyleDelegate::setEditorData(QWidget *editor,
   } else if (item->type() == LVGLStyleItem::Font) {
     QComboBox *widget = qobject_cast<QComboBox *>(editor);
     QString f = m_styleBase->get(item).toString();
-    widget->setCurrentIndex(lvgl->fontNames().indexOf(f));
+    widget->setCurrentIndex(lvgl.fontNames().indexOf(f));
   } else if (item->type() == LVGLStyleItem::BorderPart) {
     LVGLBodyPartDialog *dialog = qobject_cast<LVGLBodyPartDialog *>(editor);
     dialog->setBodyParts(m_styleBase->getBorderPart(item));
