@@ -38,6 +38,12 @@ void LVGLTabWidget::removeAllObjects() {
     if (objs.at(0) && !objs.at(0)->parent()) removeObject(m_objects.at(0));
     objs = m_objects;
   }
+  m_objects.clear();
 }
 
 void LVGLTabWidget::removeAllImages() { qDeleteAll(m_images); }
+
+void LVGLTabWidget::clean() {
+  m_objects.clear();
+  m_images.clear();
+}

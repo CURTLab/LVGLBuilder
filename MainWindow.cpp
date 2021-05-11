@@ -104,8 +104,8 @@ MainWindow::MainWindow(QWidget *parent)
   updateRecentActionList();
 
   // add style editor dock to property dock and show the property dock
-  tabifyDockWidget(m_ui->PropertyEditor, m_ui->ObjecInspector);
-  tabifyDockWidget(m_ui->StyleEditor, m_ui->UndoEditor);
+  tabifyDockWidget(m_ui->PropertyEditor, m_ui->UndoEditor);
+  tabifyDockWidget(m_ui->StyleEditor, m_ui->ObjecInspector);
   m_ui->PropertyEditor->raise();
   m_ui->StyleEditor->raise();
 
@@ -349,11 +349,18 @@ void MainWindow::loadProject(const QString &fileName) {
   m_project = nullptr;
   int index = m_ui->tabWidget->currentIndex();
   auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
-  tabw->removeAllObjects();
-  tabw->removeAllImages();
+  auto objs = lvgl.allObjects();
+  m_curSimulation->clear();
+  for (int i = 0; i < objs.size(); ++i) {
+    m_objectModel->beginRemoveObject(objs[i]);
+    m_objectModel->endRemoveObject();
+  }
+  tabw->setAllObjects(objs);
+  tabw->setAllImages(lvgl.allImages());
+  tabw->clean();
   lvgl.removeAllImages();
   lvgl.removeAllObjects();
-  m_curSimulation->clear();
+
   m_project = LVGLProject::load(fileName);
   setWindowTitle("LVGL Builder");
   if (m_project == nullptr) {
@@ -401,11 +408,15 @@ void MainWindow::on_action_load_triggered() {
       QFileDialog::getOpenFileName(this, "Load lvgl", path, "LVGL (*.lvgl)");
   if (fileName.isEmpty()) return;
   loadProject(fileName);
+  auto tab = static_cast<LVGLTabWidget *>(m_ui->tabWidget->currentWidget());
+  m_tabFile[tab] = fileName;
 }
 
 void MainWindow::on_action_save_triggered() {
   QString path;
   if (m_project != nullptr) path = m_project->fileName();
+  auto tab = static_cast<LVGLTabWidget *>(m_ui->tabWidget->currentWidget());
+  path = m_tabFile[tab];
   QString fileName =
       QFileDialog::getSaveFileName(this, "Save lvgl", path, "LVGL (*.lvgl)");
   if (fileName.isEmpty()) return;

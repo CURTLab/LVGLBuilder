@@ -869,6 +869,7 @@ void LVGLCore::removeAllObjects() {
     if (objs.at(0) && !objs.at(0)->parent()) removeObject(m_objects.at(0));
     objs = m_objects;
   }
+  m_objects.clear();
 }
 
 QList<LVGLObject *> LVGLCore::allObjects() const { return m_objects; }

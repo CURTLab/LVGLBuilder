@@ -163,12 +163,8 @@ bool LVGLProject::exportCode(const QString &path) const {
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
-  if (LVGLHelper::getInstance().IsBtngoPageEmpty()) {
-    stream << "#include \"" << name << ".h\"\n\n";
-  } else {
-    stream << "#include \"" << name << ".h\"\n";
-    stream << "#include \"app.h\"\n\n";
-  }
+  stream << "#include \"" << name << ".h\"\n";
+  stream << "#include \"app.h\"\n\n";
 
   // static variables
   stream << "/**********************\n";
@@ -345,12 +341,11 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   auto objs = lvgl.allObjects();
   QMap<lv_obj_t *, QList<LVGLEvent *>> &objevs =
       LVGLHelper::getInstance().getObjEvents();
-  for (auto o : objs) {
-    if (objevs.contains(o->obj())) {
-      QList<LVGLEvent *> &listev = objevs[o->obj()];
-      for (auto e : listev) {
-        stream << e->eventHeadCode();
-      }
+  auto iter = objevs.begin();
+  for (; iter != objevs.end(); ++iter) {
+    QList<LVGLEvent *> &listev = iter.value();
+    for (auto e : listev) {
+      stream << e->eventHeadCode();
     }
   }
 
@@ -376,13 +371,13 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   }
 
   stream << "\n";
-  for (auto o : objs) {
-    if (objevs.contains(o->obj())) {
-      QList<LVGLEvent *> &listev = objevs[o->obj()];
-      for (auto e : listev) {
-        auto strlist = e->eventCode();
-        for (auto s : strlist) stream << s;
-      }
+  iter = objevs.begin();
+  for (; iter != objevs.end(); ++iter) {
+    QList<LVGLEvent *> &listev = iter.value();
+    for (auto e : listev) {
+      auto lists = e->eventCode();
+      for (auto s : lists) stream << s;
+      stream << "\n\n";
     }
   }
 

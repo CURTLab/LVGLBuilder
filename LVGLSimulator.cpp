@@ -99,6 +99,7 @@ LVGLSimulator::LVGLSimulator(QWidget *parent)
   QObject::connect(this, &LVGLSimulator::stopPaint, m_paintTime,
                    &LVGLPaintTimer::stop);
   m_patintThread->start();
+  setStyleSheet("QGraphicsView{background:#eaeff3;}");
 }
 
 LVGLSimulator::~LVGLSimulator() {
@@ -442,8 +443,8 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
              ((keyEvent->key() == Qt::Key_C) ||
               (keyEvent->key() == Qt::Key_X))) {
     LVGLObject *obj = m_sim->selectedObject();
-    if (obj) {     
-	 if (obj->parent() && obj->parent()->widgetType() == LVGLWidget::TabView)
+    if (obj) {
+      if (obj->parent() && obj->parent()->widgetType() == LVGLWidget::TabView)
         return false;
       QJsonDocument doc(obj->toJson());
       QApplication::clipboard()->setText(doc.toJson(QJsonDocument::Compact));

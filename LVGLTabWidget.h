@@ -36,6 +36,8 @@ class LVGLTabWidget : public QWidget {
   void removeAllObjects();
   void removeAllImages();
 
+  void clean();
+
  private:
   lv_obj_t *m_parent;
   QList<LVGLObject *> m_objects;

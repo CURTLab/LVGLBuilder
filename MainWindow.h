@@ -21,6 +21,7 @@ class LVGLCore;
 class ListDelegate;
 class LVGLWidget;
 class QUndoGroup;
+class LVGLTabWidget;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -133,5 +134,6 @@ class MainWindow : public QMainWindow {
   bool m_isrun;
   QUndoGroup *m_undoGroup;
   int m_lastindex;
+  QMap<LVGLTabWidget *, QString> m_tabFile;
 };
 #endif  // MAINWINDOW_H
