@@ -37,17 +37,17 @@ void LVGLItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->save();
     if (m_objSize != m_object->size()) {
       m_obj = QRectF(QPointF(0, 0), m_object->size());
-      m_tl = QRectF(0, 0, 10, 10);
-      m_tr = QRectF(m_obj.width() - 10, 0, 10, 10);
-      m_bl = QRectF(0, m_obj.height() - 10, 10, 10);
-      m_br = QRectF(m_obj.width() - 10, m_obj.height() - 10, 10, 10);
+      m_tl = QRectF(0, 0, 6, 6);
+      m_tr = QRectF(m_obj.width() - 6, 0, 6, 6);
+      m_bl = QRectF(0, m_obj.height() - 6, 6, 6);
+      m_br = QRectF(m_obj.width() - 6, m_obj.height() - 6, 6, 6);
 
       const double centerH = m_obj.width() * 0.5;
       const double centerV = m_obj.height() * 0.5;
-      m_ct = QRectF(centerH - 5, 0, 10, 10);
-      m_cb = QRectF(centerH - 5, m_obj.height() - 10, 10, 10);
-      m_cl = QRectF(0, centerV - 5, 10, 10);
-      m_cr = QRectF(m_obj.width() - 10, centerV - 5, 10, 10);
+      m_ct = QRectF(centerH - 3, 0, 6, 6);
+      m_cb = QRectF(centerH - 3, m_obj.height() - 6, 6, 6);
+      m_cl = QRectF(0, centerV - 3, 6, 6);
+      m_cr = QRectF(m_obj.width() - 6, centerV - 3, 6, 6);
       m_objSize = m_object->size();
     }
 
@@ -64,11 +64,12 @@ void LVGLItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option,
     painter->drawRect(m_cl);
     painter->drawRect(m_cr);
 
-    auto pic = lvgl.framebuffer().copy(m_object->absolutePosition().x(),
-                                        m_object->absolutePosition().y(),
-                                        m_object->width(), m_object->height());
+    //    auto pic = lvgl.framebuffer().copy(m_object->absolutePosition().x(),
+    //                                        m_object->absolutePosition().y(),
+    //                                        m_object->width(),
+    //                                        m_object->height());
 
-    painter->drawPixmap(0, 0, m_object->width(), m_object->height(), pic);
+    //    painter->drawPixmap(0, 0, m_object->width(), m_object->height(), pic);
 
     painter->restore();
   }

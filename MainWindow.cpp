@@ -201,7 +201,6 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
                        __LINE__, __func__);
     auto parts = obj->widgetClass()->parts();
     m_styleModel->setPart(parts[0]);
-    m_styleModel->setLvglObj(obj);
     m_styleModel->setObj(obj->obj());
     m_ui->combo_style->addItems(obj->widgetClass()->styles());
     m_styleModel->setStyle(obj->style(0, 0),

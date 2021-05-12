@@ -817,7 +817,7 @@ const char *LVGLCore::symbol(const QString &name) const {
 
 void LVGLCore::poll() {
   lv_task_handler();
-  lv_tick_inc(10);
+  lv_tick_inc(static_cast<uint32_t>(m_time.elapsed()));
   m_time.restart();
 }
 
@@ -1165,7 +1165,7 @@ void LVGLCore::setAllFonts(QList<LVGLFontData *> fonts) { m_fonts = fonts; }
 
 void LVGLCore::tick() {
   lv_task_handler();
-  lv_tick_inc(10);
+  lv_tick_inc(20);
 }
 
 void LVGLCore::flushHandler(lv_disp_drv_t *disp, const lv_area_t *area,
