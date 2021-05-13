@@ -143,18 +143,127 @@ class LVGLPropertyArcValue : public LVGLPropertyInt {
   }
 };
 
+class LVGLPropertyArcStyle : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyArcStyle()
+      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
+                          "Style3", "Style4", "Style5", "Style6"}) {}
+
+  QString name() const { return "Style"; }
+
+  QStringList function(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return QStringList();
+  }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return 0;
+  }
+  void set(LVGLObject *obj, int index) {
+    if (index != 0) {
+      lv_obj_set_size(obj->obj(), 75, 75);
+      lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 2);
+      lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 255);
+      lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0xd4d7d9));
+      lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                        lv_color_hex(0x01a2b1));
+      lv_obj_set_style_local_line_rounded(obj->obj(), 0, 0, true);
+      lv_obj_set_style_local_line_rounded(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          true);
+      lv_obj_set_style_local_line_width(obj->obj(), 0, 0, 20);
+      lv_obj_set_style_local_line_width(obj->obj(), LV_ARC_PART_INDIC, 0, 20);
+      lv_obj_set_style_local_line_opa(obj->obj(), 0, 0, 255);
+    }
+    switch (index) {
+      case 1: {
+      } break;
+      case 2: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0x2abf55));
+      } break;
+      case 3: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0xf72111));
+        lv_obj_set_style_local_line_rounded(obj->obj(), 0, 0, false);
+        lv_obj_set_style_local_line_rounded(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                            false);
+      } break;
+      case 4: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0x2abf55));
+        lv_obj_set_style_local_line_opa(obj->obj(), 0, 0, 0);
+      } break;
+      case 5: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0x2abf55));
+        lv_obj_set_style_local_line_width(obj->obj(), 0, 0, 8);
+        lv_obj_set_style_local_line_width(obj->obj(), LV_ARC_PART_INDIC, 0, 8);
+      } break;
+      case 6: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0xf72111));
+        lv_obj_set_style_local_line_rounded(obj->obj(), 0, 0, false);
+        lv_obj_set_style_local_line_rounded(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                            false);
+        lv_obj_set_style_local_line_width(obj->obj(), 0, 0, 8);
+        lv_obj_set_style_local_line_width(obj->obj(), LV_ARC_PART_INDIC, 0, 8);
+      } break;
+      case 7: {
+        lv_obj_set_size(obj->obj(), 150, 150);
+        lv_obj_set_style_local_border_width(obj->obj(), LV_ARC_PART_BG, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0xefefef));
+        lv_obj_set_style_local_line_color(obj->obj(), LV_ARC_PART_INDIC, 0,
+                                          lv_color_hex(0x2abf55));
+        lv_obj_set_style_local_line_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_line_width(obj->obj(), 0, 0, 8);
+        lv_obj_set_style_local_line_width(obj->obj(), LV_ARC_PART_INDIC, 0, 8);
+      } break;
+    }
+  }
+};
+
 LVGLArc::LVGLArc() {
   initStateStyles();
   m_parts << LV_ARC_PART_BG << LV_ARC_PART_INDIC << LV_ARC_PART_KNOB;
 
   static AnyFuncColType arr[2] = {e_QSpinBox, e_QSpinBox};
-  static AnyFuncColType arr1[2] = {e_QSpinBox, e_QSpinBox};
 
   m_properties << new LVGLPropertyArcBgAngle(arr, 2);
   m_properties << new LVGLPropertyArcAngle(arr, 2);
 
   // m_properties << new LVGLPropertyArcValue;
   m_properties << new LVGLPropertyArcRotation;
+  m_properties << new LVGLPropertyArcStyle;
 
   m_editableStyles << LVGL::ArcBG     // LV_ARC_PART_BG
                    << LVGL::ArcINDIC  // LV_ARC_PART_INDIC
@@ -178,8 +287,8 @@ QSize LVGLArc::minimumSize() const { return {75, 75}; }
 
 QStringList LVGLArc::styles() const {
   return QStringList() << "ARC_PART_BG"
-                       << "ARC_PART_INDIC"
-                       << "ARC_PART_KNOB";
+                       << "ARC_PART_INDIC";
+  // << "ARC_PART_KNOB";
 }
 
 lv_style_t *LVGLArc::style(lv_obj_t *obj, lv_obj_part_t part) const {

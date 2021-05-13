@@ -1,5 +1,6 @@
 #include "LVGLWidget.h"
 
+
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
 #include "LVGLTabWidget.h"
@@ -121,7 +122,11 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
   }
   inline void set(LVGLObject *obj, QStringList list) override {
     if (!list.isEmpty()) {
-      ++Index;
+      Index += list.size();
+      if (Index < Rindex)
+        Index = Rindex;
+      else
+        Rindex = Index + 1;
     }
 
     m_list = list;

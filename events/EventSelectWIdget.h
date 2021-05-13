@@ -8,6 +8,7 @@ class LVGLEventType;
 class LVGLWidget;
 
 extern int Index;
+extern int Rindex;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
