@@ -296,6 +296,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
                        << "Id:" << newObj->name();
     m_undoStack->push(new AddWidgetCommand(this, newObj));
     addObject(newObj);
+  } else if (mimeData->hasFormat("application/x-qabstractitemmodeldatalist")) {
   }
 }
 

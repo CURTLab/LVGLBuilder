@@ -133,7 +133,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   m_ui->toolBar->addAction(undoAction);
   m_ui->toolBar->addAction(redoAction);
-  m_ui->list_images->setMovement(QListWidget::Static);
+  m_ui->list_images->setMovement(QListWidget::Snap);
   m_ui->list_images->setIconSize(QSize(60, 60));
   QString styless =
       "QListWidget{background-color:#F2F2F2;}"

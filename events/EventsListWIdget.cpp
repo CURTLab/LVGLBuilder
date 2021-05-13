@@ -52,16 +52,13 @@ void EventsListWIdget::on_add_clicked() {
 }
 
 void EventsListWIdget::on_remove_clicked() {
-  if (Index > 1) --Index;
   QList<QListWidgetItem *> list = ui->listWidget->selectedItems();
   if (list.size() != 0) {
     QListWidgetItem *sel = list[0];
     if (sel) {
       int r = ui->listWidget->row(sel);
       ui->listWidget->takeItem(r);
+      if (Index > 1) --Index;
     }
-  } else {
-    int r = ui->listWidget->count() - 1;
-    ui->listWidget->takeItem(r);
   }
 }

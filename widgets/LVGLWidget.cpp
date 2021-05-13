@@ -4,6 +4,7 @@
 #include "LVGLObject.h"
 #include "LVGLTabWidget.h"
 #include "MainWindow.h"
+#include "events/EventSelectWIdget.h"
 #include "events/LVGLEventScreen.h"
 #include "events/LVGLEventWidgts.h"
 #include "events/LVGLPropertyEvent.h"
@@ -119,13 +120,17 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
     return QStringList();
   }
   inline void set(LVGLObject *obj, QStringList list) override {
+    if (!list.isEmpty()) {
+      ++Index;
+    }
+
     m_list = list;
     QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists =
         LVGLHelper::getInstance().getObjEvents();
     if (objevlists.contains(obj->obj())) {
       QList<LVGLEvent *> &listev = objevlists[obj->obj()];
       qDeleteAll(listev);
-      objevlists.clear();
+      objevlists.remove(obj->obj());
     }
 
     for (int i = 0; i < m_list.size(); ++i) {
@@ -137,41 +142,54 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
         lv_obj_set_event_cb(obj->obj(), obj_events);
       }
       if (eventType == "Change Screen") {
-        if (objevlists.contains(obj->obj())) {
-          QList<LVGLEvent *> &listev = objevlists[obj->obj()];
-          for (auto s : listev)
-            if (s->getResult().at(3) == strlist[3]) return;
-          LVGLEventScreen *screen = new LVGLEventScreen;
-          screen->setResule(strlist);
-          listev.push_back(screen);
-        } else {
-          QList<LVGLEvent *> listev;
-          LVGLEventScreen *screen = new LVGLEventScreen;
-          screen->setResule(strlist);
-          listev.push_back(screen);
-          objevlists[obj->obj()] = listev;
-        }
+        changeScreen(objevlists, strlist, obj);
       } else if (eventType == "Set Property") {
-        if (objevlists.contains(obj->obj())) {
-          QList<LVGLEvent *> &listev = objevlists[obj->obj()];
-          // maybe need it
-          //          for (auto s : listev)
-          //            if (s->getResult().at(4) == strlist[4]) {
-          //              listev.removeOne(s);
-          //              delete s;
-          //              break;
-          //            }
-          LVGLEvent *ev = getWidgetEvent(strlist[3]);
-          ev->setResule(strlist);
-          listev.push_back(ev);
-        } else {
-          QList<LVGLEvent *> listev;
-          LVGLEvent *ev = getWidgetEvent(strlist[3]);
-          ev->setResule(strlist);
-          listev.push_back(ev);
-          objevlists[obj->obj()] = listev;
-        }
+        setPorp(objevlists, strlist, obj);
       }
+    }
+  }
+
+ private:
+  void changeScreen(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
+                    QStringList strlist, LVGLObject *obj) {
+    if (objevlists.contains(obj->obj())) {
+      QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+      for (auto s : listev)
+        if (s->getResult().at(3) == strlist[3]) return;
+      LVGLEventScreen *screen = new LVGLEventScreen;
+      screen->setResule(strlist);
+      listev.push_back(screen);
+    } else {
+      QList<LVGLEvent *> listev;
+      LVGLEventScreen *screen = new LVGLEventScreen;
+      screen->setResule(strlist);
+      listev.push_back(screen);
+      objevlists[obj->obj()] = listev;
+    }
+  }
+
+  void setPorp(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
+               QStringList strlist, LVGLObject *obj) {
+    auto objs = lvgl.allObjects();
+
+    if (objevlists.contains(obj->obj())) {
+      QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+      // maybe need it
+      //          for (auto s : listev)
+      //            if (s->getResult().at(4) == strlist[4]) {
+      //              listev.removeOne(s);
+      //              delete s;
+      //              break;
+      //            }
+      LVGLEvent *ev = getWidgetEvent(strlist[3]);
+      ev->setResule(strlist);
+      listev.push_back(ev);
+    } else {
+      QList<LVGLEvent *> listev;
+      LVGLEvent *ev = getWidgetEvent(strlist[3]);
+      ev->setResule(strlist);
+      listev.push_back(ev);
+      objevlists[obj->obj()] = listev;
     }
   }
 

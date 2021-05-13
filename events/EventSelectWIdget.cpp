@@ -108,7 +108,6 @@ void EventSelectWIdget::on_cancelbtn_clicked() { emit QDialog::reject(); }
 
 void EventSelectWIdget::slotSetWFinished() {
   if (QDialog::Accepted == m_setWidget->result()) {
-    ++Index;
     emit accept();
   }
 }

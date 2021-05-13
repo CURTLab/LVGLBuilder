@@ -35,8 +35,9 @@ class LVGLPropertyArcBgAngle : public LVGLPropertyAnyFunc {
       updateData(1, 0, false);
       updateData(1, 360, true);
     }
-    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
-    return QStringList() << QString("135@45@");
+    int begin = lv_arc_get_bg_angle_start(obj->obj());
+    int end = lv_arc_get_bg_angle_end(obj->obj());
+    return QStringList() << QString("%1@%2@").arg(begin).arg(end);
   }
   void set(LVGLObject *obj, QStringList list) {
     m_list = list;
@@ -80,8 +81,9 @@ class LVGLPropertyArcAngle : public LVGLPropertyAnyFunc {
       updateData(1, 0, false);
       updateData(1, 360, true);
     }
-    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
-    return QStringList() << QString("135@135@");
+    int begin = lv_arc_get_angle_start(obj->obj());
+    int end = lv_arc_get_angle_end(obj->obj());
+    return QStringList() << QString("%1@%2@").arg(begin).arg(end);
   }
   void set(LVGLObject *obj, QStringList list) {
     m_list = list;

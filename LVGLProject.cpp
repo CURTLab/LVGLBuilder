@@ -15,6 +15,7 @@
 #include "LVGLFontData.h"
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
+#include "LVGLTabWidget.h"
 #include "MainWindow.h"
 #include "events/LVGLEvent.h"
 
@@ -149,6 +150,17 @@ bool LVGLProject::exportCode(const QString &path) const {
     if (o->isAccessible())
       stream << "extern lv_obj_t *" << o->codeName() << ";\n";
   }
+
+  stream << "\n";
+
+  int tabindex =
+      LVGLHelper::getInstance().getMainW()->getTabW()->currentIndex();
+  for (auto o : objects) {
+    stream << QString("extern lv_obj_t* %1_ev_%2;\n")
+                  .arg(o->codeName())
+                  .arg(tabindex);
+  }
+
   stream << "\n";
   // global prototypes
   stream << "/**********************\n";
@@ -178,9 +190,6 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "/**********************\n";
   stream << " *  STATIC VARIABLES\n";
   stream << " **********************/\n";
-  if (lvgl.screenColorChanged()) {
-    stream << "static lv_style_t style_screen;\n";
-  }
 
   auto images = lvgl.images();
   for (LVGLImageData *img : images) {
@@ -193,6 +202,13 @@ bool LVGLProject::exportCode(const QString &path) const {
   for (const LVGLFontData *f : fonts) {
     f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
     stream << "LV_FONT_DECLARE(" << f->codeName() << ");\n";
+  }
+  stream << "\n";
+
+  tabindex = LVGLHelper::getInstance().getMainW()->getTabW()->currentIndex();
+
+  for (LVGLObject *o : objects) {
+    stream << QString("lv_obj_t* %1_ev_%2;\n").arg(o->codeName()).arg(tabindex);
   }
   stream << "\n";
 
@@ -290,6 +306,11 @@ bool LVGLProject::exportCode(const QString &path) const {
         }
       }
 
+      stream << QString("\n\t%1_ev_%2 = %3;\n")
+                    .arg(o->codeName())
+                    .arg(tabindex)
+                    .arg(o->codeName());
+
       stream << "\n\n";
     }
   }
@@ -327,6 +348,8 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   QTextStream stream;
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
   stream.setDevice(&file);
+  auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+  int tabindex = tabw->currentIndex();
 
   stream << "#ifndef APP_H\n";
   stream << "#define APP_H\n\n";
@@ -341,16 +364,28 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   auto objs = lvgl.allObjects();
   QMap<lv_obj_t *, QList<LVGLEvent *>> &objevs =
       LVGLHelper::getInstance().getObjEvents();
-  auto iter = objevs.begin();
-  for (; iter != objevs.end(); ++iter) {
-    QList<LVGLEvent *> &listev = iter.value();
-    for (auto e : listev) {
-      stream << e->eventHeadCode();
+
+  auto curtab = static_cast<LVGLTabWidget *>(tabw->widget(tabindex));
+  curtab->setAllObjects(lvgl.allObjects());
+  curtab->setAllImages(lvgl.allImages());
+
+  for (int i = 0; i < tabw->count(); ++i) {
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto os = tab->allObject();
+    for (auto o : os) {
+      if (objevs.contains(o->obj())) {
+        QList<LVGLEvent *> &listev = objevs[o->obj()];
+        for (auto e : listev) {
+          stream << e->eventHeadCode();
+        }
+      }
     }
   }
 
   stream << "\n";
   stream << "void app();\n";
+  stream << "\n";
+
   stream << "#endif";
   file.close();
 
@@ -364,20 +399,25 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "#include \"page_" << QString::number(i + 1) << ".h\"\n";
   }
-
+  stream << "#include \"stdlib.h\"\n";
   stream << "\n";
+
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "static lv_obj_t *page" + QString::number(i + 1) + ";\n";
   }
 
   stream << "\n";
-  iter = objevs.begin();
-  for (; iter != objevs.end(); ++iter) {
-    QList<LVGLEvent *> &listev = iter.value();
-    for (auto e : listev) {
-      auto lists = e->eventCode();
-      for (auto s : lists) stream << s;
-      stream << "\n\n";
+
+  for (int i = 0; i < tabw->count(); ++i) {
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto os = tab->allObject();
+    for (auto o : os) {
+      QList<LVGLEvent *> &listev = objevs[o->obj()];
+      for (auto e : listev) {
+        auto lists = e->eventCode();
+        for (auto s : lists) stream << s;
+        stream << "\n\n";
+      }
     }
   }
 
