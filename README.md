@@ -1,4 +1,11 @@
+# Widget Style Select
+
+* Switch & slider Style
+
+![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/sw_sld_style.gif)
+
 # Event System
+
 * support sceen screen
 * support arc event
 
