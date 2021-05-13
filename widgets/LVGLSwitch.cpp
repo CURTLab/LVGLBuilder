@@ -22,8 +22,7 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertySwitchStyle()
       : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6"}),
-        m_index(0) {}
+                          "Style3", "Style4", "Style5", "Style6", "Style7"}) {}
 
   QString name() const { return "Style"; }
 
@@ -35,10 +34,9 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
  protected:
   int get(LVGLObject *obj) const {
     Q_UNUSED(obj)
-    return m_index;
+    return 0;
   }
   void set(LVGLObject *obj, int index) {
-    m_index = index;
     if (index != 0) {
       lv_obj_set_style_local_pad_top(obj->obj(), LV_SWITCH_PART_KNOB, 0, -3);
       lv_obj_set_style_local_pad_bottom(obj->obj(), LV_SWITCH_PART_KNOB, 0, -3);
@@ -51,13 +49,14 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
       lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 0);
       lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
                                           lv_color_hex(0x000000));
+      lv_obj_set_style_local_bg_color(obj->obj(), 0, 0, lv_color_hex(0xd4d7d9));
+      lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                      lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_INDIC, 0,
+                                      lv_color_hex(0x01a2b1));
     }
-    switch (m_index) {
+    switch (index) {
       case 1: {
-        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
-                                        lv_color_hex(0xd4d7d9));
-        lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_INDIC, 0,
-                                        lv_color_hex(0x01a2b1));
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 2);
         lv_obj_set_size(obj->obj(), 70, 35);
 
@@ -103,6 +102,8 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
         lv_obj_set_style_local_pad_left(obj->obj(), LV_SWITCH_PART_KNOB, 0, 8);
         lv_obj_set_style_local_pad_right(obj->obj(), LV_SWITCH_PART_KNOB, 0, 8);
         lv_obj_set_size(obj->obj(), 44, 10);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                        lv_color_hex(0xe96565));
       } break;
       case 6: {
         lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
@@ -119,6 +120,8 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
         lv_obj_set_style_local_pad_left(obj->obj(), LV_SWITCH_PART_KNOB, 0, 8);
         lv_obj_set_style_local_pad_right(obj->obj(), LV_SWITCH_PART_KNOB, 0, 8);
         lv_obj_set_size(obj->obj(), 44, 10);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                        lv_color_hex(0xe96565));
       } break;
       case 7: {
         lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
@@ -129,7 +132,9 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
         lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 2);
         lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
-                                            lv_color_hex(0xffffff));
+                                            lv_color_hex(0x585858));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                        lv_color_hex(0xe96565));
         lv_obj_set_size(obj->obj(), 70, 35);
       } break;
       case 8: {
@@ -138,19 +143,18 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
         lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_INDIC, 0,
                                         lv_color_hex(0x1677ff));
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
-        lv_obj_set_style_local_pad_top(obj->obj(), LV_SWITCH_PART_KNOB, 0, -6);
-        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_SWITCH_PART_KNOB, -6,
-                                          8);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_SWITCH_PART_KNOB, 0, -2);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                          -2);
         lv_obj_set_style_local_pad_left(obj->obj(), LV_SWITCH_PART_KNOB, 0, -6);
-        lv_obj_set_style_local_pad_right(obj->obj(), LV_SWITCH_PART_KNOB, 0,
-                                         10);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_SWITCH_PART_KNOB, 0, 8);
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0xefefef));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_SWITCH_PART_KNOB, 0,
+                                        lv_color_hex(0xe96565));
       } break;
     }
-    m_index = 0;
   }
-
- private:
-  int m_index;
 };
 
 LVGLSwitch::LVGLSwitch() {
