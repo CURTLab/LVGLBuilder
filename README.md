@@ -1,4 +1,7 @@
-# Event System[Comming soon]
+# Event System
+* support sceen screen
+* support arc event
+
 ![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event1.gif)
 
 
