@@ -62,7 +62,7 @@ enum StylePart {
   MsgboxMAIN = Background | Padding | Text | Margin,
   RollerMAIN = Body | Text,
   SliderBG = Background | Padding | Margin | Border | Outline | Mix,
-  SliderINDIC = Background | Mix,
+  SliderINDIC = Background | Border | Mix,
   SliderKNOB = Mix | Background | Padding | Margin,
   SpinboxBG = Background | Text,
   SpinboxCURSOR = Text,

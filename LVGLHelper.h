@@ -33,8 +33,6 @@ class LVGLHelper {
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void reduceFileindex() { --m_filecount; }
-  void setSetobtev(LVGLObject* o) { m_objHaveEvs.insert(o); }
-  bool isObjHaveEv(LVGLObject* o) { return m_objHaveEvs.contains(o); }
 
  private:
   LVGLHelper() : m_pMainW(nullptr), m_filecount(0){};
@@ -45,6 +43,5 @@ class LVGLHelper {
   QMap<LVGLObject*, int> m_btnGoPage;
   QSet<QString> m_saveFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
-  QSet<LVGLObject*> m_objHaveEvs;
 };
 #endif
