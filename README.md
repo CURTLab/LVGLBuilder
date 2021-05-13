@@ -4,6 +4,12 @@
 
 ![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/sw_sld_style.gif)
 
+
+
+* Arc Style
+
+  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/arcstyle.gif)
+
 # Event System
 
 * support sceen screen
