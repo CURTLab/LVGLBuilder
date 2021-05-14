@@ -1,3 +1,9 @@
+#  Event&Style select
+
+* arc bar slider switch screen
+
+  ![evandstyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event_style1.gif)
+
 # Widget Style Select
 
 * Switch & slider Style
