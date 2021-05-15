@@ -400,6 +400,13 @@ void MainWindow::setUndoStack() {
   m_undoGroup->setActiveStack(m_curSimulation->undoStack());
 }
 
+void MainWindow::setAllModelNull() {
+  m_curSimulation->setSelectedObject(nullptr);
+  m_propertyModel->setObject(nullptr);
+  m_styleModel->setObj(nullptr);
+  m_styleModel->setLvglObj(nullptr);
+}
+
 void MainWindow::on_action_load_triggered() {
   QString path;
   if (m_project != nullptr) path = m_project->fileName();
@@ -927,19 +934,21 @@ void MainWindow::on_combo_state_currentIndexChanged(int index) {
 
 void MainWindow::tabChanged(int index) {
   if (-1 == index) return;
+  setAllModelNull();
+
   if (m_lastindex != -1) {
     auto oldtabw =
         static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(m_lastindex));
     auto objs = lvgl.allObjects();
     oldtabw->setAllObjects(lvgl.allObjects());
     oldtabw->setAllImages(lvgl.allImages());
-    // oldtabw->setAllFonts(lvgl.allFonts());
     for (int i = 0; i < objs.count(); ++i) {
       m_objectModel->beginRemoveObject(objs[i]);
       m_objectModel->endRemoveObject();
     }
     lvgl.objsclear();
   }
+
   m_lastindex = index;
   auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
   m_curSimulation->setobjParent(tabw->getparent());
@@ -947,7 +956,6 @@ void MainWindow::tabChanged(int index) {
   auto objs = tabw->allObject();
   lvgl.setAllObjects(objs);
   lvgl.setAllImages(tabw->allImages());
-  // lvgl.setAllFonts(tabw->allFonts());
   m_project->setName(tabw->getname());
   for (int i = 0; i < objs.count(); ++i) {
     m_objectModel->beginInsertObject(objs[i]);
@@ -956,7 +964,7 @@ void MainWindow::tabChanged(int index) {
   m_ui->object_tree->update();
   if (!objs.isEmpty())
     m_curSimulation->setSelectedObject(lvgl.allObjects().at(0));
-  m_curSimulation->setSelectedObject(nullptr);  // need it
+  setAllModelNull();  // need it
   updateImages();
   updateFonts();
 }
@@ -966,28 +974,17 @@ void MainWindow::onObjPressed(LVGLObject *obj) { Q_UNUSED(obj) }
 void MainWindow::ontabclose(int index) {
   int count = m_ui->tabWidget->count();
   if (count > 1) {
+    LVGLHelper::getInstance().updatetabDate();
     auto w = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
     int curindex = m_ui->tabWidget->currentIndex();
-    m_curSimulation->setSelectedObject(nullptr);
-    m_propertyModel->setObject(nullptr);
+    setAllModelNull();
     if (index == curindex) {
       int nindex = index == 0 ? 1 : index - 1;
       m_ui->tabWidget->setCurrentIndex(nindex);
-    } else {
-      auto oldtabw =
-          static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(curindex));
-      auto objs = lvgl.allObjects();
-      oldtabw->setAllObjects(lvgl.allObjects());
-      oldtabw->setAllImages(lvgl.allImages());
-      // oldtabw->setAllFonts(lvgl.allFonts());
-      for (int i = 0; i < objs.count(); ++i) {
-        m_objectModel->beginRemoveObject(objs[i]);
-        m_objectModel->endRemoveObject();
-      }
-      m_lastindex = -1;
-      w->removeAll();
-      delete w;
     }
+    m_lastindex = -1;
+    w->removeAll();
+    delete w;
   }
 }
 

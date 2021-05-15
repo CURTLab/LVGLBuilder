@@ -30,9 +30,13 @@ class LVGLHelper {
   QSet<QString>& getSaveFontName() { return m_saveFontN; }
   LVGLSimulator* getcursim();
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
+
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void reduceFileindex() { --m_filecount; }
+
+  // other
+  void updatetabDate();
 
  private:
   LVGLHelper() : m_pMainW(nullptr), m_filecount(0){};

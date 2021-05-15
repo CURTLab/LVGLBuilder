@@ -35,9 +35,9 @@ void LVGLEventType::init() {
     //                 << "Move Top"
     //                 << "Move Bottom";
   } else if (m_type == 0) {
+    auto objs = lvgl.allObjects();
     switch (m_wtype) {
       case LVGLEventType::BASIC: {
-        auto objs = lvgl.allObjects();
         for (auto o : objs) m_objName << o->name();
         m_propertyList << "X"
                        << "Y"
@@ -54,7 +54,6 @@ void LVGLEventType::init() {
         m_valueList << QObject::tr("On") << QObject::tr("Off");
       } break;
       case LVGLEventType::ARC: {
-        auto objs = lvgl.allObjects();
         for (auto o : objs)
           if (o->widgetType() == LVGLWidget::Arc) m_objName << o->name();
 
@@ -62,11 +61,32 @@ void LVGLEventType::init() {
                        << "End angle"
                        << "Rotation";
       } break;
-      case 2: {
+      case LVGLEventType::BAR: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Bar) m_objName << o->name();
+
+        m_propertyList << "Value"
+                       << "Value With anim";
+
       } break;
-      case 3: {
+      case LVGLEventType::SLIDER: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Slider) m_objName << o->name();
+
+        m_propertyList << "Value"
+                       << "Value With anim";
       } break;
-      case 4: {
+      case LVGLEventType::SWITCH: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Switch) m_objName << o->name();
+
+        m_propertyList << "Switch";
+        m_valueList << "Click"
+                    << "On"
+                    << "Off"
+                    << "Click with anim"
+                    << "On with anim"
+                    << "Off with anim";
       } break;
       case 5: {
       } break;

@@ -58,7 +58,10 @@ void EventsListWIdget::on_remove_clicked() {
     if (sel) {
       int r = ui->listWidget->row(sel);
       ui->listWidget->takeItem(r);
-      if (Index > 1) --Index;
+      if (Index > 1) {
+        --Index;
+        --Rindex;
+      }
     }
   }
 }

@@ -39,6 +39,7 @@ class LVGLEventType {
   inline QStringList getOpaName() const { return m_opaName; }
   inline QStringList getFadeModeList() const { return m_fademodelist; }
   inline int getRole() { return m_role; }
+  inline int getwtype() { return m_wtype; }
 
  private:
   QStringList m_objName;

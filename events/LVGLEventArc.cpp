@@ -12,20 +12,30 @@ LVGLEventArc::LVGLEventArc() {}
 void LVGLEventArc::eventRun(lv_obj_t *obj) {
   QString name = m_result.at(4);
   lv_obj_t *targert = nullptr;
-  auto objs = lvgl.allObjects();
-
-  for (auto o : objs)
-    if (o->name() == name) {
-      targert = o->obj();
-      break;
+  LVGLHelper::getInstance().updatetabDate();
+  QList<LVGLObject *> objs;
+  auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+  for (int i = 0; i < tabw->count(); ++i) {
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto os = tab->allObject();
+    for (auto o : os) {
+      if (o->name() == name) {
+        targert = o->obj();
+        objs = os;
+        break;
+      }
     }
+  }
 
   QString proprety = m_result.at(5);
   QString way = m_result.at(6);
   if (way == "Not use") {
     int value = m_result.at(7).toInt();
+    if (value > 360) value %= 360;
     if (proprety == "Start angle")
       lv_arc_set_start_angle(targert, value);
+    else if (proprety == "Rotation")
+      lv_arc_set_rotation(targert, value);
     else
       lv_arc_set_end_angle(targert, value);
   } else {
@@ -45,9 +55,11 @@ void LVGLEventArc::eventRun(lv_obj_t *obj) {
           value = QString(arr).toInt();
         } break;
       }
-      value %= 361;
+      if (value > 360) value %= 360;
       if (proprety == "Start angle")
         lv_arc_set_start_angle(targert, value);
+      else if (proprety == "Rotation")
+        lv_arc_set_rotation(targert, value);
       else
         lv_arc_set_end_angle(targert, value);
     }
@@ -179,11 +191,15 @@ QStringList LVGLEventArc::eventCode() {
       } break;
     }
 
-    list << "value %= 361;\n"
+    list << "if (value > 360) value %= 360;\n"
          << "\t\t";
 
     if (proprety == "Start angle")
       list << QString("lv_arc_set_start_angle(%1_ev_%2,value);\n")
+                  .arg(name)
+                  .arg(tabindex);
+    else if (proprety == "Rotation")
+      list << QString("lv_arc_set_rotation(%1_ev_%2,value);\n")
                   .arg(name)
                   .arg(tabindex);
     else

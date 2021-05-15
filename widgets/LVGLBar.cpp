@@ -136,6 +136,118 @@ class LVGLPropertyBarValue : public LVGLPropertyAnyFunc {
   mutable bool m_frun;
 };
 
+class LVGLPropertyBarStyle : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyBarStyle()
+      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
+                          "Style3", "Style4", "Style5", "Style6"}) {}
+
+  QString name() const { return "Style"; }
+
+  QStringList function(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return QStringList();
+  }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return 0;
+  }
+  void set(LVGLObject *obj, int index) {
+    if (index != 0) {
+      lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_NONE);
+      lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                         LV_GRAD_DIR_NONE);
+      lv_obj_set_style_local_bg_color(obj->obj(), 0, 0, lv_color_hex(0xefefef));
+      lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_color(obj->obj(), 1, 0, lv_color_hex(0x01a2b1));
+      lv_obj_set_style_local_bg_grad_color(obj->obj(), 1, 0,
+                                           lv_color_hex(0xffffff));
+      lv_obj_set_style_local_radius(obj->obj(), 0, 0, 32767);
+      lv_obj_set_style_local_radius(obj->obj(), 1, 0, 32767);
+      lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 255);
+      lv_obj_set_style_local_border_opa(obj->obj(), 0, 0, 0);
+      lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 0);
+    }
+    switch (index) {
+      case 1: {
+      } break;
+      case 2: {
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_HOR);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                        lv_color_hex(0x2ab5ff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                             lv_color_hex(0x1677ff));
+      } break;
+      case 3: {
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                        lv_color_hex(0x2ab5ff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                             lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 1, 0, 0);
+      } break;
+      case 4: {
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_HOR);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                        lv_color_hex(0xf12711));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                             lv_color_hex(0xf5af19));
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_border_opa(obj->obj(), 0, 0, 255);
+        lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 2);
+      } break;
+      case 5: {
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                        lv_color_hex(0xf12711));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                             lv_color_hex(0xf5af19));
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 1, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_border_opa(obj->obj(), 0, 0, 255);
+        lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 2);
+      } break;
+      case 6: {
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                             lv_color_hex(0xefefef));
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_HOR);
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_HOR);
+        lv_obj_set_style_local_bg_color(obj->obj(), 1, 0,
+                                        lv_color_hex(0xc6c6c6));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 1, 0,
+                                             lv_color_hex(0x000000));
+      } break;
+      case 7: {
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                             lv_color_hex(0xefefef));
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), LV_BAR_PART_INDIC, 0,
+                                           LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_color(obj->obj(), 1, 0,
+                                        lv_color_hex(0xc6c6c6));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 1, 0,
+                                             lv_color_hex(0x000000));
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 1, 0, 0);
+      } break;
+    }
+  }
+};
+
 LVGLBar::LVGLBar() {
   initStateStyles();
   m_parts << LV_BAR_PART_BG;
@@ -146,8 +258,7 @@ LVGLBar::LVGLBar() {
   m_properties << new LVGLPropertyBarAnimationTime;
   static const AnyFuncColType arr[2] = {e_QSpinBox, e_QComboBox};
   m_properties << new LVGLPropertyBarValue(arr, 2, p);
-
-  lv_bar_type_t a;
+  m_properties << new LVGLPropertyBarStyle;
 
   m_editableStyles << LVGL::Body;  // LV_BAR_STYLE_BG
   m_editableStyles << LVGL::Body;  // LV_BAR_STYLE_INDIC
@@ -166,7 +277,7 @@ lv_obj_t *LVGLBar::newObject(lv_obj_t *parent) const {
   _lv_obj_set_style_local_color(
       obj, LV_BAR_PART_BG,
       (LV_STATE_DEFAULT << LV_STYLE_STATE_POS) | LV_STYLE_BG_COLOR,
-      lvgl.fromColor(QColor("#c6c6c6")));
+      lvgl.fromColor(QColor("#e8e8e8")));
   return obj;
 }
 
@@ -206,8 +317,9 @@ void LVGLBar::initStateStyles() {
     lv_style_init(ho);
     lv_style_init(pr);
     lv_style_init(di);
-    lv_style_set_bg_color(de, LV_STATE_DEFAULT,
-                          lvgl.fromColor(QColor("#c6c6c6")));
+    if (i == 0)
+      lv_style_set_bg_color(de, LV_STATE_DEFAULT,
+                            lvgl.fromColor(QColor("#e8e8e8")));
     QList<lv_style_t *> stateStyles;
     stateStyles << de << ch << fo << ed << ho << pr << di;
     m_partsStyles[i] = stateStyles;

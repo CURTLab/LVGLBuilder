@@ -132,7 +132,15 @@ void EventSelectWIdget::getEventType(LVGLEventType *&ev, int index) {
     case 1:
       ev = new LVGLEventType(0, LVGLEventType::ARC);
       break;
-    default:
+    case 2:
+      ev = new LVGLEventType(0, LVGLEventType::BAR);
+      break;
+    case 12:
+      ev = new LVGLEventType(0, LVGLEventType::SLIDER);
+      break;
+    case 14:
+      ev = new LVGLEventType(0, LVGLEventType::SWITCH, 1);
+      break;
       break;
   }
 }

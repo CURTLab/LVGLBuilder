@@ -46,6 +46,7 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
       lv_obj_set_style_local_radius(obj->obj(), LV_SWITCH_PART_INDIC, 0, 32767);
       lv_obj_set_style_local_radius(obj->obj(), LV_SWITCH_PART_KNOB, 0, 32767);
       lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 255);
+      lv_obj_set_style_local_border_opa(obj->obj(), 0, 0, 0);
       lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 0);
       lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
                                           lv_color_hex(0x000000));
@@ -130,6 +131,7 @@ class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
                                         lv_color_hex(0x1677ff));
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_border_opa(obj->obj(), 0, 0, 255);
         lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 2);
         lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
                                             lv_color_hex(0x585858));

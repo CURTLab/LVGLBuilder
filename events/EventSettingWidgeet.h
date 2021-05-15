@@ -33,5 +33,11 @@ class EventSettingWidgeet : public QDialog {
   LVGLEventType *m_event;
   bool m_iscomb;
   int m_type;
+  bool m_isobjcomhide;
+  bool m_ispropcomhide;
+  bool m_issendercomhide;
+  bool m_isvaledithide;
+  bool m_isval2comhide;
+  bool m_isval3edithide;
 };
 #endif  // EVENTSETTINGWIDGEET_H

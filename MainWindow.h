@@ -100,7 +100,9 @@ class MainWindow : public QMainWindow {
   void setEnableBuilder(bool enable);
   void updateItemDelegate();
   void setUndoStack();
+  void setAllModelNull();
 
+ private:
   Ui::MainWindow *m_ui;
   QSlider *m_zoom_slider;
   LVGLProject *m_project;
