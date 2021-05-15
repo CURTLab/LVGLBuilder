@@ -1,3 +1,7 @@
+# Very important
+* If you are doing a multi-page design, please save it before switching to another page, because the multi-page design still has some minor problems.
+* Please save the current page content at any time, because some operations may cause the program to crash, but I cannot reproduce these operations, so I cannot solve this problem at present.
+
 # New Todo List
 - [ ]  (First) Add Event
 
