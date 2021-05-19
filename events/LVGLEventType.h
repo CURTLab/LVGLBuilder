@@ -3,7 +3,7 @@
 
 #include <QObject>
 
-class LVGLEventType {
+class LVGLEventType final {
  public:
   enum WType {
     BASIC = 0,

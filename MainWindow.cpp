@@ -813,7 +813,7 @@ void MainWindow::initNewWidgets() {
   addWidgetInputW(new LVGLChart);
   addWidgetInputW(new LVGLCheckBox);
   addWidgetInputW(new LVGLColorPicker);
-  // addWidgetInputW(new LVGLContainer);
+  addWidgetInputW(new LVGLContainer);
   addWidgetInputW(new LVGLDropDownList);
   addWidgetInputW(new LVGLGauge);
   addWidgetInputW(new LVGLKeyboard);

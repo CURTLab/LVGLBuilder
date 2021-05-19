@@ -25,16 +25,16 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
     case LVGLWidget::Slider:
     case LVGLWidget::Roller: {
       triggerlist = QStringList() << "Value_Changed"
-                                  << "Pressed"
                                   << "Clicked"
+                                  << "Pressed"
                                   << "Long_Pressed"
                                   << "Long_Pressed_Repeat"
                                   << "Focused"
                                   << "Defocused";
     } break;
     default: {
-      triggerlist = QStringList() << "Pressed"
-                                  << "Clicked"
+      triggerlist = QStringList() << "Clicked"
+                                  << "Pressed"
                                   << "Long_Pressed"
                                   << "Value_Changed"
                                   << "Long_Pressed_Repeat"

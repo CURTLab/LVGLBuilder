@@ -23,7 +23,6 @@ void LVGLEventScreen::eventRun(lv_obj_t *obj) {
   else if (m_result[4] == "Move Top")
     t = LV_SCR_LOAD_ANIM_MOVE_TOP;
   else if (m_result[4] == "Move Bottom")
-
     t = LV_SCR_LOAD_ANIM_MOVE_BOTTOM;
   else if (m_result[4] == "Over Left")
     t = LV_SCR_LOAD_ANIM_OVER_LEFT;
@@ -35,6 +34,8 @@ void LVGLEventScreen::eventRun(lv_obj_t *obj) {
     t = LV_SCR_LOAD_ANIM_OVER_BOTTOM;
   else if (m_result[4] == "Fade On")
     t = LV_SCR_LOAD_ANIM_FADE_ON;
+  else
+    t = LV_SCR_LOAD_ANIM_NONE;
 
   int speed = m_result[5].toInt();
   int delay = m_result[6].toInt();
