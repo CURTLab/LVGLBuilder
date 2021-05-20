@@ -1,6 +1,7 @@
 # Very important
-* If you are doing a multi-page design, please save it before switching to another page, because the multi-page design still has some minor problems.
-* Please save the current page content at any time, because some operations may cause the program to crash, but I cannot reproduce these operations, so I cannot solve this problem at present.
+* Try not to delete the page.
+* Save files at any time
+* Redo/undo operation Because of the design modification of multiple pages, currently multiple page redo/undo will cause the program to crash.
 
 # New Todo List
 - [ ]  (First) Add Event
@@ -12,6 +13,10 @@
 - [ ] Dialog for changing keyboard layout
 
 - [ ] Refactor the code related to the style of the widget
+
+- [ ] Realize the automatic save function
+
+- [ ] redo/undo supports new multi-page design
 
 
 # LVGLBuilder
