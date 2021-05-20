@@ -1,29 +1,8 @@
-#  Event&Style select
+# Event&Style select
 
 * arc bar slider switch screen
 
   ![evandstyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event_style1.gif)
-
-# Widget Style Select
-
-* Switch & slider Style
-
-![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/sw_sld_style.gif)
-
-
-
-* Arc Style
-
-  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/arcstyle.gif)
-
-# Event System
-
-* support sceen screen
-* support arc event
-
-![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event1.gif)
-
-
 # New version
 Now, the dev-7 branch based on lvgl7.11.0 has completed most of the todo list, so everyone can switch to the dev-7 branch for testing.
 
