@@ -3,6 +3,24 @@
 * Save files at any time
 * Redo/undo operation Because of the design modification of multiple pages, currently multiple page redo/undo will cause the program to crash.
 
+# Widget Style Select
+
+* Switch & slider Style
+
+![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/sw_sld_style.gif)
+
+
+* Arc Style
+
+  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/arcstyle.gif)
+
+# Event System
+
+* support sceen screen
+* support arc event
+
+![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event1.gif)
+
 # New Todo List
 - [ ]  (First) Add Event
 
