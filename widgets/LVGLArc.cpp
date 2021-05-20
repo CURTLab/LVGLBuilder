@@ -60,15 +60,16 @@ class LVGLPropertyArcAngle : public LVGLPropertyAnyFunc {
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
-    if (!m_list.isEmpty()) {
-      QStringList strlist = m_list[0].split('@');
-      int min = strlist[0].toInt();
-      int max = strlist[1].toInt();
-      list << QString("lv_arc_set_angles(%1,%2,%3);")
-                  .arg(obj->codeName())
-                  .arg(min)
-                  .arg(max);
-    }
+    int begin = lv_arc_get_angle_start(obj->obj());
+    int end = lv_arc_get_angle_end(obj->obj());
+    m_list = QStringList() << QString("%1@%2@").arg(begin).arg(end);
+    QStringList strlist = m_list[0].split('@');
+    int min = strlist[0].toInt();
+    int max = strlist[1].toInt();
+    list << QString("lv_arc_set_angles(%1,%2,%3);")
+                .arg(obj->codeName())
+                .arg(min)
+                .arg(max);
     return list;
   }
 
@@ -94,7 +95,7 @@ class LVGLPropertyArcAngle : public LVGLPropertyAnyFunc {
   }
 
  private:
-  QStringList m_list;
+  mutable QStringList m_list;
   mutable bool m_frun;
 };
 

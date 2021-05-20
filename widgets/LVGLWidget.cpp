@@ -1,6 +1,5 @@
 #include "LVGLWidget.h"
 
-
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
 #include "LVGLTabWidget.h"
@@ -23,12 +22,38 @@ static void obj_events(lv_obj_t *obj, lv_event_t event) {
       }
     }
   } else if (event == LV_EVENT_CLICKED) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Clicked") e->eventRun(obj);
+      }
+    }
   } else if (event == LV_EVENT_LONG_PRESSED) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Long_Pressed") e->eventRun(obj);
+      }
+    }
   } else if (event == LV_EVENT_VALUE_CHANGED) {
     if (objevlists.contains(obj)) {
       QList<LVGLEvent *> &listev = objevlists[obj];
       for (auto e : listev) {
         if (e->getResult().at(1) == "Value_Changed") e->eventRun(obj);
+      }
+    }
+  } else if (event == LV_EVENT_FOCUSED) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Focused") e->eventRun(obj);
+      }
+    }
+  } else if (event == LV_EVENT_LONG_PRESSED_REPEAT) {
+    if (objevlists.contains(obj)) {
+      QList<LVGLEvent *> &listev = objevlists[obj];
+      for (auto e : listev) {
+        if (e->getResult().at(1) == "Long_Pressed_Repeat") e->eventRun(obj);
       }
     }
   }
@@ -121,14 +146,6 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
     return QStringList();
   }
   inline void set(LVGLObject *obj, QStringList list) override {
-    if (!list.isEmpty()) {
-      Index += list.size();
-      if (Index < Rindex)
-        Index = Rindex;
-      else
-        Rindex = Index + 1;
-    }
-
     m_list = list;
     QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists =
         LVGLHelper::getInstance().getObjEvents();
@@ -137,7 +154,6 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
       qDeleteAll(listev);
       objevlists.remove(obj->obj());
     }
-
     for (int i = 0; i < m_list.size(); ++i) {
       QStringList strlist = m_list.at(i).split('#');
       QString eventType = strlist[2];
@@ -147,20 +163,22 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
         lv_obj_set_event_cb(obj->obj(), obj_events);
       }
       if (eventType == "Change Screen") {
-        changeScreen(objevlists, strlist, obj);
+        if (!changeScreen(objevlists, strlist, obj)) m_list[i] = "";
       } else if (eventType == "Set Property") {
         setPorp(objevlists, strlist, obj);
       }
     }
+    while (m_list.removeOne(""))
+      ;
   }
 
  private:
-  void changeScreen(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
+  bool changeScreen(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
                     QStringList strlist, LVGLObject *obj) {
     if (objevlists.contains(obj->obj())) {
       QList<LVGLEvent *> &listev = objevlists[obj->obj()];
       for (auto s : listev)
-        if (s->getResult().at(3) == strlist[3]) return;
+        if (s->getResult().at(3) == strlist[3]) return false;
       LVGLEventScreen *screen = new LVGLEventScreen;
       screen->setResule(strlist);
       listev.push_back(screen);
@@ -171,6 +189,7 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
       listev.push_back(screen);
       objevlists[obj->obj()] = listev;
     }
+    return true;
   }
 
   void setPorp(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,

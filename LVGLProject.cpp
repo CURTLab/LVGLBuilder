@@ -298,12 +298,12 @@ bool LVGLProject::exportCode(const QString &path) const {
         stream << "\t"
                << QString("lv_obj_set_click(%1, true);").arg(o->codeName())
                << "\n";
-
-        QList<LVGLEvent *> &listev = objev[o->obj()];
-        for (auto e : listev) {
-          auto strlist = e->objCode(o->codeName());
-          for (auto s : strlist) stream << s;
-        }
+        stream << "\t"
+               << QString("lv_obj_set_event_cb(%1,%2_ev_%3_event);")
+                      .arg(o->codeName())
+                      .arg(o->codeName())
+                      .arg(tabindex)
+               << "\n";
       }
 
       stream << QString("\n\t%1_ev_%2 = %3;\n")
@@ -374,6 +374,10 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
     auto os = tab->allObject();
     for (auto o : os) {
       if (objevs.contains(o->obj())) {
+        stream << QString(
+                      "void %1_ev_%2_event(lv_obj_t *obj, lv_event_t event);\n")
+                      .arg(o->codeName())
+                      .arg(tabindex);
         QList<LVGLEvent *> &listev = objevs[o->obj()];
         for (auto e : listev) {
           stream << e->eventHeadCode();
@@ -412,11 +416,21 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
     auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
     auto os = tab->allObject();
     for (auto o : os) {
-      QList<LVGLEvent *> &listev = objevs[o->obj()];
-      for (auto e : listev) {
-        auto lists = e->eventCode();
-        for (auto s : lists) stream << s;
-        stream << "\n\n";
+      if (objevs.contains(o->obj())) {
+        QList<LVGLEvent *> &listev = objevs[o->obj()];
+        for (auto e : listev) {
+          auto lists = e->eventCode();
+          for (auto s : lists) stream << s;
+          stream << "\n\n";
+        }
+        stream
+            << QString(
+                   "\nvoid %1_ev_%2_event(lv_obj_t *obj, lv_event_t event){\n")
+                   .arg(o->codeName())
+                   .arg(tabindex);
+        for (auto e : listev)
+          stream << "\t" << QString("%1(obj, event);\n").arg(e->getEventName());
+        stream << "}\n\n";
       }
     }
   }

@@ -37,6 +37,12 @@ class LVGLHelper {
 
   // other
   void updatetabDate();
+  int getobjeventsize() {
+    int size = 0;
+    auto iter = m_objEvents.begin();
+    for (; iter != m_objEvents.end(); ++iter) size += iter.value().size();
+    return size;
+  }
 
  private:
   LVGLHelper() : m_pMainW(nullptr), m_filecount(0){};

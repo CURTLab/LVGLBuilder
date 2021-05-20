@@ -4,11 +4,11 @@
 #include "LVGLEventScreen.h"
 #include "LVGLEventType.h"
 #include "LVGLEventWidgetBasic.h"
+#include "LVGLHelper.h"
 #include "ui_EventSelectWIdget.h"
 #include "widgets/LVGLWidget.h"
 
-int Index = 0;
-int Rindex = 1;
+int Ev_index = 1;
 
 EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
     : QDialog(parent),
@@ -16,7 +16,8 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
       m_setWidget(nullptr),
       m_ev(nullptr) {
   ui->setupUi(this);
-  ui->nameEdit->setText(QString("Event%1").arg(Rindex));
+  ui->nameEdit->setText(QString("Event%1").arg(
+      LVGLHelper::getInstance().getobjeventsize() + Ev_index));
   QStringList triggerlist;
 
   switch (w->type()) {
@@ -109,7 +110,6 @@ void EventSelectWIdget::on_cancelbtn_clicked() { emit QDialog::reject(); }
 
 void EventSelectWIdget::slotSetWFinished() {
   if (QDialog::Accepted == m_setWidget->result()) {
-    ++Rindex;
     emit accept();
   }
 }

@@ -32,6 +32,7 @@ QStringList EventsListWIdget::textList() {
 void EventsListWIdget::slotSelectWFinished() {
   setFocus();
   if (QDialog::Accepted == m_selectW->result()) {
+    ++Ev_index;
     m_resultlist.clear();
     m_resultlist = m_selectW->textList();
     QString tmp;
@@ -40,7 +41,10 @@ void EventsListWIdget::slotSelectWFinished() {
   }
 }
 
-void EventsListWIdget::on_ok_clicked() { accept(); }
+void EventsListWIdget::on_ok_clicked() {
+  Ev_index = 1;
+  accept();
+}
 
 void EventsListWIdget::on_cancel_clicked() { reject(); }
 
@@ -58,10 +62,7 @@ void EventsListWIdget::on_remove_clicked() {
     if (sel) {
       int r = ui->listWidget->row(sel);
       ui->listWidget->takeItem(r);
-      if (Index > 1) {
-        --Index;
-        --Rindex;
-      }
+      if (1 < Ev_index) --Ev_index;
     }
   }
 }

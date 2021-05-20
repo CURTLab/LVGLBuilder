@@ -6,9 +6,7 @@
 class EventSettingWidgeet;
 class LVGLEventType;
 class LVGLWidget;
-
-extern int Index;
-extern int Rindex;
+extern int Ev_index;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
