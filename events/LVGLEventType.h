@@ -40,6 +40,8 @@ class LVGLEventType final {
   inline QStringList getFadeModeList() const { return m_fademodelist; }
   inline int getRole() { return m_role; }
   inline int getwtype() { return m_wtype; }
+  inline QStringList getanimObjList() { return m_animObjList; }
+  inline QStringList getanimPathList() { return m_animPathList; }
 
  private:
   QStringList m_objName;
@@ -49,6 +51,8 @@ class LVGLEventType final {
   QStringList m_screenName;
   QStringList m_opaName;
   QStringList m_fademodelist;
+  QStringList m_animObjList;
+  QStringList m_animPathList;
   int m_type;
   int m_wtype;
   int m_role;

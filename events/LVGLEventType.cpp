@@ -34,6 +34,17 @@ void LVGLEventType::init() {
     //                 << "Move Right"
     //                 << "Move Top"
     //                 << "Move Bottom";
+  } else if (m_type == 2) {
+    // play anim
+    auto objs = lvgl.allObjects();
+    for (auto o : objs) m_animObjList << o->name();
+    m_animPathList << "Linear"
+                   << "Ease_in"
+                   << "Ease_out"
+                   << "Ease_in_out"
+                   << "Overshoot"
+                   << "Bounce"
+                   << "Step";
   } else if (m_type == 0) {
     auto objs = lvgl.allObjects();
     switch (m_wtype) {

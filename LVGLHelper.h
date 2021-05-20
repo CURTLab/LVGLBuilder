@@ -30,6 +30,7 @@ class LVGLHelper {
   QSet<QString>& getSaveFontName() { return m_saveFontN; }
   LVGLSimulator* getcursim();
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
+  QMap<lv_obj_t*, QPoint>& getanimobjPos() { return m_animobjPos; }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
@@ -53,5 +54,6 @@ class LVGLHelper {
   QMap<LVGLObject*, int> m_btnGoPage;
   QSet<QString> m_saveFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
+  QMap<lv_obj_t*, QPoint> m_animobjPos;
 };
 #endif

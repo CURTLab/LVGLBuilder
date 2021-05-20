@@ -5,6 +5,7 @@
 #include "LVGLTabWidget.h"
 #include "MainWindow.h"
 #include "events/EventSelectWIdget.h"
+#include "events/LVGLEventAnim.h"
 #include "events/LVGLEventScreen.h"
 #include "events/LVGLEventWidgts.h"
 #include "events/LVGLPropertyEvent.h"
@@ -166,6 +167,8 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
         if (!changeScreen(objevlists, strlist, obj)) m_list[i] = "";
       } else if (eventType == "Set Property") {
         setPorp(objevlists, strlist, obj);
+      } else if (eventType == "Play Animation") {
+        if (!playAnim(objevlists, strlist, obj)) m_list[i] = "";
       }
     }
     while (m_list.removeOne(""))
@@ -194,8 +197,6 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
 
   void setPorp(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
                QStringList strlist, LVGLObject *obj) {
-    auto objs = lvgl.allObjects();
-
     if (objevlists.contains(obj->obj())) {
       QList<LVGLEvent *> &listev = objevlists[obj->obj()];
       // maybe need it
@@ -217,6 +218,23 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
     }
   }
 
+  bool playAnim(QMap<lv_obj_t *, QList<LVGLEvent *>> &objevlists,
+                QStringList strlist, LVGLObject *obj) {
+    if (objevlists.contains(obj->obj())) {
+      QList<LVGLEvent *> &listev = objevlists[obj->obj()];
+      LVGLEvent *playanim = new LVGLEventAnim;
+      playanim->setResule(strlist);
+      listev.push_back(playanim);
+    } else {
+      QList<LVGLEvent *> listev;
+      LVGLEvent *playanim = new LVGLEventAnim;
+      playanim->setResule(strlist);
+      listev.push_back(playanim);
+      objevlists[obj->obj()] = listev;
+    }
+    return true;
+  }
+
  private:
   QStringList m_list;
   bool m_firstRun;
@@ -225,7 +243,7 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
 LVGLWidget::LVGLWidget() {
   m_geometryProp = new LVGLPropertyGeometry;
   m_properties << new LVGLPropertyName;
-  m_properties << new LVGLPropertyAccessible;
+  // m_properties << new LVGLPropertyAccessible;
   m_properties << new LVGLPropertyLocked;
   m_properties << m_geometryProp;
   m_properties << new LVGLPropertySetEvent(this);

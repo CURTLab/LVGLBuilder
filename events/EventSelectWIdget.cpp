@@ -99,6 +99,8 @@ void EventSelectWIdget::on_selectbtn_clicked() {
     case 1:
       m_ev = new LVGLEventType(1);
       break;
+    case 2:
+      m_ev = new LVGLEventType(2);
   }
   m_setWidget = new EventSettingWidgeet(m_ev, type, this);
   connect(m_setWidget, &QDialog::finished, this,

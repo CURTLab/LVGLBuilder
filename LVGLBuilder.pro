@@ -115,6 +115,7 @@ SOURCES += \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
     events/LVGLEvent.cpp \
+    events/LVGLEventAnim.cpp \
     events/LVGLEventArc.cpp \
     events/LVGLEventBar.cpp \
     events/LVGLEventButton.cpp \
@@ -218,6 +219,7 @@ HEADERS += \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \
     events/LVGLEvent.h \
+    events/LVGLEventAnim.h \
     events/LVGLEventArc.h \
     events/LVGLEventBar.h \
     events/LVGLEventButton.h \

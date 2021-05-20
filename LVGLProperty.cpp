@@ -89,8 +89,7 @@ void LVGLPropertyEnum::updateWidget(LVGLObject *obj) {
 }
 
 LVGLPropertyCoord::LVGLPropertyCoord(LVGLProperty *parent)
-    : LVGLPropertyType(parent),
-      m_max(std::min(lvgl.width(), lvgl.height())) {}
+    : LVGLPropertyType(parent), m_max(std::min(lvgl.width(), lvgl.height())) {}
 
 LVGLPropertyCoord::LVGLPropertyCoord(Qt::Orientation orientation,
                                      LVGLProperty *parent)
@@ -108,6 +107,28 @@ void LVGLPropertyCoord::updateEditor(LVGLObject *obj) {
 }
 
 void LVGLPropertyCoord::updateWidget(LVGLObject *obj) {
+  set(obj, static_cast<lv_coord_t>(m_widget->value()));
+}
+
+LVGLPropertyCoordUnlimit::LVGLPropertyCoordUnlimit(LVGLProperty *parent)
+    : LVGLPropertyType(parent), m_max(std::min(lvgl.width(), lvgl.height())) {}
+
+LVGLPropertyCoordUnlimit::LVGLPropertyCoordUnlimit(Qt::Orientation orientation,
+                                                   LVGLProperty *parent)
+    : LVGLPropertyType(parent),
+      m_max(orientation == Qt::Horizontal ? lvgl.width() : lvgl.height()) {}
+
+QWidget *LVGLPropertyCoordUnlimit::editor(QWidget *parent) {
+  m_widget = new QSpinBox(parent);
+  m_widget->setRange(-9999, 9999);
+  return m_widget;
+}
+
+void LVGLPropertyCoordUnlimit::updateEditor(LVGLObject *obj) {
+  m_widget->setValue(static_cast<int>(get(obj)));
+}
+
+void LVGLPropertyCoordUnlimit::updateWidget(LVGLObject *obj) {
   set(obj, static_cast<lv_coord_t>(m_widget->value()));
 }
 

@@ -139,6 +139,12 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>89</height>
+    </size>
+   </property>
    <property name="baseSize">
     <size>
      <width>330</width>
@@ -184,6 +190,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>89</height>
+    </size>
    </property>
    <property name="baseSize">
     <size>
@@ -237,6 +249,12 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>180</width>
+     <height>89</height>
+    </size>
+   </property>
    <property name="baseSize">
     <size>
      <width>330</width>
@@ -276,8 +294,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>76</width>
-          <height>396</height>
+          <width>178</width>
+          <height>479</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -375,6 +393,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>180</width>
+     <height>122</height>
+    </size>
    </property>
    <property name="windowTitle">
     <string>Image Editor</string>
@@ -482,6 +506,12 @@
      <verstretch>0</verstretch>
     </sizepolicy>
    </property>
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>139</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Style Editor</string>
    </property>
@@ -523,6 +553,12 @@
      <horstretch>0</horstretch>
      <verstretch>0</verstretch>
     </sizepolicy>
+   </property>
+   <property name="minimumSize">
+    <size>
+     <width>180</width>
+     <height>122</height>
+    </size>
    </property>
    <property name="windowTitle">
     <string>Font Editor</string>
@@ -609,6 +645,12 @@
    </widget>
   </widget>
   <widget class="QDockWidget" name="UndoEditor">
+   <property name="minimumSize">
+    <size>
+     <width>200</width>
+     <height>125</height>
+    </size>
+   </property>
    <property name="windowTitle">
     <string>Undo Stack</string>
    </property>

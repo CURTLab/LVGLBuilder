@@ -99,6 +99,21 @@ class LVGLPropertyCoord : public LVGLPropertyType<lv_coord_t> {
   int m_max;
 };
 
+class LVGLPropertyCoordUnlimit : public LVGLPropertyType<lv_coord_t> {
+ public:
+  LVGLPropertyCoordUnlimit(LVGLProperty *parent = nullptr);
+  LVGLPropertyCoordUnlimit(Qt::Orientation orientation,
+                           LVGLProperty *parent = nullptr);
+
+  QWidget *editor(QWidget *parent) override;
+  void updateEditor(LVGLObject *obj) override;
+  void updateWidget(LVGLObject *obj) override;
+
+ protected:
+  QSpinBox *m_widget;
+  int m_max;
+};
+
 class LVGLPropertyInt : public LVGLPropertyType<int> {
  public:
   LVGLPropertyInt(int min, int max, LVGLProperty *parent = nullptr);

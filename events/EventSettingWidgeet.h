@@ -39,5 +39,6 @@ class EventSettingWidgeet : public QDialog {
   bool m_isvaledithide;
   bool m_isval2comhide;
   bool m_isval3edithide;
+  bool m_isvalue4edithide;
 };
 #endif  // EVENTSETTINGWIDGEET_H

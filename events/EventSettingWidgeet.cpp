@@ -33,6 +33,7 @@ QStringList EventSettingWidgeet::textList() {
   if (!m_isvaledithide) list << ui->valueedit->text() + "#";
   if (!m_isval2comhide) list << ui->value2comb->currentText() + "#";
   if (!m_isval3edithide) list << ui->value3edit->text() + "#";
+  if (!m_isvalue4edithide) list << ui->value4edit->text() + "#";
   return list;
 }
 
@@ -54,6 +55,7 @@ void EventSettingWidgeet::init() {
   m_isvaledithide = false;
   m_isval2comhide = false;
   m_isval3edithide = false;
+  m_isvalue4edithide = true;
 
   switch (m_type) {
     case 0: {
@@ -89,8 +91,21 @@ void EventSettingWidgeet::init() {
       m_isval2comhide = true;
       m_issendercomhide = true;
     } break;
-    case 2:
-      break;
+    case 2: {
+      ui->objectlab->setText(tr("Target"));
+      ui->proplab->setText(tr("Animation path"));
+      ui->valuelab->setText(tr("X"));
+      ui->value3lab->setText(tr("Y"));
+      ui->objcomb->addItems(m_event->getanimObjList());
+      ui->propcomb->addItems(m_event->getanimPathList());
+      ui->valueedit->setText("0");
+      ui->value3edit->setText("0");
+      ui->value4lab->setText("Duration");
+      ui->value4edit->setText("100");
+      m_isval2comhide = true;
+      m_issendercomhide = true;
+      m_isvalue4edithide = false;
+    } break;
     case 3:
       break;
   }
@@ -112,5 +127,9 @@ void EventSettingWidgeet::init() {
   if (m_isval3edithide) {
     ui->value3lab->hide();
     ui->value3edit->hide();
+  }
+  if (m_isvalue4edithide) {
+    ui->value4lab->hide();
+    ui->value4edit->hide();
   }
 }

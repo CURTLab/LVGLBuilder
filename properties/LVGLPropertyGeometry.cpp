@@ -9,10 +9,10 @@
 #include "LVGLObject.h"
 #include "LVGLSimulator.h"
 
-class LVGLPropertyX : public LVGLPropertyCoord {
+class LVGLPropertyX : public LVGLPropertyCoordUnlimit {
  public:
   inline LVGLPropertyX(LVGLProperty *p)
-      : LVGLPropertyCoord(Qt::Horizontal, p) {}
+      : LVGLPropertyCoordUnlimit(Qt::Horizontal, p) {}
   inline QString name() const override { return "x"; }
 
  protected:
@@ -24,9 +24,10 @@ class LVGLPropertyX : public LVGLPropertyCoord {
   }
 };
 
-class LVGLPropertyY : public LVGLPropertyCoord {
+class LVGLPropertyY : public LVGLPropertyCoordUnlimit {
  public:
-  inline LVGLPropertyY(LVGLProperty *p) : LVGLPropertyCoord(Qt::Vertical, p) {}
+  inline LVGLPropertyY(LVGLProperty *p)
+      : LVGLPropertyCoordUnlimit(Qt::Vertical, p) {}
   inline QString name() const override { return "y"; }
 
  protected:
