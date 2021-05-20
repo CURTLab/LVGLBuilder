@@ -5,6 +5,10 @@ program: https://github.com/mrQzs/Lvgl_Simulator
 * Just load the source code and modify the resolution in the lvconf.h
 
   ![lvglsim](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/lvglsim.gif)
+  
+# Move Animation
+* If the value is empty, its value is not changed
+  ![animdemo](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/animdemo.gif)
 
 # Event&Style select
 
