@@ -377,7 +377,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
         stream << QString(
                       "void %1_ev_%2_event(lv_obj_t *obj, lv_event_t event);\n")
                       .arg(o->codeName())
-                      .arg(tabindex);
+                      .arg(i);
         QList<LVGLEvent *> &listev = objevs[o->obj()];
         for (auto e : listev) {
           stream << e->eventHeadCode();
@@ -427,7 +427,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
             << QString(
                    "\nvoid %1_ev_%2_event(lv_obj_t *obj, lv_event_t event){\n")
                    .arg(o->codeName())
-                   .arg(tabindex);
+                   .arg(i);
         for (auto e : listev)
           stream << "\t" << QString("%1(obj, event);\n").arg(e->getEventName());
         stream << "}\n\n";

@@ -468,12 +468,7 @@ LV_ATTRIBUTE_FAST_MEM static void draw_border(const lv_area_t * coords, const lv
         fill_area.y1 = disp_area->y1 + draw_area.y1;
         fill_area.y2 = fill_area.y1;
 
-        uint32_t buf_ofs = 0;
         if(dsc->border_side == LV_BORDER_SIDE_LEFT) fill_area.x2 = coords->x1 + corner_size;
-        else if(dsc->border_side == LV_BORDER_SIDE_RIGHT) {
-            fill_area.x1 = coords->x2 - corner_size;
-            buf_ofs = fill_area.x1 - coords->x1;
-        }
 
         volatile bool top_only = false;
         volatile bool bottom_only = false;
@@ -492,7 +487,7 @@ LV_ATTRIBUTE_FAST_MEM static void draw_border(const lv_area_t * coords, const lv
                (bottom_only && fill_area.y1 >= coords->y2 - corner_size)) {
                 _lv_memset_ff(mask_buf, draw_area_w);
                 mask_res = lv_draw_mask_apply(mask_buf, vdb->area.x1 + draw_area.x1, vdb->area.y1 + h, draw_area_w);
-                _lv_blend_fill(clip, &fill_area, color, mask_buf + buf_ofs, mask_res, opa, blend_mode);
+                _lv_blend_fill(clip, &fill_area, color, mask_buf, mask_res, opa, blend_mode);
             }
             fill_area.y1++;
             fill_area.y2++;
@@ -716,6 +711,9 @@ LV_ATTRIBUTE_FAST_MEM static void draw_shadow(const lv_area_t * coords, const lv
 
     has_com = _lv_area_intersect(&ca, &a, clip);
     if(has_com && _lv_area_is_in(&a, &bg_coords, r_bg) == false) {
+        /*Avoid overlap in the middle with large radius*/
+        if(ca.x1 <= w_half) ca.x1 = w_half + 1;
+
         if(simple_mode) ca.x1 = LV_MATH_MAX(ca.x1, coords->x2);
         /*Draw horizontal lines*/
         lv_coord_t w = lv_area_get_width(&ca);
@@ -841,6 +839,9 @@ LV_ATTRIBUTE_FAST_MEM static void draw_shadow(const lv_area_t * coords, const lv
 
     has_com = _lv_area_intersect(&ca, &a, clip);
     if(has_com && _lv_area_is_in(&a, &bg_coords, r_bg) == false) {
+        /*Avoid overlap in the middle with large radius*/
+        if(ca.x2 > w_half) ca.x2 = w_half;
+
         if(simple_mode) ca.x2 = LV_MATH_MIN(coords->x1, ca.x2);
         /*Draw vertical lines*/
         lv_coord_t w = lv_area_get_width(&ca);
@@ -879,6 +880,9 @@ LV_ATTRIBUTE_FAST_MEM static void draw_shadow(const lv_area_t * coords, const lv
 
     has_com = _lv_area_intersect(&ca, &a, clip);
     if(has_com && _lv_area_is_in(&a, &bg_coords, r_bg) == false) {
+        /*Avoid overlap in the middle with large radius*/
+        if(ca.y2 > h_half) ca.y2 = h_half;
+
         if(simple_mode) ca.y2 = LV_MATH_MIN(ca.y2, coords->y1);
         /*Draw horizontal lines*/
         lv_coord_t w = lv_area_get_width(&ca);
@@ -920,6 +924,9 @@ LV_ATTRIBUTE_FAST_MEM static void draw_shadow(const lv_area_t * coords, const lv
 
     has_com = _lv_area_intersect(&ca, &a, clip);
     if(has_com && _lv_area_is_in(&a, &bg_coords, r_bg) == false) {
+        /*Avoid overlap in the middle with large radius*/
+        if(ca.y1 <= h_half) ca.y1 = h_half + 1;
+
         if(simple_mode) ca.y1 = LV_MATH_MAX(ca.y1, coords->y2);
         /*Draw horizontal lines*/
         lv_coord_t w = lv_area_get_width(&ca);

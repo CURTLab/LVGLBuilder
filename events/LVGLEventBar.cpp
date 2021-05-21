@@ -15,15 +15,22 @@ void LVGLEventBar::eventRun(lv_obj_t *obj) {
   LVGLHelper::getInstance().updatetabDate();
   QList<LVGLObject *> objs;
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+  auto &apos = LVGLHelper::getInstance().getanimobjPos();
   for (int i = 0; i < tabw->count(); ++i) {
     auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
     auto os = tab->allObject();
     for (auto o : os) {
-      if (o->name() == name) {
-        targert = o->obj();
+      if (o->obj() == obj) {
         objs = os;
         break;
       }
+    }
+  }
+
+  for (auto o : objs) {
+    if (o->name() == name) {
+      targert = o->obj();
+      break;
     }
   }
 

@@ -105,7 +105,7 @@ void lv_anim_start(lv_anim_t * a)
     a->time_orig = a->time;
     a->run_round = anim_run_round;
     _lv_memcpy(new_anim, a, sizeof(lv_anim_t));
-
+    if(a->var == a) new_anim->var = new_anim;
     /*Set the start value*/
     if(new_anim->early_apply) {
         if(new_anim->exec_cb && new_anim->var) new_anim->exec_cb(new_anim->var, new_anim->start);
@@ -147,6 +147,15 @@ bool lv_anim_del(void * var, lv_anim_exec_xcb_t exec_cb)
     }
 
     return del;
+}
+
+/**
+ * Delete all the animations animation
+ */
+void lv_anim_del_all(void)
+{
+    _lv_ll_clear(&LV_GC_ROOT(_lv_anim_ll));
+    anim_mark_list_change();
 }
 
 /**
@@ -361,12 +370,15 @@ lv_anim_value_t lv_anim_path_bounce(const lv_anim_path_t * path, const lv_anim_t
         t    = 1024 - t;
         diff = diff / 40;
     }
-    else {
+    else if(t >= 921 && t <= 1024) {
         /*Fall back*/
         t -= 921;
         t    = t * 10; /*to [0..1024] range*/
         diff = diff / 40;
     }
+
+    if(t > 1024) t = 1024;
+
 
     int32_t step = _lv_bezier3(t, 1024, 800, 500, 0);
 
@@ -425,8 +437,9 @@ static void anim_task(lv_task_t * param)
 
             /*The animation will run now for the first time. Call `start_cb`*/
             int32_t new_act_time = a->act_time + elaps;
-            if(a->act_time <= 0 && new_act_time >= 0) {
+            if(!a->start_cb_called && a->act_time <= 0 && new_act_time >= 0) {
                 if(a->start_cb) a->start_cb(a);
+                a->start_cb_called = 1;
             }
             a->act_time += elaps;
             if(a->act_time >= 0) {

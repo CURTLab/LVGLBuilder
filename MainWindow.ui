@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1792</width>
+    <width>1894</width>
     <height>1165</height>
    </rect>
   </property>
@@ -58,7 +58,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1792</width>
+     <width>1894</width>
      <height>21</height>
     </rect>
    </property>
@@ -141,8 +141,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>200</width>
-     <height>89</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="baseSize">
@@ -193,7 +193,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>200</width>
+     <width>335</width>
      <height>89</height>
     </size>
    </property>
@@ -230,7 +230,7 @@
       <widget class="QTreeView" name="property_tree">
        <property name="minimumSize">
         <size>
-         <width>400</width>
+         <width>335</width>
          <height>0</height>
         </size>
        </property>
@@ -294,8 +294,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>178</width>
-          <height>479</height>
+          <width>243</width>
+          <height>396</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -508,8 +508,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>200</width>
-     <height>139</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -647,8 +647,8 @@
   <widget class="QDockWidget" name="UndoEditor">
    <property name="minimumSize">
     <size>
-     <width>200</width>
-     <height>125</height>
+     <width>0</width>
+     <height>0</height>
     </size>
    </property>
    <property name="windowTitle">

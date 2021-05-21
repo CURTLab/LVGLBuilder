@@ -95,6 +95,7 @@ typedef struct _lv_anim_t {
     /*Animation system use these - user shouldn't set*/
     uint8_t playback_now : 1; /**< Play back is in progress*/
     uint8_t run_round : 1;    /**< Indicates the animation has run in this round*/
+    uint8_t start_cb_called : 1;    /**< Indicates that `start_cb` was already called`*/
     uint32_t time_orig;
 } lv_anim_t;
 
@@ -311,6 +312,11 @@ static inline uint32_t lv_anim_get_delay(lv_anim_t * a)
  * @return true: at least 1 animation is deleted, false: no animation is deleted
  */
 bool lv_anim_del(void * var, lv_anim_exec_xcb_t exec_cb);
+
+/**
+ * Delete all the animations animation
+ */
+void lv_anim_del_all(void);
 
 /**
  * Get the animation of a variable and its `exec_cb`.

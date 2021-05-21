@@ -76,7 +76,7 @@ MainWindow::MainWindow(QWidget *parent)
   m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
                                     QAbstractItemView::CurrentChanged);
 
-  m_zoom_slider->setRange(-8, 8);
+  m_zoom_slider->setRange(-10, 40);
 
   m_ui->statusbar->addPermanentWidget(m_zoom_slider);
 

@@ -145,7 +145,7 @@ enum {
     LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_REPEAT,     0x6, LV_STYLE_ID_VALUE + 1, LV_STYLE_ATTR_NONE),
     LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_RECOLOR,    0x6, LV_STYLE_ID_COLOR + 0, LV_STYLE_ATTR_NONE),
     LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_OPA,        0x6, LV_STYLE_ID_OPA   + 0, LV_STYLE_ATTR_NONE),
-    LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_RECOLOR_OPA,0x6, LV_STYLE_ID_OPA   + 1, LV_STYLE_ATTR_NONE),
+    LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_RECOLOR_OPA, 0x6, LV_STYLE_ID_OPA   + 1, LV_STYLE_ATTR_NONE),
     LV_STYLE_PROP_INIT(LV_STYLE_PATTERN_IMAGE,      0x6, LV_STYLE_ID_PTR   + 0, LV_STYLE_ATTR_NONE),
 
     LV_STYLE_PROP_INIT(LV_STYLE_VALUE_LETTER_SPACE, 0x7, LV_STYLE_ID_VALUE + 0, LV_STYLE_ATTR_NONE),
@@ -327,13 +327,6 @@ void lv_style_reset(lv_style_t * style);
  * @return size of the properties in bytes
  */
 uint16_t _lv_style_get_mem_size(const lv_style_t * style);
-
-/**
- * Copy a style to an other
- * @param dest pointer to the destination style
- * @param src pointer to the source style
- */
-void lv_style_copy(lv_style_t * dest, const lv_style_t * src);
 
 /**
  * Remove a property from a style
