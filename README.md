@@ -36,6 +36,9 @@
 
 - [ ] redo/undo supports new multi-page design
 
+- [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
+
+
 
 # LVGLBuilder
 
