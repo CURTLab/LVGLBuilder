@@ -1,6 +1,7 @@
 #ifndef LVGLPROJECT_H
 #define LVGLPROJECT_H
 
+#include <QObject>
 #include <QSize>
 #include <QString>
 

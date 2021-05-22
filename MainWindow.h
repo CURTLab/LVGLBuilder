@@ -22,6 +22,8 @@ class ListDelegate;
 class LVGLWidget;
 class QUndoGroup;
 class LVGLTabWidget;
+class LVGLProcessBar;
+class LVGLExportThread;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,7 +45,13 @@ class MainWindow : public QMainWindow {
   QMap<int, lv_obj_t *> &getCodeMap() { return m_codemap; }
   QTabWidget *getTabW();
 
+ signals:
+  void startExport(QString path);
+  void stopExport();
+
  private slots:
+  void onETSuccessful();
+  void onETFailed();
   void updateProperty();
   void setCurrentObject(LVGLObject *obj);
   void styleChanged();
@@ -137,5 +145,8 @@ class MainWindow : public QMainWindow {
   QUndoGroup *m_undoGroup;
   int m_lastindex;
   QMap<LVGLTabWidget *, QString> m_tabFile;
+  LVGLProcessBar *m_pcBar;
+  LVGLExportThread *m_exportThread;
+  QThread *m_etThread;
 };
 #endif  // MAINWINDOW_H

@@ -94,6 +94,7 @@ SOURCES += \
     core/LVGLCommands.cpp \
     core/LVGLCore.cpp \
     core/LVGLDialog.cpp \
+    core/LVGLExportThread.cpp \
     core/LVGLFontData.cpp \
     core/LVGLFontDialog.cpp \
     core/LVGLHelper.cpp \
@@ -103,6 +104,7 @@ SOURCES += \
     core/LVGLNewDialog.cpp \
     core/LVGLObject.cpp \
     core/LVGLObjectModel.cpp \
+    core/LVGLProcessBar.cpp \
     core/LVGLProject.cpp \
     core/LVGLProperty.cpp \
     core/LVGLPropertyModel.cpp \
@@ -198,6 +200,7 @@ HEADERS += \
     core/LVGLCommands.h \
     core/LVGLCore.h \
     core/LVGLDialog.h \
+    core/LVGLExportThread.h \
     core/LVGLFontData.h \
     core/LVGLFontDialog.h \
     core/LVGLHelper.h \
@@ -207,6 +210,7 @@ HEADERS += \
     core/LVGLNewDialog.h \
     core/LVGLObject.h \
     core/LVGLObjectModel.h \
+    core/LVGLProcessBar.h \
     core/LVGLProject.h \
     core/LVGLProperty.h \
     core/LVGLPropertyModel.h \
@@ -303,6 +307,7 @@ FORMS += \
     core/ColorPick.ui \
     core/LVGLFontDialog.ui \
     core/LVGLNewDialog.ui \
+    core/LVGLProcessBar.ui \
     core/ListViewItem.ui \
     events/EventSelectWIdget.ui \
     events/EventSettingWidgeet.ui \

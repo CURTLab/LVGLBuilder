@@ -6,9 +6,11 @@
 #include <QMessageBox>
 #include <QSettings>
 #include <QSortFilterProxyModel>
+#include <QThread>
 #include <QUndoGroup>
 
 #include "core/LVGLDialog.h"
+#include "core/LVGLExportThread.h"
 #include "core/LVGLFontData.h"
 #include "core/LVGLFontDialog.h"
 #include "core/LVGLHelper.h"
@@ -16,6 +18,7 @@
 #include "core/LVGLLog.h"
 #include "core/LVGLNewDialog.h"
 #include "core/LVGLObjectModel.h"
+#include "core/LVGLProcessBar.h"
 #include "core/LVGLProject.h"
 #include "core/LVGLPropertyModel.h"
 #include "core/LVGLSimulator.h"
@@ -50,7 +53,10 @@ MainWindow::MainWindow(QWidget *parent)
       m_frun(true),
       m_isrun(false),
       m_undoGroup(new QUndoGroup(this)),
-      m_lastindex(-1) {
+      m_lastindex(-1),
+      m_pcBar(new LVGLProcessBar(this)),
+      m_exportThread(new LVGLExportThread),
+      m_etThread(new QThread(this)) {
   m_ui->setupUi(this);
   lvgl.init(320, 480);
   m_ui->style_tree->setStyleSheet(
@@ -142,6 +148,24 @@ MainWindow::MainWindow(QWidget *parent)
       "QListWidget::Item:selected{background-color:#CEE3F6;}";
   m_ui->list_images->setStyleSheet(styless);
   m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
+
+  m_exportThread->moveToThread(m_etThread);
+  connect(m_exportThread, &LVGLExportThread::successful, this,
+          &MainWindow::onETSuccessful);
+  connect(m_exportThread, &LVGLExportThread::failed, this,
+          &MainWindow::onETFailed);
+  connect(this, &MainWindow::startExport, m_exportThread,
+          &LVGLExportThread::startrun);
+  connect(this, &MainWindow::stopExport, m_exportThread,
+          &LVGLExportThread::stop);
+  m_etThread->start();
+  m_pcBar->setWindowTitle("Exporting...");
+  m_pcBar->setWindowModality(Qt::ApplicationModal);
+
+  // Up to U
+  // m_pcBar->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+  // m_pcBar->setAttribute(Qt::WA_TranslucentBackground);
+
   LVGLLog::log_trace("Main started", __FILE__, __LINE__, __func__);
 }
 
@@ -161,6 +185,11 @@ MainWindow::~MainWindow() {
   }
 
   delete m_ui;
+  delete m_pcBar;
+  emit stopExport();
+  m_etThread->quit();
+  delete m_exportThread;
+
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
   qDeleteAll(m_widgetsInputW);
@@ -176,6 +205,18 @@ MainWindow::~MainWindow() {
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
 QTabWidget *MainWindow::getTabW() { return m_ui->tabWidget; }
+
+void MainWindow::onETSuccessful() {
+  emit stopExport();
+  m_pcBar->close();
+  QMessageBox::information(this, tr("Export"), tr("Successful"));
+}
+
+void MainWindow::onETFailed() {
+  emit stopExport();
+  m_pcBar->close();
+  QMessageBox::warning(this, tr("Export"), tr("Failed"));
+}
 
 void MainWindow::updateProperty() {
   LVGLObject *o = m_curSimulation->selectedObject();
@@ -461,8 +502,8 @@ void MainWindow::on_action_export_c_triggered() {
   }
   QString path = QFileDialog::getExistingDirectory(this, "Export C files", dir);
   if (path.isEmpty()) return;
-  if (m_project->exportCode(path))
-    QMessageBox::information(this, "Export", "C project exported!");
+  emit startExport(path);
+  m_pcBar->exec();
 }
 
 void MainWindow::on_button_add_image_clicked() {
