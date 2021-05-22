@@ -1,7 +1,27 @@
-# Very important
+# Very Very Very important
 * Try not to delete the page.
 * Save files at any time
 * Redo/undo operation Because of the design modification of multiple pages, currently multiple page redo/undo will cause the program to crash.
+* When the simulation is running, please wait for the animation to end before canceling the simulation.
+
+# New Todo List
+
+- [x] (First) Add Event System
+- [x] (Second) Redesign the multi-page function, a single page can simulate all pages 
+- [x] Add move Animation
+- [ ] Add test cases and add detailed event function usage instructions
+- [ ] Implement the unadded functions of the remaining widgets
+- [ ] Realize all event functions
+- [ ] Support more complex animation events
+- [ ] Realize the simulation operation function to stop at any time and immediately restore the initial state
+- [ ] All event function parameters must meet the requirements
+- [ ] Realize the automatic save function
+- [ ] Refactor the code related to the style of the widget
+- [ ] redo/undo supports new multi-page design
+- [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
+- [ ] Dialog for changing keyboard layout
+
+
 
 # Widget Style Select
 
@@ -20,23 +40,6 @@
 * support arc event
 
 ![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event1.gif)
-
-# New Todo List
-- [ ]  (First) Add Event
-
-- [x] (Second) Redesign the multi-page function, a single page can simulate all pages 
-
-- [ ] Add Animation
-
-- [ ] Dialog for changing keyboard layout
-
-- [ ] Refactor the code related to the style of the widget
-
-- [ ] Realize the automatic save function
-
-- [ ] redo/undo supports new multi-page design
-
-- [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
 
 
 
