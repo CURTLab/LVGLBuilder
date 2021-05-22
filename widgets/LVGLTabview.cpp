@@ -2,8 +2,8 @@
 
 #include <QIcon>
 
-#include "LVGLCore.h"
-#include "LVGLObject.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyTextList.h"
 

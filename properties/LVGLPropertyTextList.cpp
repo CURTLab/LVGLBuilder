@@ -1,128 +1,109 @@
 #include "LVGLPropertyTextList.h"
 
+#include <QDialog>
+#include <QDialogButtonBox>
+#include <QJsonArray>
 #include <QListWidget>
 #include <QToolButton>
-#include <QDialogButtonBox>
 #include <QVBoxLayout>
-#include <QDialog>
-#include <QJsonArray>
 
-class LVGLPropertyTextListDialog : public QDialog
-{
-public:
-	inline LVGLPropertyTextListDialog(bool canInsert, QWidget *parent = nullptr) : QDialog(parent)
-	{
-		m_list = new QListWidget(this);
+class LVGLPropertyTextListDialog : public QDialog {
+ public:
+  inline LVGLPropertyTextListDialog(bool canInsert, QWidget *parent = nullptr)
+      : QDialog(parent) {
+    m_list = new QListWidget(this);
 
-		QDialogButtonBox *box = new QDialogButtonBox(QDialogButtonBox::Ok |
-																	QDialogButtonBox::Cancel);
-		connect(box, &QDialogButtonBox::accepted, this, &QDialog::accept);
-		connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
+    QDialogButtonBox *box =
+        new QDialogButtonBox(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(box, &QDialogButtonBox::accepted, this, &QDialog::accept);
+    connect(box, &QDialogButtonBox::rejected, this, &QDialog::reject);
 
-		if (canInsert) {
-			QToolButton *add = new QToolButton();
-			add->setIcon(QIcon(":/icons/add.png"));
-			add->setIconSize(QSize(24, 24));
-			QToolButton *rem = new QToolButton();
-			rem->setIcon(QIcon(":/icons/delete.png"));
-			rem->setIconSize(QSize(24, 24));
+    if (canInsert) {
+      QToolButton *add = new QToolButton();
+      add->setIcon(QIcon(":/icons/add.png"));
+      add->setIconSize(QSize(24, 24));
+      QToolButton *rem = new QToolButton();
+      rem->setIcon(QIcon(":/icons/delete.png"));
+      rem->setIconSize(QSize(24, 24));
 
-			box->addButton(add, QDialogButtonBox::ApplyRole);
-			box->addButton(rem, QDialogButtonBox::ApplyRole);
+      box->addButton(add, QDialogButtonBox::ApplyRole);
+      box->addButton(rem, QDialogButtonBox::ApplyRole);
 
-			connect(box, &QDialogButtonBox::clicked, [this,add,rem](QAbstractButton *b) {
-				if (b == add) {
-					QListWidgetItem *item = new QListWidgetItem("New text");
-					item->setFlags(item->flags() | Qt::ItemIsEditable);
-					m_list->addItem(item);
-				} else if (b == rem) {
-					m_list->takeItem(m_list->currentRow());
-				}
-			});
-		}
+      connect(box, &QDialogButtonBox::clicked,
+              [this, add, rem](QAbstractButton *b) {
+                if (b == add) {
+                  QListWidgetItem *item = new QListWidgetItem("New text");
+                  item->setFlags(item->flags() | Qt::ItemIsEditable);
+                  m_list->addItem(item);
+                } else if (b == rem) {
+                  m_list->takeItem(m_list->currentRow());
+                }
+              });
+    }
 
-		QVBoxLayout *layout1 = new QVBoxLayout;
-		layout1->addWidget(m_list);
-		layout1->addWidget(box);
+    QVBoxLayout *layout1 = new QVBoxLayout;
+    layout1->addWidget(m_list);
+    layout1->addWidget(box);
 
-		setLayout(layout1);
-	}
+    setLayout(layout1);
+  }
 
-	inline void setTextList(QStringList list)
-	{
-		m_list->clear();
-		for (const QString &s:list) {
-			QListWidgetItem *item = new QListWidgetItem(s);
-			item->setFlags(item->flags() | Qt::ItemIsEditable);
-			m_list->addItem(item);
-		}
-	}
+  inline void setTextList(QStringList list) {
+    m_list->clear();
+    for (const QString &s : list) {
+      QListWidgetItem *item = new QListWidgetItem(s);
+      item->setFlags(item->flags() | Qt::ItemIsEditable);
+      m_list->addItem(item);
+    }
+  }
 
-	inline QStringList textList() const {
-		QStringList ret;
-		for (int i = 0; i < m_list->count(); ++i)
-			ret << m_list->item(i)->text();
-		return ret;
-	}
+  inline QStringList textList() const {
+    QStringList ret;
+    for (int i = 0; i < m_list->count(); ++i) ret << m_list->item(i)->text();
+    return ret;
+  }
 
-private:
-	QListWidget *m_list;
-
+ private:
+  QListWidget *m_list;
 };
 
 LVGLPropertyTextList::LVGLPropertyTextList(bool canInsert, LVGLProperty *parent)
-	: LVGLProperty(parent)
-	, m_widget(nullptr)
-	, m_canInsert(canInsert)
-{
+    : LVGLProperty(parent), m_widget(nullptr), m_canInsert(canInsert) {}
+
+bool LVGLPropertyTextList::hasEditor() const { return true; }
+
+QWidget *LVGLPropertyTextList::editor(QWidget *parent) {
+  m_widget = new LVGLPropertyTextListDialog(m_canInsert, parent);
+  return m_widget;
 }
 
-bool LVGLPropertyTextList::hasEditor() const
-{
-	return true;
+void LVGLPropertyTextList::updateEditor(LVGLObject *obj) {
+  m_widget->setTextList(get(obj));
 }
 
-QWidget *LVGLPropertyTextList::editor(QWidget *parent)
-{
-	m_widget = new LVGLPropertyTextListDialog(m_canInsert, parent);
-	return m_widget;
+void LVGLPropertyTextList::updateWidget(LVGLObject *obj) {
+  if (m_widget->result() == QDialog::Accepted) set(obj, m_widget->textList());
 }
 
-void LVGLPropertyTextList::updateEditor(LVGLObject *obj)
-{
-	m_widget->setTextList(get(obj));
+QVariant LVGLPropertyTextList::value(LVGLObject *obj) const {
+  const QStringList items = get(obj);
+  return items.isEmpty() ? "Empty list" : items.join(", ");
 }
 
-void LVGLPropertyTextList::updateWidget(LVGLObject *obj)
-{
-	if (m_widget->result() == QDialog::Accepted)
-		set(obj, m_widget->textList());
+void LVGLPropertyTextList::setValue(LVGLObject *obj, QVariant value) {
+  if (value.type() == QVariant::List) {
+    QVariantList list = value.toList();
+    QStringList items;
+    for (const QVariant &p : list) {
+      if (p.type() == QVariant::String) items << p.toString();
+    }
+    set(obj, items);
+  }
 }
 
-QVariant LVGLPropertyTextList::value(LVGLObject *obj) const
-{
-	const QStringList items = get(obj);
-	return items.isEmpty() ? "Empty list" : items.join(", ");
-}
-
-void LVGLPropertyTextList::setValue(LVGLObject *obj, QVariant value)
-{
-	if (value.type() == QVariant::List) {
-		QVariantList list = value.toList();
-		QStringList items;
-		for (const QVariant &p:list) {
-			if (p.type() == QVariant::String)
-				items << p.toString();
-		}
-		set(obj, items);
-	}
-}
-
-QJsonValue LVGLPropertyTextList::toJson(LVGLObject *obj) const
-{
-	const QStringList items = get(obj);
-	QJsonArray val;
-	for (const QString &i:items)
-		val.append(i);
-	return val;
+QJsonValue LVGLPropertyTextList::toJson(LVGLObject *obj) const {
+  const QStringList items = get(obj);
+  QJsonArray val;
+  for (const QString &i : items) val.append(i);
+  return val;
 }

@@ -11,9 +11,9 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-#include "LVGLCore.h"
-#include "LVGLImageData.h"
-#include "LVGLObject.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLImageData.h"
+#include "core/LVGLObject.h"
 
 class LVGLPropertyListDelegate : public QStyledItemDelegate {
  public:

@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAssignTextArea.h"
 
 class LVGLPropertyKBMode : public LVGLPropertyEnum {

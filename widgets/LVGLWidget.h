@@ -4,8 +4,8 @@
 #include <QJsonObject>
 #include <QPixmap>
 
-#include "LVGLProperty.h"
-#include "LVGLStyle.h"
+#include "core/LVGLProperty.h"
+#include "core/LVGLStyle.h"
 
 class LVGLWidget {
  public:

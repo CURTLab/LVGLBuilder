@@ -1,7 +1,7 @@
 #ifndef LVGLPROPERTYANYFUNC_H
 #define LVGLPROPERTYANYFUNC_H
 
-#include "LVGLProperty.h"
+#include "core/LVGLProperty.h"
 
 enum AnyFuncColType {
   e_QComboBox = 0,

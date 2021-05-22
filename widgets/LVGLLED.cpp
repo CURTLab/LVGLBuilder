@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 
 #define LV_LED_WIDTH_DEF (LV_DPI / 3)
 #define LV_LED_HEIGHT_DEF (LV_DPI / 3)

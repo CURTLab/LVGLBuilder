@@ -1,10 +1,10 @@
 #include "LVGLEventArc.h"
 
-#include "LVGLCore.h"
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
-#include "LVGLTabWidget.h"
 #include "MainWindow.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
+#include "core/LVGLTabWidget.h"
 #include "lvgl/lvgl.h"
 
 LVGLEventArc::LVGLEventArc() {}

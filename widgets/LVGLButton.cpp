@@ -3,9 +3,9 @@
 #include <QDebug>
 #include <QIcon>
 
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
 #include "MainWindow.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAnyFunc.h"
 
 class LVGLPropertyButtonState : public LVGLPropertyEnum {

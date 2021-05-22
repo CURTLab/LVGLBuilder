@@ -4,7 +4,7 @@
 #include "LVGLEventScreen.h"
 #include "LVGLEventType.h"
 #include "LVGLEventWidgetBasic.h"
-#include "LVGLHelper.h"
+#include "core/LVGLHelper.h"
 #include "ui_EventSelectWIdget.h"
 #include "widgets/LVGLWidget.h"
 

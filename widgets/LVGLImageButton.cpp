@@ -2,10 +2,10 @@
 
 #include <QIcon>
 
-#include "LVGLCore.h"
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
 #include "MainWindow.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyImage.h"
 

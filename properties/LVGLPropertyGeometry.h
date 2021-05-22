@@ -1,7 +1,7 @@
 #ifndef LVGLPROPERTYGEOMETRY_H
 #define LVGLPROPERTYGEOMETRY_H
 
-#include "LVGLProperty.h"
+#include "core/LVGLProperty.h"
 
 class LVGLPropertyGeometry : public LVGLProperty {
  public:

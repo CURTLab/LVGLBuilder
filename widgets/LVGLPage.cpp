@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 
 class LVGLPropertyPageScrollbars : public LVGLPropertyEnum {
  public:

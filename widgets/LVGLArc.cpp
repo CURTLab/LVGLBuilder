@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAnyFunc.h"
 #include "properties/LVGLPropertyVal2.h"
 

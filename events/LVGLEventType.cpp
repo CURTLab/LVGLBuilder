@@ -1,9 +1,9 @@
 #include "LVGLEventType.h"
 
-#include "LVGLCore.h"
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
 #include "MainWindow.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
 
 LVGLEventType::LVGLEventType(int type) : m_type(type), m_wtype(0), m_role(0) {
   init();

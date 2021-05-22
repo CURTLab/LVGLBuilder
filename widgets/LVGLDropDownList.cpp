@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 
 class LVGLPropertyDropdownDir : public LVGLPropertyEnum {
  public:

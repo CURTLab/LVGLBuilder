@@ -2,7 +2,7 @@
 
 #include <QIcon>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 
 class LVGLPropertyState : public LVGLPropertyBool {
  public:

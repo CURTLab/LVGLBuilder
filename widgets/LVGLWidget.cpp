@@ -1,9 +1,9 @@
 #include "LVGLWidget.h"
 
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
-#include "LVGLTabWidget.h"
 #include "MainWindow.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
+#include "core/LVGLTabWidget.h"
 #include "events/EventSelectWIdget.h"
 #include "events/LVGLEventAnim.h"
 #include "events/LVGLEventScreen.h"

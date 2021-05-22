@@ -1,7 +1,7 @@
 #ifndef LVGLPROPERTYEVENT_H
 #define LVGLPROPERTYEVENT_H
 
-#include "LVGLProperty.h"
+#include "core/LVGLProperty.h"
 class EventsListWIdget;
 class LVGLWidget;
 

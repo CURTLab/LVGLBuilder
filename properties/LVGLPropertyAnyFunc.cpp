@@ -14,7 +14,7 @@
 #include <QToolButton>
 #include <QVBoxLayout>
 
-#include "ColorPick.h"
+#include "core/ColorPick.h"
 
 class LVGLPropertyAnyFuncDialog : public QDialog {
  public:

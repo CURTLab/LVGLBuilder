@@ -5,7 +5,7 @@
 #include <QIcon>
 #include <QSpinBox>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 
 class LVGLPropertyRolleroptionsN : public LVGLPropertyStringPlus {
  public:

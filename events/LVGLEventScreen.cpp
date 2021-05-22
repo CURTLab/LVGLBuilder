@@ -1,8 +1,8 @@
 #include "LVGLEventScreen.h"
 
-#include "LVGLHelper.h"
-#include "LVGLTabWidget.h"
 #include "MainWindow.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLTabWidget.h"
 
 LVGLEventScreen::LVGLEventScreen() {}
 

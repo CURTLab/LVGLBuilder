@@ -3,8 +3,8 @@
 #include <QComboBox>
 #include <QIcon>
 
-#include "LVGLCore.h"
-#include "LVGLObject.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyImage.h"
 
 class LVGLPropertyImgOffsetX : public LVGLPropertyCoord {

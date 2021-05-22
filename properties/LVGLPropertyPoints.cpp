@@ -9,7 +9,7 @@
 #include <QTreeWidget>
 #include <QVBoxLayout>
 
-#include "LVGLCore.h"
+#include "core/LVGLCore.h"
 
 LVGLPropertyPointsDialog::LVGLPropertyPointsDialog(QWidget *parent)
     : QDialog(parent) {

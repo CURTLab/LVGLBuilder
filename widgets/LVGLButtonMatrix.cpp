@@ -4,7 +4,7 @@
 #include <QIcon>
 #include <QUuid>
 
-#include "LVGLObject.h"
+#include "core/LVGLObject.h"
 #include "properties/LVGLPropertyAnyFunc.h"
 
 class LVGLPropertyBtnmatrixButtonsText : public LVGLPropertyStringPlus {

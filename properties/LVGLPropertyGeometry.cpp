@@ -4,10 +4,10 @@
 #include <QJsonObject>
 #include <QSpinBox>
 
-#include "LVGLCommands.h"
-#include "LVGLHelper.h"
-#include "LVGLObject.h"
-#include "LVGLSimulator.h"
+#include "core/LVGLCommands.h"
+#include "core/LVGLHelper.h"
+#include "core/LVGLObject.h"
+#include "core/LVGLSimulator.h"
 
 class LVGLPropertyX : public LVGLPropertyCoordUnlimit {
  public:

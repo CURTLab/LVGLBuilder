@@ -12,8 +12,8 @@
 #include <QStyledItemDelegate>
 #include <QToolButton>
 
-#include "LVGLCore.h"
-#include "LVGLObject.h"
+#include "core/LVGLCore.h"
+#include "core/LVGLObject.h"
 
 struct LVGLChartSeries {
   QColor color;

@@ -90,27 +90,33 @@ contains(TARGET_ARCH, x86_64){
 
 
 SOURCES += \
-    ColorPick.cpp \
-    LVGLCommands.cpp \
-    LVGLCore.cpp \
-    LVGLDialog.cpp \
-    LVGLFontData.cpp \
-    LVGLFontDialog.cpp \
-    LVGLHelper.cpp \
-    LVGLImageData.cpp \
-    LVGLLog.cpp \
-    LVGLNewDialog.cpp \
-    LVGLObject.cpp \
-    LVGLObjectModel.cpp \
-    LVGLProject.cpp \
-    LVGLStyle.cpp \
-    LVGLStyleModel.cpp \
-    LVGLTabWidget.cpp \
-    LVGLWidgetListView.cpp \
-    LVGLWidgetModelDisplay.cpp \
-    LVGLWidgetModelInput.cpp \
-    ListDelegate.cpp \
-    ListViewItem.cpp \
+    core/ColorPick.cpp \
+    core/LVGLCommands.cpp \
+    core/LVGLCore.cpp \
+    core/LVGLDialog.cpp \
+    core/LVGLFontData.cpp \
+    core/LVGLFontDialog.cpp \
+    core/LVGLHelper.cpp \
+    core/LVGLImageData.cpp \
+    core/LVGLItem.cpp \
+    core/LVGLLog.cpp \
+    core/LVGLNewDialog.cpp \
+    core/LVGLObject.cpp \
+    core/LVGLObjectModel.cpp \
+    core/LVGLProject.cpp \
+    core/LVGLProperty.cpp \
+    core/LVGLPropertyModel.cpp \
+    core/LVGLSimulator.cpp \
+    core/LVGLStyle.cpp \
+    core/LVGLStyleModel.cpp \
+    core/LVGLTabWidget.cpp \
+    core/LVGLWidgetListView.cpp \
+    core/LVGLWidgetModel.cpp \
+    core/LVGLWidgetModelDisplay.cpp \
+    core/LVGLWidgetModelInput.cpp \
+    core/LVGLWorker.cpp \
+    core/ListDelegate.cpp \
+    core/ListViewItem.cpp \
     events/EventSelectWIdget.cpp \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
@@ -183,38 +189,38 @@ SOURCES += \
     widgets/LVGLTextArea.cpp \
     widgets/LVGLTileView.cpp \
     widgets/LVGLWidget.cpp \
-    LVGLItem.cpp \
-    LVGLProperty.cpp \
-    LVGLPropertyModel.cpp \
-    LVGLSimulator.cpp \
-    LVGLWidgetModel.cpp \
-    LVGLWorker.cpp \
+    widgets/LVGLWindow.cpp \
     main.cpp \
     MainWindow.cpp \
-    widgets/LVGLWindow.cpp
 
 HEADERS += \
-    ColorPick.h \
-    LVGLCommands.h \
-    LVGLCore.h \
-    LVGLDialog.h \
-    LVGLFontData.h \
-    LVGLFontDialog.h \
-    LVGLHelper.h \
-    LVGLImageData.h \
-    LVGLLog.h \
-    LVGLNewDialog.h \
-    LVGLObject.h \
-    LVGLObjectModel.h \
-    LVGLProject.h \
-    LVGLStyle.h \
-    LVGLStyleModel.h \
-    LVGLTabWidget.h \
-    LVGLWidgetListView.h \
-    LVGLWidgetModelDisplay.h \
-    LVGLWidgetModelInput.h \
-    ListDelegate.h \
-    ListViewItem.h \
+    core/ColorPick.h \
+    core/LVGLCommands.h \
+    core/LVGLCore.h \
+    core/LVGLDialog.h \
+    core/LVGLFontData.h \
+    core/LVGLFontDialog.h \
+    core/LVGLHelper.h \
+    core/LVGLImageData.h \
+    core/LVGLItem.h \
+    core/LVGLLog.h \
+    core/LVGLNewDialog.h \
+    core/LVGLObject.h \
+    core/LVGLObjectModel.h \
+    core/LVGLProject.h \
+    core/LVGLProperty.h \
+    core/LVGLPropertyModel.h \
+    core/LVGLSimulator.h \
+    core/LVGLStyle.h \
+    core/LVGLStyleModel.h \
+    core/LVGLTabWidget.h \
+    core/LVGLWidgetListView.h \
+    core/LVGLWidgetModel.h \
+    core/LVGLWidgetModelDisplay.h \
+    core/LVGLWidgetModelInput.h \
+    core/LVGLWorker.h \
+    core/ListDelegate.h \
+    core/ListViewItem.h \
     events/EventSelectWIdget.h \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \
@@ -258,13 +264,6 @@ HEADERS += \
     widgets/LVGLArc.h \
     widgets/LVGLBar.h \
     widgets/LVGLButton.h \
-    LVGLItem.h \
-    LVGLProperty.h \
-    LVGLPropertyModel.h \
-    LVGLSimulator.h \
-    LVGLWidgetModel.h \
-    LVGLWorker.h \
-    MainWindow.h \
     widgets/LVGLButtonMatrix.h \
     widgets/LVGLCalendar.h \
     widgets/LVGLCanvas.h \
@@ -296,14 +295,15 @@ HEADERS += \
     widgets/LVGLTileView.h \
     widgets/LVGLWidget.h \
     widgets/LVGLWidgets.h \
-    widgets/LVGLWindow.h
+    widgets/LVGLWindow.h \
+    MainWindow.h \
 
 FORMS += \
-    ColorPick.ui \
-    LVGLFontDialog.ui \
-    LVGLNewDialog.ui \
-    ListViewItem.ui \
     MainWindow.ui \
+    core/ColorPick.ui \
+    core/LVGLFontDialog.ui \
+    core/LVGLNewDialog.ui \
+    core/ListViewItem.ui \
     events/EventSelectWIdget.ui \
     events/EventSettingWidgeet.ui \
     events/EventsListWIdget.ui

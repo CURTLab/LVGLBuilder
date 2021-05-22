@@ -8,7 +8,7 @@
 #include <QLineEdit>
 #include <QToolButton>
 
-#include "LVGLCore.h"
+#include "core/LVGLCore.h"
 
 LVGLPropertyColor::LVGLPropertyColor(LVGLProperty *parent)
     : LVGLProperty(parent) {}
