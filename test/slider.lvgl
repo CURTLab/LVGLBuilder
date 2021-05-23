@@ -1,0 +1,2645 @@
+{
+    "fonts": [
+    ],
+    "images": [
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 25,
+                    "width": 150,
+                    "x": 21,
+                    "y": 19
+                },
+                "locked": false,
+                "name": "slider_1",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 12,
+                    "width": 150,
+                    "x": 21,
+                    "y": 82
+                },
+                "locked": false,
+                "name": "slider_2",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 12,
+                    "width": 150,
+                    "x": 19,
+                    "y": 145
+                },
+                "locked": false,
+                "name": "slider_3",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 12,
+                    "width": 150,
+                    "x": 21,
+                    "y": 208
+                },
+                "locked": false,
+                "name": "slider_4",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Border": {
+                            "border_width": 1
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 12,
+                    "width": 150,
+                    "x": 23,
+                    "y": 270
+                },
+                "locked": false,
+                "name": "slider_5",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Mix": {
+                            "radius": 0
+                        },
+                        "Padding": {
+                            "pad_left": 0,
+                            "pad_right": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 30,
+                    "width": 150,
+                    "x": 21,
+                    "y": 327
+                },
+                "locked": false,
+                "name": "slider_6",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 30,
+                    "width": 150,
+                    "x": 19,
+                    "y": 390
+                },
+                "locked": false,
+                "name": "slider_7",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_opa": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 30,
+                    "width": 150,
+                    "x": 20,
+                    "y": 448
+                },
+                "locked": false,
+                "name": "slider_8",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "Mix": {
+                            "radius": 6
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": -5,
+                            "pad_right": -5,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 30,
+                    "width": 150,
+                    "x": 19,
+                    "y": 509
+                },
+                "locked": false,
+                "name": "slider_9",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe8e8e8"
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x409cff",
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_grad_color": "0x396afc",
+                            "bg_grad_dir": 2
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x585858"
+                        },
+                        "Padding": {
+                            "pad_bottom": 0,
+                            "pad_left": 2,
+                            "pad_right": -2,
+                            "pad_top": 0
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 448,
+                    "y": 95
+                },
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#Slider#slider_1#Value#Not use#55#",
+                    "Event2#Clicked#Set Property#Slider#slider_2#Value#Not use#55#",
+                    "Event3#Clicked#Set Property#Slider#slider_3#Value#Not use#55#",
+                    "Event4#Clicked#Set Property#Slider#slider_4#Value#Not use#55#",
+                    "Event5#Clicked#Set Property#Slider#slider_5#Value#Not use#55#",
+                    "Event6#Clicked#Set Property#Slider#slider_6#Value#Not use#55#",
+                    "Event7#Clicked#Set Property#Slider#slider_7#Value#Not use#55#",
+                    "Event8#Clicked#Set Property#Slider#slider_8#Value#Not use#55#",
+                    "Event9#Clicked#Set Property#Slider#slider_9#Value#Not use#55#"
+                ],
+                "state": "Released",
+                "styles": [
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "class": "lv_slider",
+                "geometry": {
+                    "height": 25,
+                    "width": 150,
+                    "x": 437,
+                    "y": 227
+                },
+                "locked": false,
+                "name": "slider_10",
+                "range": {
+                    "max": 100,
+                    "min": 0
+                },
+                "set event": [
+                    "Event10#Value_Changed#Set Property#Slider#slider_1#Value#Use##",
+                    "Event11#Value_Changed#Set Property#Slider#slider_2#Value#Use##",
+                    "Event12#Value_Changed#Set Property#Slider#slider_3#Value#Use##",
+                    "Event13#Value_Changed#Set Property#Slider#slider_4#Value#Use##",
+                    "Event14#Value_Changed#Set Property#Slider#slider_5#Value#Use##",
+                    "Event15#Value_Changed#Set Property#Slider#slider_6#Value#Use##",
+                    "Event16#Value_Changed#Set Property#Slider#slider_7#Value#Use##",
+                    "Event17#Value_Changed#Set Property#Slider#slider_8#Value#Use##",
+                    "Event18#Value_Changed#Set Property#Slider#slider_9#Value#Use##"
+                ],
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "value": 0,
+                "widget": "Slider"
+            },
+            {
+                "align": "Center",
+                "animation time": 200,
+                "auto fit": true,
+                "class": "lv_roller",
+                "geometry": {
+                    "height": 132,
+                    "width": 64,
+                    "x": 482,
+                    "y": 378
+                },
+                "locked": false,
+                "name": "roller_1",
+                "options": "11\n22\n33\n44\n55\n66\n77\n88\n99\n110",
+                "set event": [
+                    "Event19#Value_Changed#Set Property#Slider#slider_1#Value#Use##",
+                    "Event20#Value_Changed#Set Property#Slider#slider_2#Value#Use##",
+                    "Event21#Value_Changed#Set Property#Slider#slider_3#Value#Use##",
+                    "Event22#Value_Changed#Set Property#Slider#slider_4#Value#Use##",
+                    "Event23#Value_Changed#Set Property#Slider#slider_5#Value#Use##",
+                    "Event24#Value_Changed#Set Property#Slider#slider_6#Value#Use##",
+                    "Event25#Value_Changed#Set Property#Slider#slider_7#Value#Use##",
+                    "Event26#Value_Changed#Set Property#Slider#slider_8#Value#Use##",
+                    "Event27#Value_Changed#Set Property#Slider#slider_9#Value#Use##"
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 20B"
+                        },
+                        "part": 3,
+                        "state": 6
+                    }
+                ],
+                "visible rows": 3,
+                "widget": "Roller"
+            },
+            {
+                "align": "Left",
+                "class": "lv_label",
+                "geometry": {
+                    "height": 19,
+                    "width": 59,
+                    "x": 466,
+                    "y": 71
+                },
+                "locked": false,
+                "long mode": "Expand",
+                "name": "label_1",
+                "recolor": false,
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "click me",
+                "widget": "Label"
+            },
+            {
+                "align": "Left",
+                "class": "lv_label",
+                "geometry": {
+                    "height": 19,
+                    "width": 96,
+                    "x": 458,
+                    "y": 186
+                },
+                "locked": false,
+                "long mode": "Expand",
+                "name": "label_2",
+                "recolor": false,
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "change value",
+                "widget": "Label"
+            },
+            {
+                "align": "Left",
+                "class": "lv_label",
+                "geometry": {
+                    "height": 19,
+                    "width": 96,
+                    "x": 466,
+                    "y": 332
+                },
+                "locked": false,
+                "long mode": "Expand",
+                "name": "label_3",
+                "recolor": false,
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "change value",
+                "widget": "Label"
+            }
+        ]
+    }
+}

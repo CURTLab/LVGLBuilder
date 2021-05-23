@@ -487,7 +487,7 @@ typedef void * lv_indev_drv_user_data_t;            /*Type of user data in the i
 #define LV_FONT_CUSTOM_DECLARE
 
 /*Always set a default font from the built-in fonts*/
-#define LV_FONT_DEFAULT        &lv_font_chinese_16
+#define LV_FONT_DEFAULT        &lv_font_123abc_16
 
 /* Enable it if you have fonts with a lot of characters.
  * The limit depends on the font size, font face and bpp

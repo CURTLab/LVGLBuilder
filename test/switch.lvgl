@@ -1,0 +1,1959 @@
+{
+    "fonts": [
+    ],
+    "images": [
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 0,
+                    "y": 0
+                },
+                "locked": false,
+                "name": "switch_1",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 0,
+                    "y": 60
+                },
+                "locked": false,
+                "name": "switch_2",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 0,
+                    "y": 125
+                },
+                "locked": false,
+                "name": "switch_3",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 0,
+                    "y": 186
+                },
+                "locked": false,
+                "name": "switch_4",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Mix": {
+                            "radius": 8
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 10,
+                    "width": 44,
+                    "x": 11,
+                    "y": 249
+                },
+                "locked": false,
+                "name": "switch_5",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 10,
+                    "width": 44,
+                    "x": 13,
+                    "y": 313
+                },
+                "locked": false,
+                "name": "switch_6",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Mix": {
+                            "radius": 4
+                        },
+                        "Padding": {
+                            "pad_bottom": 8,
+                            "pad_left": 8,
+                            "pad_right": 8,
+                            "pad_top": 8
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 3,
+                    "y": 356
+                },
+                "locked": false,
+                "name": "switch_7",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xeceff6",
+                            "bg_opa": 0
+                        },
+                        "Border": {
+                            "border_color": "0x585858",
+                            "border_width": 2
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "class": "lv_switch",
+                "geometry": {
+                    "height": 35,
+                    "width": 70,
+                    "x": 1,
+                    "y": 417
+                },
+                "locked": false,
+                "name": "switch_8",
+                "set event": [
+                ],
+                "state": false,
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xefefef"
+                        },
+                        "Border": {
+                            "border_opa": 255
+                        },
+                        "Outline": {
+                            "outline_width": 0
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0x1677ff"
+                        },
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "Background": {
+                            "bg_color": "0xe96565"
+                        },
+                        "Padding": {
+                            "pad_bottom": -2,
+                            "pad_left": -6,
+                            "pad_right": 8,
+                            "pad_top": -2
+                        },
+                        "part": 2,
+                        "state": 6
+                    }
+                ],
+                "widget": "Switch"
+            },
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 411,
+                    "y": 191
+                },
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#Switch#switch_1#Switch#Click#",
+                    "Event2#Clicked#Set Property#Switch#switch_2#Switch#Click#",
+                    "Event3#Clicked#Set Property#Switch#switch_3#Switch#Click#",
+                    "Event4#Clicked#Set Property#Switch#switch_4#Switch#Click#",
+                    "Event5#Clicked#Set Property#Switch#switch_5#Switch#Click#",
+                    "Event6#Clicked#Set Property#Switch#switch_6#Switch#Click#",
+                    "Event7#Clicked#Set Property#Switch#switch_7#Switch#Click#",
+                    "Event8#Clicked#Set Property#Switch#switch_8#Switch#Click#"
+                ],
+                "state": "Released",
+                "styles": [
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Outline": {
+                            "outline_color": "0x44d1b6",
+                            "outline_opa": 0
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "align": "Left",
+                "class": "lv_label",
+                "geometry": {
+                    "height": 19,
+                    "width": 59,
+                    "x": 431,
+                    "y": 159
+                },
+                "locked": false,
+                "long mode": "Expand",
+                "name": "label_1",
+                "recolor": false,
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "click me",
+                "widget": "Label"
+            }
+        ]
+    }
+}

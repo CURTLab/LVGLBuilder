@@ -1438,9 +1438,9 @@ bool border_color(lv_obj_t *s1, lv_obj_t *s2, lv_obj_part_t part,
 bool border_opa(lv_obj_t *s1, lv_obj_t *s2, lv_obj_part_t part,
                 lv_state_t state) {
   auto a = _lv_obj_get_style_opa(
-      s1, part, LV_STYLE_BG_OPA | (state << LV_STYLE_STATE_POS));
+      s1, part, LV_STYLE_BORDER_OPA | (state << LV_STYLE_STATE_POS));
   auto b = _lv_obj_get_style_opa(
-      s2, part, LV_STYLE_BG_OPA | (state << LV_STYLE_STATE_POS));
+      s2, part, LV_STYLE_BORDER_OPA | (state << LV_STYLE_STATE_POS));
   return (a == b);
 }
 
