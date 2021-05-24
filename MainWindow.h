@@ -46,7 +46,7 @@ class MainWindow : public QMainWindow {
   QTabWidget *getTabW();
 
  signals:
-  void startExport(QString path);
+  void startExport(const QStringList &list);
   void stopExport();
 
  private slots:

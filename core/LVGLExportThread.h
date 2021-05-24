@@ -10,7 +10,7 @@ class LVGLExportThread : public QObject {
  public:
   LVGLExportThread();
   ~LVGLExportThread();
-  void startrun(QString path);
+  void startrun(const QStringList &list);
   void stop();
  signals:
   void successful();

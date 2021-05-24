@@ -301,7 +301,6 @@ void MainWindow::openNewProject() {
     m_curSimulation->setobjParent(tabW->getparent());
     m_ui->tabWidget->addTab(tabW, dialog.selectName());
     m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
-    auto imgs = lvgl.images();
   } else {
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
@@ -500,9 +499,12 @@ void MainWindow::on_action_export_c_triggered() {
     QFileInfo fi(m_project->fileName());
     dir = fi.absoluteFilePath();
   }
+  QStringList list;
+  list << m_project->name();
   QString path = QFileDialog::getExistingDirectory(this, "Export C files", dir);
   if (path.isEmpty()) return;
-  emit startExport(path);
+  list << path;
+  emit startExport(list);
   m_pcBar->exec();
 }
 
