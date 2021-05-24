@@ -85,6 +85,15 @@ QVariant LVGLStyleModel::data(const QModelIndex &index, int role) const {
       m_styleBase->updateDate();
       return x;
     }
+  } else if (Qt::DecorationRole == role) {
+    if (item->type() == LVGLStyleItem::Color) {
+      if (index.column() == 1) {
+        auto x = m_styleBase->get(item).value<QColor>();
+        QPixmap pixmap(20, 20);
+        pixmap.fill(x);
+        return QIcon(pixmap);
+      }
+    }
   }
 
   // FIXME: Implement me!

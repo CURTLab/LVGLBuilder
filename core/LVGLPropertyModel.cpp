@@ -182,6 +182,16 @@ void LVGLPropertyDelegate::setModelData(QWidget *editor,
         new SetWidgetPropCommand(sim, obj, oldprop, newprop, prop->name()));
   }
   emit model->dataChanged(index, index);
+}
+
+QSize LVGLPropertyDelegate::sizeHint(const QStyleOptionViewItem &option,
+                                     const QModelIndex &index) const {
+  QSize size = QStyledItemDelegate::sizeHint(option, index);
+  auto prop = reinterpret_cast<LVGLProperty *>(index.internalPointer());
+  if (prop->name() == "Text") {
+    return QSize(size.width(), 100);
+  } else
+    return size;
 };
 
 #if 0

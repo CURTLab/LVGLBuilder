@@ -4,9 +4,8 @@
 
 #include "core/LVGLObject.h"
 
-class LVGLPropertyTAText : public LVGLPropertyString {
+class LVGLPropertyTAText : public LVGLPropertyStringPlus {
  public:
-  LVGLPropertyTAText() : LVGLPropertyString(true) {}
   QString name() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
@@ -24,9 +23,8 @@ class LVGLPropertyTAText : public LVGLPropertyString {
   }
 };
 
-class LVGLPropertyTAPlaceholder : public LVGLPropertyString {
+class LVGLPropertyTAPlaceholder : public LVGLPropertyStringPlus {
  public:
-  LVGLPropertyTAPlaceholder() : LVGLPropertyString(true) {}
   QString name() const { return "Placeholder"; }
 
   QStringList function(LVGLObject *obj) const {
