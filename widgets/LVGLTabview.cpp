@@ -173,6 +173,238 @@ class LVGLPropertyTabWidthZoom : public LVGLPropertyInt {
   }
 };
 
+class LVGLPropertyTabViewStyle : public LVGLPropertyEnum {
+ public:
+  LVGLPropertyTabViewStyle()
+      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
+                          "Style3", "Style4", "Style5", "Style6"}) {}
+
+  QString name() const { return "Style"; }
+
+  QStringList function(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return QStringList();
+  }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return 0;
+  }
+  void set(LVGLObject *obj, int index) {
+    if (index != 0) {
+      lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+      lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0, 0);
+
+      lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0, 0);
+      lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                    LV_STATE_CHECKED, 0);
+
+      lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 255);
+      lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 255);
+
+      lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                        lv_color_hex(0x3b3e42));
+      lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x3b3e42));
+
+      lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, lv_color_hex(0xffffff));
+
+      lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0, 0);
+      lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                    LV_STATE_CHECKED, 0);
+
+      lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0, 6);
+      lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        0);
+      lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0, 6);
+      lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       6);
+
+      lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          0, lv_color_hex(0x00000));
+      lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0x00000));
+      lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          0, 0);
+      lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED, 0);
+      lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          lv_color_hex(0x000000));
+      lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          0);
+    }
+    switch (index) {
+      case 1: {
+      } break;
+      case 2: {
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 32767);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                        lv_color_hex(0xf2f2f2));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x1677ff));
+
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      255);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       3);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          3);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        8);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         8);
+      } break;
+      case 3: {
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0, 8);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      8);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 8);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       3);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          3);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        3);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         3);
+      } break;
+      case 4: {
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 32767);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       0);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          0);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        0);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         0);
+      } break;
+      case 5: {
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 32767);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       0);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          0);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        0);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         0);
+        lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                            LV_STATE_CHECKED,
+                                            lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                            LV_STATE_CHECKED, 2);
+      } break;
+      case 6: {
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN, 0,
+                                      32767);
+        lv_obj_set_style_local_radius(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 32767);
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       0);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          0);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        0);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         0);
+        lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BG,
+                                            0, lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BG,
+                                            0, 2);
+      } break;
+      case 7: {
+        lv_obj_set_style_local_bg_opa(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_INDIC, 0, 0);
+        lv_obj_set_style_local_text_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                          LV_STATE_CHECKED,
+                                          lv_color_hex(0xffffff));
+        lv_obj_set_style_local_bg_color(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                        LV_STATE_CHECKED,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_opa(obj->obj(), LV_TABVIEW_PART_TAB_BTN,
+                                      LV_STATE_CHECKED, 255);
+        lv_obj_set_style_local_pad_top(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                       0);
+        lv_obj_set_style_local_pad_bottom(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                          0);
+        lv_obj_set_style_local_pad_left(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                        0);
+        lv_obj_set_style_local_pad_right(obj->obj(), LV_TABVIEW_PART_TAB_BG, 0,
+                                         0);
+        lv_obj_set_style_local_border_color(obj->obj(), LV_TABVIEW_PART_TAB_BG,
+                                            0, lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_border_width(obj->obj(), LV_TABVIEW_PART_TAB_BG,
+                                            0, 2);
+      } break;
+    }
+  }
+};
+
 LVGLTabview::LVGLTabview() {
   initStateStyles();
   m_parts << LV_TABVIEW_PART_BG << LV_TABVIEW_PART_BG_SCROLLABLE
@@ -185,12 +417,13 @@ LVGLTabview::LVGLTabview() {
   m_properties << new LVGLPropertyTabCurrent;
   m_properties << new LVGLPropertyTabScrollbars;
   m_properties << new LVGLPropertyTabWidthZoom;
+  m_properties << new LVGLPropertyTabViewStyle;
 
-  m_editableStyles << LVGL::BtnMatrixBTN;  // LV_TABVIEW_PART_BG
-  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_BG_SCROLLABLE
-  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BG
-  m_editableStyles << LVGL::Background;    // LV_TABVIEW_PART_TAB_BTN
-  m_editableStyles << LVGL::TABINDIC;      // LV_TABVIEW_PART_INDIC
+  m_editableStyles << LVGL::TabBG;      // LV_TABVIEW_PART_BG
+  m_editableStyles << LVGL::TabBGScro;  // LV_TABVIEW_PART_BG_SCROLLABLE
+  m_editableStyles << LVGL::TabTaBBG;   // LV_TABVIEW_PART_TAB_BG
+  m_editableStyles << LVGL::TabTabBTN;  // LV_TABVIEW_PART_TAB_BTN
+  m_editableStyles << LVGL::TabINDIC;   // LV_TABVIEW_PART_INDIC
 }
 
 QString LVGLTabview::name() const { return "Tabview"; }

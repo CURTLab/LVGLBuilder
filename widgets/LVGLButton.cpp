@@ -101,41 +101,219 @@ class LVGLPropertyButtonFit : public LVGLPropertyEnum {
   int m_index;
 };
 
-class LVGLPropertyButtonGo : public LVGLPropertyAnyFunc {
+class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
  public:
-  LVGLPropertyButtonGo(const AnyFuncColType arr[], int size)
-      : LVGLPropertyAnyFunc(arr, size, true) {}
-  QString name() const { return "Go to"; }
+  LVGLPropertyButtonStyle()
+      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
+                          "Style3", "Style4", "Style5", "Style6"}) {}
 
- protected:
-  QStringList get(LVGLObject *obj) const {
-    QStringList &pagelist = LVGLHelper::getInstance().pageName();
-    if (!pagelist.isEmpty()) updateData(0, pagelist);
+  QString name() const { return "Style"; }
 
-    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
+  QStringList function(LVGLObject *obj) const {
+    Q_UNUSED(obj)
     return QStringList();
   }
-  void set(LVGLObject *obj, QStringList list) {
-    m_list = list;
-    for (int i = 0; i < m_list.size(); ++i) {
-      QStringList strlist = list[i].split('@');
-      QString pagename = strlist[0];
-      int gotopage = 0;
-      auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
-      for (int i = 0; i < tabw->count(); ++i) {
-        if (pagename == tabw->tabText(i)) {
-          gotopage = i;
-          break;
-        }
-      }
-      QMap<LVGLObject *, int> &btngopage =
-          LVGLHelper::getInstance().getBtnGoPage();
-      btngopage[obj] = gotopage;
+
+ protected:
+  int get(LVGLObject *obj) const {
+    Q_UNUSED(obj)
+    return 0;
+  }
+  void set(LVGLObject *obj, int index) {
+    if (index != 0) {
+      lv_obj_set_size(obj->obj(), 100, 35);
+      lv_obj_set_style_local_radius(obj->obj(), 0, 0, 32767);
+      lv_obj_set_style_local_border_width(obj->obj(), 0, 0, 2);
+      lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 2);
+      lv_obj_set_style_local_value_str(obj->obj(), 0, 0, nullptr);
+
+      lv_obj_set_style_local_bg_color(obj->obj(), 0, 0, lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                      lv_color_hex(0xffffff));
+
+      lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                         lv_color_hex(0x000000));
+      lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                         lv_color_hex(0x000000));
+
+      lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0x01a2b1));
+      lv_obj_set_style_local_border_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                          lv_color_hex(0x01a2b1));
+
+      lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0xffffff));
+      lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_NONE);
+      lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, LV_STATE_PRESSED,
+                                         LV_GRAD_DIR_NONE);
+
+      lv_obj_set_style_local_shadow_color(obj->obj(), 0, 0,
+                                          lv_color_hex(0x000000));
+      lv_obj_set_style_local_shadow_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                          lv_color_hex(0x000000));
+
+      lv_obj_set_style_local_shadow_width(obj->obj(), 0, 0, 0);
+      lv_obj_set_style_local_shadow_width(obj->obj(), 0, LV_STATE_PRESSED, 0);
+      lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, 0, 0);
+      lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, LV_STATE_PRESSED, 0);
+    }
+    switch (index) {
+      case 1: {
+      } break;
+      case 2: {
+        char *str = new char[7];
+        strcpy_s(str, 7, "Button");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+        lv_obj_set_size(obj->obj(), 100, 40);
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0x0950ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0xffffff));
+      } break;
+      case 3: {
+        char *str = new char[7];
+        strcpy_s(str, 7, "Button");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 8);
+        lv_obj_set_size(obj->obj(), 100, 40);
+
+        lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
+                                            lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_border_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                            lv_color_hex(0x1677ff));
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0xd0e3ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0x1677ff));
+      } break;
+      case 4: {
+        char *str = new char[7];
+        strcpy_s(str, 7, "Button");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_size(obj->obj(), 100, 40);
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0x0950ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0xffffff));
+
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                             lv_color_hex(0x2ab6ff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                             lv_color_hex(0x1496ff));
+
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, LV_STATE_PRESSED,
+                                           LV_GRAD_DIR_VER);
+
+        lv_obj_set_style_local_shadow_color(obj->obj(), 0, 0,
+                                            lv_color_hex(0x115fcc));
+        lv_obj_set_style_local_shadow_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                            lv_color_hex(0x115fcc));
+
+        lv_obj_set_style_local_shadow_width(obj->obj(), 0, 0, 4);
+        lv_obj_set_style_local_shadow_width(obj->obj(), 0, LV_STATE_PRESSED, 4);
+        lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, 0, 2);
+        lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, LV_STATE_PRESSED, 2);
+      } break;
+      case 5: {
+        char *str = new char[4];
+        strcpy_s(str, 7, "BTN");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
+        lv_obj_set_size(obj->obj(), 50, 50);
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0x0950ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0xffffff));
+      } break;
+      case 6: {
+        char *str = new char[4];
+        strcpy_s(str, 7, "BTN");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_style_local_radius(obj->obj(), 0, 0, 8);
+        lv_obj_set_size(obj->obj(), 50, 50);
+
+        lv_obj_set_style_local_border_color(obj->obj(), 0, 0,
+                                            lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_border_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                            lv_color_hex(0x1677ff));
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0xd0e3ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0x1677ff));
+      } break;
+      case 7: {
+        char *str = new char[4];
+        strcpy_s(str, 7, "BTN");
+        lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
+        lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
+        lv_obj_set_size(obj->obj(), 50, 50);
+
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, 0,
+                                        lv_color_hex(0x1677ff));
+        lv_obj_set_style_local_bg_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                        lv_color_hex(0x0950ff));
+
+        lv_obj_set_style_local_value_color(obj->obj(), 0, 0,
+                                           lv_color_hex(0xffffff));
+        lv_obj_set_style_local_value_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                           lv_color_hex(0xffffff));
+
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, 0,
+                                             lv_color_hex(0x2ab6ff));
+        lv_obj_set_style_local_bg_grad_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                             lv_color_hex(0x1496ff));
+
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, 0, LV_GRAD_DIR_VER);
+        lv_obj_set_style_local_bg_grad_dir(obj->obj(), 0, LV_STATE_PRESSED,
+                                           LV_GRAD_DIR_VER);
+
+        lv_obj_set_style_local_shadow_color(obj->obj(), 0, 0,
+                                            lv_color_hex(0x115fcc));
+        lv_obj_set_style_local_shadow_color(obj->obj(), 0, LV_STATE_PRESSED,
+                                            lv_color_hex(0x115fcc));
+
+        lv_obj_set_style_local_shadow_width(obj->obj(), 0, 0, 4);
+        lv_obj_set_style_local_shadow_width(obj->obj(), 0, LV_STATE_PRESSED, 4);
+        lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, 0, 2);
+        lv_obj_set_style_local_shadow_ofs_y(obj->obj(), 0, LV_STATE_PRESSED, 2);
+      } break;
     }
   }
-
- private:
-  QStringList m_list;
 };
 
 LVGLButton::LVGLButton() {
@@ -148,8 +326,7 @@ LVGLButton::LVGLButton() {
                                        lv_btn_get_checkable);
   m_properties << new LVGLPropertyButtonLayout;
   m_properties << new LVGLPropertyButtonFit;
-  // static AnyFuncColType arr[1] = {e_QComboBox};
-  // m_properties << new LVGLPropertyButtonGo(arr, 1);
+  m_properties << new LVGLPropertyButtonStyle;
 
   m_editableStyles << LVGL::Button;  // LV_BTN_PART_MAIN
 }

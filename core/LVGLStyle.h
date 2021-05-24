@@ -31,8 +31,7 @@ enum StylePart {
   ArcBG = Background | Line | Padding | Margin | Border,
   ArcINDIC = Mix | Line | Padding | Margin,
   ArcKNOB = Background | Padding | Margin,
-  Button = Mix | Background | Border | Outline | Shadow | Value | Pattern |
-           Transition,
+  Button = Mix | Background | Border | Outline | Shadow | Value | Pattern,
   BtnMatrixBTN = Background | Text,
   CalendarHead = Mix | Background | Padding | Margin | Text,
   Canvas = Image,
@@ -68,7 +67,11 @@ enum StylePart {
   SpinboxCURSOR = Text,
   TableCELL = Background | Line,
   TableTABBTN = Button | Text,
-  TABINDIC = Background | Line,
+  TabBG = Mix | Border | Background | Padding | Margin,
+  TabBGScro = Background | Padding,
+  TabTaBBG = Mix | Border | Background | Padding | Margin,
+  TabTabBTN = Mix | Background | Border | Outline | Shadow | Text | Pattern,
+  TabINDIC = Background,
   TextPlaceHode = Text,
   WindowHEAD = Background | Text | Padding | Margin,
 };
