@@ -47,13 +47,13 @@
 
  GUI Builder for littlevgl release 7.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
 
-![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/preview.png)
+![Preview](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/resources/preview.png)
 
 
 
 # Qt Setting
 window
-![setting](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/QtSetting.png)
+![setting](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/dev-v7/resources/QtSetting.png)
 ubuntu
 ![ubuntuSetting](https://user-images.githubusercontent.com/37052865/116019312-85701900-a676-11eb-8e70-45df873e94e1.jpg)
 maxos
