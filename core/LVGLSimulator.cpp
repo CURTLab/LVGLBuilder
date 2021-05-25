@@ -80,7 +80,7 @@ LVGLSimulator::LVGLSimulator(QWidget *parent)
       m_mouseEnabled(false),
       m_item(new LVGLItem),
       m_objectModel(nullptr),
-      m_undoStack(new QUndoStack(this)),
+      m_undoStack(nullptr),
       m_mousePressed(false),
       m_patintThread(new QThread),
       m_paintTime(new LVGLPaintTimer) {

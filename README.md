@@ -9,7 +9,7 @@
 - [x] (First) Add Event System
 - [x] (Second) Redesign the multi-page function, a single page can simulate all pages 
 - [x] Add move Animation
-- [ ] Add test cases and add detailed event function usage instructions
+- [x] Add test cases and add detailed event function usage instructions
 - [ ] Implement the unadded functions of the remaining widgets
 - [ ] Realize all event functions
 - [ ] Support more complex animation events
@@ -17,7 +17,7 @@
 - [ ] All event function parameters must meet the requirements
 - [ ] Realize the automatic save function
 - [ ] Refactor the code related to the style of the widget
-- [ ] redo/undo supports new multi-page design
+- [x] redo/undo supports new multi-page design
 - [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
 - [ ] Dialog for changing keyboard layout
 

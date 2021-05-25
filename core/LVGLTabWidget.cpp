@@ -1,12 +1,15 @@
 #include "LVGLTabWidget.h"
 
 #include <QGridLayout>
+#include <QUndoStack>
 
 #include "LVGLObject.h"
 #include "LVGLSimulator.h"
 
 LVGLTabWidget::LVGLTabWidget(QWidget *parent)
-    : QWidget(parent), m_parent(lv_obj_create(NULL, NULL)) {}
+    : QWidget(parent),
+      m_parent(lv_obj_create(NULL, NULL)),
+      m_undoStack(new QUndoStack(this)) {}
 
 void LVGLTabWidget::setSimulator(LVGLSimulator *sim) {
   delete this->layout();

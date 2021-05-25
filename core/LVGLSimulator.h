@@ -57,6 +57,7 @@ class LVGLSimulator : public QGraphicsView {
   void threadstop();
   void restartconnect();
   QUndoStack *undoStack() const;
+  void setUndoStack(QUndoStack *us) { m_undoStack = us; }
 
  public slots:
   void setSelectedObject(LVGLObject *obj);

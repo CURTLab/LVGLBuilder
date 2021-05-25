@@ -291,6 +291,9 @@ void MainWindow::openNewProject() {
       lvgl.changeResolution(res);
       m_curSimulation->changeResolution(res);
       m_curSimulation->restartconnect();
+      auto us = m_curSimulation->undoStack();
+      if (us) m_undoGroup->removeStack(us);
+      m_curSimulation->setUndoStack(tabW->getundostack());
       setUndoStack();
       tabW->setAllImages(lvgl.allImages());
       tabW->setAllFonts(lvgl.allFonts());
@@ -990,6 +993,8 @@ void MainWindow::tabChanged(int index) {
       m_objectModel->endRemoveObject();
     }
     lvgl.objsclear();
+    auto us = m_curSimulation->undoStack();
+    if (us) m_undoGroup->removeStack(us);
   }
 
   m_lastindex = index;
@@ -1008,6 +1013,8 @@ void MainWindow::tabChanged(int index) {
   if (!objs.isEmpty())
     m_curSimulation->setSelectedObject(lvgl.allObjects().at(0));
   setAllModelNull();  // need it
+  m_curSimulation->setUndoStack(tabw->getundostack());
+  setUndoStack();
   updateImages();
   updateFonts();
 }

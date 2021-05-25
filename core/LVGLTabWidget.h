@@ -9,6 +9,7 @@ class LVGLImageData;
 class LVGLObject;
 class LVGLFontData;
 class LVGLSimulator;
+class QUndoStack;
 
 class LVGLTabWidget : public QWidget {
   Q_OBJECT
@@ -38,12 +39,15 @@ class LVGLTabWidget : public QWidget {
 
   void clean();
 
+  inline QUndoStack *getundostack() { return m_undoStack; }
+
  private:
   lv_obj_t *m_parent;
   QList<LVGLObject *> m_objects;
   QHash<QString, LVGLImageData *> m_images;
   QList<LVGLFontData *> m_fonts;
   QString m_name;
+  QUndoStack *m_undoStack;
 };
 
 #endif  // LVGLTABWIDGET_H
