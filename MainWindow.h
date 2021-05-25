@@ -73,14 +73,22 @@ class MainWindow : public QMainWindow {
   void on_list_fonts_currentItemChanged(QListWidgetItem *current,
                                         QListWidgetItem *previous);
   void on_action_run_toggled(bool run);
-
   void on_combo_state_currentIndexChanged(int index);
-
   void tabChanged(int index);
   void onObjPressed(LVGLObject *obj);
   void ontabclose(int index);
-
   void on_eaction_export_triggered();
+  void on_actionOFF_triggered();
+  void on_action1_Min_triggered();
+  void on_action2_Min_triggered();
+  void on_action3_Min_triggered();
+  void on_action4_Min_triggered();
+  void on_action5_Min_triggered();
+  void on_action6_Min_triggered();
+  void on_action7_Min_triggered();
+  void on_action8_Min_triggered();
+  void on_action9_Min_triggered();
+  void on_action10_Min_triggered();
 
  protected:
   void showEvent(QShowEvent *event) override;
@@ -109,6 +117,7 @@ class MainWindow : public QMainWindow {
   void updateItemDelegate();
   void setUndoStack();
   void setAllModelNull();
+  void setAutoSaveChecked(int state);
 
  private:
   Ui::MainWindow *m_ui;
@@ -148,5 +157,6 @@ class MainWindow : public QMainWindow {
   LVGLProcessBar *m_pcBar;
   LVGLExportThread *m_exportThread;
   QThread *m_etThread;
+  int m_autosaveState;
 };
 #endif  // MAINWINDOW_H

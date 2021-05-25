@@ -94,7 +94,6 @@ SOURCES += \
     core/LVGLCommands.cpp \
     core/LVGLCore.cpp \
     core/LVGLDialog.cpp \
-    core/LVGLExportThread.cpp \
     core/LVGLFontData.cpp \
     core/LVGLFontDialog.cpp \
     core/LVGLHelper.cpp \
@@ -112,6 +111,7 @@ SOURCES += \
     core/LVGLStyle.cpp \
     core/LVGLStyleModel.cpp \
     core/LVGLTabWidget.cpp \
+    core/LVGLThreads.cpp \
     core/LVGLWidgetListView.cpp \
     core/LVGLWidgetModel.cpp \
     core/LVGLWidgetModelDisplay.cpp \
@@ -200,7 +200,6 @@ HEADERS += \
     core/LVGLCommands.h \
     core/LVGLCore.h \
     core/LVGLDialog.h \
-    core/LVGLExportThread.h \
     core/LVGLFontData.h \
     core/LVGLFontDialog.h \
     core/LVGLHelper.h \
@@ -218,6 +217,7 @@ HEADERS += \
     core/LVGLStyle.h \
     core/LVGLStyleModel.h \
     core/LVGLTabWidget.h \
+    core/LVGLThreads.h \
     core/LVGLWidgetListView.h \
     core/LVGLWidgetModel.h \
     core/LVGLWidgetModelDisplay.h \

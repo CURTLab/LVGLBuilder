@@ -4,6 +4,7 @@
 #include <QObject>
 
 class LVGLProject;
+class QTimer;
 
 class LVGLExportThread : public QObject {
   Q_OBJECT
@@ -20,4 +21,22 @@ class LVGLExportThread : public QObject {
   volatile bool stopped;
   LVGLProject *m_project;
 };
+
+class LVGLAutoSaveThread : public QObject {
+  Q_OBJECT
+ public:
+  LVGLAutoSaveThread();
+  ~LVGLAutoSaveThread();
+  void startrun(int state);
+  void saveFile();
+  void stop();
+ signals:
+  void successful();
+  void failed();
+
+ private:
+  volatile bool stopped;
+  QTimer *m_time;
+};
+
 #endif  // LVGLEXPORTTHREAD_H

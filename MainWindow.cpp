@@ -10,7 +10,6 @@
 #include <QUndoGroup>
 
 #include "core/LVGLDialog.h"
-#include "core/LVGLExportThread.h"
 #include "core/LVGLFontData.h"
 #include "core/LVGLFontDialog.h"
 #include "core/LVGLHelper.h"
@@ -24,6 +23,7 @@
 #include "core/LVGLSimulator.h"
 #include "core/LVGLStyleModel.h"
 #include "core/LVGLTabWidget.h"
+#include "core/LVGLThreads.h"
 #include "core/LVGLWidgetListView.h"
 #include "core/LVGLWidgetModel.h"
 #include "core/LVGLWidgetModelDisplay.h"
@@ -56,7 +56,8 @@ MainWindow::MainWindow(QWidget *parent)
       m_lastindex(-1),
       m_pcBar(new LVGLProcessBar(this)),
       m_exportThread(new LVGLExportThread),
-      m_etThread(new QThread(this)) {
+      m_etThread(new QThread(this)),
+      m_autosaveState(0) {
   m_ui->setupUi(this);
   lvgl.init(320, 480);
   m_ui->style_tree->setStyleSheet(
@@ -165,6 +166,8 @@ MainWindow::MainWindow(QWidget *parent)
   // Up to U
   // m_pcBar->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
   // m_pcBar->setAttribute(Qt::WA_TranslucentBackground);
+
+  m_ui->actionOFF->setChecked(true);
 
   LVGLLog::log_trace("Main started", __FILE__, __LINE__, __func__);
 }
@@ -448,6 +451,55 @@ void MainWindow::setAllModelNull() {
   m_propertyModel->setObject(nullptr);
   m_styleModel->setObj(nullptr);
   m_styleModel->setLvglObj(nullptr);
+}
+
+void MainWindow::setAutoSaveChecked(int state) {
+  m_ui->actionOFF->setChecked(false);
+  m_ui->action1_Min->setChecked(false);
+  m_ui->action2_Min->setChecked(false);
+  m_ui->action3_Min->setChecked(false);
+  m_ui->action4_Min->setChecked(false);
+  m_ui->action5_Min->setChecked(false);
+  m_ui->action6_Min->setChecked(false);
+  m_ui->action7_Min->setChecked(false);
+  m_ui->action8_Min->setChecked(false);
+  m_ui->action9_Min->setChecked(false);
+  m_ui->action10_Min->setChecked(false);
+  switch (state) {
+    case 0:
+      m_ui->actionOFF->setChecked(true);
+      break;
+    case 1:
+      m_ui->action1_Min->setChecked(true);
+      break;
+    case 2:
+      m_ui->action2_Min->setChecked(true);
+      break;
+    case 3:
+      m_ui->action3_Min->setChecked(true);
+      break;
+    case 4:
+      m_ui->action4_Min->setChecked(true);
+      break;
+    case 5:
+      m_ui->action5_Min->setChecked(true);
+      break;
+    case 6:
+      m_ui->action6_Min->setChecked(true);
+      break;
+    case 7:
+      m_ui->action7_Min->setChecked(true);
+      break;
+    case 8:
+      m_ui->action8_Min->setChecked(true);
+      break;
+    case 9:
+      m_ui->action8_Min->setChecked(true);
+      break;
+    case 10:
+      m_ui->action10_Min->setChecked(true);
+      break;
+  }
 }
 
 void MainWindow::on_action_load_triggered() {
@@ -1041,3 +1093,25 @@ void MainWindow::ontabclose(int index) {
 void MainWindow::on_eaction_export_triggered() {
   on_action_export_c_triggered();
 }
+
+void MainWindow::on_actionOFF_triggered() { setAutoSaveChecked(0); }
+
+void MainWindow::on_action1_Min_triggered() { setAutoSaveChecked(1); }
+
+void MainWindow::on_action2_Min_triggered() { setAutoSaveChecked(2); }
+
+void MainWindow::on_action3_Min_triggered() { setAutoSaveChecked(3); }
+
+void MainWindow::on_action4_Min_triggered() { setAutoSaveChecked(4); }
+
+void MainWindow::on_action5_Min_triggered() { setAutoSaveChecked(5); }
+
+void MainWindow::on_action6_Min_triggered() { setAutoSaveChecked(6); }
+
+void MainWindow::on_action7_Min_triggered() { setAutoSaveChecked(7); }
+
+void MainWindow::on_action8_Min_triggered() { setAutoSaveChecked(8); }
+
+void MainWindow::on_action9_Min_triggered() { setAutoSaveChecked(9); }
+
+void MainWindow::on_action10_Min_triggered() { setAutoSaveChecked(10); }

@@ -86,32 +86,30 @@
     <addaction name="separator"/>
     <addaction name="menu_resent_filess"/>
    </widget>
-   <widget class="QMenu" name="menuEdit">
+   <widget class="QMenu" name="menuAutoSave">
     <property name="title">
-     <string>Edit</string>
+     <string>AutoSave</string>
     </property>
-   </widget>
-   <widget class="QMenu" name="menuView">
-    <property name="title">
-     <string>View</string>
-    </property>
-    <addaction name="separator"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Tools</string>
-    </property>
-   </widget>
-   <widget class="QMenu" name="menuHelp_2">
-    <property name="title">
-     <string>Help</string>
-    </property>
+    <widget class="QMenu" name="menuOn">
+     <property name="title">
+      <string>On</string>
+     </property>
+     <addaction name="action1_Min"/>
+     <addaction name="action2_Min"/>
+     <addaction name="action3_Min"/>
+     <addaction name="action4_Min"/>
+     <addaction name="action5_Min"/>
+     <addaction name="action6_Min"/>
+     <addaction name="action7_Min"/>
+     <addaction name="action8_Min"/>
+     <addaction name="action9_Min"/>
+     <addaction name="action10_Min"/>
+    </widget>
+    <addaction name="menuOn"/>
+    <addaction name="actionOFF"/>
    </widget>
    <addaction name="menuLittlevGL_Builder"/>
-   <addaction name="menuEdit"/>
-   <addaction name="menuView"/>
-   <addaction name="menuHelp"/>
-   <addaction name="menuHelp_2"/>
+   <addaction name="menuAutoSave"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -141,8 +139,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>70</width>
+     <height>89</height>
     </size>
    </property>
    <property name="baseSize">
@@ -508,8 +506,8 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>72</width>
+     <height>133</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -647,8 +645,8 @@
   <widget class="QDockWidget" name="UndoEditor">
    <property name="minimumSize">
     <size>
-     <width>0</width>
-     <height>0</height>
+     <width>118</width>
+     <height>122</height>
     </size>
    </property>
    <property name="windowTitle">
@@ -800,6 +798,94 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+E</string>
+   </property>
+  </action>
+  <action name="actionOFF">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>OFF</string>
+   </property>
+  </action>
+  <action name="action1_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>1 Min</string>
+   </property>
+  </action>
+  <action name="action2_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>2 Min</string>
+   </property>
+  </action>
+  <action name="action3_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>3 Min</string>
+   </property>
+  </action>
+  <action name="action4_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>4 Min</string>
+   </property>
+  </action>
+  <action name="action5_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>5 Min</string>
+   </property>
+  </action>
+  <action name="action6_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>6 Min</string>
+   </property>
+  </action>
+  <action name="action7_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>7 Min</string>
+   </property>
+  </action>
+  <action name="action8_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>8 Min</string>
+   </property>
+  </action>
+  <action name="action9_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>9 Min</string>
+   </property>
+  </action>
+  <action name="action10_Min">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>10 Min</string>
    </property>
   </action>
  </widget>
