@@ -164,7 +164,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 2: {
         char *str = new char[7];
-        strcpy_s(str, 7, "Button");
+        strcpy(str, "Button");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
@@ -182,7 +182,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 3: {
         char *str = new char[7];
-        strcpy_s(str, 7, "Button");
+        strcpy(str, "Button");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_radius(obj->obj(), 0, 0, 8);
@@ -203,7 +203,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 4: {
         char *str = new char[7];
-        strcpy_s(str, 7, "Button");
+        strcpy(str, "Button");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_size(obj->obj(), 100, 40);
@@ -239,7 +239,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 5: {
         char *str = new char[4];
-        strcpy_s(str, 7, "BTN");
+        strcpy(str, "BTN");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_radius(obj->obj(), 0, 0, 0);
@@ -257,7 +257,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 6: {
         char *str = new char[4];
-        strcpy_s(str, 7, "BTN");
+        strcpy(str, "BTN");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_style_local_radius(obj->obj(), 0, 0, 8);
@@ -278,7 +278,7 @@ class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
       } break;
       case 7: {
         char *str = new char[4];
-        strcpy_s(str, 7, "BTN");
+        strcpy(str, "BTN");
         lv_obj_set_style_local_value_str(obj->obj(), 0, 0, str);
         lv_obj_set_style_local_outline_width(obj->obj(), 0, 0, 0);
         lv_obj_set_size(obj->obj(), 50, 50);
