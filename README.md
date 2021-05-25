@@ -27,19 +27,19 @@
 
 * Switch & slider Style
 
-![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/sw_sld_style.gif)
+![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/sw_sld_style.gif)
 
 
 * Arc Style
 
-  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/arcstyle.gif)
+  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/arcstyle.gif)
 
 # Event System
 
 * support sceen screen
 * support arc event
 
-![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/event1.gif)
+![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/event1.gif)
 
 
 
