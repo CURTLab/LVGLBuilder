@@ -20,7 +20,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
       m_parent(parent) {
   if (parent) parent->m_childs.append(this);
   if (m_name.isEmpty()) generateName();
-  }
+}
 
 LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
                        lv_obj_t *parent)
@@ -33,7 +33,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, QString name,
       m_index(-1),
       m_parent(nullptr) {
   if (m_name.isEmpty()) generateName();
-  }
+}
 
 LVGLObject::LVGLObject(const LVGLWidget *widgetClass, LVGLObject *parent,
                        lv_obj_t *parentObj)
@@ -45,7 +45,7 @@ LVGLObject::LVGLObject(const LVGLWidget *widgetClass, LVGLObject *parent,
       m_index(-1),
       m_parent(parent) {
   generateName();
-  }
+}
 
 LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
                        LVGLObject *parent, bool movable, int index)
@@ -59,7 +59,7 @@ LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
   Q_ASSERT(m_widgetClass);
   if (parent) parent->m_childs.append(this);
   generateName();
-  }
+}
 
 LVGLObject::~LVGLObject() {
   lv_obj_del(m_obj);
@@ -3212,7 +3212,7 @@ void LVGLObject::parseProp(QJsonObject object, LVGLObject *obj) {
   const LVGLWidget *widgetClass = obj->widgetClass();
   for (LVGLProperty *p : widgetClass->properties()) {
     QString pname = p->name().toLower();
-    if (pname == "name" || pname == "geometry") continue;
+    if (pname == "name") continue;
     if (object.contains(pname)) {
       QVariant v = object[pname].toVariant();
       if (!v.isNull()) p->setValue(obj, v);

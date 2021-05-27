@@ -1,5 +1,6 @@
 #include "LVGLEventBar.h"
 
+#include "LVGLEventStateResume.h"
 #include "MainWindow.h"
 #include "core/LVGLCore.h"
 #include "core/LVGLHelper.h"
@@ -15,7 +16,6 @@ void LVGLEventBar::eventRun(lv_obj_t *obj) {
   LVGLHelper::getInstance().updatetabDate();
   QList<LVGLObject *> objs;
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
-  auto &apos = LVGLHelper::getInstance().getanimobjPos();
   for (int i = 0; i < tabw->count(); ++i) {
     auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
     auto os = tab->allObject();
@@ -30,6 +30,7 @@ void LVGLEventBar::eventRun(lv_obj_t *obj) {
   for (auto o : objs) {
     if (o->name() == name) {
       targert = o->obj();
+      LVGLEventStateResume::getInstance().addEvent(o);
       break;
     }
   }
@@ -72,20 +73,6 @@ void LVGLEventBar::eventRun(lv_obj_t *obj) {
         lv_bar_set_value(targert, value, LV_ANIM_ON);
     }
   }
-}
-
-QStringList LVGLEventBar::objCode(const QString &objName) {
-  QStringList list;
-  QString str =
-      QString("lv_obj_set_event_cb(%1,%2);").arg(objName).arg(m_result[0]);
-  list << "\t" << str << "\n";
-  return list;
-}
-
-QString LVGLEventBar::eventHeadCode() {
-  m_eventHeadCode =
-      QString("void %1(lv_obj_t *obj, lv_event_t event)").arg(m_result[0]);
-  return m_eventHeadCode + ";\n";
 }
 
 QStringList LVGLEventBar::eventCode() {

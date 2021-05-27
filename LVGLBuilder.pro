@@ -138,6 +138,7 @@ SOURCES += \
     events/LVGLEventScreen.cpp \
     events/LVGLEventSlider.cpp \
     events/LVGLEventSpinbox.cpp \
+    events/LVGLEventStateResume.cpp \
     events/LVGLEventSwitch.cpp \
     events/LVGLEventTextArea.cpp \
     events/LVGLEventType.cpp \
@@ -244,6 +245,7 @@ HEADERS += \
     events/LVGLEventScreen.h \
     events/LVGLEventSlider.h \
     events/LVGLEventSpinbox.h \
+    events/LVGLEventStateResume.h \
     events/LVGLEventSwitch.h \
     events/LVGLEventTextArea.h \
     events/LVGLEventType.h \

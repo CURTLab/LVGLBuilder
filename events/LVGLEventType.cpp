@@ -54,13 +54,12 @@ void LVGLEventType::init() {
                        << "Y"
                        << "Width"
                        << "Height"
-                       << "Background Color"
-                       << "Background gradient color"
-                       << "Background opa"
-                       //<< "Clickable"
-                       //<< "Dragable"
-                       << "Hidden"
-                       << "Disabled";
+                       //<< "Background Color"
+                       //<< "Background gradient color"
+                       //<< "Background opa"
+                       << "Clickable"
+                       << "Dragable"
+                       << "Hidden";
 
         m_valueList << QObject::tr("On") << QObject::tr("Off");
       } break;

@@ -47,7 +47,8 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
   ui->triggercomb->addItems(triggerlist);
   QStringList typelist = QStringList() << "Set Property"
                                        << "Change Screen"
-                                       << "Play Animation";
+                                       << "Play Animation"
+                                       << "Change Style";
   ui->typecomb->addItems(typelist);
   QStringList objlist = QStringList() << "Basic"
                                       << "Arc"

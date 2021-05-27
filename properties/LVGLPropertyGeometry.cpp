@@ -4,10 +4,7 @@
 #include <QJsonObject>
 #include <QSpinBox>
 
-#include "core/LVGLCommands.h"
-#include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
-#include "core/LVGLSimulator.h"
 
 class LVGLPropertyX : public LVGLPropertyCoordUnlimit {
  public:
@@ -20,7 +17,7 @@ class LVGLPropertyX : public LVGLPropertyCoordUnlimit {
     return lv_obj_get_x(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
-    static_cast<const LVGLPropertyGeometry *>(this->parent())->setx(obj, value);
+    obj->setX(value);
   }
 };
 
@@ -35,7 +32,7 @@ class LVGLPropertyY : public LVGLPropertyCoordUnlimit {
     return lv_obj_get_y(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
-    static_cast<const LVGLPropertyGeometry *>(this->parent())->sety(obj, value);
+    obj->setY(value);
   }
 };
 
@@ -50,8 +47,8 @@ class LVGLPropertyWidth : public LVGLPropertyCoord {
     return lv_obj_get_width(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
-    if (0 == value) value = 1;
-    static_cast<const LVGLPropertyGeometry *>(this->parent())->setw(obj, value);
+    if (value == 0) value = 1;
+    lv_obj_set_width(obj->obj(), value);
   }
 };
 
@@ -66,8 +63,8 @@ class LVGLPropertyHeight : public LVGLPropertyCoord {
     return lv_obj_get_height(obj->obj());
   }
   inline void set(LVGLObject *obj, lv_coord_t value) override {
-    if (0 == value) value = 1;
-    static_cast<const LVGLPropertyGeometry *>(this->parent())->seth(obj, value);
+    if (value == 0) value = 1;
+    lv_obj_set_height(obj->obj(), value);
   }
 };
 
@@ -93,10 +90,8 @@ QVariant LVGLPropertyGeometry::value(LVGLObject *obj) const {
 void LVGLPropertyGeometry::setValue(LVGLObject *obj, QVariant value) {
   if (value.type() == QVariant::Map) {
     QVariantMap map = value.toMap();
-    QRect rect(map["x"].toInt(), map["y"].toInt(), map["width"].toInt(),
-               map["height"].toInt());
-    auto sim = LVGLHelper::getInstance().getcursim();
-    sim->undoStack()->push(new SetWidgetRectCommand(sim, obj, rect));
+    obj->setGeometry(QRect(map["x"].toInt(), map["y"].toInt(),
+                           map["width"].toInt(), map["height"].toInt()));
   }
 }
 
@@ -118,47 +113,4 @@ QStringList LVGLPropertyGeometry::function(LVGLObject *obj) const {
              .arg(m_w->value(obj).toInt())
              .arg(m_h->value(obj).toInt());
   return ret;
-}
-
-void LVGLPropertyGeometry::setx(LVGLObject *obj, int x) const {
-  if (obj->geometry().x() != x) {
-    QRect rect(x, m_y->value(obj).toInt(), m_w->value(obj).toInt(),
-               m_h->value(obj).toInt());
-    auto sim = LVGLHelper::getInstance().getcursim();
-    sim->undoStack()->push(new SetWidgetRectCommand(sim, obj, rect));
-    obj->setX(x);
-  }
-}
-
-void LVGLPropertyGeometry::sety(LVGLObject *obj, int y) const {
-  if (obj->geometry().y() != y) {
-    QRect rect(m_x->value(obj).toInt(), y, m_w->value(obj).toInt(),
-               m_h->value(obj).toInt());
-
-    auto sim = LVGLHelper::getInstance().getcursim();
-    sim->undoStack()->push(new SetWidgetRectCommand(sim, obj, rect));
-    obj->setY(y);
-  }
-}
-
-void LVGLPropertyGeometry::setw(LVGLObject *obj, int w) const {
-  if (obj->geometry().width() != w) {
-    QRect rect(m_x->value(obj).toInt(), m_y->value(obj).toInt(), w,
-               m_h->value(obj).toInt());
-
-    auto sim = LVGLHelper::getInstance().getcursim();
-    sim->undoStack()->push(new SetWidgetRectCommand(sim, obj, rect));
-    lv_obj_set_width(obj->obj(), w);
-  }
-}
-
-void LVGLPropertyGeometry::seth(LVGLObject *obj, int h) const {
-  if (obj->geometry().height() != h) {
-    QRect rect(m_x->value(obj).toInt(), m_y->value(obj).toInt(),
-               m_w->value(obj).toInt(), h);
-
-    auto sim = LVGLHelper::getInstance().getcursim();
-    sim->undoStack()->push(new SetWidgetRectCommand(sim, obj, rect));
-    lv_obj_set_height(obj->obj(), h);
-  }
 }

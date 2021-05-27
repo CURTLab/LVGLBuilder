@@ -14,10 +14,9 @@ class LVGLEvent {
   inline QStringList getResult() { return m_result; }
   inline QString getEventName() { return m_result[0]; }
   inline void setResule(QStringList res) { m_result = res; }
+  QString eventHeadCode();
 
   virtual void eventRun(lv_obj_t* obj) = 0;
-  virtual QStringList objCode(const QString& objName) = 0;
-  virtual QString eventHeadCode() = 0;
   virtual QStringList eventCode() = 0;
 
  protected:

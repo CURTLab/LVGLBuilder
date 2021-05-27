@@ -15,11 +15,6 @@ class LVGLPropertyGeometry : public LVGLProperty {
 
   QStringList function(LVGLObject *obj) const override;
 
-  void setx(LVGLObject *obj, int x) const;
-  void sety(LVGLObject *obj, int y) const;
-  void setw(LVGLObject *obj, int w) const;
-  void seth(LVGLObject *obj, int h) const;
-
  protected:
   LVGLProperty *m_x;
   LVGLProperty *m_y;

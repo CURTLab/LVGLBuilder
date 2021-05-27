@@ -2,8 +2,11 @@
 
 #include <QComboBox>
 
+#include "MainWindow.h"
 #include "core/LVGLCore.h"
+#include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
+#include "core/LVGLTabWidget.h"
 
 LVGLPropertyImage::LVGLPropertyImage(LVGLProperty *parent)
     : LVGLProperty(parent) {}
@@ -27,9 +30,23 @@ void LVGLPropertyImage::updateWidget(LVGLObject *obj) {
 
 QVariant LVGLPropertyImage::value(LVGLObject *obj) const {
   const lv_img_dsc_t *dsc = get(obj);
-  if (dsc)
-    return lvgl.nameByImage(const_cast<lv_img_dsc_t *>(dsc));
-  else
+  if (dsc) {
+    auto str = lvgl.nameByImage(const_cast<lv_img_dsc_t *>(dsc));
+    if (str.isEmpty()) {
+      auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+      auto curindex = tabw->currentIndex();
+      for (int i = 0; i < tabw->count(); ++i) {
+        if (i != curindex) {
+          auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+          auto imgs = tab->allImages();
+          for (LVGLImageData *img : imgs) {
+            if (img->img_des() == dsc) return img->name();
+          }
+        }
+      }
+    }
+    return str;
+  } else
     return "default";
 }
 

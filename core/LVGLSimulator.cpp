@@ -25,6 +25,7 @@
 #include "LVGLObject.h"
 #include "LVGLObjectModel.h"
 #include "LVGLProject.h"
+#include "events/LVGLEventStateResume.h"
 #include "properties/LVGLPropertyGeometry.h"
 #include "widgets/LVGLWidget.h"
 
@@ -142,16 +143,9 @@ void LVGLSimulator::clear() { setSelectedObject(nullptr); }
 void LVGLSimulator::setMouseEnable(bool enable) {
   m_mouseEnabled = enable;
   if (false == enable) {
+    lv_anim_del_all();
+    LVGLEventStateResume::getInstance().stateResume();
     lv_scr_load(m_parent);
-    auto &apos = LVGLHelper::getInstance().getanimobjPos();
-    auto iter = apos.begin();
-    for (; iter != apos.end(); ++iter) {
-      auto x = iter.value().x();
-      auto y = iter.value().y();
-      auto obj = iter.key();
-      lv_obj_set_pos(obj, x, y);
-    }
-    apos.clear();
   }
 }
 

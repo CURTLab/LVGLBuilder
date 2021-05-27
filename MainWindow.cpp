@@ -30,6 +30,7 @@
 #include "core/LVGLWidgetModelInput.h"
 #include "core/ListDelegate.h"
 #include "core/ListViewItem.h"
+#include "events/LVGLEventStateResume.h"
 #include "lvgl/lvgl.h"
 #include "ui_MainWindow.h"
 #include "widgets/LVGLWidgets.h"
@@ -1085,6 +1086,7 @@ void MainWindow::tabChanged(int index) {
   setUndoStack();
   updateImages();
   updateFonts();
+  LVGLEventStateResume::getInstance().stateResume();
 }
 
 void MainWindow::onObjPressed(LVGLObject *obj) { Q_UNUSED(obj) }

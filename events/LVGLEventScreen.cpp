@@ -43,20 +43,6 @@ void LVGLEventScreen::eventRun(lv_obj_t *obj) {
   lv_scr_load_anim(screen, t, speed, delay, false);
 }
 
-QStringList LVGLEventScreen::objCode(const QString &objName) {
-  QStringList list;
-  QString str =
-      QString("lv_obj_set_event_cb(%1,%2);").arg(objName).arg(m_result[0]);
-  list << "\t" << str << "\n";
-  return list;
-}
-
-QString LVGLEventScreen::eventHeadCode() {
-  m_eventHeadCode =
-      QString("void %1(lv_obj_t *obj, lv_event_t event)").arg(m_result[0]);
-  return m_eventHeadCode + ";\n";
-}
-
 QStringList LVGLEventScreen::eventCode() {
   QStringList list;
   list << QString("%1{").arg(m_eventHeadCode) << "\n";
