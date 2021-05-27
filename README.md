@@ -12,7 +12,7 @@
 - [ ] Implement the unadded functions of the remaining widgets
 - [ ] Realize all event functions
 - [ ] Support more complex animation events
-- [ ] Realize the simulation operation function to stop at any time and immediately restore the initial state
+- [x] Realize the simulation operation function to stop at any time and immediately restore the initial state
 - [ ] All event function parameters must meet the requirements
 - [x] Realize the automatic save function
 - [ ] Refactor the code related to the style of the widget
