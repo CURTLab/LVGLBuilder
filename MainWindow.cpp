@@ -57,7 +57,8 @@ MainWindow::MainWindow(QWidget *parent)
       m_pcBar(new LVGLProcessBar(this)),
       m_exportThread(new LVGLExportThread),
       m_etThread(new QThread(this)),
-      m_autosaveState(0) {
+      m_autosaveThread(new LVGLAutoSaveThread),
+      m_asThread(new QThread(this)) {
   m_ui->setupUi(this);
   lvgl.init(320, 480);
   m_ui->style_tree->setStyleSheet(
@@ -169,6 +170,13 @@ MainWindow::MainWindow(QWidget *parent)
 
   m_ui->actionOFF->setChecked(true);
 
+  m_autosaveThread->moveToThread(m_asThread);
+  connect(this, &MainWindow::startAutoSave, m_autosaveThread,
+          &LVGLAutoSaveThread::startrun);
+  connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
+          &LVGLAutoSaveThread::stop);
+  m_asThread->start();
+
   LVGLLog::log_trace("Main started", __FILE__, __LINE__, __func__);
 }
 
@@ -192,6 +200,10 @@ MainWindow::~MainWindow() {
   emit stopExport();
   m_etThread->quit();
   delete m_exportThread;
+
+  emit stopAutoSave();
+  m_asThread->quit();
+  delete m_autosaveThread;
 
   qDeleteAll(m_widgets);
   qDeleteAll(m_widgetsDisplayW);
@@ -500,6 +512,10 @@ void MainWindow::setAutoSaveChecked(int state) {
       m_ui->action10_Min->setChecked(true);
       break;
   }
+  if (state > 0)
+    emit startAutoSave(state);
+  else
+    emit stopAutoSave();
 }
 
 void MainWindow::on_action_load_triggered() {

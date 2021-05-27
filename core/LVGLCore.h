@@ -100,6 +100,7 @@ class LVGLCore : public QObject {
 
   void setScreenColor(QColor color);
   QColor screenColor() const;
+  QColor screenColor(lv_obj_t *scr) const;
   bool screenColorChanged() const;
 
   QList<const LVGLWidget *> widgets() const;

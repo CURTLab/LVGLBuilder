@@ -24,6 +24,7 @@ class QUndoGroup;
 class LVGLTabWidget;
 class LVGLProcessBar;
 class LVGLExportThread;
+class LVGLAutoSaveThread;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -49,6 +50,8 @@ class MainWindow : public QMainWindow {
   void startExport(const QStringList &list);
   void stopExport();
 
+  void startAutoSave(int State);
+  void stopAutoSave();
  private slots:
   void onETSuccessful();
   void onETFailed();
@@ -157,6 +160,7 @@ class MainWindow : public QMainWindow {
   LVGLProcessBar *m_pcBar;
   LVGLExportThread *m_exportThread;
   QThread *m_etThread;
-  int m_autosaveState;
+  LVGLAutoSaveThread *m_autosaveThread;
+  QThread *m_asThread;
 };
 #endif  // MAINWINDOW_H

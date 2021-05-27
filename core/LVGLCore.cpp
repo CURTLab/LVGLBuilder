@@ -1064,6 +1064,11 @@ QColor LVGLCore::screenColor() const {
   return toColor(res);
 }
 
+QColor LVGLCore::screenColor(lv_obj_t *scr) const {
+  lv_color_t res = _lv_obj_get_style_color(scr, 0, LV_STYLE_BG_COLOR);
+  return toColor(res);
+}
+
 bool LVGLCore::screenColorChanged() const {
   lv_color_t res = _lv_obj_get_style_color(lv_scr_act(), 0, LV_STYLE_BG_COLOR);
   QColor c = toColor(res);
