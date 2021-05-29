@@ -1,3 +1,21 @@
+# New features
+
+- Added auto save file function
+
+- When the simulation stops running, widgets are restored to their original state immediately
+
+- Added btn, checkbox, ddlist, img, imgbtn and label event functions
+
+- Label adds the event function of dynamically displaying time
+
+- undo/redo supports multiple pages
+
+  ![ev3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event3.gif)
+
+  ![ev2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event2.gif)
+
+
+
 # Pre Release
 
 - Windows: builded by msvc201564 and msvc201732
