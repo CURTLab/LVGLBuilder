@@ -43,7 +43,7 @@ enum StylePart {
   Container = Background | Padding | Margin | Mix | Border,
   CPickerBG = Mix | Padding | Background | Margin,
   CpickerKNOB = Mix | Padding | Background | Margin,
-  DropdownMAIN = Mix | Background | Text | Border,
+  DropdownMAIN = Mix | Background | Text | Border | Padding | Margin,
   DropdownLIST = Background | Border | Text,
   DropdownDCRLBAR = Background,
   DropdownSELECTED = Background | Border | Text,

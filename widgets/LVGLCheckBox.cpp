@@ -37,8 +37,9 @@ LVGLCheckBox::LVGLCheckBox() {
   m_parts << LV_CHECKBOX_PART_BG;
   //<< LV_CHECKBOX_PART_BULLET;
 
-  m_properties << new LVGLPropertyString(
-      "Text", "lv_cb_set_text", lv_checkbox_set_text, lv_checkbox_get_text);
+  m_properties << new LVGLPropertyString("Text", "lv_checkbox_set_text",
+                                         lv_checkbox_set_text,
+                                         lv_checkbox_get_text);
   m_properties << new LVGLPropertyBool("Checked", "lv_checkbox_set_checked",
                                        lv_checkbox_set_checked,
                                        lv_checkbox_is_checked);
@@ -50,7 +51,7 @@ LVGLCheckBox::LVGLCheckBox() {
 
 QString LVGLCheckBox::name() const { return "Check box"; }
 
-QString LVGLCheckBox::className() const { return "lv_cb"; }
+QString LVGLCheckBox::className() const { return "lv_checkbox"; }
 
 LVGLWidget::Type LVGLCheckBox::type() const { return CheckBox; }
 

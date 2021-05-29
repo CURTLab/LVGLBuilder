@@ -324,6 +324,7 @@ LVGLButton::LVGLButton() {
   m_properties << new LVGLPropertyBool("Checkable", "lv_btn_set_checkable",
                                        lv_btn_set_checkable,
                                        lv_btn_get_checkable);
+
   m_properties << new LVGLPropertyButtonLayout;
   m_properties << new LVGLPropertyButtonFit;
   m_properties << new LVGLPropertyButtonStyle;

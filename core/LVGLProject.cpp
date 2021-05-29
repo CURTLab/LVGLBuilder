@@ -335,6 +335,9 @@ bool LVGLProject::exportCode(const QString &path) const {
     file.copy(copyfilepath);
   }
 
+  if (LVGLHelper::getInstance().getNeedSetTime())
+    if (!exportTimeFuncs(path)) return false;
+
   return exportCodePlus(path);
 }
 
@@ -387,6 +390,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   }
 
   stream << "\n";
+
   stream << "void app();\n";
   stream << "\n";
 
@@ -399,11 +403,15 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
 
   auto tabW = LVGLHelper::getInstance().getMainW()->getTabW();
-  stream << "#include \"app.h\"\n";
+  stream << "#include \"app.h\"\n\n";
+  stream << "#include <stdlib.h>\n\n";
+  if (LVGLHelper::getInstance().getNeedSetTime())
+    stream << "#include \"timefuncs.h\"\n";
+  stream << "\n";
+
   for (int i = 0; i < tabW->count(); ++i) {
     stream << "#include \"page_" << QString::number(i + 1) << ".h\"\n";
   }
-  stream << "#include \"stdlib.h\"\n";
   stream << "\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
@@ -449,6 +457,19 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
          << "lv_scr_load(page1);\n";
   stream << "}";
 
+  return true;
+}
+
+bool LVGLProject::exportTimeFuncs(const QString &path) const {
+  QString timefuncsdir = QDir::currentPath();
+  QString filepath = timefuncsdir + "/timefuncs";
+  QString copyfilepath = path + "/timefuncs";
+
+  QFile file(filepath + ".h");
+  file.copy(copyfilepath + ".h");
+
+  QFile file2(filepath + ".c");
+  file2.copy(copyfilepath + ".c");
   return true;
 }
 

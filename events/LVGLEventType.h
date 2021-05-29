@@ -42,6 +42,8 @@ class LVGLEventType final {
   inline int getwtype() { return m_wtype; }
   inline QStringList getanimObjList() { return m_animObjList; }
   inline QStringList getanimPathList() { return m_animPathList; }
+  inline void setneedCusVal(bool b) { m_needCustomeValue = b; }
+  inline bool getneedCusVal() { return m_needCustomeValue; }
 
  private:
   QStringList m_objName;
@@ -56,6 +58,7 @@ class LVGLEventType final {
   int m_type;
   int m_wtype;
   int m_role;
+  bool m_needCustomeValue;
 };
 
 #endif  // LVGLEVENTTYPE_H

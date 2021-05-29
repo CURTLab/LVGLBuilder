@@ -5,17 +5,18 @@
 #include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
 
-LVGLEventType::LVGLEventType(int type) : m_type(type), m_wtype(0), m_role(0) {
+LVGLEventType::LVGLEventType(int type)
+    : m_type(type), m_wtype(0), m_role(0), m_needCustomeValue(true) {
   init();
 }
 
 LVGLEventType::LVGLEventType(int type, int wtype)
-    : m_type(type), m_wtype(wtype), m_role(0) {
+    : m_type(type), m_wtype(wtype), m_role(0), m_needCustomeValue(true) {
   init();
 }
 
 LVGLEventType::LVGLEventType(int type, int wtype, int Role)
-    : m_type(type), m_wtype(wtype), m_role(Role) {
+    : m_type(type), m_wtype(wtype), m_role(Role), m_needCustomeValue(true) {
   init();
 }
 
@@ -67,8 +68,8 @@ void LVGLEventType::init() {
         for (auto o : objs)
           if (o->widgetType() == LVGLWidget::Arc) m_objName << o->name();
 
-        m_propertyList << "Start angle"
-                       << "End angle"
+        m_propertyList << "End angle"
+                       << "Start angle"
                        << "Rotation";
       } break;
       case LVGLEventType::BAR: {
@@ -78,6 +79,59 @@ void LVGLEventType::init() {
         m_propertyList << "Value"
                        << "Value With anim";
 
+      } break;
+      case LVGLEventType::BUTTON: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Button) m_objName << o->name();
+        m_propertyList << "Checkable";
+        m_valueList << "On"
+                    << "Off";
+      } break;
+      case LVGLEventType::CHECKBOX: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::CheckBox) m_objName << o->name();
+        m_propertyList << "Check";
+        m_valueList << "Click"
+                    << "On"
+                    << "Off";
+      } break;
+      case LVGLEventType::DROPDOWNLIST: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::DropDownList)
+            m_objName << o->name();
+        m_propertyList << "Set Select By Index";
+      } break;
+      case LVGLEventType::IMAGE: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Image) m_objName << o->name();
+        m_propertyList << "Change Image";
+        m_valueList << "dafault";
+        m_valueList += lvgl.imageNames();
+      } break;
+      case LVGLEventType::IMAGEBUTTON: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::ImageButton)
+            m_objName << o->name();
+        m_propertyList << "Release"
+                       << "Pressed"
+                       << "Checked Release"
+                       << "Checked Pressed";
+        m_valueList << "dafault";
+        m_valueList += lvgl.imageNames();
+      } break;
+      case LVGLEventType::LABEL: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Label) m_objName << o->name();
+        m_propertyList << "Text"
+                       << "Time";
+      } break;
+      case LVGLEventType::ROLLER: {
+        auto objs = lvgl.allObjects();
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::Roller) m_objName << o->name();
+
+        m_propertyList << "Selected with anim"
+                       << "Selected";
       } break;
       case LVGLEventType::SLIDER: {
         for (auto o : objs)
@@ -97,26 +151,6 @@ void LVGLEventType::init() {
                     << "Click with anim"
                     << "On with anim"
                     << "Off with anim";
-      } break;
-      case 5: {
-      } break;
-      case 6: {
-      } break;
-      case 7: {
-      } break;
-      case 8: {
-      } break;
-      case 9: {
-      } break;
-      case 10: {
-      } break;
-      case 11: {
-        auto objs = lvgl.allObjects();
-        for (auto o : objs)
-          if (o->widgetType() == LVGLWidget::Roller) m_objName << o->name();
-
-        m_propertyList << "Selected with anim"
-                       << "Selected";
       } break;
     }
   }

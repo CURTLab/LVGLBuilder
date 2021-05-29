@@ -243,6 +243,13 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
 LVGLWidget::LVGLWidget() {
   m_geometryProp = new LVGLPropertyGeometry;
   m_properties << new LVGLPropertyName;
+  m_properties << new LVGLPropertyBool("Hidden", "lv_obj_set_hidden",
+                                       lv_obj_set_hidden, lv_obj_get_hidden);
+  m_properties << new LVGLPropertyBool("Click", "lv_obj_set_click",
+                                       lv_obj_set_click, lv_obj_get_click);
+  m_properties << new LVGLPropertyBool("Drag", "lv_obj_set_drag",
+                                       lv_obj_set_drag, lv_obj_get_drag);
+
   // m_properties << new LVGLPropertyAccessible;
   m_properties << new LVGLPropertyLocked;
   m_properties << m_geometryProp;

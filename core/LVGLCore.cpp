@@ -1103,7 +1103,7 @@ const LVGLWidget *LVGLCore::widget(const QString &name) const {
     return new LVGLCanvas;
   else if (name == "lv_chart")
     return new LVGLChart;
-  else if (name == "lv_cb")
+  else if (name == "lv_checkbox")
     return new LVGLCheckBox;
   else if (name == "lv_cpicker")
     return new LVGLColorPicker;

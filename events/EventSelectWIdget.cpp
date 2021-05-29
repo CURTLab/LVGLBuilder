@@ -138,12 +138,34 @@ void EventSelectWIdget::getEventType(LVGLEventType *&ev, int index) {
     case 2:
       ev = new LVGLEventType(0, LVGLEventType::BAR);
       break;
+    case 3:
+      ev = new LVGLEventType(0, LVGLEventType::BUTTON, 1);
+      ev->setneedCusVal(false);
+      break;
+    case 4:
+      ev = new LVGLEventType(0, LVGLEventType::CHECKBOX, 1);
+      ev->setneedCusVal(false);
+      break;
+    case 5:
+      ev = new LVGLEventType(0, LVGLEventType::DROPDOWNLIST);
+      break;
+    case 6:
+      ev = new LVGLEventType(0, LVGLEventType::IMAGE, 1);
+      ev->setneedCusVal(false);
+      break;
+    case 7:
+      ev = new LVGLEventType(0, LVGLEventType::IMAGEBUTTON, 1);
+      ev->setneedCusVal(false);
+      break;
+    case 8:
+      ev = new LVGLEventType(0, LVGLEventType::LABEL);
+      break;
     case 12:
       ev = new LVGLEventType(0, LVGLEventType::SLIDER);
       break;
     case 14:
       ev = new LVGLEventType(0, LVGLEventType::SWITCH, 1);
-      break;
+      ev->setneedCusVal(false);
       break;
   }
 }

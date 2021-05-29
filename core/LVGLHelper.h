@@ -30,10 +30,13 @@ class LVGLHelper {
   QSet<QString>& getSaveFontName() { return m_saveFontN; }
   LVGLSimulator* getcursim();
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
+  QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
+  bool getNeedSetTime() { return m_needSetTime; }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void reduceFileindex() { --m_filecount; }
+  void setNeedSetTime(bool b) { m_needSetTime = b; }
 
   // other
   void updatetabDate();
@@ -45,12 +48,14 @@ class LVGLHelper {
   }
 
  private:
-  LVGLHelper() : m_pMainW(nullptr), m_filecount(0){};
+  LVGLHelper() : m_pMainW(nullptr), m_filecount(0), m_needSetTime(false){};
   MainWindow* m_pMainW;
   int m_filecount;
   QStringList pagelist;
   QMap<LVGLObject*, int> m_btnGoPage;
   QSet<QString> m_saveFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
+  QMap<lv_obj_t*, QString> m_timeCmd;
+  bool m_needSetTime;
 };
 #endif

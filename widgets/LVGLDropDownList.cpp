@@ -1,5 +1,6 @@
 #include "LVGLDropDownList.h"
 
+#include <QDebug>
 #include <QIcon>
 
 #include "core/LVGLObject.h"
@@ -72,12 +73,12 @@ class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
                                        << "Right"
                                        << "None"),
         m_values({"LV_SYMBOL_DOWN", "LV_SYMBOL_UP", "LV_SYMBOL_LEFT",
-                  "LV_SYMBOL_RIGHT", "NULL"}) {}
+                  "LV_SYMBOL_RIGHT"}) {}
 
   QString name() const { return "Arrow"; }
 
   QStringList function(LVGLObject *obj) const {
-    if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
+    if (get(obj) == 0) return QStringList();
     return QStringList() << QString("lv_dropdown_set_symbol(%1, %2);")
                                 .arg(obj->codeName())
                                 .arg(m_values.at(get(obj)));
@@ -86,18 +87,24 @@ class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
  protected:
   int get(LVGLObject *obj) const {
     auto arrow = lv_dropdown_get_symbol(obj->obj());
+    QByteArray a(arrow);
+    QByteArray b(LV_SYMBOL_DOWN);
+    QByteArray c(LV_SYMBOL_UP);
+    QByteArray d(LV_SYMBOL_LEFT);
+    QByteArray e(LV_SYMBOL_RIGHT);
 
-    if (arrow == LV_SYMBOL_DOWN)
+    if (a == b)
       return 0;
-    else if (arrow == LV_SYMBOL_UP)
+    else if (a == c)
       return 1;
-    else if (arrow == LV_SYMBOL_LEFT)
+    else if (a == d)
       return 2;
-    else if (arrow == LV_SYMBOL_RIGHT)
+    else if (a == e)
       return 3;
     else
       return 4;
   }
+
   void set(LVGLObject *obj, int index) {
     auto arrow = LV_SYMBOL_DOWN;
     switch (index) {
@@ -118,7 +125,8 @@ class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
       default:
         arrow = LV_SYMBOL_DOWN;
     }
-    if (arrow != NULL) lv_dropdown_set_symbol(obj->obj(), arrow);
+
+    lv_dropdown_set_symbol(obj->obj(), arrow);
   }
 
   QStringList m_values;

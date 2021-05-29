@@ -108,9 +108,13 @@ QStringList LVGLPropertyGeometry::function(LVGLObject *obj) const {
              .arg(obj->codeName())
              .arg(m_x->value(obj).toInt())
              .arg(m_y->value(obj).toInt());
-  ret << QString("lv_obj_set_size(%1, %2, %3);")
-             .arg(obj->codeName())
-             .arg(m_w->value(obj).toInt())
-             .arg(m_h->value(obj).toInt());
+  QString name = obj->widgetClass()->name();
+  if (name == "Dropdown")
+    ;
+  else
+    ret << QString("lv_obj_set_size(%1, %2, %3);")
+               .arg(obj->codeName())
+               .arg(m_w->value(obj).toInt())
+               .arg(m_h->value(obj).toInt());
   return ret;
 }

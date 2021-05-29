@@ -110,7 +110,7 @@ void EventSettingWidgeet::init() {
       break;
   }
 
-  if (m_event->getwtype() == LVGLEventType::SWITCH) m_issendercomhide = true;
+  m_issendercomhide = !m_event->getneedCusVal();
 
   if (m_issendercomhide) {
     ui->Sendercomb->hide();

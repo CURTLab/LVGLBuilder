@@ -177,8 +177,6 @@ MainWindow::MainWindow(QWidget *parent)
   connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
           &LVGLAutoSaveThread::stop);
   m_asThread->start();
-
-  LVGLLog::log_trace("Main started", __FILE__, __LINE__, __func__);
 }
 
 MainWindow::~MainWindow() {
@@ -215,7 +213,8 @@ MainWindow::~MainWindow() {
   delete m_ld2;
   delete m_ld3;
   delete m_project;
-  LVGLLog::log_trace("Main deleted", __FILE__, __LINE__, __func__);
+  ushort a;
+  uchar(1);
 }
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
@@ -254,8 +253,6 @@ void MainWindow::setCurrentObject(LVGLObject *obj) {
   m_styleModel->setLvglObj(obj);
   m_styleModel->setObj(nullptr);
   if (obj) {
-    LVGLLog::log_trace(QString("%1 selected").arg(obj->name()), __FILE__,
-                       __LINE__, __func__);
     auto parts = obj->widgetClass()->parts();
     m_styleModel->setPart(parts[0]);
     m_styleModel->setObj(obj->obj());
@@ -401,8 +398,6 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 }
 
 void MainWindow::loadProject(const QString &fileName) {
-  LVGLLog::log_trace(QString("%1 load").arg(fileName), __FILE__, __LINE__,
-                     __func__);
   delete m_project;
   m_project = nullptr;
   int index = m_ui->tabWidget->currentIndex();
@@ -541,13 +536,8 @@ void MainWindow::on_action_save_triggered() {
 
   if (!m_project->save(fileName)) {
     QMessageBox::critical(this, "Error", "Could not save lvgl file!");
-    LVGLLog::getInstance().log_error(
-        QString("Could not save %1!").arg(fileName), __FILE__, __LINE__,
-        __func__);
   } else {
     adjustForCurrentFile(fileName);
-    LVGLLog::log_trace(QString("%1 save").arg(fileName), __FILE__, __LINE__,
-                       __func__);
   }
 }
 
