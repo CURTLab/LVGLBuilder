@@ -6,23 +6,11 @@
 
 - Added btn, checkbox, ddlist, img, imgbtn and label event functions
 
+- undo/redo supports multiple pages
+
 - Label adds the event function of dynamically displaying time
 
-- undo/redo supports multiple pages
-  yy or yyyy :year （yyyy = 2021 yy = 21)
-  M or MM: month (m = 5 MM = 05)
-  d or dd： day (d = 9 dd = 09)
-  MMM or MMMM : month name (MMM = Dec MMMM = December)
-  ddd or dddd : day name( ddd = Mon dddd = Monday)
-  h or hh:hour(0 - 12) (h = 4 hh = 04)
-  H or HH: hour(0 - 23) (H = 4 HH = 04)
-  m or mm: minute (m = 9 mm = 09)
-  s or ss:second (s = 9 ss = 09)
-  a or ap(A or AP) : am/pm
-  e or en(E or EN): english
-  c or ch(C or CH): chinese
-  yyyy-MM-dd hh:mm:ss a == 2021-05-29 5:00:00 pm
-  yy/M/d H:m:s == 21/5/29 17:00:00
+  ![timedes](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/timedes.png)
   
   ![ev2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event2.gif)
 
