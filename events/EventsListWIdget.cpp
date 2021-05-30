@@ -7,10 +7,13 @@ EventsListWIdget::EventsListWIdget(LVGLWidget *w, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::EventsListWIdget),
       m_selectW(nullptr),
-      m_w(w) {
+      m_w(w),
+      m_edititem(nullptr) {
   ui->setupUi(this);
   ui->add->setIcon(QIcon(":/icons/add.png"));
   ui->remove->setIcon(QIcon(":/icons/delete.png"));
+  connect(ui->listWidget, &QListWidget::itemDoubleClicked, this,
+          &EventsListWIdget::slotEditItem);
 }
 
 EventsListWIdget::~EventsListWIdget() { delete ui; }
@@ -64,5 +67,26 @@ void EventsListWIdget::on_remove_clicked() {
       ui->listWidget->takeItem(r);
       --Ev_index;
     }
+  }
+}
+
+void EventsListWIdget::slotEditItem(QListWidgetItem *item) {
+  m_edititem = item;
+  QStringList list = item->text().split('#');
+  m_selectW = new EventSelectWIdget(m_w, this);
+  m_selectW->setTextList(list);
+  connect(m_selectW, &QDialog::finished, this,
+          &EventsListWIdget::slotUpdateItem);
+  m_selectW->open();
+}
+
+void EventsListWIdget::slotUpdateItem() {
+  setFocus();
+  if (QDialog::Accepted == m_selectW->result()) {
+    m_resultlist.clear();
+    m_resultlist = m_selectW->textList();
+    QString tmp;
+    for (auto str : m_resultlist) tmp += str;
+    m_edititem->setText(tmp);
   }
 }

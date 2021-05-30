@@ -4,6 +4,7 @@
 #include <QDialog>
 class EventSelectWIdget;
 class LVGLWidget;
+class QListWidgetItem;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -27,11 +28,14 @@ class EventsListWIdget : public QDialog {
   void on_cancel_clicked();
   void on_add_clicked();
   void on_remove_clicked();
+  void slotEditItem(QListWidgetItem *item);
+  void slotUpdateItem();
 
  private:
   Ui::EventsListWIdget *ui;
   EventSelectWIdget *m_selectW;
   QStringList m_resultlist;
   LVGLWidget *m_w;
+  QListWidgetItem *m_edititem;
 };
 #endif  // EVENTSLISTWIDGET_H

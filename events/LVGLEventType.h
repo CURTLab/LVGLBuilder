@@ -16,7 +16,6 @@ class LVGLEventType final {
     IMAGEBUTTON,
     LABEL,
     LED,
-    LINE,
     ROLLER,
     SLIDER,
     SPINBOX,

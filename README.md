@@ -9,7 +9,7 @@
 - [x] Add move Animation
 - [x] Add test cases and add detailed event function usage instructions
 - [ ] Implement the unadded functions of the remaining widgets
-- [ ] Realize all event functions
+- [x] Realize all event functions
 - [ ] Support more complex animation events
 - [x] Realize the simulation operation function to stop at any time and immediately restore the initial state
 - [ ] All event function parameters must meet the requirements

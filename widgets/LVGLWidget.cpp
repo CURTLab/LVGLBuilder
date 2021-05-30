@@ -118,8 +118,6 @@ static LVGLEvent *getWidgetEvent(QString name) {
     ev = new LVGLEventLabel;
   } else if (name == "Led") {
     ev = new LVGLEventLed;
-  } else if (name == "Line") {
-    ev = new LVGLEventLine;
   } else if (name == "Roller") {
     ev = new LVGLEventRoller;
   } else if (name == "Slider") {

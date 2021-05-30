@@ -27,6 +27,9 @@ class EventSettingWidgeet : public QDialog {
 
  private:
   void init();
+  void setSetPropvalue(const QStringList &list);
+  void setscreenValue(const QStringList &list);
+  void setAnimalValue(const QStringList &list);
 
  private:
   Ui::EventSettingWidgeet *ui;
@@ -40,5 +43,6 @@ class EventSettingWidgeet : public QDialog {
   bool m_isval2comhide;
   bool m_isval3edithide;
   bool m_isvalue4edithide;
+  bool m_isvalue5textedithide;
 };
 #endif  // EVENTSETTINGWIDGEET_H

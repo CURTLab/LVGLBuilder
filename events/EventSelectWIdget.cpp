@@ -60,7 +60,6 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
                                       << "Image Button"
                                       << "Label"
                                       << "Led"
-                                      << "Line"
                                       << "Roller"
                                       << "Slider"
                                       << "Spinbox"
@@ -73,7 +72,47 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
 
 EventSelectWIdget::~EventSelectWIdget() { delete ui; }
 
-void EventSelectWIdget::setTextList(const QStringList &list) {}
+void EventSelectWIdget::setTextList(const QStringList &list) {
+  if (list.isEmpty()) return;
+
+  auto eventname = list[0];
+  ui->nameEdit->setText(eventname);
+
+  auto eventtrigger = list[1];
+  int trindex = ui->triggercomb->findText(eventtrigger);
+  ui->triggercomb->setCurrentIndex(trindex);
+
+  auto eventtype = list[2];
+  int type = ui->typecomb->findText(eventtype);
+  ui->typecomb->setCurrentIndex(type);
+
+  int index = 0;
+  if (type == 0) {
+    index = ui->objectcomb->findText(list[3]);
+    ui->objectcomb->setCurrentIndex(index);
+  }
+
+  if (m_ev) {
+    delete m_ev;
+    m_ev = nullptr;
+  }
+
+  switch (type) {
+    case 0:
+      getEventType(m_ev, index);
+      break;
+    case 1:
+      m_ev = new LVGLEventType(1);
+      break;
+    case 2:
+      m_ev = new LVGLEventType(2);
+  }
+  m_setWidget = new EventSettingWidgeet(m_ev, type, this);
+  m_setWidget->setTextList(list);
+  connect(m_setWidget, &QDialog::finished, this,
+          &EventSelectWIdget::slotSetWFinished);
+  m_setWidget->open();
+}
 
 QStringList EventSelectWIdget::textList() {
   QStringList list;
@@ -129,42 +168,53 @@ void EventSelectWIdget::slotTypeChanged(int index) {
 
 void EventSelectWIdget::getEventType(LVGLEventType *&ev, int index) {
   switch (index) {
-    case 0:
+    case LVGLEventType::BASIC:
       ev = new LVGLEventType(0, LVGLEventType::BASIC);
       break;
-    case 1:
+    case LVGLEventType::ARC:
       ev = new LVGLEventType(0, LVGLEventType::ARC);
       break;
-    case 2:
+    case LVGLEventType::BAR:
       ev = new LVGLEventType(0, LVGLEventType::BAR);
       break;
-    case 3:
+    case LVGLEventType::BUTTON:
       ev = new LVGLEventType(0, LVGLEventType::BUTTON, 1);
       ev->setneedCusVal(false);
       break;
-    case 4:
+    case LVGLEventType::CHECKBOX:
       ev = new LVGLEventType(0, LVGLEventType::CHECKBOX, 1);
       ev->setneedCusVal(false);
       break;
-    case 5:
+    case LVGLEventType::DROPDOWNLIST:
       ev = new LVGLEventType(0, LVGLEventType::DROPDOWNLIST);
       break;
-    case 6:
+    case LVGLEventType::IMAGE:
       ev = new LVGLEventType(0, LVGLEventType::IMAGE, 1);
       ev->setneedCusVal(false);
       break;
-    case 7:
+    case LVGLEventType::IMAGEBUTTON:
       ev = new LVGLEventType(0, LVGLEventType::IMAGEBUTTON, 1);
       ev->setneedCusVal(false);
       break;
-    case 8:
+    case LVGLEventType::LABEL:
       ev = new LVGLEventType(0, LVGLEventType::LABEL);
       break;
-    case 12:
+    case LVGLEventType::LED:
+      ev = new LVGLEventType(0, LVGLEventType::LED, 1);
+      ev->setneedCusVal(false);
+      break;
+    case LVGLEventType::ROLLER:
+      ev = new LVGLEventType(0, LVGLEventType::ROLLER);
+      break;
+    case LVGLEventType::SLIDER:
       ev = new LVGLEventType(0, LVGLEventType::SLIDER);
       break;
-    case 14:
+    case LVGLEventType::SWITCH:
       ev = new LVGLEventType(0, LVGLEventType::SWITCH, 1);
+      ev->setneedCusVal(false);
+      break;
+    case LVGLEventType::TEXTAREA:
+      ev = new LVGLEventType(0, LVGLEventType::TEXTAREA, 2);
       ev->setneedCusVal(false);
       break;
   }

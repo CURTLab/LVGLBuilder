@@ -23,7 +23,16 @@ EventSettingWidgeet::EventSettingWidgeet(LVGLEventType *event, int type,
 
 EventSettingWidgeet::~EventSettingWidgeet() { delete ui; }
 
-void EventSettingWidgeet::setTextList(const QStringList &list) {}
+void EventSettingWidgeet::setTextList(const QStringList &list) {
+  auto type = list[2];
+  if (type == "Set Property") {
+    setSetPropvalue(list);
+  } else if (type == "Change Screen") {
+    setscreenValue(list);
+  } else if (type == "Play Animation") {
+    setAnimalValue(list);
+  }
+}
 
 QStringList EventSettingWidgeet::textList() {
   QStringList list;
@@ -34,6 +43,7 @@ QStringList EventSettingWidgeet::textList() {
   if (!m_isval2comhide) list << ui->value2comb->currentText() + "#";
   if (!m_isval3edithide) list << ui->value3edit->text() + "#";
   if (!m_isvalue4edithide) list << ui->value4edit->text() + "#";
+  if (!m_isvalue5textedithide) list << ui->valut5textEdit->toPlainText() + "#";
   return list;
 }
 
@@ -56,6 +66,7 @@ void EventSettingWidgeet::init() {
   m_isval2comhide = false;
   m_isval3edithide = false;
   m_isvalue4edithide = true;
+  m_isvalue5textedithide = true;
 
   switch (m_type) {
     case 0: {
@@ -75,6 +86,11 @@ void EventSettingWidgeet::init() {
         m_isvaledithide = true;
         ui->value2lab->setText(tr("Value"));
         ui->value2comb->addItems(m_event->getValuelist());
+      } else if (Role == 2) {
+        m_isval2comhide = true;
+        m_isvaledithide = true;
+        m_isvalue5textedithide = false;
+        ui->value5lab->setText(tr("Value"));
       }
       m_isval3edithide = true;
 
@@ -110,7 +126,7 @@ void EventSettingWidgeet::init() {
       break;
   }
 
-  m_issendercomhide = !m_event->getneedCusVal();
+  if (m_type == 0) m_issendercomhide = !m_event->getneedCusVal();
 
   if (m_issendercomhide) {
     ui->Sendercomb->hide();
@@ -132,4 +148,147 @@ void EventSettingWidgeet::init() {
     ui->value4lab->hide();
     ui->value4edit->hide();
   }
+  if (m_isvalue5textedithide) {
+    ui->value5lab->hide();
+    ui->valut5textEdit->hide();
+  }
+}
+
+void EventSettingWidgeet::setSetPropvalue(const QStringList &list) {
+  if (!m_isobjcomhide) {
+    int objindex = ui->objcomb->findText(list[4]);
+    ui->objcomb->setCurrentIndex(objindex);
+  }
+
+  if (!m_ispropcomhide) {
+    int propindex = ui->propcomb->findText(list[5]);
+    ui->propcomb->setCurrentIndex(propindex);
+  }
+
+  if (!m_issendercomhide) {
+    int isdindex = ui->Sendercomb->findText(list[6]);
+    ui->Sendercomb->setCurrentIndex(isdindex);
+    if (!m_isvaledithide) {
+      ui->valueedit->setText(list[7]);
+      if (!m_isval2comhide) {
+        auto v2index = ui->value2comb->findText(list[8]);
+        ui->value2comb->setCurrentIndex(v2index);
+      }
+      if (!m_isval3edithide) {
+        ui->value3edit->setText(list[9]);
+      }
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[10]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[11]);
+      }
+    }
+    if (!m_isval2comhide) {
+      auto v2index = ui->value2comb->findText(list[7]);
+      ui->value2comb->setCurrentIndex(v2index);
+
+      if (!m_isval3edithide) {
+        ui->value3edit->setText(list[8]);
+      }
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[9]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[10]);
+      }
+    }
+    if (!m_isval3edithide) {
+      ui->value3edit->setText(list[7]);
+
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[8]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[9]);
+      }
+    }
+    if (!m_isvalue4edithide) {
+      ui->value4edit->setText(list[7]);
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[8]);
+      }
+    }
+    if (!m_isvalue5textedithide) {
+      ui->valut5textEdit->setText(list[7]);
+    }
+  } else {
+    if (!m_isvaledithide) {
+      ui->valueedit->setText(list[6]);
+      if (!m_isval2comhide) {
+        auto v2index = ui->value2comb->findText(list[7]);
+        ui->value2comb->setCurrentIndex(v2index);
+      }
+      if (!m_isval3edithide) {
+        ui->value3edit->setText(list[8]);
+      }
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[9]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[10]);
+      }
+    }
+    if (!m_isval2comhide) {
+      auto v2index = ui->value2comb->findText(list[6]);
+      ui->value2comb->setCurrentIndex(v2index);
+
+      if (!m_isval3edithide) {
+        ui->value3edit->setText(list[7]);
+      }
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[8]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[9]);
+      }
+    }
+    if (!m_isval3edithide) {
+      ui->value3edit->setText(list[6]);
+
+      if (!m_isvalue4edithide) {
+        ui->value4edit->setText(list[7]);
+      }
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[8]);
+      }
+    }
+    if (!m_isvalue4edithide) {
+      ui->value4edit->setText(list[6]);
+      if (!m_isvalue5textedithide) {
+        ui->valut5textEdit->setText(list[7]);
+      }
+    }
+    if (!m_isvalue5textedithide) {
+      ui->valut5textEdit->setText(list[6]);
+    }
+  }
+}
+
+void EventSettingWidgeet::setscreenValue(const QStringList &list) {
+  int objindex = ui->objcomb->findText(list[3]);
+  ui->objcomb->setCurrentIndex(objindex);
+
+  int propindex = ui->propcomb->findText(list[4]);
+  ui->propcomb->setCurrentIndex(propindex);
+
+  ui->valueedit->setText(list[5]);
+  ui->value3edit->setText(list[6]);
+}
+
+void EventSettingWidgeet::setAnimalValue(const QStringList &list) {
+  int objindex = ui->objcomb->findText(list[3]);
+  ui->objcomb->setCurrentIndex(objindex);
+
+  int propindex = ui->propcomb->findText(list[4]);
+  ui->propcomb->setCurrentIndex(propindex);
+
+  ui->valueedit->setText(list[5]);
+  ui->value3edit->setText(list[6]);
+  ui->value4edit->setText(list[7]);
 }

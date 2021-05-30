@@ -133,7 +133,6 @@ SOURCES += \
     events/LVGLEventImageButton.cpp \
     events/LVGLEventLabel.cpp \
     events/LVGLEventLed.cpp \
-    events/LVGLEventLine.cpp \
     events/LVGLEventRoller.cpp \
     events/LVGLEventScreen.cpp \
     events/LVGLEventSlider.cpp \
@@ -240,7 +239,6 @@ HEADERS += \
     events/LVGLEventImageButton.h \
     events/LVGLEventLabel.h \
     events/LVGLEventLed.h \
-    events/LVGLEventLine.h \
     events/LVGLEventRoller.h \
     events/LVGLEventScreen.h \
     events/LVGLEventSlider.h \

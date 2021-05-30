@@ -10,7 +10,6 @@
 #include "LVGLEventImageButton.h"
 #include "LVGLEventLabel.h"
 #include "LVGLEventLed.h"
-#include "LVGLEventLine.h"
 #include "LVGLEventRoller.h"
 #include "LVGLEventSlider.h"
 #include "LVGLEventSpinbox.h"

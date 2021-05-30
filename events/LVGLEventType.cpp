@@ -125,13 +125,21 @@ void LVGLEventType::init() {
         m_propertyList << "Text"
                        << "Time";
       } break;
+      case LVGLEventType::LED: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::LED) m_objName << o->name();
+        m_propertyList << "Turn";
+        m_valueList << "Click"
+                    << "On"
+                    << "Off";
+      } break;
       case LVGLEventType::ROLLER: {
         auto objs = lvgl.allObjects();
         for (auto o : objs)
           if (o->widgetType() == LVGLWidget::Roller) m_objName << o->name();
 
-        m_propertyList << "Selected with anim"
-                       << "Selected";
+        m_propertyList << "Selected"
+                       << "Selected with anim";
       } break;
       case LVGLEventType::SLIDER: {
         for (auto o : objs)
@@ -151,6 +159,11 @@ void LVGLEventType::init() {
                     << "Click with anim"
                     << "On with anim"
                     << "Off with anim";
+      } break;
+      case LVGLEventType::TEXTAREA: {
+        for (auto o : objs)
+          if (o->widgetType() == LVGLWidget::TextArea) m_objName << o->name();
+        m_propertyList << "Text";
       } break;
     }
   }
