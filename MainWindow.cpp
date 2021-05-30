@@ -170,6 +170,7 @@ MainWindow::MainWindow(QWidget *parent)
   // m_pcBar->setAttribute(Qt::WA_TranslucentBackground);
 
   m_ui->actionOFF->setChecked(true);
+  m_ui->actionAbsolute_path->setChecked(true);
 
   m_autosaveThread->moveToThread(m_asThread);
   connect(this, &MainWindow::startAutoSave, m_autosaveThread,
@@ -1123,3 +1124,15 @@ void MainWindow::on_action8_Min_triggered() { setAutoSaveChecked(8); }
 void MainWindow::on_action9_Min_triggered() { setAutoSaveChecked(9); }
 
 void MainWindow::on_action10_Min_triggered() { setAutoSaveChecked(10); }
+
+void MainWindow::on_actionAbsolute_path_triggered() {
+  LVGLHelper::getInstance().setLoadMethod(0);
+  m_ui->actionAbsolute_path->setChecked(true);
+  m_ui->actionRelative_path->setChecked(false);
+}
+
+void MainWindow::on_actionRelative_path_triggered() {
+  LVGLHelper::getInstance().setLoadMethod(1);
+  m_ui->actionAbsolute_path->setChecked(false);
+  m_ui->actionRelative_path->setChecked(true);
+}

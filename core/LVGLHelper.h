@@ -32,11 +32,13 @@ class LVGLHelper {
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
   QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
   bool getNeedSetTime() { return m_needSetTime; }
+  int getLoadMethod() { return m_loadMethod; }
 
   // set
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void reduceFileindex() { --m_filecount; }
   void setNeedSetTime(bool b) { m_needSetTime = b; }
+  void setLoadMethod(int method) { m_loadMethod = method; }
 
   // other
   void updatetabDate();
@@ -48,7 +50,11 @@ class LVGLHelper {
   }
 
  private:
-  LVGLHelper() : m_pMainW(nullptr), m_filecount(0), m_needSetTime(false){};
+  LVGLHelper()
+      : m_pMainW(nullptr),
+        m_filecount(0),
+        m_needSetTime(false),
+        m_loadMethod(0){};
   MainWindow* m_pMainW;
   int m_filecount;
   QStringList pagelist;
@@ -57,5 +63,6 @@ class LVGLHelper {
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
   QMap<lv_obj_t*, QString> m_timeCmd;
   bool m_needSetTime;
+  int m_loadMethod;
 };
 #endif

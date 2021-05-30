@@ -1,0 +1,284 @@
+{
+    "fonts": [
+    ],
+    "images": [
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 156,
+                    "y": 122
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#Led#led_1#Turn#Click#",
+                    "Event2#Clicked#Set Property#Roller#roller_1#Selected with anim#Not use#2#"
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Outline": {
+                            "outline_color": "0x44d1b6",
+                            "outline_opa": 0
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "brightness": 255,
+                "class": "lv_led",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 43,
+                    "width": 43,
+                    "x": 140,
+                    "y": 286
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "led_1",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "switch": "On",
+                "widget": "LED"
+            },
+            {
+                "align": "Center",
+                "animation time": 200,
+                "auto fit": true,
+                "class": "lv_roller",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 117,
+                    "width": 92,
+                    "x": 429,
+                    "y": 176
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "roller_1",
+                "options": "Option 1\nOption 2\nOption 3\nOption 4\nOption 5",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 3,
+                        "state": 6
+                    }
+                ],
+                "visible rows": 3,
+                "widget": "Roller"
+            }
+        ]
+    }
+}

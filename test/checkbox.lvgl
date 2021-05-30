@@ -1,0 +1,475 @@
+{
+    "fonts": [
+    ],
+    "images": [
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 68,
+                    "y": 157
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#CheckBox#check_box_1#Check#Click#",
+                    "Event2#Clicked#Set Property#CheckBox#check_box_2#Check#On#",
+                    "Event3#Clicked#Set Property#CheckBox#check_box_3#Check#Off#",
+                    "Event4#Clicked#Set Property#Button#button_2#Checkable#On#",
+                    "Event5#Clicked#Set Property#Button#button_3#Checkable#Off#"
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Outline": {
+                            "outline_color": "0x44d1b6",
+                            "outline_opa": 0
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 344,
+                    "y": 75
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_2",
+                "set event": [
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "checked": false,
+                "class": "lv_checkbox",
+                "click": true,
+                "disabled": false,
+                "drag": false,
+                "geometry": {
+                    "height": 23,
+                    "width": 105,
+                    "x": 118,
+                    "y": 274
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "check_box_1",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "Check box",
+                "widget": "Check box"
+            },
+            {
+                "checked": false,
+                "class": "lv_checkbox",
+                "click": true,
+                "disabled": false,
+                "drag": false,
+                "geometry": {
+                    "height": 23,
+                    "width": 105,
+                    "x": 123,
+                    "y": 365
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "check_box_2",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "Check box",
+                "widget": "Check box"
+            },
+            {
+                "checked": false,
+                "class": "lv_checkbox",
+                "click": true,
+                "disabled": false,
+                "drag": false,
+                "geometry": {
+                    "height": 23,
+                    "width": 105,
+                    "x": 123,
+                    "y": 438
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "check_box_3",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "text": "Check box",
+                "widget": "Check box"
+            },
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 353,
+                    "y": 167
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_3",
+                "set event": [
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            }
+        ]
+    }
+}

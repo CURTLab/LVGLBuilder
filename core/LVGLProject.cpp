@@ -53,7 +53,41 @@ LVGLProject *LVGLProject::load(const QString &fileName) {
 
   QJsonArray imageArr = doc["images"].toArray();
   for (int i = 0; i < imageArr.size(); ++i) {
-    LVGLImageData *img = new LVGLImageData(imageArr[i].toObject());
+    LVGLImageData *img = nullptr;
+    if (0 == LVGLHelper::getInstance().getLoadMethod()) {
+      img = new LVGLImageData(imageArr[i].toObject());
+    } else {
+      auto object = imageArr[i].toObject();
+      QString name = object["name"].toString();
+      QString picpath = object["fileName"].toString();
+      QString dir, fname;
+      int index = 0;
+      for (int i = fileName.size() - 1; i >= 0; --i) {
+        if (fileName[i] == '/') {
+          index = i;
+          break;
+        }
+        if (fileName[i] == '\\') {
+          index = i;
+          break;
+        }
+      }
+      dir = fileName.mid(0, index);
+      index = 0;
+      for (int i = picpath.size() - 1; i >= 0; --i) {
+        if (picpath[i] == '/') {
+          index = i;
+          break;
+        }
+        if (picpath[i] == '\\') {
+          index = i;
+          break;
+        }
+      }
+      fname = picpath.mid(index, picpath.size() - index);
+      QString filepath = dir + fname;
+      img = new LVGLImageData(filepath, name);
+    }
     if (img->isValid()) {
       lvgl.addImage(img);
     } else {

@@ -93,6 +93,10 @@ class MainWindow : public QMainWindow {
   void on_action9_Min_triggered();
   void on_action10_Min_triggered();
 
+  void on_actionAbsolute_path_triggered();
+
+  void on_actionRelative_path_triggered();
+
  protected:
   void showEvent(QShowEvent *event) override;
   void keyPressEvent(QKeyEvent *e) override;

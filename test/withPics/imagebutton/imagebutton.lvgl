@@ -1,0 +1,347 @@
+{
+    "fonts": [
+    ],
+    "images": [
+        {
+            "colorFormat": "RGBA",
+            "fileName": "C:/Users/root/Desktop/LVGLBuilder/test/withPics/imagebutton/menu_first.png",
+            "name": "menu_first"
+        },
+        {
+            "colorFormat": "RGBA",
+            "fileName": "C:/Users/root/Desktop/LVGLBuilder/test/withPics/imagebutton/menu_third.png",
+            "name": "menu_third"
+        },
+        {
+            "colorFormat": "RGBA",
+            "fileName": "C:/Users/root/Desktop/LVGLBuilder/test/withPics/imagebutton/menu_secnd.png",
+            "name": "menu_secnd"
+        },
+        {
+            "colorFormat": "RGBA",
+            "fileName": "C:/Users/root/Desktop/LVGLBuilder/test/withPics/imagebutton/bedroom_sel.png",
+            "name": "bedroom_sel"
+        }
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "checkable": false,
+                "class": "lv_imgbtn",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 269,
+                    "width": 200,
+                    "x": 0,
+                    "y": 0
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "image_button_1",
+                "set event": [
+                ],
+                "source checked pressed": "default",
+                "source checked released": "default",
+                "source pressed": "default",
+                "source released": "default",
+                "state": "Released",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Image button"
+            },
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 278,
+                    "y": 311
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#Image Button#image_button_1#Release#menu_third#",
+                    "Event2#Clicked#Set Property#Image Button#image_button_2#Pressed#bedroom_sel#",
+                    "Event3#Clicked#Set Property#Image Button#image_button_3#Checked Release#menu_secnd#",
+                    "Event4#Clicked#Set Property#Image Button#image_button_4#Checked Pressed#menu_first#"
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Outline": {
+                            "outline_color": "0x44d1b6",
+                            "outline_opa": 0
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "checkable": false,
+                "class": "lv_imgbtn",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 269,
+                    "width": 200,
+                    "x": 369,
+                    "y": 0
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "image_button_2",
+                "set event": [
+                ],
+                "source checked pressed": "default",
+                "source checked released": "default",
+                "source pressed": "default",
+                "source released": "menu_third",
+                "state": "Released",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Image button"
+            },
+            {
+                "checkable": true,
+                "class": "lv_imgbtn",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 269,
+                    "width": 200,
+                    "x": 409,
+                    "y": 382
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "image_button_3",
+                "set event": [
+                ],
+                "source checked pressed": "default",
+                "source checked released": "menu_third",
+                "source pressed": "default",
+                "source released": "default",
+                "state": "Released",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Image button"
+            },
+            {
+                "checkable": true,
+                "class": "lv_imgbtn",
+                "click": true,
+                "drag": false,
+                "geometry": {
+                    "height": 269,
+                    "width": 200,
+                    "x": 1,
+                    "y": 385
+                },
+                "hidden": false,
+                "locked": false,
+                "name": "image_button_4",
+                "set event": [
+                ],
+                "source checked pressed": "default",
+                "source checked released": "default",
+                "source pressed": "default",
+                "source released": "default",
+                "state": "Checked released",
+                "styles": [
+                    {
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Image button"
+            }
+        ]
+    }
+}

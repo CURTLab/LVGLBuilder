@@ -1,0 +1,324 @@
+{
+    "fonts": [
+    ],
+    "images": [
+    ],
+    "lvgl": {
+        "name": "Page_1",
+        "resolution": {
+            "height": 720,
+            "width": 720
+        },
+        "screen color": "#ffffff",
+        "widgets": [
+            {
+                "checkable": false,
+                "class": "lv_btn",
+                "click": true,
+                "drag": false,
+                "fit": "None",
+                "geometry": {
+                    "height": 35,
+                    "width": 100,
+                    "x": 185,
+                    "y": 74
+                },
+                "hidden": false,
+                "layout": "Center",
+                "locked": false,
+                "name": "button_1",
+                "set event": [
+                    "Event1#Clicked#Set Property#TextArea#text_area_1#Text#haha\nheihei \ne = mc^2#"
+                ],
+                "state": "Released",
+                "style": "Custome Style",
+                "styles": [
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Outline": {
+                            "outline_color": "0x44d1b6",
+                            "outline_opa": 0
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Outline": {
+                            "outline_opa": 127
+                        },
+                        "Value": {
+                            "value_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    }
+                ],
+                "widget": "Button"
+            },
+            {
+                "class": "lv_textarea",
+                "click": true,
+                "cursor blink time": 144,
+                "cursor position": 0,
+                "drag": false,
+                "edge flash": false,
+                "geometry": {
+                    "height": 173,
+                    "width": 238,
+                    "x": 197,
+                    "y": 376
+                },
+                "hidden": false,
+                "locked": false,
+                "max length": 0,
+                "name": "text_area_1",
+                "one line mode": false,
+                "password mode": false,
+                "placeholder": "",
+                "scroll propagation": false,
+                "scrollbars": "Drag",
+                "set event": [
+                ],
+                "styles": [
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 0,
+                        "state": 6
+                    },
+                    {
+                        "part": 1,
+                        "state": 0
+                    },
+                    {
+                        "part": 1,
+                        "state": 1
+                    },
+                    {
+                        "part": 1,
+                        "state": 2
+                    },
+                    {
+                        "part": 1,
+                        "state": 3
+                    },
+                    {
+                        "part": 1,
+                        "state": 4
+                    },
+                    {
+                        "part": 1,
+                        "state": 5
+                    },
+                    {
+                        "part": 1,
+                        "state": 6
+                    },
+                    {
+                        "part": 2,
+                        "state": 0
+                    },
+                    {
+                        "part": 2,
+                        "state": 1
+                    },
+                    {
+                        "part": 2,
+                        "state": 2
+                    },
+                    {
+                        "part": 2,
+                        "state": 3
+                    },
+                    {
+                        "part": 2,
+                        "state": 4
+                    },
+                    {
+                        "part": 2,
+                        "state": 5
+                    },
+                    {
+                        "part": 2,
+                        "state": 6
+                    },
+                    {
+                        "part": 3,
+                        "state": 0
+                    },
+                    {
+                        "part": 3,
+                        "state": 1
+                    },
+                    {
+                        "part": 3,
+                        "state": 2
+                    },
+                    {
+                        "part": 3,
+                        "state": 3
+                    },
+                    {
+                        "part": 3,
+                        "state": 4
+                    },
+                    {
+                        "part": 3,
+                        "state": 5
+                    },
+                    {
+                        "part": 3,
+                        "state": 6
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 0
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 1
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 2
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 3
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 4
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 5
+                    },
+                    {
+                        "Text": {
+                            "text_font": "123abc 16"
+                        },
+                        "part": 4,
+                        "state": 6
+                    }
+                ],
+                "text": "Text area",
+                "text align": "Left",
+                "widget": "Text area"
+            }
+        ]
+    }
+}

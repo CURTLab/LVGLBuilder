@@ -108,8 +108,16 @@
     <addaction name="menuOn"/>
     <addaction name="actionOFF"/>
    </widget>
+   <widget class="QMenu" name="menuLoadMode">
+    <property name="title">
+     <string>Loading Method</string>
+    </property>
+    <addaction name="actionAbsolute_path"/>
+    <addaction name="actionRelative_path"/>
+   </widget>
    <addaction name="menuLittlevGL_Builder"/>
    <addaction name="menuAutoSave"/>
+   <addaction name="menuLoadMode"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -886,6 +894,22 @@
    </property>
    <property name="text">
     <string>10 Min</string>
+   </property>
+  </action>
+  <action name="actionAbsolute_path">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Absolute path</string>
+   </property>
+  </action>
+  <action name="actionRelative_path">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Relative path</string>
    </property>
   </action>
  </widget>

@@ -17,6 +17,7 @@
 - [ ] Refactor the code related to the style of the widget
 - [x] redo/undo supports new multi-page design
 - [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
+- [ ] Add language switching function
 - [ ] Dialog for changing keyboard layout
 
 
