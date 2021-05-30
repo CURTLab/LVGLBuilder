@@ -7,3 +7,11 @@
  - Completed all event functions
  - Add test cases for all events
  - Support for reading relative path files (The configuration file and the picture need to be in the same directory)
+ 
+## 1.0.1
+ - Added auto save file function
+ - When the simulation stops running, widgets are restored to their original state immediately
+ - Added btn, checkbox, ddlist, img, imgbtn and label event functions
+ - undo/redo supports multiple pages
+ - Label adds the event function of dynamically displaying time
+  ![timedes](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/timedes.png)
