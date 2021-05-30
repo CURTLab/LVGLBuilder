@@ -37,6 +37,7 @@ class LVGLAutoSaveThread : public QObject {
  private:
   volatile bool stopped;
   QTimer *m_time;
+  int m_saveCount;
 };
 
 #endif  // LVGLEXPORTTHREAD_H

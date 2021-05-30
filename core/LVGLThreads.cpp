@@ -45,6 +45,7 @@ LVGLAutoSaveThread::~LVGLAutoSaveThread() {}
 
 void LVGLAutoSaveThread::startrun(int state) {
   stopped = false;
+  m_saveCount = 0;
   if (!m_time) {
     delete m_time;
     m_time = new QTimer;
@@ -55,15 +56,18 @@ void LVGLAutoSaveThread::startrun(int state) {
 }
 
 void LVGLAutoSaveThread::saveFile() {
+  if (m_saveCount > 2) m_saveCount = 0;
+  ++m_saveCount;
   LVGLHelper::getInstance().updatetabDate();
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   for (int i = 0; i < tabw->count(); ++i) {
     if (stopped) return;
     auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
     QString name = tab->getname();
-    QString timestr = QDateTime::currentDateTime().toString("MMddhhmm");
-    QString fileName = QString("%1/%2_%3.lvgl")
+    QString timestr = QDateTime::currentDateTime().toString("yyMMdd");
+    QString fileName = QString("%1/%2_%3_%4.lvgl")
                            .arg(QApplication::applicationDirPath())
+                           .arg(m_saveCount)
                            .arg(timestr)
                            .arg(name);
     QFile file(fileName);
