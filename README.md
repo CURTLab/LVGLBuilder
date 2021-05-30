@@ -1,7 +1,6 @@
 # Very Very Very important
-* Try not to delete the page.
-* Save files at any time
-* When the simulation is running, please wait for the animation to end before canceling the simulation.
+* Try not to delete the page
+* Save files at any time or turn on the auto-save function
 
 # New Todo List
 
