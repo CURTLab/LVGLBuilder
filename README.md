@@ -1,3 +1,7 @@
+# Future plan
+- The changes to lvgl8.0 are very large, and it is still being changed, so it is expected to start supporting lvgl8.0 in November
+- After the dotolist is completed, no new functions will be added later. At that time, the entire project code will be refactored. 
+
 # New features
 The pre-release of v1.0.2 has been released. And Changlog.md under the dev-v7 branch will record all the new features of the version starting from v1.01
 ## 1.0.2 
