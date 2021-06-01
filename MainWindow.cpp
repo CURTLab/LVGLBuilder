@@ -314,7 +314,7 @@ void MainWindow::openNewProject() {
     }
 
     setEnableBuilder(true);
-    tabW->setname(dialog.selectName());
+    tabW->setfilename(dialog.selectName());
     m_curSimulation->setobjParent(tabW->getparent());
     m_ui->tabWidget->addTab(tabW, dialog.selectName());
     m_ui->tabWidget->setCurrentIndex(m_ui->tabWidget->count() - 1);
@@ -421,7 +421,7 @@ void MainWindow::loadProject(const QString &fileName) {
     QMessageBox::critical(this, "Error", "Could not load lvgl file!");
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
   } else {
-    m_ui->tabWidget->setTabText(index, m_project->name());
+    m_ui->tabWidget->setTabText(index, m_project->getProjectName());
     adjustForCurrentFile(fileName);
     lvgl.changeResolution(m_project->resolution());
     m_curSimulation->changeResolution(m_project->resolution());
@@ -563,7 +563,7 @@ void MainWindow::on_action_export_c_triggered() {
     dir = fi.absoluteFilePath();
   }
   QStringList list;
-  list << m_project->name();
+  list << m_project->getProjectName();
   QString path = QFileDialog::getExistingDirectory(this, "Export C files", dir);
   if (path.isEmpty()) return;
   list << path;
@@ -1064,7 +1064,7 @@ void MainWindow::tabChanged(int index) {
   auto objs = tabw->allObject();
   lvgl.setAllObjects(objs);
   lvgl.setAllImages(tabw->allImages());
-  m_project->setName(tabw->getname());
+  m_project->setProjeName(tabw->getfilename());
   for (int i = 0; i < objs.count(); ++i) {
     m_objectModel->beginInsertObject(objs[i]);
     m_objectModel->endInsertObject();

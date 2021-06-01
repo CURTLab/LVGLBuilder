@@ -29,7 +29,7 @@ LVGLProject::LVGLProject()
 LVGLProject::LVGLProject(const QString &name, QSize resolution)
     : m_name(name), m_resolution(resolution) {}
 
-QString LVGLProject::name() const { return m_name; }
+QString LVGLProject::getProjectName() const { return m_name; }
 
 QSize LVGLProject::resolution() const { return m_resolution; }
 
@@ -396,6 +396,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   auto itor = fontname.begin();
   for (; itor != fontname.end(); ++itor)
     stream << "LV_FONT_DECLARE(" + *itor + ");\n";
+  stream << QString("LV_FONT_DECLARE(lv_font_123abc_16);\n");
 
   stream << "\n";
   auto objs = lvgl.allObjects();

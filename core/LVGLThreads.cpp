@@ -28,7 +28,7 @@ void LVGLExportThread::startrun(const QStringList &list) {
   if (list.isEmpty() || list.count() != 2) {
     if (!stopped) emit failed();
   } else {
-    m_project->setName(list[0]);
+    m_project->setProjeName(list[0]);
     if (m_project->exportCode(list[1])) {
       if (!stopped) emit successful();
     } else {
@@ -63,7 +63,7 @@ void LVGLAutoSaveThread::saveFile() {
   for (int i = 0; i < tabw->count(); ++i) {
     if (stopped) return;
     auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
-    QString name = tab->getname();
+    QString name = tab->getfilename();
     QString timestr = QDateTime::currentDateTime().toString("yyMMdd");
     QString fileName = QString("%1/%2_%3_%4.lvgl")
                            .arg(QApplication::applicationDirPath())
@@ -80,7 +80,6 @@ void LVGLAutoSaveThread::saveFile() {
     QJsonArray widgetArr;
     for (LVGLObject *o : tab->allObject()) {
       if (o->parent() == nullptr) {
-        if (o->doesNameExists()) o->generateName();
         widgetArr.append(o->toJson());
       }
     }

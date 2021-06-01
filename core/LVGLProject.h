@@ -10,7 +10,7 @@ class LVGLProject {
   LVGLProject();
   LVGLProject(const QString &name, QSize resolution);
 
-  QString name() const;
+  QString getProjectName() const;
   QSize resolution() const;
 
   static LVGLProject *load(const QString &fileName);
@@ -20,7 +20,7 @@ class LVGLProject {
   bool exportTimeFuncs(const QString &path) const;
 
   void setres(const QSize &res) { m_resolution = res; };
-  void setName(const QString &name) { m_name = name; }
+  void setProjeName(const QString &name) { m_name = name; }
   QString fileName() const;
 
  private:

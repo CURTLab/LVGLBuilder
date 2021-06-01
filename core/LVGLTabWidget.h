@@ -29,8 +29,8 @@ class LVGLTabWidget : public QWidget {
   inline QList<LVGLFontData *> allFonts() { return m_fonts; }
   inline void setAllFonts(QList<LVGLFontData *> fonts) { m_fonts = fonts; }
 
-  inline void setname(const QString &name) { m_name = name; }
-  inline QString getname() { return m_name; }
+  inline void setfilename(const QString &name) { m_name = name; }
+  inline QString getfilename() { return m_name; }
 
   void removeAll();
   void removeObject(LVGLObject *object);
