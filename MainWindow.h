@@ -97,6 +97,10 @@ class MainWindow : public QMainWindow {
 
   void on_actionRelative_path_triggered();
 
+  void on_actionHierarchical_export_triggered();
+
+  void on_actionHomologous_export_triggered();
+
  protected:
   void showEvent(QShowEvent *event) override;
   void keyPressEvent(QKeyEvent *e) override;

@@ -171,6 +171,7 @@ MainWindow::MainWindow(QWidget *parent)
 
   m_ui->actionOFF->setChecked(true);
   m_ui->actionAbsolute_path->setChecked(true);
+  m_ui->actionHomologous_export->setChecked(true);
 
   m_autosaveThread->moveToThread(m_asThread);
   connect(this, &MainWindow::startAutoSave, m_autosaveThread,
@@ -908,7 +909,7 @@ void MainWindow::initNewWidgets() {
   addWidgetDisplayW(new LVGLMessageBox);
   // addWidgetDisplayW(new LVGLObjectMask);
   addWidgetDisplayW(new LVGLPage);
-  // addWidgetDisplayW(new LVGLTable);
+  addWidgetDisplayW(new LVGLTable);
   addWidgetDisplayW(new LVGLTabview);
   // addWidgetDisplayW(new LVGLTileView);
   addWidgetDisplayW(new LVGLTextArea);
@@ -1135,4 +1136,16 @@ void MainWindow::on_actionRelative_path_triggered() {
   LVGLHelper::getInstance().setLoadMethod(1);
   m_ui->actionAbsolute_path->setChecked(false);
   m_ui->actionRelative_path->setChecked(true);
+}
+
+void MainWindow::on_actionHomologous_export_triggered() {
+  m_ui->actionHomologous_export->setChecked(true);
+  m_ui->actionHierarchical_export->setChecked(false);
+  LVGLHelper::getInstance().setExportMethod(0);
+}
+
+void MainWindow::on_actionHierarchical_export_triggered() {
+  m_ui->actionHomologous_export->setChecked(false);
+  m_ui->actionHierarchical_export->setChecked(true);
+  LVGLHelper::getInstance().setExportMethod(1);
 }

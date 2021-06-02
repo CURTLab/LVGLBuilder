@@ -77,43 +77,6 @@ class LVGLPropertyImgBtnState : public LVGLPropertyEnum {
   QStringList m_values;
 };
 
-class LVGLPropertyImageButtonGo : public LVGLPropertyAnyFunc {
- public:
-  LVGLPropertyImageButtonGo(const AnyFuncColType arr[], int size)
-      : LVGLPropertyAnyFunc(arr, size, true) {}
-  QString name() const { return "Go to"; }
-
- protected:
-  QStringList get(LVGLObject *obj) const {
-    QStringList &pagelist = LVGLHelper::getInstance().pageName();
-    if (!pagelist.isEmpty()) updateData(0, pagelist);
-
-    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
-    return QStringList();
-  }
-  void set(LVGLObject *obj, QStringList list) {
-    m_list = list;
-    for (int i = 0; i < m_list.size(); ++i) {
-      QStringList strlist = list[i].split('@');
-      QString pagename = strlist[0];
-      int gotopage = 0;
-      auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
-      for (int i = 0; i < tabw->count(); ++i) {
-        if (pagename == tabw->tabText(i)) {
-          gotopage = i;
-          break;
-        }
-      }
-      QMap<LVGLObject *, int> &btngopage =
-          LVGLHelper::getInstance().getBtnGoPage();
-      btngopage[obj] = gotopage;
-    }
-  }
-
- private:
-  QStringList m_list;
-};
-
 LVGLImageButton::LVGLImageButton() {
   initStateStyles();
   m_parts << LV_IMGBTN_PART_MAIN;
@@ -126,9 +89,6 @@ LVGLImageButton::LVGLImageButton() {
   // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_DISABLED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_RELEASED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_PRESSED);
-  // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_CHECKED_DISABLED);
-  // static AnyFuncColType arr[1] = {e_QComboBox};
-  // m_properties << new LVGLPropertyImageButtonGo(arr, 1);
 
   m_editableStyles << LVGL::ImgMAIN;  // LV_IMGBTN_PART_MAIN
 }

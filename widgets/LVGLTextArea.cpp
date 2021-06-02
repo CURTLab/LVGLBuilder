@@ -2,6 +2,7 @@
 
 #include <QIcon>
 
+#include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
 
 class LVGLPropertyTAText : public LVGLPropertyStringPlus {
@@ -9,18 +10,40 @@ class LVGLPropertyTAText : public LVGLPropertyStringPlus {
   QString name() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
-    return QStringList() << QString("lv_textarea_set_text(%1, \"%2\");")
-                                .arg(obj->codeName())
-                                .arg(get(obj));
+    if (!m_havesym)
+      return QStringList() << QString("lv_textarea_set_text(%1, \"%2\");")
+                                  .arg(obj->codeName())
+                                  .arg(get(obj));
+    else {
+      QString result = LVGLHelper::getInstance().getStringWithSymbol(get(obj));
+      return QStringList() << QString("lv_textarea_set_text(%1, \"%2\");")
+                                  .arg(obj->codeName())
+                                  .arg(result);
+    }
   }
 
  protected:
   QString get(LVGLObject *obj) const {
-    return lv_textarea_get_text(obj->obj());
+    if (!m_havesym)
+      return lv_textarea_get_text(obj->obj());
+    else
+      return m_string;
   }
   void set(LVGLObject *obj, QString string) {
-    lv_textarea_set_text(obj->obj(), qUtf8Printable(string));
+    if (string.contains("(LV_S_")) {
+      m_string = string;
+      m_havesym = true;
+      QString result = LVGLHelper::getInstance().getStringWithSymbol(string);
+      lv_textarea_set_text(obj->obj(), qUtf8Printable(result));
+    } else {
+      m_havesym = false;
+      lv_textarea_set_text(obj->obj(), qUtf8Printable(string));
+    }
   }
+
+ private:
+  bool m_havesym = false;
+  QString m_string;
 };
 
 class LVGLPropertyTAPlaceholder : public LVGLPropertyStringPlus {

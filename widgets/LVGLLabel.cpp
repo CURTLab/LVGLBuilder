@@ -2,6 +2,7 @@
 
 #include <QIcon>
 
+#include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
 #include "properties/LVGLPropertyColor.h"
 
@@ -96,18 +97,36 @@ class LVGLPropertyLabelText : public LVGLPropertyStringPlus {
         else
           str += "\\n";
       }
+      QString result = LVGLHelper::getInstance().getStringWithSymbol(str);
       list << QString("lv_label_set_text(%1,\"%2\");")
                   .arg(obj->codeName())
-                  .arg(str);
+                  .arg(result);
     }
     return list;
   }
 
  protected:
-  QString get(LVGLObject *obj) const { return lv_label_get_text(obj->obj()); }
-  void set(LVGLObject *obj, QString string) {
-    lv_label_set_text(obj->obj(), string.toUtf8().data());
+  QString get(LVGLObject *obj) const {
+    if (!havasyb)
+      return lv_label_get_text(obj->obj());
+    else
+      return m_string;
   }
+  void set(LVGLObject *obj, QString string) {
+    if (string.contains("(LV_S_")) {
+      havasyb = true;
+      m_string = string;
+      QString result = LVGLHelper::getInstance().getStringWithSymbol(string);
+      lv_label_set_text(obj->obj(), result.toUtf8().data());
+    } else {
+      havasyb = false;
+      lv_label_set_text(obj->obj(), string.toUtf8().data());
+    }
+  }
+
+ private:
+  bool havasyb = false;
+  QString m_string;
 };
 
 LVGLLabel::LVGLLabel() {

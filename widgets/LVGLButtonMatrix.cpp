@@ -22,9 +22,17 @@ class LVGLPropertyBtnmatrixButtonsText : public LVGLPropertyStringPlus {
     QString arrname = "arr" + QString(QUuid::createUuid().toString()).mid(1, 7);
     QString str = "static const char* " + arrname + "[] = {";
     for (auto s : strmap) {
-      if (s != "\n")
-        str += "\"" + s + "\",";
-      else
+      if (s != "\n") {
+        QString tmp;
+        for (auto c : s) {
+          if (c != '\n')
+            tmp += c;
+          else {
+            tmp += "\\n";
+          }
+        }
+        str += "\"" + tmp + "\",";
+      } else
         str += "\"\\n\",";
     }
     str += "\"\"};";
@@ -282,7 +290,7 @@ LVGLButtonMatrix::LVGLButtonMatrix() {
       lv_btnmatrix_get_one_check);
 
   m_parts << LV_BTNMATRIX_PART_BG << LV_BTNMATRIX_PART_BTN;
-  m_editableStyles << LVGL::Background;    // LV_BTNMATRIX_PART_BG
+  m_editableStyles << LVGL::BtnMatrixBG;   // LV_BTNMATRIX_PART_BG
   m_editableStyles << LVGL::BtnMatrixBTN;  // LV_BTNMATRIX_PART_BTN
 }
 

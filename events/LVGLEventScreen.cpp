@@ -48,31 +48,31 @@ QStringList LVGLEventScreen::eventCode() {
   list << QString("%1{").arg(m_eventHeadCode) << "\n";
   if (m_result[1] == "Pressed") {
     list << "\t"
-         << "if (event == LV_EVENT_PRESSED)"
+         << "if (event == LV_EVENT_PRESSED){"
          << "\n";
   } else if (m_result[1] == "Clicked") {
     list << "\t"
-         << "if (event == LV_EVENT_CLICKED)"
+         << "if (event == LV_EVENT_CLICKED){"
          << "\n";
   } else if (m_result[1] == "Long_Pressed") {
     list << "\t"
-         << "if (event == LV_EVENT_LONG_PRESSED)"
+         << "if (event == LV_EVENT_LONG_PRESSED){"
          << "\n";
   } else if (m_result[1] == "Long_Pressed_Repeat") {
     list << "\t"
-         << "if (event == LV_EVENT_LONG_PRESSED_REPEAT)"
+         << "if (event == LV_EVENT_LONG_PRESSED_REPEAT){"
          << "\n";
   } else if (m_result[1] == "Focused") {
     list << "\t"
-         << "if (event == LV_EVENT_FOCUSED)"
+         << "if (event == LV_EVENT_FOCUSED){"
          << "\n";
   } else if (m_result[1] == "Defocused") {
     list << "\t"
-         << "if (event == LV_EVENT_DEFOCUSED)"
+         << "if (event == LV_EVENT_DEFOCUSED){"
          << "\n";
   } else if (m_result[1] == "Value_Changed") {
     list << "\t"
-         << "if (event == LV_EVENT_VALUE_CHANGED)"
+         << "if (event == LV_EVENT_VALUE_CHANGED){"
          << "\n";
   }
 
@@ -104,13 +104,13 @@ QStringList LVGLEventScreen::eventCode() {
     t = "LV_SCR_LOAD_ANIM_FADE_ON";
 
   list << "\t\t"
-       << QString("lv_scr_load_anim(page%1, %2, %3, %4, false);")
+       << QString("lv_scr_load_anim(page%1, %2, %3, %4, false);\n")
               .arg(index + 1)
               .arg(t)
               .arg(m_result[5])
-              .arg(m_result[6])
-       << "\n";
-  list << "}";
+              .arg(m_result[6]);
 
+  list << "\t}\n";
+  list << "}";
   return list;
 }

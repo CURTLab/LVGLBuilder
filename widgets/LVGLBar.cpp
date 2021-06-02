@@ -44,7 +44,7 @@ class LVGLPropertyBarType : public LVGLPropertyEnum {
   QString name() const { return "Type"; }
 
   QStringList function(LVGLObject *obj) const {
-    if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
+    if (get(obj) == 0) return QStringList();
     return QStringList() << QString("lv_bar_set_type(%1, %2);")
                                 .arg(obj->codeName())
                                 .arg(m_values.at(get(obj)));
@@ -81,59 +81,58 @@ class LVGLPropertyBarAnimationTime : public LVGLPropertyInt {
   int m_value;
 };
 
-class LVGLPropertyBarValue : public LVGLPropertyAnyFunc {
+class LVGLPropertyBarAnimalState : public LVGLPropertyEnum {
  public:
-  LVGLPropertyBarValue(const AnyFuncColType arr[], int arrsize,
-                       LVGLPropertyBarRange *p)
-      : LVGLPropertyAnyFunc(arr, arrsize, true), m_lpbr(p), m_frun(true) {}
+  LVGLPropertyBarAnimalState()
+      : LVGLPropertyEnum(QStringList() << "On"
+                                       << "Off") {}
+
+  QString name() const { return "Animation state"; }
+
+  int getIndex() { return m_index; }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    (void)obj;
+    return m_index;
+  }
+  void set(LVGLObject *obj, int index) {
+    (void)obj;
+    m_index = index;
+  }
+
+  int m_index = 0;
+};
+
+class LVGLPropertyBarValue : public LVGLPropertyInt {
+ public:
+  LVGLPropertyBarValue(LVGLPropertyBarAnimalState *lpbas)
+      : LVGLPropertyInt(INT16_MIN, INT16_MAX), m_lpbas(lpbas) {}
 
   QString name() const { return "Value"; }
 
   QStringList function(LVGLObject *obj) const {
-    if (!m_list.empty()) {
-      QStringList strlist = m_list[0].split(' ');
-      int value = strlist[0].toInt();
-      QString str = strlist[1];
-      QString codestr =
-          QString("lv_bar_set_value(%1, %2, ").arg(obj->codeName()).arg(value);
-      codestr += str + ");";
-      return QStringList() << codestr;
-    }
-    return QStringList();
+    if (0 == m_lpbas->getIndex())
+      return QStringList() << QString("lv_bar_set_value(%1, %2, LV_ANIM_ON);")
+                                  .arg(obj->codeName())
+                                  .arg(get(obj));
+    else
+      return QStringList() << QString("lv_bar_set_value(%1, %2, LV_ANIM_OFF);")
+                                  .arg(obj->codeName())
+                                  .arg(get(obj));
   }
 
  protected:
-  QStringList get(LVGLObject *obj) const {
-    Q_UNUSED(obj)
-    if (m_frun) {
-      m_frun = false;
-      updateData(0, m_lpbr->getmax(), true);
-      updateData(0, m_lpbr->getmin(), false);
-      updateData(1, QStringList() << "LV_ANIM_ON"
-                                  << "LV_ANIM_OFF");
-    }
-    if (!m_list.isEmpty() && m_list[0] != "Empty list") return m_list;
-    return QStringList();
-  }
-  void set(LVGLObject *obj, QStringList list) {
-    m_list = list;
-    if (!m_list.empty()) {
-      QStringList strlist = m_list[0].split('@');
-      int value = strlist[0].toInt();
-      QString str = strlist[1];
-      lv_anim_enable_t ae;
-      if (str == "LV_ANIM_ON")
-        ae = LV_ANIM_ON;
-      else
-        ae = LV_ANIM_OFF;
-      lv_bar_set_value(obj->obj(), value, ae);
-    }
+  int get(LVGLObject *obj) const { return lv_bar_get_value(obj->obj()); }
+  void set(LVGLObject *obj, int value) {
+    if (0 == m_lpbas->getIndex())
+      lv_bar_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_ON);
+    else
+      lv_bar_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_OFF);
   }
 
  private:
-  QStringList m_list;
-  LVGLPropertyBarRange *m_lpbr;
-  mutable bool m_frun;
+  LVGLPropertyBarAnimalState *m_lpbas;
 };
 
 class LVGLPropertyBarStyle : public LVGLPropertyEnum {
@@ -256,8 +255,9 @@ LVGLBar::LVGLBar() {
   m_properties << p;
   m_properties << new LVGLPropertyBarType;
   m_properties << new LVGLPropertyBarAnimationTime;
-  static const AnyFuncColType arr[2] = {e_QSpinBox, e_QComboBox};
-  m_properties << new LVGLPropertyBarValue(arr, 2, p);
+  auto lpbas = new LVGLPropertyBarAnimalState;
+  m_properties << lpbas;
+  m_properties << new LVGLPropertyBarValue(lpbas);
   m_properties << new LVGLPropertyBarStyle;
 
   m_editableStyles << LVGL::Body;  // LV_BAR_STYLE_BG

@@ -71,18 +71,11 @@
       <string>Recent files</string>
      </property>
     </widget>
-    <widget class="QMenu" name="menuExport">
-     <property name="title">
-      <string>Export</string>
-     </property>
-     <addaction name="action_export_c"/>
-    </widget>
     <addaction name="action_new"/>
     <addaction name="action_load"/>
     <addaction name="action_save"/>
     <addaction name="separator"/>
     <addaction name="eaction_export"/>
-    <addaction name="menuExport"/>
     <addaction name="separator"/>
     <addaction name="menu_resent_filess"/>
    </widget>
@@ -115,9 +108,17 @@
     <addaction name="actionAbsolute_path"/>
     <addaction name="actionRelative_path"/>
    </widget>
+   <widget class="QMenu" name="menuExport_Method">
+    <property name="title">
+     <string>Export Method</string>
+    </property>
+    <addaction name="actionHomologous_export"/>
+    <addaction name="actionHierarchical_export"/>
+   </widget>
    <addaction name="menuLittlevGL_Builder"/>
    <addaction name="menuAutoSave"/>
    <addaction name="menuLoadMode"/>
+   <addaction name="menuExport_Method"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -910,6 +911,22 @@
    </property>
    <property name="text">
     <string>Relative path</string>
+   </property>
+  </action>
+  <action name="actionHomologous_export">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Homologous Export</string>
+   </property>
+  </action>
+  <action name="actionHierarchical_export">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hierarchical Export</string>
    </property>
   </action>
  </widget>

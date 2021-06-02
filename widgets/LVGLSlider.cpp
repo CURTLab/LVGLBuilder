@@ -5,23 +5,87 @@
 #include "core/LVGLObject.h"
 #include "properties/LVGLPropertyRange.h"
 
+class LVGLPropertySliderType : public LVGLPropertyEnum {
+ public:
+  LVGLPropertySliderType()
+      : LVGLPropertyEnum(QStringList() << "Normal"
+                                       << "SYMMETRICAL"
+                                       << "CUSTOM"),
+        m_values({"LV_SLIDER_TYPE_NORMAL", "LV_SLIDER_TYPE_SYMMETRICAL",
+                  "LV_SLIDER_TYPE_RANGE"}) {}
+
+  QString name() const { return "Type"; }
+
+  QStringList function(LVGLObject *obj) const {
+    if (get(obj) == 0) return QStringList();
+    return QStringList() << QString("lv_slider_set_type(%1, %2);")
+                                .arg(obj->codeName())
+                                .arg(m_values.at(get(obj)));
+  }
+
+ protected:
+  int get(LVGLObject *obj) const { return lv_slider_get_type(obj->obj()); }
+  void set(LVGLObject *obj, int index) {
+    lv_slider_set_type(obj->obj(), index & 0xff);
+  }
+
+  QStringList m_values;
+};
+
+class LVGLPropertySliderAnimalState : public LVGLPropertyEnum {
+ public:
+  LVGLPropertySliderAnimalState()
+      : LVGLPropertyEnum(QStringList() << "On"
+                                       << "Off") {}
+
+  QString name() const { return "Animation state"; }
+
+  int getIndex() { return m_index; }
+
+ protected:
+  int get(LVGLObject *obj) const {
+    (void)obj;
+    return m_index;
+  }
+  void set(LVGLObject *obj, int index) {
+    (void)obj;
+    m_index = index;
+  }
+
+  int m_index = 0;
+};
+
 class LVGLPropertySliderValue : public LVGLPropertyInt {
  public:
-  LVGLPropertySliderValue() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
+  LVGLPropertySliderValue(LVGLPropertySliderAnimalState *lpsas)
+      : LVGLPropertyInt(INT16_MIN, INT16_MAX), m_lpsas(lpsas) {}
 
   QString name() const { return "Value"; }
 
   QStringList function(LVGLObject *obj) const {
-    return QStringList() << QString("lv_slider_set_value(%1, %2, LV_ANIM_OFF);")
-                                .arg(obj->codeName())
-                                .arg(get(obj));
+    if (0 == m_lpsas->getIndex())
+      return QStringList() << QString(
+                                  "lv_slider_set_value(%1, %2, LV_ANIM_ON);")
+                                  .arg(obj->codeName())
+                                  .arg(get(obj));
+    else
+      return QStringList() << QString(
+                                  "lv_slider_set_value(%1, %2, LV_ANIM_OFF);")
+                                  .arg(obj->codeName())
+                                  .arg(get(obj));
   }
 
  protected:
   int get(LVGLObject *obj) const { return lv_slider_get_value(obj->obj()); }
   void set(LVGLObject *obj, int value) {
-    lv_slider_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_OFF);
+    if (0 == m_lpsas)
+      lv_slider_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_ON);
+    else
+      lv_slider_set_value(obj->obj(), static_cast<int16_t>(value), LV_ANIM_OFF);
   }
+
+ private:
+  LVGLPropertySliderAnimalState *m_lpsas;
 };
 
 class LVGLPropertySliderRange : public LVGLPropertyRange {
@@ -44,6 +108,28 @@ class LVGLPropertySliderRange : public LVGLPropertyRange {
     lv_slider_set_range(obj->obj(), static_cast<int16_t>(min),
                         static_cast<int16_t>(max));
   }
+};
+
+class LVGLPropertySliderAnimationTime : public LVGLPropertyInt {
+ public:
+  LVGLPropertySliderAnimationTime()
+      : LVGLPropertyInt(0, UINT16_MAX, " ms"), m_value(200) {}
+
+  QString name() const { return "Animation time"; }
+
+  QStringList function(LVGLObject *obj) const {
+    return QStringList() << QString("lv_slider_set_anim_time(%1,%2);")
+                                .arg(obj->codeName())
+                                .arg(m_value);
+  }
+
+ protected:
+  int get(LVGLObject *obj) const { return lv_slider_get_anim_time(obj->obj()); }
+  void set(LVGLObject *obj, int value) {
+    m_value = value;
+    lv_slider_set_anim_time(obj->obj(), static_cast<uint16_t>(value));
+  }
+  int m_value;
 };
 
 class LVGLPropertySliderStyle : public LVGLPropertyEnum {
@@ -257,8 +343,12 @@ LVGLSlider::LVGLSlider() {
   initStateStyles();
   m_parts << LV_SLIDER_PART_BG << LV_SLIDER_PART_INDIC << LV_SLIDER_PART_KNOB;
 
+  m_properties << new LVGLPropertySliderType;
   m_properties << new LVGLPropertySliderRange;
-  m_properties << new LVGLPropertySliderValue;
+  auto lpsas = new LVGLPropertySliderAnimalState;
+  m_properties << lpsas;
+  m_properties << new LVGLPropertySliderAnimationTime;
+  m_properties << new LVGLPropertySliderValue(lpsas);
   m_properties << new LVGLPropertySliderStyle;
 
   m_editableStyles << LVGL::SliderBG;     // LV_SLIDER_PART_BG

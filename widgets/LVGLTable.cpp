@@ -9,11 +9,11 @@ LVGLTable::LVGLTable() {
   m_parts << LV_TABLE_PART_BG << LV_TABLE_PART_CELL1 << LV_TABLE_PART_CELL2
           << LV_TABLE_PART_CELL3 << LV_TABLE_PART_CELL4;
 
-  m_editableStyles << LVGL::Background;  // LV_TABLE_PART_BG
-  m_editableStyles << LVGL::TableCELL;   // LV_TABLE_PART_CELL1
-  m_editableStyles << LVGL::TableCELL;   // LV_TABLE_PART_CELL2
-  m_editableStyles << LVGL::TableCELL;   // LV_TABLE_PART_CELL3
-  m_editableStyles << LVGL::TableCELL;   // LV_TABLE_PART_CELL4
+  m_editableStyles << LVGL::TableBG;    // LV_TABLE_PART_BG
+  m_editableStyles << LVGL::TableCELL;  // LV_TABLE_PART_CELL1
+  m_editableStyles << LVGL::TableCELL;  // LV_TABLE_PART_CELL2
+  m_editableStyles << LVGL::TableCELL;  // LV_TABLE_PART_CELL3
+  m_editableStyles << LVGL::TableCELL;  // LV_TABLE_PART_CELL4
 }
 
 QString LVGLTable::name() const { return "Table"; }
@@ -26,6 +26,10 @@ QIcon LVGLTable::icon() const { return QIcon(); }
 
 lv_obj_t *LVGLTable::newObject(lv_obj_t *parent) const {
   lv_obj_t *obj = lv_table_create(parent, nullptr);
+  lv_table_set_col_cnt(obj, 2);
+  lv_table_set_row_cnt(obj, 4);
+  lv_table_set_cell_value(obj, 0, 0, "Col1");
+  lv_table_set_cell_value(obj, 0, 1, "Col2");
   return obj;
 }
 
