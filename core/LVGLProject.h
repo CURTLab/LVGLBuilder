@@ -19,6 +19,9 @@ class LVGLProject {
   bool exportCodePlus(const QString &path) const;
   bool exportTimeFuncs(const QString &path) const;
 
+  bool exportPageMK(const QString &path) const;
+  bool exportMakeFile(const QString &path) const;
+
   void setres(const QSize &res) { m_resolution = res; };
   void setProjeName(const QString &name) { m_name = name; }
   QString fileName() const;

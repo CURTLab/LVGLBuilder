@@ -162,6 +162,17 @@ bool LVGLProject::exportCode(const QString &path) const {
   const QString name = m_name.toLower();
   const QString codeName = m_name.toLower().replace(" ", "_");
   const QString defName = m_name.toUpper().replace(" ", "_");
+  int exportmethod = LVGLHelper::getInstance().getExportMethod();
+  if (exportmethod == 1) {
+    if (!dir.exists(path + "/" + name)) dir.mkdir(path + "/" + name);
+    if (!dir.exists(path + "/" + name + "/images"))
+      dir.mkdir(path + "/" + name + "/images");
+    if (!dir.exists(path + "/" + name + "/fonts"))
+      dir.mkdir(path + "/" + name + "/fonts");
+    dir.setPath(path + "/" + name);
+    exportPageMK(dir.path());
+    exportMakeFile(path);
+  }
 
   file.setFileName(dir.path() + "/" + name + ".h");
   if (!file.open(QIODevice::WriteOnly)) return false;
@@ -227,14 +238,20 @@ bool LVGLProject::exportCode(const QString &path) const {
 
   auto images = lvgl.images();
   for (LVGLImageData *img : images) {
-    img->saveAsCode(dir.path() + "/" + img->codeName() + ".c");
+    if (exportmethod == 1)
+      img->saveAsCode(dir.path() + "/images/" + img->codeName() + ".c");
+    else
+      img->saveAsCode(dir.path() + "/" + img->codeName() + ".c");
     stream << "LV_IMG_DECLARE(" << img->codeName() << ");\n";
   }
   stream << "\n";
 
   auto fonts = lvgl.customFonts();
   for (const LVGLFontData *f : fonts) {
-    f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
+    if (exportmethod == 1)
+      f->saveAsCode(dir.path() + "/fonts/" + f->codeName() + ".c");
+    else
+      f->saveAsCode(dir.path() + "/" + f->codeName() + ".c");
     stream << "LV_FONT_DECLARE(" << f->codeName() << ");\n";
   }
   stream << "\n";
@@ -356,14 +373,17 @@ bool LVGLProject::exportCode(const QString &path) const {
   file.close();
 
   // output font file
-  QString fontdir = QDir::currentPath() + "/fonts/";
+  QString fontdir = QDir::currentPath() + "/../../../lvgl/lvgl/src/lv_font/";
   QStringList fontfilelist;
-  QSet<QString> &fontname = LVGLHelper::getInstance().getSaveFontName();
-  auto itor = fontname.begin();
-  for (; itor != fontname.end(); ++itor) fontfilelist.push_back(*itor + ".c");
+  auto &fontname = LVGLHelper::getInstance().getSaveFontName();
+  for (auto s : fontname) fontfilelist.push_back(s + ".c");
   for (auto x : fontfilelist) {
     QString filepath = fontdir + x;
-    QString copyfilepath = path + "/" + x;
+    QString copyfilepath;
+    if (exportmethod == 1)
+      copyfilepath = dir.path() + "/fonts/" + x;
+    else
+      copyfilepath = dir.path() + "/" + x;
 
     QFile file(filepath);
     file.copy(copyfilepath);
@@ -378,6 +398,7 @@ bool LVGLProject::exportCode(const QString &path) const {
 bool LVGLProject::exportCodePlus(const QString &path) const {
   QDir dir(path);
   QFile file;
+  int exportmethod = LVGLHelper::getInstance().getExportMethod();
   const QString name = "app";
   file.setFileName(dir.path() + "/" + name + ".h");
   if (!file.open(QIODevice::WriteOnly)) return false;
@@ -392,11 +413,8 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "#define APP_H\n\n";
   stream << "#include \"lvgl/lvgl.h\"\n\n";
 
-  QSet<QString> &fontname = LVGLHelper::getInstance().getSaveFontName();
-  auto itor = fontname.begin();
-  for (; itor != fontname.end(); ++itor)
-    stream << "LV_FONT_DECLARE(" + *itor + ");\n";
-  stream << QString("LV_FONT_DECLARE(lv_font_123abc_16);\n");
+  auto &fontname = LVGLHelper::getInstance().getSaveFontName();
+  for (auto s : fontname) stream << "LV_FONT_DECLARE(" + s + ");\n";
 
   stream << "\n";
   auto objs = lvgl.allObjects();
@@ -445,12 +463,20 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
-    stream << "#include \"page_" << QString::number(i + 1) << ".h\"\n";
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    if (1 == exportmethod)
+      stream << QString("#include \"%1/%1.h\"\n")
+                    .arg(tab->getfilename().toLower().replace(" ", "_"));
+    else
+      stream << QString("#include \"%1.h\"\n")
+                    .arg(tab->getfilename().toLower().replace(" ", "_"));
   }
   stream << "\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
-    stream << "static lv_obj_t *page" + QString::number(i + 1) + ";\n";
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    stream << QString("static lv_obj_t *%1;\n")
+                  .arg(tab->getfilename().toLower().replace(" ", "_"));
   }
 
   stream << "\n";
@@ -482,14 +508,20 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "void app(){\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
     stream << "\t"
-           << "page" << QString::number(i + 1) << " = page_"
-           << QString::number(i + 1) << "_create();\n";
+           << QString("%1 = %2_create();\n")
+                  .arg(tab->getfilename().toLower().replace(" ", "_"))
+                  .arg(tab->getfilename().toLower().replace(" ", "_"));
   }
 
   stream << "\n";
   stream << "\t"
-         << "lv_scr_load(page1);\n";
+         << QString("lv_scr_load(%1);\n")
+                .arg(static_cast<LVGLTabWidget *>(tabw->widget(0))
+                         ->getfilename()
+                         .toLower()
+                         .replace(" ", "_"));
   stream << "}";
 
   return true;
@@ -497,7 +529,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
 
 bool LVGLProject::exportTimeFuncs(const QString &path) const {
   QString timefuncsdir = QDir::currentPath();
-  QString filepath = timefuncsdir + "/exfile/timefuncs";
+  QString filepath = timefuncsdir + "/timefuncs";
   QString copyfilepath = path + "/timefuncs";
 
   QFile file(filepath + ".h");
@@ -505,6 +537,142 @@ bool LVGLProject::exportTimeFuncs(const QString &path) const {
 
   QFile file2(filepath + ".c");
   file2.copy(copyfilepath + ".c");
+  return true;
+}
+
+bool LVGLProject::exportPageMK(const QString &path) const {
+  QDir dir(path);
+  QFile file;
+  QTextStream stream;
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  const QString name = m_name.toLower();
+  file.setFileName(dir.path() + "/" + name + ".mk");
+  if (!file.open(QIODevice::WriteOnly)) return false;
+  stream.setDevice(&file);
+  stream << QString("include $(LVGL_DIR)/%1/images/%1_images.mk\n").arg(name);
+  stream << QString("include $(LVGL_DIR)/%1/fonts/%1_fonts.mk\n").arg(name);
+  stream << "\n";
+
+  stream << QString("CSRCS += %1.c\n").arg(name);
+  stream << "\n";
+
+  stream << QString("DEPPATH += --dep-path $(LVGL_DIR)/%1\n").arg(name);
+  stream << QString("VPATH += :$(LVGL_DIR)/%1\n").arg(name);
+  stream << "\n";
+
+  stream << QString("CFLAGS += \"-I$(LVGL_DIR)/%1\"").arg(name);
+  stream << "\n";
+  file.close();
+
+  QString imagemk = QString("%1/images/%2_images.mk").arg(dir.path()).arg(name);
+  file.setFileName(imagemk);
+  if (!file.open(QIODevice::WriteOnly)) return false;
+  stream.setDevice(&file);
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+
+  auto images = lvgl.images();
+  for (LVGLImageData *img : images) {
+    stream << QString("CSRCS += %1.c\n").arg(img->codeName());
+  }
+  stream << "\n";
+
+  stream << QString("DEPPATH += --dep-path $(LVGL_DIR)/%1/images\n").arg(name);
+  stream << QString("VPATH += :$(LVGL_DIR)/%1/images\n").arg(name);
+  stream << "\n";
+
+  stream << QString("CFLAGS += \"-I$(LVGL_DIR)/%1/images\"").arg(name);
+  stream << "\n";
+  file.close();
+
+  QString fontsmk = QString("%1/fonts/%2_fonts.mk").arg(dir.path()).arg(name);
+  file.setFileName(fontsmk);
+  if (!file.open(QIODevice::WriteOnly)) return false;
+  stream.setDevice(&file);
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+
+  auto fonts = lvgl.customFonts();
+  for (const LVGLFontData *f : fonts) {
+    stream << QString("CSRCS += %1.c\n").arg(f->codeName());
+  }
+
+  auto &fontname = LVGLHelper::getInstance().getSaveFontName();
+  for (auto s : fontname) stream << QString("CSRCS += %1.c\n").arg(s);
+
+  stream << "\n";
+
+  stream << QString("DEPPATH += --dep-path $(LVGL_DIR)/%1/fonts\n").arg(name);
+  stream << QString("VPATH += :$(LVGL_DIR)/%1/fonts\n").arg(name);
+  stream << "\n";
+
+  stream << QString("CFLAGS += \"-I$(LVGL_DIR)/%1/fonts\"").arg(name);
+  stream << "\n";
+  file.close();
+
+  return true;
+}
+
+bool LVGLProject::exportMakeFile(const QString &path) const {
+  QDir dir(path);
+  QFile file;
+  QTextStream stream;
+  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  file.setFileName(dir.path() + "/Makefile");
+
+  if (!file.open(QIODevice::WriteOnly)) return false;
+
+  stream.setDevice(&file);
+  stream << "#\n"
+         << "#Makefile\n"
+         << "#\n";
+  stream << "\n";
+
+  stream << QString("LVGL_DIR ?= %1\n").arg(path);
+  stream << QString("OBJ_DIR ?= $(LVGL_DIR)/obj\n");
+  stream << "\n";
+
+  stream << QString("CC = arm-none-linux-gnueabi-gcc\n");
+  stream << QString("CFLAGS ?= -w -Wshadow -Wundef -O3 -g0 -I$(LVGL_DIR)\n");
+  stream << QString("LDFLAGS ?= -lpthread\n");
+  stream << QString("CVERSION ?= -std=c99\n");
+  stream << QString("TARGET = $(LVGL_DIR)/app\n");
+  stream << "\n";
+
+  auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+  for (int i = 0; i < tabw->count(); ++i) {
+    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    stream << QString("include $(LVGL_DIR)/%1/%1.mk\n")
+                  .arg(tab->getfilename().toLower());
+  }
+  stream << "\n";
+
+  stream << QString("MAINSRC += $(wildcard *.c)\n");
+  stream << QString("SRCS =  $(CSRCS) $(MAINSRC)\n");
+  stream << QString(
+      "OBJS = $(addprefix $(OBJ_DIR)/,$(patsubst %.c,%.o,$(notdir "
+      "$(SRCS))))\n");
+  stream << QString(
+      "DELOBJS = $(addprefix .\\obj\\,$(patsubst %.c,%.o,$(notdir "
+      "$(SRCS))))\n");
+  stream << "\n";
+
+  stream << QString("all: default\n");
+  stream << "\n";
+
+  stream << QString("$(OBJ_DIR)/%.o: %.c\n");
+  stream << QString("	@$(CC)  $(CFLAGS) -c $< -o $@\n");
+  stream << QString("	@echo \"CC $<\"\n");
+  stream << "\n";
+
+  stream << QString("default: $(OBJS)\n");
+  stream << QString("	$(CC) -o $(TARGET) $^ $(LDFLAGS) $(CVERSION)\n");
+  stream << "\n";
+
+  stream << QString(".PHONY: clean\n");
+  stream << QString("clean:\n");
+  stream << QString("	del app\n");
+  stream << QString("	del $(DELOBJS)\n");
+
+  file.close();
   return true;
 }
 

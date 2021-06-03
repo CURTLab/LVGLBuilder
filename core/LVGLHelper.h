@@ -27,7 +27,7 @@ class LVGLHelper {
   QStringList& pageName();
   QMap<LVGLObject*, int>& getBtnGoPage() { return m_btnGoPage; }
   bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
-  QSet<QString>& getSaveFontName() { return m_saveFontN; }
+  QList<QString>& getSaveFontName() { return m_saveFontN; }
   LVGLSimulator* getcursim();
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
   QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
@@ -58,12 +58,15 @@ class LVGLHelper {
         m_filecount(0),
         m_needSetTime(false),
         m_loadMethod(0),
-        m_exportMethod(0){};
+        m_exportMethod(0) {
+    m_saveFontN.push_back("lv_font_123abc_16");
+  }
+
   MainWindow* m_pMainW;
   int m_filecount;
   QStringList pagelist;
   QMap<LVGLObject*, int> m_btnGoPage;
-  QSet<QString> m_saveFontN;
+  QList<QString> m_saveFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
   QMap<lv_obj_t*, QString> m_timeCmd;
   bool m_needSetTime;

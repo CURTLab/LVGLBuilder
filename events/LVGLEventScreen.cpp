@@ -103,9 +103,10 @@ QStringList LVGLEventScreen::eventCode() {
   else if (m_result[4] == "Fade On")
     t = "LV_SCR_LOAD_ANIM_FADE_ON";
 
+  auto tabw = static_cast<LVGLTabWidget *>(tab->widget(index));
   list << "\t\t"
-       << QString("lv_scr_load_anim(page%1, %2, %3, %4, false);\n")
-              .arg(index + 1)
+       << QString("lv_scr_load_anim(%1, %2, %3, %4, false);\n")
+              .arg(tabw->getfilename().toLower().replace(" ", "_"))
               .arg(t)
               .arg(m_result[5])
               .arg(m_result[6]);

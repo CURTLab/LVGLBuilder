@@ -4,7 +4,8 @@
 
 - LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
 - Some widgets have new functions, such as animation switch and type selection
-- 
+- Fixed the issue of compiling errors caused by using a custom page name
+- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders
 
 ## 1.0.2 
 
