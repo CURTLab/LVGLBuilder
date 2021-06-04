@@ -1,5 +1,7 @@
 #include "EventSelectWIdget.h"
 
+#include <QMessageBox>
+
 #include "EventSettingWidgeet.h"
 #include "LVGLEventScreen.h"
 #include "LVGLEventType.h"
@@ -8,16 +10,13 @@
 #include "ui_EventSelectWIdget.h"
 #include "widgets/LVGLWidget.h"
 
-int Ev_index = 1;
-
 EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
     : QDialog(parent),
       ui(new Ui::EventSelectWIdget),
       m_setWidget(nullptr),
       m_ev(nullptr) {
   ui->setupUi(this);
-  ui->nameEdit->setText(QString("Event%1").arg(
-      LVGLHelper::getInstance().getobjeventsize() + Ev_index));
+  ui->nameEdit->setText(LVGLHelper::getInstance().newEventName());
   QStringList triggerlist;
 
   switch (w->type()) {
@@ -68,6 +67,8 @@ EventSelectWIdget::EventSelectWIdget(LVGLWidget *w, QWidget *parent)
   ui->objectcomb->addItems(objlist);
   connect(ui->typecomb, SIGNAL(currentIndexChanged(int)), this,
           SLOT(slotTypeChanged(int)));
+  connect(ui->nameEdit, &QLineEdit::editingFinished, this,
+          &EventSelectWIdget::slotFinishEdit);
 }
 
 EventSelectWIdget::~EventSelectWIdget() { delete ui; }
@@ -126,6 +127,10 @@ QStringList EventSelectWIdget::textList() {
 }
 
 void EventSelectWIdget::on_selectbtn_clicked() {
+  if (ui->nameEdit->text().isEmpty()) {
+    QMessageBox::warning(this, tr("Error"), tr("Need the name of the event!"));
+    return;
+  }
   int index = ui->objectcomb->currentIndex();
   int type = ui->typecomb->currentIndex();
   if (m_ev) {
@@ -163,6 +168,15 @@ void EventSelectWIdget::slotTypeChanged(int index) {
   } else {
     ui->objectlab->hide();
     ui->objectcomb->hide();
+  }
+}
+
+void EventSelectWIdget::slotFinishEdit() {
+  auto &list = LVGLHelper::getInstance().getEventName();
+  if (list.contains(ui->nameEdit->text())) {
+    ui->nameEdit->clear();
+    QMessageBox::warning(this, tr("Error"),
+                         tr("The name is already used by other events!"));
   }
 }
 

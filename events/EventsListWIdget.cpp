@@ -1,6 +1,7 @@
 #include "EventsListWIdget.h"
 
 #include "EventSelectWIdget.h"
+#include "core/LVGLHelper.h"
 #include "ui_EventsListWIdget.h"
 
 EventsListWIdget::EventsListWIdget(LVGLWidget *w, QWidget *parent)
@@ -35,19 +36,17 @@ QStringList EventsListWIdget::textList() {
 void EventsListWIdget::slotSelectWFinished() {
   setFocus();
   if (QDialog::Accepted == m_selectW->result()) {
-    ++Ev_index;
     m_resultlist.clear();
     m_resultlist = m_selectW->textList();
+    auto &list = LVGLHelper::getInstance().getEventName();
+    list.push_back(m_resultlist[0].mid(0, m_resultlist[0].size() - 1));
     QString tmp;
     for (auto str : m_resultlist) tmp += str;
     ui->listWidget->addItem(tmp);
   }
 }
 
-void EventsListWIdget::on_ok_clicked() {
-  Ev_index = 1;
-  accept();
-}
+void EventsListWIdget::on_ok_clicked() { accept(); }
 
 void EventsListWIdget::on_cancel_clicked() { reject(); }
 
@@ -63,9 +62,11 @@ void EventsListWIdget::on_remove_clicked() {
   if (list.size() != 0) {
     QListWidgetItem *sel = list[0];
     if (sel) {
+      auto strlists = sel->text().split('#');
+      auto &list = LVGLHelper::getInstance().getEventName();
+      list.removeOne(strlists[0]);
       int r = ui->listWidget->row(sel);
       ui->listWidget->takeItem(r);
-      --Ev_index;
     }
   }
 }
@@ -73,6 +74,8 @@ void EventsListWIdget::on_remove_clicked() {
 void EventsListWIdget::slotEditItem(QListWidgetItem *item) {
   m_edititem = item;
   QStringList list = item->text().split('#');
+  auto &strlist = LVGLHelper::getInstance().getEventName();
+  strlist.removeOne(list[0]);
   m_selectW = new EventSelectWIdget(m_w, this);
   m_selectW->setTextList(list);
   connect(m_selectW, &QDialog::finished, this,
@@ -85,6 +88,8 @@ void EventsListWIdget::slotUpdateItem() {
   if (QDialog::Accepted == m_selectW->result()) {
     m_resultlist.clear();
     m_resultlist = m_selectW->textList();
+    auto &list = LVGLHelper::getInstance().getEventName();
+    list.push_back(m_resultlist[0].mid(0, m_resultlist[0].size() - 1));
     QString tmp;
     for (auto str : m_resultlist) tmp += str;
     m_edititem->setText(tmp);

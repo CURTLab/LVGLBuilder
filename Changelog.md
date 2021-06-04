@@ -6,6 +6,7 @@
 - Some widgets have new functions, such as animation switch and type selection
 - Fixed the issue of compiling errors caused by using a custom page name
 - New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders
+- Improve the naming logic when creating a new page or event
 
 ## 1.0.2 
 

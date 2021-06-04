@@ -322,7 +322,6 @@ void MainWindow::openNewProject() {
   } else {
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
     setWindowTitle("LVGL Builder");
-    LVGLHelper::getInstance().reduceFileindex();
   }
   m_isrun = false;
 }

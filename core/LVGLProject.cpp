@@ -164,17 +164,17 @@ bool LVGLProject::exportCode(const QString &path) const {
   const QString defName = m_name.toUpper().replace(" ", "_");
   int exportmethod = LVGLHelper::getInstance().getExportMethod();
   if (exportmethod == 1) {
-    if (!dir.exists(path + "/" + name)) dir.mkdir(path + "/" + name);
-    if (!dir.exists(path + "/" + name + "/images"))
-      dir.mkdir(path + "/" + name + "/images");
-    if (!dir.exists(path + "/" + name + "/fonts"))
-      dir.mkdir(path + "/" + name + "/fonts");
-    dir.setPath(path + "/" + name);
+    if (!dir.exists(path + "/" + codeName)) dir.mkdir(path + "/" + codeName);
+    if (!dir.exists(path + "/" + codeName + "/images"))
+      dir.mkdir(path + "/" + codeName + "/images");
+    if (!dir.exists(path + "/" + codeName + "/fonts"))
+      dir.mkdir(path + "/" + codeName + "/fonts");
+    dir.setPath(path + "/" + codeName);
     exportPageMK(dir.path());
     exportMakeFile(path);
   }
 
-  file.setFileName(dir.path() + "/" + name + ".h");
+  file.setFileName(dir.path() + "/" + codeName + ".h");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
 
@@ -216,11 +216,11 @@ bool LVGLProject::exportCode(const QString &path) const {
   stream << "#endif /*" << defName << "_H*/";
   file.close();
 
-  file.setFileName(dir.path() + "/" + name + ".c");
+  file.setFileName(dir.path() + "/" + codeName + ".c");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
-  stream << "#include \"" << name << ".h\"\n";
+  stream << "#include \"" << codeName << ".h\"\n";
   stream << "#include \"app.h\"\n\n";
 
   // static variables
@@ -545,7 +545,7 @@ bool LVGLProject::exportPageMK(const QString &path) const {
   QFile file;
   QTextStream stream;
   stream.setCodec(QTextCodec::codecForName("UTF-8"));
-  const QString name = m_name.toLower();
+  const QString name = m_name.toLower().replace(" ", "_");
   file.setFileName(dir.path() + "/" + name + ".mk");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);

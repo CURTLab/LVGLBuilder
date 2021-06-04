@@ -19,7 +19,7 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
   m_ui->pushButton->setText("Ok");
   m_ui->pushButton_2->setText("Cancel");
   m_ui->combo_resolution->addItem(tr("Costume"));
-  m_ui->lineEdit->setText(LVGLHelper::getInstance().generateFileName());
+  m_ui->lineEdit->setText(LVGLHelper::getInstance().newProjectName());
   setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
   setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
   m_ui->close->setStyleSheet(

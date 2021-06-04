@@ -19,43 +19,39 @@ class LVGLHelper {
     static LVGLHelper instance;
     return instance;
   }
+
   // get
-  MainWindow* getMainW() { return m_pMainW; }
-  const QString generateFileName() {
-    return QString("Page_%1").arg(++m_filecount);
-  }
-  QStringList& pageName();
-  QMap<LVGLObject*, int>& getBtnGoPage() { return m_btnGoPage; }
-  bool IsBtngoPageEmpty() { return m_btnGoPage.isEmpty(); }
-  QList<QString>& getSaveFontName() { return m_saveFontN; }
-  LVGLSimulator* getcursim();
-  QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
-  QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
   bool getNeedSetTime() { return m_needSetTime; }
   int getLoadMethod() { return m_loadMethod; }
   int getExportMethod() { return m_exportMethod; }
-  QString getStringWithSymbol(const QString& s);
+
+  LVGLSimulator* getcursim();
+  MainWindow* getMainW() { return m_pMainW; }
+
+  QStringList& pageName();
+  QStringList& getEventName();
+  QList<QString>& getSaveFontName() { return m_saveFontN; }
+  QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
+  QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
 
   // set
-  void setMainW(MainWindow* m) { m_pMainW = m; }
-  void reduceFileindex() { --m_filecount; }
   void setNeedSetTime(bool b) { m_needSetTime = b; }
   void setLoadMethod(int method) { m_loadMethod = method; }
   void setExportMethod(int method) { m_exportMethod = method; }
 
+  void setMainW(MainWindow* m) { m_pMainW = m; }
+
   // other
   void updatetabDate();
-  int getobjeventsize() {
-    int size = 0;
-    auto iter = m_objEvents.begin();
-    for (; iter != m_objEvents.end(); ++iter) size += iter.value().size();
-    return size;
-  }
+  int getobjeventsize();
+
+  QString newProjectName();
+  QString newEventName();
+  QString getStringWithSymbol(const QString& s);
 
  private:
   LVGLHelper()
       : m_pMainW(nullptr),
-        m_filecount(0),
         m_needSetTime(false),
         m_loadMethod(0),
         m_exportMethod(0) {
@@ -63,14 +59,13 @@ class LVGLHelper {
   }
 
   MainWindow* m_pMainW;
-  int m_filecount;
   QStringList pagelist;
-  QMap<LVGLObject*, int> m_btnGoPage;
   QList<QString> m_saveFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
   QMap<lv_obj_t*, QString> m_timeCmd;
   bool m_needSetTime;
   int m_loadMethod;
   int m_exportMethod;
+  QStringList m_eventName;
 };
 #endif

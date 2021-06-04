@@ -6,7 +6,6 @@
 class EventSettingWidgeet;
 class LVGLEventType;
 class LVGLWidget;
-extern int Ev_index;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -28,6 +27,7 @@ class EventSelectWIdget : public QDialog {
   void on_cancelbtn_clicked();
   void slotSetWFinished();
   void slotTypeChanged(int index);
+  void slotFinishEdit();
 
  private:
   void getEventType(LVGLEventType *&ev, int index);
