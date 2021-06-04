@@ -632,7 +632,8 @@ bool LVGLProject::exportMakeFile(const QString &path) const {
 
   stream << QString("CC = arm-none-linux-gnueabi-gcc\n");
   stream << QString("CFLAGS ?= -w -Wshadow -Wundef -O3 -g0 -I$(LVGL_DIR)\n");
-  stream << QString("LDFLAGS ?= -lpthread\n");
+  stream << QString("LDFLAGS ?= -lpthread -llvgl\n");
+  stream << QString("LDFLAGS += -L$(LVGL_DIR)/lib\n");
   stream << QString("CVERSION ?= -std=c99\n");
   stream << QString("TARGET = $(LVGL_DIR)/app\n");
   stream << "\n";
@@ -659,7 +660,7 @@ bool LVGLProject::exportMakeFile(const QString &path) const {
   stream << "\n";
 
   stream << QString("$(OBJ_DIR)/%.o: %.c\n");
-  stream << QString("	@$(CC)  $(CFLAGS) -c $< -o $@\n");
+  stream << QString("	@$(CC) $(CVERSION) $(CFLAGS) -c $< -o $@\n");
   stream << QString("	@echo \"CC $<\"\n");
   stream << "\n";
 
