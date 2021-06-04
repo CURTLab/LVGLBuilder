@@ -179,6 +179,8 @@ MainWindow::MainWindow(QWidget *parent)
   connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
           &LVGLAutoSaveThread::stop);
   m_asThread->start();
+
+  setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
 }
 
 MainWindow::~MainWindow() {
@@ -215,8 +217,6 @@ MainWindow::~MainWindow() {
   delete m_ld2;
   delete m_ld3;
   delete m_project;
-  ushort a;
-  uchar(1);
 }
 
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }

@@ -5,8 +5,10 @@
 - LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
 - Some widgets have new functions, such as animation switch and type selection
 - Fixed the issue of compiling errors caused by using a custom page name
-- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders
+- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
 - Improve the naming logic when creating a new page or event
+- Optimize the export logic, will not copy the same font file repeatedly
+- Fix that the image event function fails to compile when the image name contains uppercase letters
 
 ## 1.0.2 
 
@@ -23,3 +25,23 @@
  - undo/redo supports multiple pages
  - Label adds the event function of dynamically displaying time
     ![timedes](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/timedes.png)
+	
+	  ![ev3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event3.gif)
+	
+## older
+
+### Pre Release
+
+- Windows: builded by msvc201564 and msvc201732
+- Macos: builder by Clang64
+- ubuntu20: builder by gcc8_64
+
+![lvglsim](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/pre-release.png)
+
+### New version
+Now, the dev-7 branch based on lvgl7.11.0 has completed most of the todo list, so everyone can switch to the dev-7 branch for testing.
+
+![Preview1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview1.png)
+![Preview2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview2.png)
+![Preview3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview3.png)
+

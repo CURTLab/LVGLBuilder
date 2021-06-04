@@ -2018,7 +2018,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     if (!value_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c = lvgl.fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_VALUE_FONT | (state << LV_STYLE_STATE_POS)));
-      if (!fontset.contains(c)) fontset.push_back(c);
+      LVGLHelper::getInstance().setSaveFontNmae(c);
       ret << ("lv_style_set_value_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");
     }
@@ -2091,7 +2091,7 @@ QStringList LVGLObject::codeStyle(QString styleVar, lv_obj_t *obj1,
     if (!text_font(obj1, obj2, part, LVGLCore::LVGL_STATE[stateindex])) {
       auto c = lvgl.fontCodeName((lv_font_t *)_lv_obj_get_style_ptr(
           s1, part, LV_STYLE_TEXT_FONT | (state << LV_STYLE_STATE_POS)));
-      if (!fontset.contains(c)) fontset.push_back(c);
+      LVGLHelper::getInstance().setSaveFontNmae(c);
       ret << ("lv_style_set_text_font(&" + styleVar + "," +
               LVGLCore::LVGL_STATE_STR[stateindex] + ",&" + c + ");");
     }

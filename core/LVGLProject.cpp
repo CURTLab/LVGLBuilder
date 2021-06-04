@@ -170,8 +170,6 @@ bool LVGLProject::exportCode(const QString &path) const {
     if (!dir.exists(path + "/" + codeName + "/fonts"))
       dir.mkdir(path + "/" + codeName + "/fonts");
     dir.setPath(path + "/" + codeName);
-    exportPageMK(dir.path());
-    exportMakeFile(path);
   }
 
   file.setFileName(dir.path() + "/" + codeName + ".h");
@@ -392,6 +390,12 @@ bool LVGLProject::exportCode(const QString &path) const {
   if (LVGLHelper::getInstance().getNeedSetTime())
     if (!exportTimeFuncs(path)) return false;
 
+  if (exportmethod == 1) {
+    exportPageMK(dir.path());
+    exportMakeFile(path);
+  } else
+    fontname.clear();
+
   return exportCodePlus(path);
 }
 
@@ -413,8 +417,8 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "#define APP_H\n\n";
   stream << "#include \"lvgl/lvgl.h\"\n\n";
 
-  auto &fontname = LVGLHelper::getInstance().getSaveFontName();
-  for (auto s : fontname) stream << "LV_FONT_DECLARE(" + s + ");\n";
+  auto &allfontname = LVGLHelper::getInstance().getAllFontName();
+  for (auto s : allfontname) stream << "LV_FONT_DECLARE(" + s + ");\n";
 
   stream << "\n";
   auto objs = lvgl.allObjects();

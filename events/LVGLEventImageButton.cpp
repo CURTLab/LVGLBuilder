@@ -130,7 +130,7 @@ QStringList LVGLEventImageButton::eventCode() {
     if (o->name() == m_result[4]) name = o->codeName();
 
   QString proprety = m_result.at(5);
-  QString picname = m_result.at(6);
+  QString picname = m_result.at(6).toLower();
 
   list << QString("LV_IMG_DECLARE(%1);\n").arg(picname);
 

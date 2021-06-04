@@ -31,6 +31,7 @@ class LVGLHelper {
   QStringList& pageName();
   QStringList& getEventName();
   QList<QString>& getSaveFontName() { return m_saveFontN; }
+  QList<QString>& getAllFontName() { return m_allFontN; }
   QMap<lv_obj_t*, QList<LVGLEvent*>>& getObjEvents() { return m_objEvents; }
   QMap<lv_obj_t*, QString>& getTimeCmd() { return m_timeCmd; }
 
@@ -38,8 +39,8 @@ class LVGLHelper {
   void setNeedSetTime(bool b) { m_needSetTime = b; }
   void setLoadMethod(int method) { m_loadMethod = method; }
   void setExportMethod(int method) { m_exportMethod = method; }
-
   void setMainW(MainWindow* m) { m_pMainW = m; }
+  void setSaveFontNmae(const QString& name);
 
   // other
   void updatetabDate();
@@ -61,6 +62,7 @@ class LVGLHelper {
   MainWindow* m_pMainW;
   QStringList pagelist;
   QList<QString> m_saveFontN;
+  QList<QString> m_allFontN;
   QMap<lv_obj_t*, QList<LVGLEvent*>> m_objEvents;
   QMap<lv_obj_t*, QString> m_timeCmd;
   bool m_needSetTime;

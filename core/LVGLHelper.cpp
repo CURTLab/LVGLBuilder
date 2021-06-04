@@ -19,6 +19,13 @@ QStringList &LVGLHelper::pageName() {
 
 QStringList &LVGLHelper::getEventName() { return m_eventName; }
 
+void LVGLHelper::setSaveFontNmae(const QString &name) {
+  if (!m_saveFontN.contains(name)) {
+    m_saveFontN.push_back(name);
+    m_allFontN.push_back(name);
+  }
+}
+
 LVGLSimulator *LVGLHelper::getcursim() { return m_pMainW->simulator(); }
 
 QString LVGLHelper::getStringWithSymbol(const QString &s) {
