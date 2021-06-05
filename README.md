@@ -1,3 +1,6 @@
+# 1.0.3 Pre-release
+Because the rlease version of 1.0.3 failed the basic test, but the debug version is completely fine, so it takes some time to find out the reason.
+
 # New Test Tool
 
 [**For Test**]arm-none-linux-gnueabi-i686-mingw32-2014 **on window** https://github.com/mrQzs/CreateLvglLib/releases
@@ -31,7 +34,7 @@ program: https://github.com/mrQzs/CreateLvglLib
 ## Warring
 
 # New features
-The pre-release of v1.0.3 has been released. 
+The pre-release of v1.0.2 has been released. 
 Changelog.md under the dev-v7 branch records the changes of the previous version.
 
 ## 1.0.3
