@@ -1,44 +1,62 @@
-# Future plan
-- The changes to lvgl8.0 are very large, and it is still being changed, so it is expected to start supporting lvgl8.0 in November
-- After the dotolist is completed, no new functions will be added later. At that time, the entire project code will be refactored. 
+# New Test Tool
+
+[**For Test**]arm-none-linux-gnueabi-i686-mingw32-2014 **on window** https://github.com/mrQzs/CreateLvglLib/releases
+
+## Export LVGL Code Build
+- Need to select hierarchical export 
+- The cc path of Makefile originally needed to be modified, but this time the path of armgcc was added to the environment variable
+
+program: https://github.com/mrQzs/LCBuild
+
+![lbcode](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/lbcode.gif)
+
+## Create LVGL LIB
+
+- Select the output device and input device file of the corresponding platform
+
+- lv_drv_conf.h should also enable the corresponding input device and output device
+
+- Both lvgl and drive are the latest official v7 version
+
+  This project modified the source code of lvgl to achieve some functions (such as tabwidth adjustment), so the official lvgl can be replaced by the lvgl of this project.
+
+  ![tabwidth](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/tabwidth.gif)
+
+program: https://github.com/mrQzs/CreateLvglLib
+
+![createlib](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/createlib.gif)
+
+
+
+## Warring
 
 # New features
-The pre-release of v1.0.2 has been released. And Changlog.md under the dev-v7 branch will record all the new features of the version starting from v1.01
-## 1.0.2 
- - Auto-save function only keeps three stored files per page
- - Support event function modification
- - Completed all event functions
- - Add test cases for all events
- - Support for reading relative path files (The configuration file and the picture need to be in the same directory)
- 
-## 1.0.1
- - Added auto save file function
- - When the simulation stops running, widgets are restored to their original state immediately
- - Added btn, checkbox, ddlist, img, imgbtn and label event functions
- - undo/redo supports multiple pages
- - Label adds the event function of dynamically displaying time
+The pre-release of v1.0.3 has been released. 
+Changelog.md under the dev-v7 branch records the changes of the previous version.
 
-  ![timedes](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/timedes.png)
+## 1.0.3
+
+- LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
+  ![SupportSyb](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/supportsyb.png)
+
+- Some widgets have new functions, such as animation switch and type selection
+
+- Fixed the issue of compiling errors caused by using a custom page name
+
+- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
+
+  ![epway](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/epway.gif)
+
+- Improve the naming logic when creating a new page or event
+
+- Optimize the export logic, will not copy the same font file repeatedly
+
+- Fix that the image event function fails to compile when the image name contains uppercase letters
   
   ![ev2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event2.gif)
-
   ![ev3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event3.gif)
 
-
-
-
-
-# Pre Release
-
-- Windows: builded by msvc201564 and msvc201732
-- Macos: builder by Clang64
-- ubuntu20: builder by gcc8_64
-
-![lvglsim](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/pre-release.png)
-
-
-
-# LVGL Simulator
+## LVGL Simulator
 
 program: https://github.com/mrQzs/Lvgl_Simulator
 * support msvc 32/64 and mingw 32/64
@@ -46,7 +64,9 @@ program: https://github.com/mrQzs/Lvgl_Simulator
 * Just load the source code and modify the resolution in the lvconf.h
 
   ![lvglsim](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/lvglsim.gif)
+
 # Move Animation
+
 * If the value is empty, its value is not changed
   ![animdemo](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/animdemo.gif)
 
@@ -55,12 +75,7 @@ program: https://github.com/mrQzs/Lvgl_Simulator
 * arc bar slider switch screen
 
   ![evandstyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/event_style1.gif)
-# New version
-Now, the dev-7 branch based on lvgl7.11.0 has completed most of the todo list, so everyone can switch to the dev-7 branch for testing.
 
-![Preview1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview1.png)
-![Preview2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview2.png)
-![Preview3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/preview3.png)
 
 # LVGLBuilder
  GUI Builder for littlevgl release 6.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
