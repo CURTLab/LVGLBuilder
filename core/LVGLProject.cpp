@@ -371,7 +371,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   file.close();
 
   // output font file
-  QString fontdir = QDir::currentPath() + "/../../../lvgl/lvgl/src/lv_font/";
+  QString fontdir = QDir::currentPath() + "/fonts/";
   QStringList fontfilelist;
   auto &fontname = LVGLHelper::getInstance().getSaveFontName();
   for (auto s : fontname) fontfilelist.push_back(s + ".c");
@@ -533,7 +533,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
 
 bool LVGLProject::exportTimeFuncs(const QString &path) const {
   QString timefuncsdir = QDir::currentPath();
-  QString filepath = timefuncsdir + "/timefuncs";
+  QString filepath = timefuncsdir + "/exfile/timefuncs";
   QString copyfilepath = path + "/timefuncs";
 
   QFile file(filepath + ".h");

@@ -2,6 +2,13 @@
 * Try not to delete the page
 * Save files at any time or turn on the auto-save function
 
+# Future plan
+
+- The changes to lvgl8.0 are very large, and it is still being changed, so it is expected to start supporting lvgl8.0 in November
+
+- After the dotolist is completed, no new functions will be added later. At that time, the entire project code will be refactored. 
+
+
 # New Todo List
 
 - [x] (First) Add Event System
@@ -18,6 +25,7 @@
 - [x] redo/undo supports new multi-page design
 - [ ] Refactored font conversion code, no need for multiple font files of different sizes, reducing a lot of storage space
 - [ ] Add language switching function
+- [ ] Encapsulate log operation API
 - [ ] Dialog for changing keyboard layout
 
 

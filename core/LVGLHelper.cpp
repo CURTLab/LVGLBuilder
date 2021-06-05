@@ -26,6 +26,19 @@ void LVGLHelper::setSaveFontNmae(const QString &name) {
   }
 }
 
+LVGLHelper::~LVGLHelper() {
+  auto iter = m_objEvents.begin();
+  for (; iter != m_objEvents.end(); ++iter) {
+    auto lists = iter.value();
+    for (auto e : lists) {
+      delete e;
+    }
+  }
+  for (auto p : m_needDelCharPoint) {
+    delete p;
+  }
+}
+
 LVGLSimulator *LVGLHelper::getcursim() { return m_pMainW->simulator(); }
 
 QString LVGLHelper::getStringWithSymbol(const QString &s) {

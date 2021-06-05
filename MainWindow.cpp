@@ -62,125 +62,17 @@ MainWindow::MainWindow(QWidget *parent)
       m_asThread(new QThread(this)) {
   m_ui->setupUi(this);
   lvgl.init(320, 480);
-  m_ui->style_tree->setStyleSheet(
-      "QTreeView::item{border:1px solid "
-      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
-      "border:1px solid #567dbc;color:black;}");
-  m_ui->property_tree->setStyleSheet(
-      "QTreeView::item{border:1px solid "
-      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
-      "border:1px solid #567dbc;color:black;}");
+
   m_propertyModel = new LVGLPropertyModel(this);
   m_ld1 = new ListDelegate(m_ui->list_widgets->getlistview());
   m_ld2 = new ListDelegate(m_ui->list_widgets_2->getlistview());
   m_ld3 = new ListDelegate(m_ui->list_widgets_3->getlistview());
-
-  m_ui->property_tree->setModel(m_propertyModel);
-  m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate(this));
-  m_ui->button_remove_image->setEnabled(false);
-  m_ui->button_remove_font->setEnabled(false);
-
-  m_ui->object_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
-                                     QAbstractItemView::CurrentChanged);
-  m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
-                                    QAbstractItemView::CurrentChanged);
-
-  m_zoom_slider->setRange(-10, 40);
-
-  m_ui->statusbar->addPermanentWidget(m_zoom_slider);
-
   m_styleModel = new LVGLStyleModel(this);
-  connect(m_styleModel, &LVGLStyleModel::styleChanged, this,
-          &MainWindow::styleChanged);
-  m_ui->style_tree->setModel(m_styleModel);
-  m_ui->style_tree->setItemDelegate(
-      new LVGLStyleDelegate(m_styleModel->styleBase(), this));
-  m_ui->style_tree->expandAll();
 
-  connect(m_ui->action_new, &QAction::triggered, this,
-          &MainWindow::openNewProject);
-
-  // recent configurations
-  QAction *recentFileAction = nullptr;
-  for (int i = 0; i < m_maxFileNr; i++) {
-    recentFileAction = new QAction(this);
-    recentFileAction->setVisible(false);
-    connect(recentFileAction, &QAction::triggered, this,
-            &MainWindow::loadRecent);
-    m_recentFileActionList.append(recentFileAction);
-    m_ui->menu_resent_filess->addAction(recentFileAction);
-  }
-  updateRecentActionList();
-
-  // add style editor dock to property dock and show the property dock
-  tabifyDockWidget(m_ui->PropertyEditor, m_ui->UndoEditor);
-  tabifyDockWidget(m_ui->StyleEditor, m_ui->ObjecInspector);
-  m_ui->PropertyEditor->raise();
-  m_ui->StyleEditor->raise();
-
-  // add font editor dock to image dock and show the image dock
-  tabifyDockWidget(m_ui->ImageEditor, m_ui->FontEditor);
-  m_ui->ImageEditor->raise();
-  m_liststate << LV_STATE_DEFAULT << LV_STATE_CHECKED << LV_STATE_FOCUSED
-              << LV_STATE_EDITED << LV_STATE_HOVERED << LV_STATE_PRESSED
-              << LV_STATE_DISABLED;
-  connect(m_ui->tabWidget, &QTabWidget::currentChanged, this,
-          &MainWindow::tabChanged);
-
-  LVGLHelper::getInstance().setMainW(this);
-  m_ui->tabWidget->setTabsClosable(true);
-  connect(m_ui->tabWidget, &QTabWidget::tabCloseRequested, this,
-          &MainWindow::ontabclose);
-  m_ui->style_tree->setColumnWidth(0, 200);
-  m_ui->property_tree->setColumnWidth(0, 200);
-  m_ui->object_tree->setColumnWidth(0, 120);
-  m_ui->undoView->setGroup(m_undoGroup);
-  QAction *undoAction = m_undoGroup->createUndoAction(this);
-  QAction *redoAction = m_undoGroup->createRedoAction(this);
-  undoAction->setIcon(QIcon(":/icons/undo.png"));
-  redoAction->setIcon(QIcon(":/icons/redo.png"));
-
-  m_ui->toolBar->addAction(undoAction);
-  m_ui->toolBar->addAction(redoAction);
-  m_ui->list_images->setMovement(QListWidget::Snap);
-  m_ui->list_images->setIconSize(QSize(60, 60));
-  QString styless =
-      "QListWidget{background-color:#F2F2F2;}"
-      "QListWidget::Item{background-color:#ffffff;}"
-      "QListWidget::Item:hover,"
-      "QListWidget::Item:selected{background-color:#CEE3F6;}";
-  m_ui->list_images->setStyleSheet(styless);
-  m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
-
-  m_exportThread->moveToThread(m_etThread);
-  connect(m_exportThread, &LVGLExportThread::successful, this,
-          &MainWindow::onETSuccessful);
-  connect(m_exportThread, &LVGLExportThread::failed, this,
-          &MainWindow::onETFailed);
-  connect(this, &MainWindow::startExport, m_exportThread,
-          &LVGLExportThread::startrun);
-  connect(this, &MainWindow::stopExport, m_exportThread,
-          &LVGLExportThread::stop);
-  m_etThread->start();
-  m_pcBar->setWindowTitle("Exporting...");
-  m_pcBar->setWindowModality(Qt::ApplicationModal);
-
-  // Up to U
-  // m_pcBar->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-  // m_pcBar->setAttribute(Qt::WA_TranslucentBackground);
-
-  m_ui->actionOFF->setChecked(true);
-  m_ui->actionAbsolute_path->setChecked(true);
-  m_ui->actionHomologous_export->setChecked(true);
-
-  m_autosaveThread->moveToThread(m_asThread);
-  connect(this, &MainWindow::startAutoSave, m_autosaveThread,
-          &LVGLAutoSaveThread::startrun);
-  connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
-          &LVGLAutoSaveThread::stop);
-  m_asThread->start();
-
-  setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
+  initConnect();
+  initProp();
+  initStyle();
+  initThreads();
 }
 
 MainWindow::~MainWindow() {
@@ -401,17 +293,15 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 void MainWindow::loadProject(const QString &fileName) {
   delete m_project;
   m_project = nullptr;
+  LVGLHelper::getInstance().updatetabDate();
   int index = m_ui->tabWidget->currentIndex();
   auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  tabw->clean();
   auto objs = lvgl.allObjects();
-  m_curSimulation->clear();
-  for (int i = 0; i < objs.size(); ++i) {
+  for (int i = 0; i < objs.count(); ++i) {
     m_objectModel->beginRemoveObject(objs[i]);
     m_objectModel->endRemoveObject();
   }
-  tabw->setAllObjects(objs);
-  tabw->setAllImages(lvgl.allImages());
-  tabw->clean();
   lvgl.removeAllImages();
   lvgl.removeAllObjects();
 
@@ -422,9 +312,12 @@ void MainWindow::loadProject(const QString &fileName) {
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
   } else {
     m_ui->tabWidget->setTabText(index, m_project->getProjectName());
+
     adjustForCurrentFile(fileName);
-    lvgl.changeResolution(m_project->resolution());
+
     m_curSimulation->changeResolution(m_project->resolution());
+    lvgl.changeResolution(m_project->resolution());
+
     setEnableBuilder(true);
   }
   updateImages();
@@ -893,6 +786,126 @@ void MainWindow::initcodemap() {
   m_codemap[32] = lv_textarea_create(pt, NULL);
   m_codemap[33] = lv_tileview_create(pt, NULL);
   m_codemap[34] = lv_win_create(pt, NULL);
+}
+
+void MainWindow::initConnect() {
+  connect(m_styleModel, &LVGLStyleModel::styleChanged, this,
+          &MainWindow::styleChanged);
+  connect(m_ui->action_new, &QAction::triggered, this,
+          &MainWindow::openNewProject);
+  connect(m_ui->tabWidget, &QTabWidget::currentChanged, this,
+          &MainWindow::tabChanged);
+
+  connect(m_ui->tabWidget, &QTabWidget::tabCloseRequested, this,
+          &MainWindow::ontabclose);
+
+  // recent configurations
+  QAction *recentFileAction = nullptr;
+  for (int i = 0; i < m_maxFileNr; i++) {
+    recentFileAction = new QAction(this);
+    recentFileAction->setVisible(false);
+    connect(recentFileAction, &QAction::triggered, this,
+            &MainWindow::loadRecent);
+    m_recentFileActionList.append(recentFileAction);
+    m_ui->menu_resent_filess->addAction(recentFileAction);
+  }
+  updateRecentActionList();
+}
+
+void MainWindow::initProp() {
+  m_ui->property_tree->setModel(m_propertyModel);
+  m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate(this));
+  m_ui->button_remove_image->setEnabled(false);
+  m_ui->button_remove_font->setEnabled(false);
+  m_ui->style_tree->setColumnWidth(0, 150);
+  m_ui->property_tree->setColumnWidth(0, 150);
+  m_ui->object_tree->setColumnWidth(0, 80);
+  m_zoom_slider->setRange(-10, 40);
+  m_ui->statusbar->addPermanentWidget(m_zoom_slider);
+
+  m_ui->style_tree->setModel(m_styleModel);
+  m_ui->style_tree->setItemDelegate(
+      new LVGLStyleDelegate(m_styleModel->styleBase(), this));
+  m_ui->style_tree->expandAll();
+
+  // add style editor dock to property dock and show the property dock
+  tabifyDockWidget(m_ui->PropertyEditor, m_ui->UndoEditor);
+  tabifyDockWidget(m_ui->StyleEditor, m_ui->ObjecInspector);
+  m_ui->PropertyEditor->raise();
+  m_ui->StyleEditor->raise();
+  // add font editor dock to image dock and show the image dock
+  tabifyDockWidget(m_ui->ImageEditor, m_ui->FontEditor);
+  m_ui->ImageEditor->raise();
+  LVGLHelper::getInstance().setMainW(this);
+  m_ui->tabWidget->setTabsClosable(true);
+
+  m_liststate << LV_STATE_DEFAULT << LV_STATE_CHECKED << LV_STATE_FOCUSED
+              << LV_STATE_EDITED << LV_STATE_HOVERED << LV_STATE_PRESSED
+              << LV_STATE_DISABLED;
+
+  m_ui->undoView->setGroup(m_undoGroup);
+  QAction *undoAction = m_undoGroup->createUndoAction(this);
+  QAction *redoAction = m_undoGroup->createRedoAction(this);
+  undoAction->setIcon(QIcon(":/icons/undo.png"));
+  redoAction->setIcon(QIcon(":/icons/redo.png"));
+  m_ui->toolBar->addAction(undoAction);
+  m_ui->toolBar->addAction(redoAction);
+  m_pcBar->setWindowTitle("Exporting...");
+  m_pcBar->setWindowModality(Qt::ApplicationModal);
+
+  // Up to U
+  // m_pcBar->setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+  // m_pcBar->setAttribute(Qt::WA_TranslucentBackground);
+
+  m_ui->actionOFF->setChecked(true);
+  m_ui->actionAbsolute_path->setChecked(true);
+  m_ui->actionHomologous_export->setChecked(true);
+
+  m_ui->object_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
+                                     QAbstractItemView::CurrentChanged);
+  m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
+                                    QAbstractItemView::CurrentChanged);
+  m_ui->list_images->setMovement(QListWidget::Snap);
+  m_ui->list_images->setIconSize(QSize(60, 60));
+  setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
+}
+
+void MainWindow::initStyle() {
+  m_ui->style_tree->setStyleSheet(
+      "QTreeView::item{border:1px solid "
+      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
+      "border:1px solid #567dbc;color:black;}");
+  m_ui->property_tree->setStyleSheet(
+      "QTreeView::item{border:1px solid "
+      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
+      "border:1px solid #567dbc;color:black;}");
+  QString styless =
+      "QListWidget{background-color:#F2F2F2;}"
+      "QListWidget::Item{background-color:#ffffff;}"
+      "QListWidget::Item:hover,"
+      "QListWidget::Item:selected{background-color:#CEE3F6;}";
+  m_ui->list_images->setStyleSheet(styless);
+  m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
+}
+
+void MainWindow::initThreads() {
+  m_exportThread->moveToThread(m_etThread);
+  connect(m_exportThread, &LVGLExportThread::successful, this,
+          &MainWindow::onETSuccessful);
+  connect(m_exportThread, &LVGLExportThread::failed, this,
+          &MainWindow::onETFailed);
+  connect(this, &MainWindow::startExport, m_exportThread,
+          &LVGLExportThread::startrun);
+  connect(this, &MainWindow::stopExport, m_exportThread,
+          &LVGLExportThread::stop);
+  m_etThread->start();
+
+  m_autosaveThread->moveToThread(m_asThread);
+  connect(this, &MainWindow::startAutoSave, m_autosaveThread,
+          &LVGLAutoSaveThread::startrun);
+  connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
+          &LVGLAutoSaveThread::stop);
+  m_asThread->start();
 }
 
 void MainWindow::initNewWidgets() {

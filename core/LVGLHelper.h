@@ -12,7 +12,7 @@ class LVGLEvent;
 
 class LVGLHelper {
  public:
-  ~LVGLHelper(){};
+  ~LVGLHelper();
   LVGLHelper(const LVGLHelper&) = delete;
   LVGLHelper operator=(const LVGLHelper&) = delete;
   static LVGLHelper& getInstance() {
@@ -49,6 +49,7 @@ class LVGLHelper {
   QString newProjectName();
   QString newEventName();
   QString getStringWithSymbol(const QString& s);
+  void addNeedDelPoint(char* p) { m_needDelCharPoint.push_back(p); }
 
  private:
   LVGLHelper()
@@ -69,5 +70,6 @@ class LVGLHelper {
   int m_loadMethod;
   int m_exportMethod;
   QStringList m_eventName;
+  QList<char*> m_needDelCharPoint;
 };
 #endif

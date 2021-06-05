@@ -2711,6 +2711,7 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
         char *p = new char[c.size() + 1];
         strcpy(p, c.data());
         p[c.size() + 1] = '\0';
+        // LVGLHelper::getInstance().addNeedDelPoint(p);  //maybe mem leak
         _lv_obj_set_style_local_ptr(
             m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS), p);
       }

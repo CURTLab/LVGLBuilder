@@ -3,6 +3,7 @@
 ## 1.0.3
 
 - LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
+![SupportSyb](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/supportsyb.png)
 - Some widgets have new functions, such as animation switch and type selection
 - Fixed the issue of compiling errors caused by using a custom page name
 - New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
@@ -25,9 +26,7 @@
  - undo/redo supports multiple pages
  - Label adds the event function of dynamically displaying time
     ![timedes](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/timedes.png)
-	
-	  ![ev3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event3.gif)
-	
+
 ## older
 
 ### Pre Release

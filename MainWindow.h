@@ -109,6 +109,10 @@ class MainWindow : public QMainWindow {
   QPixmap getPix(int type);
   void initNewWidgets();
   void initcodemap();
+  void initConnect();
+  void initProp();
+  void initStyle();
+  void initThreads();
   void addWidget(LVGLWidget *w);
   void addWidgetDisplayW(LVGLWidget *w);
   void addWidgetInputW(LVGLWidget *w);
