@@ -8,7 +8,7 @@
 
 program: https://github.com/mrQzs/LCBuild
 
-![lbcode](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/lbcode.gif)
+![lbcode](https://github.com/mrQzs/LCBuild/blob/main/lbcode.gif)
 
 ## Create LVGL LIB
 
@@ -20,11 +20,11 @@ program: https://github.com/mrQzs/LCBuild
 
   This project modified the source code of lvgl to achieve some functions (such as tabwidth adjustment), so the official lvgl can be replaced by the lvgl of this project.
 
-  ![tabwidth](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/tabwidth.gif)
+  ![tabwidth](https://github.com/mrQzs/CreateLvglLib/blob/main/tabwidth.gif)
 
 program: https://github.com/mrQzs/CreateLvglLib
 
-![createlib](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/createlib.gif)
+![createlib](https://github.com/mrQzs/CreateLvglLib/blob/main/createlib.gif)
 
 
 
