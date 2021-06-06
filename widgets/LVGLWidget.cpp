@@ -256,7 +256,6 @@ LVGLWidget::LVGLWidget() {
 
 LVGLWidget::~LVGLWidget() {
   qDeleteAll(m_properties);
-  for (auto x : m_partsStyles) qDeleteAll(x);
 }
 
 QPixmap LVGLWidget::preview() const { return m_preview; }

@@ -291,6 +291,7 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 }
 
 void MainWindow::loadProject(const QString &fileName) {
+  m_curSimulation->setSelectedObject(nullptr);
   delete m_project;
   m_project = nullptr;
   LVGLHelper::getInstance().updatetabDate();
@@ -315,13 +316,18 @@ void MainWindow::loadProject(const QString &fileName) {
 
     adjustForCurrentFile(fileName);
 
-    m_curSimulation->changeResolution(m_project->resolution());
     lvgl.changeResolution(m_project->resolution());
+    m_curSimulation->changeResolution(m_project->resolution());
 
     setEnableBuilder(true);
   }
   updateImages();
   updateFonts();
+  LVGLHelper::getInstance().updatetabDate();
+  for (int i = 0; i < objs.count(); ++i) {
+    m_objectModel->beginInsertObject(objs[i]);
+    m_objectModel->endInsertObject();
+  }
 }
 
 void MainWindow::setEnableBuilder(bool enable) {

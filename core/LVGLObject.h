@@ -108,6 +108,7 @@ class LVGLObject : public QObject {
   QList<LVGLObject *> m_childs;
   QHash<int, lv_style_t> m_styles;
   QList<lv_style_t *> m_liststyles;
+  char m_pStr[30];
 };
 
 #endif  // LVGLOBJECT_H

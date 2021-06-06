@@ -2707,13 +2707,10 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Value")) {
       QJsonObject mix = style["Value"].toObject();
       if (mix.contains("value_str")) {
-        auto c = mix["value_str"].toString().toUtf8();
-        char *p = new char[c.size() + 1];
-        strcpy(p, c.data());
-        p[c.size() + 1] = '\0';
-        // LVGLHelper::getInstance().addNeedDelPoint(p);  //maybe mem leak
+		  memset(m_pStr, 0, sizeof(m_pStr));
+		  strcpy(m_pStr, mix["value_str"].toString().toUtf8().data());
         _lv_obj_set_style_local_ptr(
-            m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS), p);
+            m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS), m_pStr);
       }
       if (mix.contains("value_color")) {
         auto c = lvgl.fromColor(QColor(
