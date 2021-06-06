@@ -1,3 +1,14 @@
+# Google Breakpad
+The next version 1.0.4 version starts to support google breakpad
+- Currently only used for window
+- If the program crashes, please check whether the dmp file is generated. If it exists, you can send it to me for debugging and tracking
+- If the release version is to generate a pdb file, please uncomment these two lines of code in the pro file
+  QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+  QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+  
+![breakpad](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/breakpad.gif)
+
+
 # Fixed crash bugs
 These bugs exist in release versions before 1.0.3
 - If the value_str attribute of the button is set or a configuration file containing this attribute is loaded, it will sometimes cause the program to crash.
