@@ -12,3 +12,10 @@
 /object_script.LVGLBuilder.Debug
 /object_script.LVGLBuilder.Release
 /bin
+/*.filters
+/*.user
+/*.lvgl
+/*.db
+/*.vcxproj
+/*.sln
+/.vs/LVGLBuilder/v14/*.suo
