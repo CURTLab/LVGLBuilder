@@ -30,9 +30,6 @@ CONFIG += c++11
 
 TARGET = LVGLBuilder
 
-#QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
-#QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
-
 # The following define makes your compiler emit warnings if you use
 # any Qt feature that has been marked deprecated (the exact warnings
 # depend on your compiler). Please consult the documentation of the
@@ -46,6 +43,15 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 include(lvgl/lvgl.pri)
 include(freetype/freetype.pri)
+
+QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+win32{
+    include(breakpad/breakpad.pri)
+}
+win64{
+    include(breakpad/breakpad.pri)
+}
 
 RC_FILE = resources/icon.rc
 

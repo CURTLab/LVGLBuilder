@@ -1,0 +1,67 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2015
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(crash_generation)", "..\..\..\tools\gyp\crash_generation", "{71054F76-E083-ED71-B3F9-3E9B872F3E9E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "(handler)", "..\..\..\tools\gyp\handler", "{07BF0989-2B77-D3C5-75FC-813F97B41E10}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "common", "..\common.vcxproj", "{3F0927D0-A340-500F-D154-460869A16005}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crash_generation_server", "..\crash_generation\crash_generation_server.vcxproj", "{1C445187-A81E-9D2C-B222-75B6F1B39DA0}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "exception_handler", "exception_handler.vcxproj", "{CC0AA23A-824D-54F1-E891-A44828FD4C8A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|x64 = Release|x64
+		Purify|Win32 = Purify|Win32
+		Purify|x64 = Purify|x64
+		Debug|x64 = Debug|x64
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Debug|Win32.Build.0 = Debug|Win32
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Release|x64.ActiveCfg = Release|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Release|x64.Build.0 = Release|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Purify|Win32.ActiveCfg = Purify|Win32
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Purify|Win32.Build.0 = Purify|Win32
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Purify|x64.ActiveCfg = Purify|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Purify|x64.Build.0 = Purify|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Debug|x64.ActiveCfg = Debug|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Debug|x64.Build.0 = Debug|x64
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Release|Win32.ActiveCfg = Release|Win32
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0}.Release|Win32.Build.0 = Release|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Debug|Win32.Build.0 = Debug|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Release|x64.ActiveCfg = Release|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Release|x64.Build.0 = Release|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Purify|Win32.ActiveCfg = Purify|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Purify|Win32.Build.0 = Purify|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Purify|x64.ActiveCfg = Purify|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Purify|x64.Build.0 = Purify|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Debug|x64.ActiveCfg = Debug|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Debug|x64.Build.0 = Debug|x64
+		{3F0927D0-A340-500F-D154-460869A16005}.Release|Win32.ActiveCfg = Release|Win32
+		{3F0927D0-A340-500F-D154-460869A16005}.Release|Win32.Build.0 = Release|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Debug|Win32.Build.0 = Debug|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Release|x64.ActiveCfg = Release|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Release|x64.Build.0 = Release|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Purify|Win32.ActiveCfg = Purify|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Purify|Win32.Build.0 = Purify|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Purify|x64.ActiveCfg = Purify|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Purify|x64.Build.0 = Purify|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Debug|x64.ActiveCfg = Debug|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Debug|x64.Build.0 = Debug|x64
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Release|Win32.ActiveCfg = Release|Win32
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{1C445187-A81E-9D2C-B222-75B6F1B39DA0} = {71054F76-E083-ED71-B3F9-3E9B872F3E9E}
+		{CC0AA23A-824D-54F1-E891-A44828FD4C8A} = {07BF0989-2B77-D3C5-75FC-813F97B41E10}
+	EndGlobalSection
+EndGlobal
