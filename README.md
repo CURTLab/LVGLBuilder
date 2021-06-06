@@ -1,5 +1,7 @@
-# 1.0.3 Pre-release
-Because the rlease version of 1.0.3 failed the basic test, but the debug version is completely fine, so it takes some time to find out the reason.
+# Fixed crash bugs
+These bugs exist in release versions before 1.0.3
+- If the value_str attribute of the button is set or a configuration file containing this attribute is loaded, it will sometimes cause the program to crash.
+- If the current page contains a page switching event, and the target page of the page switching event is closed, exporting the code at this time will cause the program to crash.
 
 # New Test Tool
 
@@ -29,12 +31,8 @@ program: https://github.com/mrQzs/CreateLvglLib
 
 ![createlib](https://github.com/mrQzs/CreateLvglLib/blob/main/createlib.gif)
 
-
-
-## Warring
-
 # New features
-The pre-release of v1.0.2 has been released. 
+The pre-release of v1.0.3 has been released. 
 Changelog.md under the dev-v7 branch records the changes of the previous version.
 
 ## 1.0.3
