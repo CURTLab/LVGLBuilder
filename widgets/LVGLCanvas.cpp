@@ -10,7 +10,7 @@ LVGLCanvas::LVGLCanvas() {
   m_editableStyles << LVGL::Canvas;  // LV_CANVAS_STYLE_MAIN
 }
 
-QString LVGLCanvas::name() const { return "Canvas"; }
+QString LVGLCanvas::name() const { return QObject::tr("Canvas"); }
 
 QString LVGLCanvas::className() const { return "lv_canvas"; }
 

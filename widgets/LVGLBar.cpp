@@ -35,13 +35,14 @@ class LVGLPropertyBarRange : public LVGLPropertyRange {
 class LVGLPropertyBarType : public LVGLPropertyEnum {
  public:
   LVGLPropertyBarType()
-      : LVGLPropertyEnum(QStringList() << "Normal"
-                                       << "SYMMETRICAL"
-                                       << "CUSTOM"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Normal") << QObject::tr("SYMMETRICAL")
+                         << QObject::tr("CUSTOM")),
         m_values({"LV_BAR_TYPE_NORMAL", "LV_BAR_TYPE_SYMMETRICAL",
                   "LV_BAR_TYPE_CUSTOM"}) {}
 
-  QString name() const { return "Type"; }
+  QString name() const { return QObject::tr("Type"); }
+  QString codename() const { return "Type"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == 0) return QStringList();
@@ -64,7 +65,8 @@ class LVGLPropertyBarAnimationTime : public LVGLPropertyInt {
   LVGLPropertyBarAnimationTime()
       : LVGLPropertyInt(0, UINT16_MAX, " ms"), m_value(200) {}
 
-  QString name() const { return "Animation time"; }
+  QString name() const { return QObject::tr("Animation time"); }
+  QString codename() const { return "Animation time"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_bar_set_anim_time(%1,%2);")
@@ -87,7 +89,8 @@ class LVGLPropertyBarAnimalState : public LVGLPropertyEnum {
       : LVGLPropertyEnum(QStringList() << "On"
                                        << "Off") {}
 
-  QString name() const { return "Animation state"; }
+  QString name() const { return QObject::tr("Animation state"); }
+  QString codename() const { return "Animation state"; }
 
   int getIndex() { return m_index; }
 
@@ -109,7 +112,8 @@ class LVGLPropertyBarValue : public LVGLPropertyInt {
   LVGLPropertyBarValue(LVGLPropertyBarAnimalState *lpbas)
       : LVGLPropertyInt(INT16_MIN, INT16_MAX), m_lpbas(lpbas) {}
 
-  QString name() const { return "Value"; }
+  QString name() const { return QObject::tr("Value"); }
+  QString codename() const { return "Value"; }
 
   QStringList function(LVGLObject *obj) const {
     if (0 == m_lpbas->getIndex())
@@ -138,10 +142,14 @@ class LVGLPropertyBarValue : public LVGLPropertyInt {
 class LVGLPropertyBarStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertyBarStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -264,7 +272,7 @@ LVGLBar::LVGLBar() {
   m_editableStyles << LVGL::Body;  // LV_BAR_STYLE_INDIC
 }
 
-QString LVGLBar::name() const { return "Bar"; }
+QString LVGLBar::name() const { return QObject::tr("Bar"); }
 
 QString LVGLBar::className() const { return "lv_bar"; }
 

@@ -14,7 +14,7 @@ LVGLTileView::LVGLTileView() {
   m_editableStyles << LVGL::PageEDGEFLASH;  // LV_TILEVIEW_PART_EDGE_FLASH
 }
 
-QString LVGLTileView::name() const { return "TileView"; }
+QString LVGLTileView::name() const { return QObject::tr("TileView"); }
 
 QString LVGLTileView::className() const { return "lv_tileview"; }
 

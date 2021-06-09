@@ -5,28 +5,10 @@
 #include "core/LVGLObject.h"
 #include "properties/LVGLPropertyList.h"
 
-// class LVGLPropertyListSingleMode : public LVGLPropertyBool {
-// public:
-//  QString name() const { return "Single mode"; }
-
-//  QStringList function(LVGLObject *obj) const {
-//    return QStringList() << QString("lv_list_set_single_mode(%1, %2);")
-//                                .arg(obj->codeName())
-//                                .arg(QVariant(get(obj)).toString());
-//  }
-
-// protected:
-//  bool get(LVGLObject *obj) const {
-//    return lv_list_get_single_mode(obj->obj());
-//  }
-//  void set(LVGLObject *obj, bool boolean) {
-//    lv_list_set_single_mode(obj->obj(), boolean);
-//  }
-//};
-
 class LVGLPropertyListScrollPropagation : public LVGLPropertyBool {
  public:
-  QString name() const { return "Scroll propagation"; }
+  QString name() const { return QObject::tr("Scroll propagation"); }
+  QString codename() const { return "Scroll propagation"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_list_set_scroll_propagation(%1, %2);")
@@ -45,7 +27,8 @@ class LVGLPropertyListScrollPropagation : public LVGLPropertyBool {
 
 class LVGLPropertyListEdgeFlash : public LVGLPropertyBool {
  public:
-  QString name() const { return "Edge flash"; }
+  QString name() const { return QObject::tr("Edge flash"); }
+  QString codename() const { return "Edge flash"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_list_set_edge_flash(%1, %2);")
@@ -76,7 +59,7 @@ LVGLList::LVGLList() {
   m_editableStyles << LVGL::PageEDGEFLASH;  // LV_LIST_PART_EDGE_FLASH
 }
 
-QString LVGLList::name() const { return "List"; }
+QString LVGLList::name() const { return QObject::tr("List"); }
 
 QString LVGLList::className() const { return "lv_list"; }
 

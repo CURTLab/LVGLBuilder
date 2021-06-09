@@ -8,7 +8,8 @@
 
 class LVGLPropertyLineAutoSize : public LVGLPropertyBool {
  public:
-  QString name() const { return "Auto size"; }
+  QString name() const { return QObject::tr("Auto size"); }
+  QString codename() const { return "Auto size"; }
 
  protected:
   bool get(LVGLObject *obj) const { return lv_line_get_auto_size(obj->obj()); }
@@ -19,7 +20,8 @@ class LVGLPropertyLineAutoSize : public LVGLPropertyBool {
 
 class LVGLPropertyLineInvertY : public LVGLPropertyBool {
  public:
-  QString name() const { return "InvertY"; }
+  QString name() const { return QObject::tr("InvertY"); }
+  QString codename() const { return "InvertY"; }
 
  protected:
   bool get(LVGLObject *obj) const { return lv_line_get_y_invert(obj->obj()); }
@@ -30,7 +32,8 @@ class LVGLPropertyLineInvertY : public LVGLPropertyBool {
 
 class LVGLPropertyLinePoints : public LVGLPropertyPoints {
  public:
-  QString name() const { return "Points"; }
+  QString name() const { return QObject::tr("Points"); }
+  QString codename() const { return "Points"; }
 
   QStringList function(LVGLObject *obj) const {
     lv_line_ext_t *ext =
@@ -79,7 +82,7 @@ LVGLLine::LVGLLine() {
   m_editableStyles << LVGL::Line;  // LV_LINE_PART_MAIN
 }
 
-QString LVGLLine::name() const { return "Line"; }
+QString LVGLLine::name() const { return QObject::tr("Line"); }
 
 QString LVGLLine::className() const { return "lv_line"; }
 

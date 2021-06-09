@@ -11,9 +11,11 @@ class LVGLPropertyVal2 : public LVGLProperty {
                    QString value2, std::function<T(lv_obj_t *)> getter2,
                    QString functionName,
                    std::function<void(lv_obj_t *, T, T)> setter, QString title,
-                   LVGLProperty *parent = nullptr);
+                   QString trtitle, LVGLProperty *parent = nullptr);
 
   QString name() const override;
+  QString codename() const override;
+
   QVariant value(LVGLObject *obj) const override;
   void setValue(LVGLObject *obj, QVariant value) override;
 
@@ -25,6 +27,7 @@ class LVGLPropertyVal2 : public LVGLProperty {
   LVGLPropertyValT<T> *m_item1;
   LVGLPropertyValT<T> *m_item2;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, T, T)> m_setter;
   std::function<void(lv_obj_t *, T)> m_setter1;
@@ -41,7 +44,7 @@ class LVGLPropertyVal2Int16 : public LVGLPropertyVal2<int16_t> {
       QString value2, std::function<int16_t(lv_obj_t *)> getter2,
       QString functionName,
       std::function<void(lv_obj_t *, int16_t, int16_t)> setter, QString title,
-      LVGLProperty *parent = nullptr);
+      QString trtitle, LVGLProperty *parent = nullptr);
 };
 
 class LVGLPropertyVal2UInt16 : public LVGLPropertyVal2<uint16_t> {
@@ -52,7 +55,7 @@ class LVGLPropertyVal2UInt16 : public LVGLPropertyVal2<uint16_t> {
       QString value2, std::function<uint16_t(lv_obj_t *)> getter2,
       QString functionName,
       std::function<void(lv_obj_t *, uint16_t, uint16_t)> setter, QString title,
-      LVGLProperty *parent = nullptr);
+      QString trtitle, LVGLProperty *parent = nullptr);
 };
 
 #endif  // LVGLPROPERTYVAL2_H

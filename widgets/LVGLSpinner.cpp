@@ -11,7 +11,7 @@ LVGLSpinner::LVGLSpinner() {
                    << LVGL::ArcINDIC;  // LV_SPINNER_PART_INDIC
 }
 
-QString LVGLSpinner::name() const { return "Spinner"; }
+QString LVGLSpinner::name() const { return QObject::tr("Spinner"); }
 
 QString LVGLSpinner::className() const { return "lv_spinner"; }
 

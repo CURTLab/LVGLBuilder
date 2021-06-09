@@ -10,7 +10,8 @@ class LVGLPropertyArcBgAngle : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyArcBgAngle(const AnyFuncColType arr[], int size)
       : LVGLPropertyAnyFunc(arr, size, true), m_frun(true) {}
-  QString name() const { return "Set Bg Angle"; }
+  QString name() const { return QObject::tr("Set Bg Angle"); }
+  QString codename() const { return "Set Bg Angle"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -56,7 +57,8 @@ class LVGLPropertyArcAngle : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyArcAngle(const AnyFuncColType arr[], int size)
       : LVGLPropertyAnyFunc(arr, size, true), m_frun(true) {}
-  QString name() const { return "Set Angle"; }
+  QString name() const { return QObject::tr("Set Angle"); }
+  QString codename() const { return "Set Angle"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -103,7 +105,8 @@ class LVGLPropertyArcRotation : public LVGLPropertyInt {
  public:
   LVGLPropertyArcRotation() : LVGLPropertyInt(0, 360, ""), m_rations(0) {}
 
-  QString name() const { return "Rotation"; }
+  QString name() const { return QObject::tr("Rotation"); }
+  QString codename() const { return "Rotation"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_arc_set_rotation(%1,%2);")
@@ -129,7 +132,8 @@ class LVGLPropertyArcValue : public LVGLPropertyInt {
  public:
   LVGLPropertyArcValue() : LVGLPropertyInt(0, 360, "") {}
 
-  QString name() const { return "Value"; }
+  QString name() const { return QObject::tr("Value"); }
+  QString codename() const { return "Value"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_arc_set_value(%1,%2);")
@@ -147,10 +151,14 @@ class LVGLPropertyArcValue : public LVGLPropertyInt {
 class LVGLPropertyArcStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertyArcStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -271,7 +279,7 @@ LVGLArc::LVGLArc() {
                    << LVGL::ArcKNOB;  // LV_ARC_PART_KNOB
 }
 
-QString LVGLArc::name() const { return "Arc"; }
+QString LVGLArc::name() const { return QObject::tr("Arc"); }
 
 QString LVGLArc::className() const { return "lv_arc"; }
 

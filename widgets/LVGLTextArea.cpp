@@ -7,7 +7,8 @@
 
 class LVGLPropertyTAText : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Text"; }
+  QString name() const { return QObject::tr("Text"); }
+  QString codename() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
     if (!m_havesym)
@@ -48,7 +49,8 @@ class LVGLPropertyTAText : public LVGLPropertyStringPlus {
 
 class LVGLPropertyTAPlaceholder : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Placeholder"; }
+  QString name() const { return QObject::tr("Placeholder"); }
+  QString codename() const { return "Placeholder"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString(
@@ -70,7 +72,8 @@ class LVGLPropertyTACursorPos : public LVGLPropertyInt {
  public:
   LVGLPropertyTACursorPos() : LVGLPropertyInt(0, LV_TEXTAREA_CURSOR_LAST) {}
 
-  QString name() const { return "Cursor position"; }
+  QString name() const { return QObject::tr("Cursor position"); }
+  QString codename() const { return "Cursor position"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -85,7 +88,8 @@ class LVGLPropertyTACursorBlinkTime : public LVGLPropertyInt {
  public:
   LVGLPropertyTACursorBlinkTime() : LVGLPropertyInt(0, UINT16_MAX) {}
 
-  QString name() const { return "Cursor blink time"; }
+  QString name() const { return QObject::tr("Cursor blink time"); }
+  QString codename() const { return "Cursor blink time"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString(
@@ -105,7 +109,8 @@ class LVGLPropertyTACursorBlinkTime : public LVGLPropertyInt {
 
 class LVGLPropertyTAOneLineMode : public LVGLPropertyBool {
  public:
-  QString name() const { return "One line mode"; }
+  QString name() const { return QObject::tr("One line mode"); }
+  QString codename() const { return "One line mode"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_textarea_set_one_line(%1, %2);")
@@ -124,7 +129,8 @@ class LVGLPropertyTAOneLineMode : public LVGLPropertyBool {
 
 class LVGLPropertyTAPasswordMode : public LVGLPropertyBool {
  public:
-  QString name() const { return "Password mode"; }
+  QString name() const { return QObject::tr("Password mode"); }
+  QString codename() const { return "Password mode"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_textarea_set_pwd_mode(%1, %2);")
@@ -151,7 +157,8 @@ class LVGLPropertyTAMaxLen : public LVGLPropertyInt {
                                 .arg(get(obj));
   }
 
-  QString name() const { return "Max length"; }
+  QString name() const { return QObject::tr("Max length"); }
+  QString codename() const { return "Max length"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -165,11 +172,12 @@ class LVGLPropertyTAMaxLen : public LVGLPropertyInt {
 class LVGLPropertyTATextAlign : public LVGLPropertyEnum {
  public:
   LVGLPropertyTATextAlign()
-      : LVGLPropertyEnum(QStringList() << "Left"
-                                       << "Center"
-                                       << "Right") {}
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Left") << QObject::tr("Center")
+                         << QObject::tr("Right")) {}
 
-  QString name() const { return "Text align"; }
+  QString name() const { return QObject::tr("Text align"); }
+  QString codename() const { return "Text align"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -183,12 +191,12 @@ class LVGLPropertyTATextAlign : public LVGLPropertyEnum {
 class LVGLPropertyTAScrollbars : public LVGLPropertyEnum {
  public:
   LVGLPropertyTAScrollbars()
-      : LVGLPropertyEnum(QStringList() << "Off"
-                                       << "On"
-                                       << "Drag"
-                                       << "Auto") {}
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Off") << QObject::tr("On")
+                         << QObject::tr("Drag") << QObject::tr("Auto")) {}
 
-  QString name() const { return "Scrollbars"; }
+  QString name() const { return QObject::tr("Scrollbars"); }
+  QString codename() const { return "Scrollbars"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -201,7 +209,8 @@ class LVGLPropertyTAScrollbars : public LVGLPropertyEnum {
 
 class LVGLPropertyTAScrollPropagation : public LVGLPropertyBool {
  public:
-  QString name() const { return "Scroll propagation"; }
+  QString name() const { return QObject::tr("Scroll propagation"); }
+  QString codename() const { return "Scroll propagation"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString(
@@ -221,7 +230,8 @@ class LVGLPropertyTAScrollPropagation : public LVGLPropertyBool {
 
 class LVGLPropertyTAEdgeFlash : public LVGLPropertyBool {
  public:
-  QString name() const { return "Edge flash"; }
+  QString name() const { return QObject::tr("Edge flash"); }
+  QString codename() const { return "Edge flash"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_textarea_set_edge_flash(%1, %2);")
@@ -263,7 +273,7 @@ LVGLTextArea::LVGLTextArea() {
   m_editableStyles << LVGL::TextPlaceHode;  // LV_TEXTAREA_PART_PLACEHOLDER
 }
 
-QString LVGLTextArea::name() const { return "Text area"; }
+QString LVGLTextArea::name() const { return QObject::tr("Text area"); }
 
 QString LVGLTextArea::className() const { return "lv_textarea"; }
 

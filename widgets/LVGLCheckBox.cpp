@@ -8,7 +8,8 @@ class LVGLPropertyCBDisabled : public LVGLPropertyBool {
  public:
   LVGLPropertyCBDisabled() : m_bool(false) {}
 
-  QString name() const { return "Disabled"; }
+  QString name() const { return QObject::tr("Disabled"); }
+  QString codename() const { return "Disabled"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -37,19 +38,19 @@ LVGLCheckBox::LVGLCheckBox() {
   m_parts << LV_CHECKBOX_PART_BG;
   //<< LV_CHECKBOX_PART_BULLET;
 
-  m_properties << new LVGLPropertyString("Text", "lv_checkbox_set_text",
-                                         lv_checkbox_set_text,
-                                         lv_checkbox_get_text);
-  m_properties << new LVGLPropertyBool("Checked", "lv_checkbox_set_checked",
-                                       lv_checkbox_set_checked,
-                                       lv_checkbox_is_checked);
+  m_properties << new LVGLPropertyString(
+      "Text", QObject::tr("Text"), "lv_checkbox_set_text", lv_checkbox_set_text,
+      lv_checkbox_get_text);
+  m_properties << new LVGLPropertyBool(
+      "Checked", QObject::tr("Checked"), "lv_checkbox_set_checked",
+      lv_checkbox_set_checked, lv_checkbox_is_checked);
   m_properties << new LVGLPropertyCBDisabled;
 
   m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BG
   // m_editableStyles << LVGL::Checkbox;  // LV_CHECKBOX_PART_BULLET
 }
 
-QString LVGLCheckBox::name() const { return "Check box"; }
+QString LVGLCheckBox::name() const { return QObject::tr("Check box"); }
 
 QString LVGLCheckBox::className() const { return "lv_checkbox"; }
 

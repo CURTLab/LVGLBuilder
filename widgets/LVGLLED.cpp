@@ -11,7 +11,8 @@ class LVGLPropertyLEDBrightness : public LVGLPropertyInt {
  public:
   LVGLPropertyLEDBrightness() : LVGLPropertyInt(0, 255) {}
 
-  QString name() const { return "Brightness"; }
+  QString name() const { return QObject::tr("Brightness"); }
+  QString codename() const { return "Brightness"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_led_set_bright(%1, %2);")
@@ -29,11 +30,12 @@ class LVGLPropertyLEDBrightness : public LVGLPropertyInt {
 class LVGLPropertySwitch : public LVGLPropertyEnum {
  public:
   LVGLPropertySwitch()
-      : LVGLPropertyEnum(QStringList() << "On"
-                                       << "Off"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("On") << QObject::tr("Off")),
         m_index(0) {}
 
-  QString name() const { return "Switch"; }
+  QString name() const { return QObject::tr("Switch"); }
+  QString codename() const { return "Switch"; }
 
   QStringList function(LVGLObject *obj) const {
     if (m_index)
@@ -65,7 +67,7 @@ LVGLLED::LVGLLED() {
   m_editableStyles << LVGL::Background;  // LV_LED_PART_MAIN
 }
 
-QString LVGLLED::name() const { return "LED"; }
+QString LVGLLED::name() const { return QObject::tr("LED"); }
 
 QString LVGLLED::className() const { return "lv_led"; }
 

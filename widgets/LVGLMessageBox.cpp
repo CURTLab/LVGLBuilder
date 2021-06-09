@@ -11,7 +11,8 @@ class LVGLPropertyMsgBoxButtons : public LVGLPropertyAnyFunc {
   LVGLPropertyMsgBoxButtons(const AnyFuncColType arr[], int size,
                             LVGLMessageBox *msgB)
       : LVGLPropertyAnyFunc(arr, size), m_msgb(msgB) {}
-  QString name() const { return "Add Buttons"; }
+  QString name() const { return QObject::tr("Add Buttons"); }
+  QString codename() const { return "Add Buttons"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -56,7 +57,8 @@ class LVGLPropertyMsgBoxButtons : public LVGLPropertyAnyFunc {
 
 class LVGLPropertyMsgContent : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Content"; }
+  QString name() const { return QObject::tr("Content"); }
+  QString codename() const { return "Content"; }
 
   QStringList function(LVGLObject *obj) const {
     QString tmp = get(obj);
@@ -90,11 +92,12 @@ LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
   // m_properties << new LVGLPropertyMBoxButtons;
   m_properties << new LVGLPropertyMsgContent;
   m_properties << new LVGLPropertyValUInt16(
-      0, UINT16_MAX, "Animation time", "lv_msgbox_set_anim_time",
-      lv_msgbox_set_anim_time, lv_msgbox_get_anim_time);
-  m_properties << new LVGLPropertyBool("Recolor", "lv_mbox_set_recolor",
-                                       lv_msgbox_set_recolor,
-                                       lv_msgbox_get_recolor);
+      0, UINT16_MAX, "Animation time", QObject::tr("Animation time"),
+      "lv_msgbox_set_anim_time", lv_msgbox_set_anim_time,
+      lv_msgbox_get_anim_time);
+  m_properties << new LVGLPropertyBool(
+      "Recolor", QObject::tr("Recolor"), "lv_mbox_set_recolor",
+      lv_msgbox_set_recolor, lv_msgbox_get_recolor);
 
   static AnyFuncColType arr[] = {e_Seqlabel, e_QLineEdit};
   m_properties << new LVGLPropertyMsgBoxButtons(arr, 2, this);
@@ -104,7 +107,7 @@ LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
                    << LVGL::Background;  // LV_MSGBOX_PART_BTN
 }
 
-QString LVGLMessageBox::name() const { return "Message box"; }
+QString LVGLMessageBox::name() const { return QObject::tr("Message box"); }
 
 QString LVGLMessageBox::className() const { return "lv_msgbox"; }
 

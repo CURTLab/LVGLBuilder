@@ -7,17 +7,16 @@
 class LVGLPropertyPageScrollbars : public LVGLPropertyEnum {
  public:
   LVGLPropertyPageScrollbars()
-      : LVGLPropertyEnum(QStringList() << "Off"
-                                       << "On"
-                                       << "Drag"
-                                       << "Auto"
-                                       << "Hide"
-                                       << "Unhide"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Off") << QObject::tr("On")
+                         << QObject::tr("Drag") << QObject::tr("Auto")
+                         << QObject::tr("Hide") << QObject::tr("Unhide")),
         m_values({"LV_SCROLLBAR_MODE_OFF", "LV_SCROLLBAR_MODE_ON",
                   "LV_SCROLLBAR_MODE_DRAG", "LV_SCROLLBAR_MODE_AUTO",
                   "LV_SCROLLBAR_MODE_HIDE", "LV_SCROLLBAR_MODE_UNHIDE"}) {}
 
-  QString name() const { return "Scrollbars"; }
+  QString name() const { return QObject::tr("Scrollbars"); }
+  QString codename() const { return "Scrollbars"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -43,7 +42,8 @@ class LVGLPropertyPageWidth : public LVGLPropertyCoord {
  public:
   inline LVGLPropertyPageWidth(LVGLProperty *p = nullptr)
       : LVGLPropertyCoord(Qt::Horizontal, p) {}
-  inline QString name() const override { return "Scroll width"; }
+  inline QString name() const override { return QObject::tr("Scroll width"); }
+  inline QString codename() const override { return "Scroll width"; }
 
   inline lv_coord_t get(LVGLObject *obj) const override {
     return lv_page_get_scrl_width(obj->obj());
@@ -57,7 +57,8 @@ class LVGLPropertyPageHeight : public LVGLPropertyCoord {
  public:
   inline LVGLPropertyPageHeight(LVGLProperty *p = nullptr)
       : LVGLPropertyCoord(Qt::Vertical, p) {}
-  inline QString name() const override { return "Scroll height"; }
+  inline QString name() const override { return QObject::tr("Scroll height"); }
+  inline QString codename() const override { return "Scroll height"; }
 
   inline lv_coord_t get(LVGLObject *obj) const override {
     return lv_page_get_scrl_height(obj->obj());
@@ -69,7 +70,8 @@ class LVGLPropertyPageHeight : public LVGLPropertyCoord {
 
 class LVGLPropertyPageEdgeFlash : public LVGLPropertyBool {
  public:
-  QString name() const { return "Edge flash"; }
+  QString name() const { return QObject::tr("Edge flash"); }
+  QString codename() const { return "Edge flash"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_page_set_edge_flash(%1, %2);")
@@ -86,7 +88,8 @@ class LVGLPropertyPageEdgeFlash : public LVGLPropertyBool {
 
 class LVGLPropertyPageScrollPropagation : public LVGLPropertyBool {
  public:
-  QString name() const { return "Scroll propagation"; }
+  QString name() const { return QObject::tr("Scroll propagation"); }
+  QString codename() const { return "Scroll propagation"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_page_set_scroll_propagation(%1, %2);")
@@ -119,7 +122,7 @@ LVGLPage::LVGLPage() {
   m_editableStyles << LVGL::PageEDGEFLASH;  // LV_PAGE_PART_EDGE_FLASH
 }
 
-QString LVGLPage::name() const { return "Page"; }
+QString LVGLPage::name() const { return QObject::tr("Page"); }
 
 QString LVGLPage::className() const { return "lv_page"; }
 

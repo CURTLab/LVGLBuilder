@@ -33,20 +33,21 @@ LVGLLineMeter::LVGLLineMeter() {
   m_parts << LV_LINEMETER_PART_MAIN;
   m_properties << new LVGLPropertyLMeterRange;
   m_properties << new LVGLPropertyValInt16(
-      INT16_MIN, INT16_MAX, "Value", "lv_linemeter_set_value",
-      lv_linemeter_set_value, lv_linemeter_get_value);
+      INT16_MIN, INT16_MAX, "Value", QObject::tr("Value"),
+      "lv_linemeter_set_value", lv_linemeter_set_value, lv_linemeter_get_value);
   m_properties << new LVGLPropertyValUInt16(
-      0, 360, "Angle", "lv_linemeter_set_angle_offset",
+      0, 360, "Angle", QObject::tr("Angle"), "lv_linemeter_set_angle_offset",
       lv_linemeter_set_angle_offset, lv_linemeter_get_angle_offset);
   m_properties << new LVGLPropertyVal2UInt16(
-      0, 360, "Angle", lv_linemeter_get_scale_angle, 0, UINT16_MAX, "Lines",
-      lv_linemeter_get_line_count, "lv_linemeter_set_scale",
-      lv_linemeter_set_scale, "Scale");
+      0, 360, QObject::tr("Angle"), lv_linemeter_get_scale_angle, 0, UINT16_MAX,
+      QObject::tr("Lines"), lv_linemeter_get_line_count,
+      "lv_linemeter_set_scale", lv_linemeter_set_scale, "Scale",
+      QObject::tr("Scale"));
 
   m_editableStyles << LVGL::LinemeterMAIN;  // LV_LINEMETER_PART_MAIN
 }
 
-QString LVGLLineMeter::name() const { return "Line meter"; }
+QString LVGLLineMeter::name() const { return QObject::tr("Line meter"); }
 
 QString LVGLLineMeter::className() const { return "lv_lmeter"; }
 

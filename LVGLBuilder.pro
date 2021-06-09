@@ -91,6 +91,8 @@ contains(TARGET_ARCH, x86_64){
     }
 }
 
+TRANSLATIONS += en.ts sc_zh.ts jp.ts tc_zh.ts
+
 #CONFIG(debug,debug|release){
 #    INCLUDEPATH += C:/vld/include
 #    DEPENDPATH += C:/vld/include
@@ -101,6 +103,7 @@ contains(TARGET_ARCH, x86_64){
 SOURCES += \
     core/ColorPick.cpp \
     core/LVGLCommands.cpp \
+    core/LVGLConfig.cpp \
     core/LVGLCore.cpp \
     core/LVGLDialog.cpp \
     core/LVGLFontData.cpp \
@@ -207,6 +210,7 @@ SOURCES += \
 HEADERS += \
     core/ColorPick.h \
     core/LVGLCommands.h \
+    core/LVGLConfig.h \
     core/LVGLCore.h \
     core/LVGLDialog.h \
     core/LVGLFontData.h \

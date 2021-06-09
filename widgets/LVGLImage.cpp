@@ -11,7 +11,8 @@ class LVGLPropertyImgOffsetX : public LVGLPropertyCoord {
  public:
   inline LVGLPropertyImgOffsetX(LVGLProperty *p)
       : LVGLPropertyCoord(Qt::Horizontal, p) {}
-  inline QString name() const override { return "X"; }
+  inline QString name() const override { return QObject::tr("X"); }
+  inline QString codename() const override { return "X"; }
 
   inline lv_coord_t get(LVGLObject *obj) const override {
     return lv_img_get_offset_x(obj->obj());
@@ -25,7 +26,8 @@ class LVGLPropertyImgOffsetY : public LVGLPropertyCoord {
  public:
   inline LVGLPropertyImgOffsetY(LVGLProperty *p)
       : LVGLPropertyCoord(Qt::Vertical, p) {}
-  inline QString name() const override { return "Y"; }
+  inline QString name() const override { return QObject::tr("Y"); }
+  inline QString codename() const override { return "Y"; }
 
   inline lv_coord_t get(LVGLObject *obj) const override {
     return lv_img_get_offset_y(obj->obj());
@@ -44,7 +46,9 @@ class LVGLPropertyImgOffset : public LVGLProperty {
     m_childs << m_x << m_y;
   }
 
-  inline QString name() const override { return "Offset"; }
+  inline QString name() const override { return QObject::tr("Offset"); }
+  inline QString codename() const override { return "Offset"; }
+
   inline QVariant value(LVGLObject *obj) const override {
     return QString("(%1,%2)")
         .arg(child(0)->value(obj).toInt())
@@ -84,7 +88,8 @@ class LVGLPropertyImgOffset : public LVGLProperty {
 
 class LVGLPropertyImgAutoSize : public LVGLPropertyBool {
  public:
-  inline QString name() const { return "Auto Size"; }
+  inline QString name() const { return QObject::tr("Auto Size"); }
+  inline QString codename() const { return "Auto Size"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj)) return QStringList();
@@ -104,7 +109,8 @@ class LVGLPropertyImgAutoSize : public LVGLPropertyBool {
 
 class LVGLPropertyImgSource : public LVGLPropertyImage {
  public:
-  inline QString name() const override { return "Source"; }
+  inline QString name() const override { return QObject::tr("Source"); }
+  inline QString codename() const override { return "Source"; }
 
   QStringList function(LVGLObject *obj) const override {
     LVGLImageData *img = lvgl.imageByDesc(get(obj));
@@ -133,7 +139,7 @@ LVGLImage::LVGLImage() {
   m_editableStyles << LVGL::ImgMAIN;  // LV_IMG_PART_MAIN
 }
 
-QString LVGLImage::name() const { return "Image"; }
+QString LVGLImage::name() const { return QObject::tr("Image"); }
 
 QString LVGLImage::className() const { return "lv_img"; }
 

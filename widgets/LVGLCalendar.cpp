@@ -18,7 +18,8 @@ class LVGLPropertyDayNames : public LVGLPropertyTextList {
     }
   }
 
-  inline QString name() const override { return "Day names"; }
+  inline QString name() const override { return QObject::tr("Day names"); }
+  inline QString codename() const override { return "Day names"; }
 
   inline QStringList function(LVGLObject *obj) const override {
     const QStringList list = get(obj);
@@ -85,7 +86,8 @@ class LVGLPropertyMonthNames : public LVGLPropertyTextList {
     }
   }
 
-  inline QString name() const override { return "Month names"; }
+  inline QString name() const override { return QObject::tr("Month names"); }
+  inline QString codename() const override { return "Month names"; }
 
   inline QStringList function(LVGLObject *obj) const override {
     const QStringList list = get(obj);
@@ -147,15 +149,15 @@ LVGLCalendar::LVGLCalendar() {
   m_parts << LV_CALENDAR_PART_BG << LV_CALENDAR_PART_HEADER
           << LV_CALENDAR_PART_DAY_NAMES << LV_CALENDAR_PART_DATE;
   m_properties << new LVGLPropertyDate(
-      "Current date", "lv_calendar_set_today_date", lv_calendar_set_today_date,
-      lv_calendar_get_today_date);
+      "Current date", QObject::tr("Current date"), "lv_calendar_set_today_date",
+      lv_calendar_set_today_date, lv_calendar_get_today_date);
   m_properties << new LVGLPropertyDate(
-      "Shown date", "lv_calendar_set_showed_date", lv_calendar_set_showed_date,
-      lv_calendar_get_showed_date);
+      "Shown date", QObject::tr("Shown date"), "lv_calendar_set_showed_date",
+      lv_calendar_set_showed_date, lv_calendar_get_showed_date);
   m_properties << new LVGLPropertyDateList(
-      "Highlighted dates", "lv_calendar_set_highlighted_dates",
-      lv_calendar_set_highlighted_dates, lv_calendar_get_highlighted_dates,
-      lv_calendar_get_highlighted_dates_num);
+      "Highlighted dates", QObject::tr("Highlighted dates"),
+      "lv_calendar_set_highlighted_dates", lv_calendar_set_highlighted_dates,
+      lv_calendar_get_highlighted_dates, lv_calendar_get_highlighted_dates_num);
 
   m_properties << new LVGLPropertyDayNames;
   m_properties << new LVGLPropertyMonthNames;
@@ -166,7 +168,7 @@ LVGLCalendar::LVGLCalendar() {
   m_editableStyles << LVGL::Text;          // CALENDAR_PART_DATE
 }
 
-QString LVGLCalendar::name() const { return "Calendar"; }
+QString LVGLCalendar::name() const { return QObject::tr("Calendar"); }
 
 QString LVGLCalendar::className() const { return "lv_calendar"; }
 

@@ -5,13 +5,14 @@
 #include "core/LVGLObject.h"
 
 LVGLPropertyDate::LVGLPropertyDate(
-    QString title, QString functionName,
+    QString title, QString trtitle, QString functionName,
     std::function<void(lv_obj_t *, lv_calendar_date_t *)> setter,
     std::function<lv_calendar_date_t *(lv_obj_t *)> getter,
     LVGLProperty *parent)
     : LVGLProperty(parent),
       m_widget(nullptr),
       m_title(title),
+      m_trtitle(trtitle),
       m_functionName(functionName),
       m_setter(setter),
       m_getter(getter) {}
@@ -53,7 +54,9 @@ void LVGLPropertyDate::setValue(LVGLObject *obj, QVariant value) {
   set(obj, &d);
 }
 
-QString LVGLPropertyDate::name() const { return m_title; }
+QString LVGLPropertyDate::name() const { return m_trtitle; }
+
+QString LVGLPropertyDate::codename() const { return m_title; }
 
 QStringList LVGLPropertyDate::function(LVGLObject *obj) const {
   if (m_functionName.isEmpty()) return {};

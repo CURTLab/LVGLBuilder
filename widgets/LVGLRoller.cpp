@@ -9,7 +9,8 @@
 
 class LVGLPropertyRolleroptionsN : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Options"; }
+  QString name() const { return QObject::tr("Options"); }
+  QString codename() const { return "Options"; }
 
   QStringList function(LVGLObject *obj) const {
     QString tmp = get(obj);
@@ -43,13 +44,14 @@ class LVGLPropertyRolleroptionsN : public LVGLPropertyStringPlus {
 class LVGLPropertyRollerAlign : public LVGLPropertyEnum {
  public:
   LVGLPropertyRollerAlign()
-      : LVGLPropertyEnum(QStringList() << "Left"
-                                       << "Center"
-                                       << "Right"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Left") << QObject::tr("Center")
+                         << QObject::tr("Right")),
         m_values({"LV_LABEL_ALIGN_LEFT", "LV_LABEL_ALIGN_CENTER",
                   "LV_LABEL_ALIGN_RIGHT"}) {}
 
-  QString name() const { return "Align"; }
+  QString name() const { return QObject::tr("Align"); }
+  QString codename() const { return "Align"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
@@ -72,7 +74,8 @@ class LVGLPropertyRollerVisibleRows : public LVGLPropertyInt {
   LVGLPropertyRollerVisibleRows()
       : LVGLPropertyInt(0, UINT8_MAX, ""), m_value(3) {}
 
-  QString name() const { return "Visible rows"; }
+  QString name() const { return QObject::tr("Visible rows"); }
+  QString codename() const { return "Visible rows"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_roller_set_visible_row_count(%1,%2);")
@@ -98,7 +101,8 @@ class LVGLPropertyRollerAnimationTime : public LVGLPropertyInt {
  public:
   LVGLPropertyRollerAnimationTime() : LVGLPropertyInt(0, UINT16_MAX, " ms") {}
 
-  QString name() const { return "Animation time"; }
+  QString name() const { return QObject::tr("Animation time"); }
+  QString codename() const { return "Animation time"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_roller_set_anim_time(%1,%2);")
@@ -124,15 +128,15 @@ LVGLRoller::LVGLRoller() {
   m_properties << new LVGLPropertyRolleroptionsN << new LVGLPropertyRollerAlign;
   m_properties << new LVGLPropertyRollerVisibleRows;
   m_properties << new LVGLPropertyRollerAnimationTime;
-  m_properties << new LVGLPropertyBool("Auto fit", "lv_roller_set_auto_fit",
-                                       lv_roller_set_auto_fit,
-                                       lv_roller_get_auto_fit);
+  m_properties << new LVGLPropertyBool(
+      "Auto fit", QObject::tr("Auto fit"), "lv_roller_set_auto_fit",
+      lv_roller_set_auto_fit, lv_roller_get_auto_fit);
   m_parts << LV_ROLLER_PART_BG << LV_ROLLER_PART_SELECTED;
   m_editableStyles << LVGL::RollerMAIN;  // LV_ROLLER_PART_BG
   m_editableStyles << LVGL::RollerMAIN;  // LV_ROLLER_PART_SELECTED
 }
 
-QString LVGLRoller::name() const { return "Roller"; }
+QString LVGLRoller::name() const { return QObject::tr("Roller"); }
 
 QString LVGLRoller::className() const { return "lv_roller"; }
 

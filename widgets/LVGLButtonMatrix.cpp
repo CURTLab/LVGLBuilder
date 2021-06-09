@@ -13,7 +13,8 @@ class LVGLPropertyBtnmatrixButtonsText : public LVGLPropertyStringPlus {
 
   int getBtnTotal() { return m_btnTotal; }
 
-  QString name() const { return "Button's Text"; }
+  QString name() const { return QObject::tr("Button's Text"); }
+  QString codename() const { return "Button's Text"; }
 
   QStringList function(LVGLObject *obj) const {
     const char **map = lv_btnmatrix_get_map_array(obj->obj());
@@ -75,11 +76,13 @@ class LVGLPropertyBtnmatrixButtonsText : public LVGLPropertyStringPlus {
 class LVGLPropertyBtnmatrixTextAlign : public LVGLPropertyEnum {
  public:
   LVGLPropertyBtnmatrixTextAlign()
-      : LVGLPropertyEnum({"Left", "Right", "Center", "Auto"}),
+      : LVGLPropertyEnum({QObject::tr("Left"), QObject::tr("Right"),
+                          QObject::tr("Center"), QObject::tr("Auto")}),
         m_values({"LV_LABEL_ALIGN_LEFT", "LV_LABEL_ALIGN_RIGHT",
                   "LV_LABEL_ALIGN_CENTER", "LV_LABEL_ALIGN_AUTO"}) {}
 
-  QString name() const { return "Text Align"; }
+  QString name() const { return QObject::tr("Text Align"); }
+  QString codename() const { return "Text Align"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) != 0)
@@ -102,7 +105,8 @@ class LVGLPropertyBtnmatrixFocus : public LVGLPropertyInt {
   LVGLPropertyBtnmatrixFocus(LVGLPropertyBtnmatrixButtonsText *p)
       : LVGLPropertyInt(-1, UINT16_MAX - 1, ""), m_btnid(-1), m_lpbbt(p) {}
 
-  QString name() const { return "Focus"; }
+  QString name() const { return QObject::tr("Focus"); }
+  QString codename() const { return "Focus"; }
 
   QStringList function(LVGLObject *obj) const {
     if (m_btnid != -1 && m_btnid < 0xffff)
@@ -140,7 +144,8 @@ class LVGLPropertyBtnmatrixButtonCtrl : public LVGLPropertyAnyFunc {
   LVGLPropertyBtnmatrixButtonCtrl(const AnyFuncColType arr[], int size,
                                   LVGLPropertyBtnmatrixButtonsText *p)
       : LVGLPropertyAnyFunc(arr, size), m_lpbbt(p), m_frun(true) {}
-  QString name() const { return "Button's Ctrl"; }
+  QString name() const { return QObject::tr("Button's Ctrl"); }
+  QString codename() const { return "Button's Ctrl"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -221,7 +226,8 @@ class LVGLPropertyBtnmatrixButtonWidth : public LVGLPropertyAnyFunc {
                                    LVGLPropertyBtnmatrixButtonsText *p)
       : LVGLPropertyAnyFunc(arr, size), m_lpbbt(p), m_frun(true) {}
 
-  QString name() const { return "Button's Width"; }
+  QString name() const { return QObject::tr("Button's Width"); }
+  QString codename() const { return "Button's Width"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -276,8 +282,8 @@ LVGLButtonMatrix::LVGLButtonMatrix() {
   auto p = new LVGLPropertyBtnmatrixButtonsText;
   m_properties << p;
   m_properties << new LVGLPropertyBool(
-      "Text Recolor", "lv_btnmatrix_set_one_check", lv_btnmatrix_set_recolor,
-      lv_btnmatrix_get_recolor);
+      "Text Recolor", QObject::tr("Text Recolor"), "lv_btnmatrix_set_one_check",
+      lv_btnmatrix_set_recolor, lv_btnmatrix_get_recolor);
   m_properties << new LVGLPropertyBtnmatrixTextAlign;
   m_properties << new LVGLPropertyBtnmatrixFocus(p);
   static const AnyFuncColType arr[2]{e_QComboBox, e_QComboBox};
@@ -286,15 +292,15 @@ LVGLButtonMatrix::LVGLButtonMatrix() {
   static const AnyFuncColType arr2[2]{e_QComboBox, e_QSpinBox};
   m_properties << new LVGLPropertyBtnmatrixButtonWidth(arr2, 2, p);
   m_properties << new LVGLPropertyBool(
-      "One check", "lv_btnmatrix_set_one_check", lv_btnmatrix_set_one_check,
-      lv_btnmatrix_get_one_check);
+      "One check", QObject::tr("One check"), "lv_btnmatrix_set_one_check",
+      lv_btnmatrix_set_one_check, lv_btnmatrix_get_one_check);
 
   m_parts << LV_BTNMATRIX_PART_BG << LV_BTNMATRIX_PART_BTN;
   m_editableStyles << LVGL::BtnMatrixBG;   // LV_BTNMATRIX_PART_BG
   m_editableStyles << LVGL::BtnMatrixBTN;  // LV_BTNMATRIX_PART_BTN
 }
 
-QString LVGLButtonMatrix::name() const { return "Button Matrix"; }
+QString LVGLButtonMatrix::name() const { return QObject::tr("Button Matrix"); }
 
 QString LVGLButtonMatrix::className() const { return "lv_btnmatrix"; }
 

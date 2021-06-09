@@ -16,7 +16,7 @@ LVGLTable::LVGLTable() {
   m_editableStyles << LVGL::TableCELL;  // LV_TABLE_PART_CELL4
 }
 
-QString LVGLTable::name() const { return "Table"; }
+QString LVGLTable::name() const { return QObject::tr("Table"); }
 
 QString LVGLTable::className() const { return "lv_table"; }
 

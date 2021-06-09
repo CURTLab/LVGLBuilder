@@ -10,6 +10,7 @@ class LVGLPropertySeries : public LVGLProperty {
   LVGLPropertySeries(LVGLProperty *parent = nullptr);
 
   QString name() const override;
+  QString codename() const override;
 
   bool hasEditor() const override;
   QWidget *editor(QWidget *parent) override;

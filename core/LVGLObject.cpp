@@ -172,7 +172,7 @@ QJsonObject LVGLObject::toJson() {
   if (m_index > -1) object.insert("index", m_index);
   for (LVGLProperty *p : m_widgetClass->properties()) {
     QJsonValue v = p->toJson(this);
-    if (!v.isNull()) object.insert(p->name().toLower(), v);
+    if (!v.isNull()) object.insert(p->codename().toLower(), v);
   }
 
   QJsonArray styles = jsonStyles();
@@ -192,7 +192,7 @@ QJsonObject LVGLObject::propToJson() {
   if (m_index > -1) object.insert("index", m_index);
   for (LVGLProperty *p : m_widgetClass->properties()) {
     QJsonValue v = p->toJson(this);
-    if (!v.isNull()) object.insert(p->name().toLower(), v);
+    if (!v.isNull()) object.insert(p->codename().toLower(), v);
   }
 
   return object;
@@ -222,7 +222,7 @@ QJsonArray LVGLObject::jsonStyles() const {
       int stateindex = j;
       auto obj1 = this->obj();
       auto obj2 = codemap[m_widgetClass->type()];
-      if (this->widgetClass()->name() == "Dropdown") {
+      if (this->widgetClass()->className() == "lv_dropdown") {
         lv_dropdown_open(obj1);
         lv_dropdown_open(obj2);
       }
@@ -899,7 +899,7 @@ QJsonArray LVGLObject::jsonStyles() const {
       styles.append(style);
     }
   }
-  if (this->widgetClass()->name() == "Dropdown") {
+  if (this->widgetClass()->className() == "lv_dropdown") {
     lv_dropdown_close(this->obj());
   }
   return styles;
@@ -919,7 +919,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
       int stateindex = j;
       auto obj1 = this->obj();
       auto obj2 = codemap[m_widgetClass->type()];
-      if (this->widgetClass()->name() == "Dropdown") {
+      if (this->widgetClass()->className() == "lv_dropdown") {
         lv_dropdown_open(obj1);
         lv_dropdown_open(obj2);
       }
@@ -1575,7 +1575,7 @@ QJsonArray LVGLObject::jsonAllStyles() const {
       styles.append(style);
     }
   }
-  if (this->widgetClass()->name() == "Dropdown") {
+  if (this->widgetClass()->className() == "lv_dropdown") {
     lv_dropdown_close(this->obj());
   }
   return styles;
@@ -2707,10 +2707,11 @@ void LVGLObject::parseStyles(const QJsonArray &styles) {
     if (style.contains("Value")) {
       QJsonObject mix = style["Value"].toObject();
       if (mix.contains("value_str")) {
-		  memset(m_pStr, 0, sizeof(m_pStr));
-		  strcpy(m_pStr, mix["value_str"].toString().toUtf8().data());
+        memset(m_pStr, 0, sizeof(m_pStr));
+        strcpy(m_pStr, mix["value_str"].toString().toUtf8().data());
         _lv_obj_set_style_local_ptr(
-            m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS), m_pStr);
+            m_obj, part, LV_STYLE_VALUE_STR | (state << LV_STYLE_STATE_POS),
+            m_pStr);
       }
       if (mix.contains("value_color")) {
         auto c = lvgl.fromColor(QColor(
@@ -3113,7 +3114,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
         newObj->parseStyles(object["styles"].toArray());
 
       for (LVGLProperty *p : widgetClass->properties()) {
-        QString pname = p->name().toLower();
+        QString pname = p->codename().toLower();
         if (pname == "name") continue;
         if (object.contains(pname)) {
           QVariant v = object[pname].toVariant();
@@ -3136,7 +3137,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
             // parse page props
             for (LVGLProperty *p :
                  lvgl.widget("lv_page")->specialProperties()) {
-              const QString pname = p->name().toLower();
+              const QString pname = p->codename().toLower();
               if (child.contains(pname)) {
                 QVariant v = child[pname].toVariant();
                 if (!v.isNull()) p->setValue(page, v);
@@ -3156,7 +3157,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
 
     } else {
       for (LVGLProperty *p : widgetClass->properties()) {
-        QString pname = p->name().toLower();
+        QString pname = p->codename().toLower();
         if (pname == "name") continue;
         if (object.contains(pname)) {
           QVariant v = object[pname].toVariant();
@@ -3179,7 +3180,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
             // parse page props
             for (LVGLProperty *p :
                  lvgl.widget("lv_page")->specialProperties()) {
-              const QString pname = p->name().toLower();
+              const QString pname = p->codename().toLower();
               if (child.contains(pname)) {
                 QVariant v = child[pname].toVariant();
                 if (!v.isNull()) p->setValue(page, v);
@@ -3209,7 +3210,7 @@ LVGLObject *LVGLObject::parse(QJsonObject object, LVGLObject *parent) {
 void LVGLObject::parseProp(QJsonObject object, LVGLObject *obj) {
   const LVGLWidget *widgetClass = obj->widgetClass();
   for (LVGLProperty *p : widgetClass->properties()) {
-    QString pname = p->name().toLower();
+    QString pname = p->codename().toLower();
     if (pname == "name") continue;
     if (object.contains(pname)) {
       QVariant v = object[pname].toVariant();

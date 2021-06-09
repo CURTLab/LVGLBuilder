@@ -7,16 +7,20 @@
 class LVGLPropertyContainerLayout : public LVGLPropertyEnum {
  public:
   LVGLPropertyContainerLayout()
-      : LVGLPropertyEnum({"Off", "Center", "Left-justified column",
-                          "Centered column", "Right-justified column",
-                          "Top-justified row", "Centered row",
-                          "Bottom-justified row", "Pretty", "Grid"}),
+      : LVGLPropertyEnum({QObject::tr("Off"), QObject::tr("Center"),
+                          QObject::tr("Left-justified column"),
+                          QObject::tr("Centered column"),
+                          QObject::tr("Right-justified column"),
+                          QObject::tr("Top-justified row"),
+                          QObject::tr("Centered row"), "Bottom-justified row",
+                          QObject::tr("Pretty"), QObject::tr("Grid")}),
         m_values({"LV_LAYOUT_OFF", "LV_LAYOUT_CENTER", "LV_LAYOUT_COL_L",
                   "LV_LAYOUT_COL_M", "LV_LAYOUT_COL_R", "LV_LAYOUT_ROW_T",
                   "LV_LAYOUT_ROW_M", "LV_LAYOUT_ROW_B", "LV_LAYOUT_PRETTY",
                   "LV_LAYOUT_GRID"}) {}
 
-  QString name() const { return "Layout"; }
+  QString name() const { return QObject::tr("Layout"); }
+  QString codename() const { return "Layout"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) != LV_BTN_STATE_RELEASED)
@@ -43,7 +47,7 @@ LVGLContainer::LVGLContainer() {
   m_editableStyles << LVGL::Container;  // LV_CONT_PART_MAIN
 }
 
-QString LVGLContainer::name() const { return "Container"; }
+QString LVGLContainer::name() const { return QObject::tr("Container"); }
 
 QString LVGLContainer::className() const { return "lv_cont"; }
 

@@ -9,24 +9,30 @@ LVGLPropertyVal2<T>::LVGLPropertyVal2(
     T min1, T max1, QString value1, std::function<T(lv_obj_t *)> getter1,
     T min2, T max2, QString value2, std::function<T(lv_obj_t *)> getter2,
     QString functionName, std::function<void(lv_obj_t *, T, T)> setter,
-    QString title, LVGLProperty *parent)
+    QString title, QString trtitle, LVGLProperty *parent)
     : LVGLProperty(parent),
       m_title(title),
+      m_trtitle(trtitle),
       m_functionName(functionName),
       m_setter(setter),
       m_getter1(getter1),
       m_getter2(getter2) {
   m_setter1 = [&](lv_obj_t *obj, T val) { m_setter(obj, val, m_getter2(obj)); };
   m_setter2 = [&](lv_obj_t *obj, T val) { m_setter(obj, m_getter1(obj), val); };
-  m_item1 = new LVGLPropertyValT<T>(min1, max1, value1, "", m_setter1,
+  m_item1 = new LVGLPropertyValT<T>(min1, max1, value1, value1, "", m_setter1,
                                     m_getter1, this);
-  m_item2 = new LVGLPropertyValT<T>(min2, max2, value2, "", m_setter2,
+  m_item2 = new LVGLPropertyValT<T>(min2, max2, value2, value2, "", m_setter2,
                                     m_getter2, this);
   m_childs << m_item1 << m_item2;
 }
 
 template <class T>
 QString LVGLPropertyVal2<T>::name() const {
+  return m_trtitle;
+}
+
+template <class T>
+QString LVGLPropertyVal2<T>::codename() const {
   return m_title;
 }
 
@@ -68,9 +74,10 @@ LVGLPropertyVal2Int16::LVGLPropertyVal2Int16(
     QString value2, std::function<int16_t(lv_obj_t *)> getter2,
     QString functionName,
     std::function<void(lv_obj_t *, int16_t, int16_t)> setter, QString title,
-    LVGLProperty *parent)
+    QString trtitle, LVGLProperty *parent)
     : LVGLPropertyVal2<int16_t>(min1, max1, value1, getter1, min2, max2, value2,
-                                getter2, functionName, setter, title, parent) {}
+                                getter2, functionName, setter, title, trtitle,
+                                parent) {}
 
 LVGLPropertyVal2UInt16::LVGLPropertyVal2UInt16(
     uint16_t min1, uint16_t max1, QString value1,
@@ -78,7 +85,7 @@ LVGLPropertyVal2UInt16::LVGLPropertyVal2UInt16(
     QString value2, std::function<uint16_t(lv_obj_t *)> getter2,
     QString functionName,
     std::function<void(lv_obj_t *, uint16_t, uint16_t)> setter, QString title,
-    LVGLProperty *parent)
+    QString trtitle, LVGLProperty *parent)
     : LVGLPropertyVal2<uint16_t>(min1, max1, value1, getter1, min2, max2,
                                  value2, getter2, functionName, setter, title,
-                                 parent) {}
+                                 trtitle, parent) {}

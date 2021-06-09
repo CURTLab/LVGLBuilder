@@ -183,7 +183,9 @@ LVGLPropertySeriesDialog::LVGLPropertySeriesDialog(QWidget *parent)
 LVGLPropertySeries::LVGLPropertySeries(LVGLProperty *parent)
     : LVGLProperty(parent) {}
 
-QString LVGLPropertySeries::name() const { return "Series"; }
+QString LVGLPropertySeries::name() const { return QObject::tr("Series"); }
+
+QString LVGLPropertySeries::codename() const { return "Series"; }
 
 bool LVGLPropertySeries::hasEditor() const { return true; }
 

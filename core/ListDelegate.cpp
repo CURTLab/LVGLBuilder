@@ -16,13 +16,13 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
   int x = option.rect.x();
   int y = option.rect.y();
   QRect seletrec = option.rect;
-  painter->setPen(QColor("#ffffff"));
-  painter->setBrush(QColor("#ffffff"));
+  painter->setPen(QColor(0xff, 0xff, 0xff));
+  painter->setBrush(QColor(0xff, 0xff, 0xff));
   painter->drawRect(seletrec);
 
   seletrec.adjust(2, 2, -2, -2);
   if (option.state & QStyle::State_Selected) {
-    painter->setBrush(QColor("#d1e5ca"));
+    painter->setBrush(QColor(0xd1, 0xe5, 0xca));
     painter->drawRoundRect(seletrec, 2, 2);
     painter->setBrush(Qt::NoBrush);
   }
@@ -38,139 +38,108 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
   painter->setPen(Qt::black);
   painter->setRenderHint(QPainter::SmoothPixmapTransform);
 
-  if (name == tr("Arc")) {
+  if (name == QObject::tr("Arc")) {
     QPixmap pixmap = QPixmap(":/icons/Arc.png");
     pixmap.scaled(QSize(62, 15), Qt::KeepAspectRatio);
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Arc"));
-  } else if (name == tr("Bar")) {
+  } else if (name == QObject::tr("Bar")) {
     QPixmap pixmap = QPixmap(":/icons/Bar.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Bar"));
-  } else if (name == tr("Button")) {
+  } else if (name == QObject::tr("Button")) {
     QPixmap pixmap = QPixmap(":/icons/Button.png");
     pixmap.scaled(QSize(62, 15), Qt::KeepAspectRatio);
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Button"));
-  } else if (name == tr("Button Matrix")) {
+  } else if (name == QObject::tr("Button Matrix")) {
     QPixmap pixmap = QPixmap(":/icons/Button Matrix.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Button Matrix"));
-  } else if (name == tr("Calendar")) {
+  } else if (name == QObject::tr("Calendar")) {
     QPixmap pixmap = QPixmap(":/icons/Calendar.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Calendar"));
-  } else if (name == tr("Canvas")) {
+  } else if (name == QObject::tr("Canvas")) {
     QPixmap pixmap = QPixmap(":/icons/Canvas.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Canvas"));
-  } else if (name == tr("Chart")) {
+  } else if (name == QObject::tr("Chart")) {
     QPixmap pixmap = QPixmap(":/icons/Chart.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Chart"));
-  } else if (name == tr("Check box")) {
+  } else if (name == QObject::tr("Check box")) {
     QPixmap pixmap = QPixmap(":/icons/Check box.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Check box"));
-  } else if (name == tr("Color picker")) {
+  } else if (name == QObject::tr("Color picker")) {
     QPixmap pixmap = QPixmap(":/icons/Color picker.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Color picker"));
-  } else if (name == tr("Container")) {
+  } else if (name == QObject::tr("Container")) {
     QPixmap pixmap = QPixmap(":/icons/Container.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Container"));
-  } else if (name == tr("Dropdown")) {
+  } else if (name == QObject::tr("Dropdown")) {
     QPixmap pixmap = QPixmap(":/icons/Dropdown.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Dropdown"));
-  } else if (name == tr("Gauge")) {
+  } else if (name == QObject::tr("Gauge")) {
     QPixmap pixmap = QPixmap(":/icons/Gauge.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Gauge"));
-  } else if (name == tr("Image button")) {
+  } else if (name == QObject::tr("Image button")) {
     QPixmap pixmap = QPixmap(":/icons/Image button.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Image button"));
-  } else if (name == tr("Image")) {
+  } else if (name == QObject::tr("Image")) {
     QPixmap pixmap = QPixmap(":/icons/Image.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Image"));
-  } else if (name == tr("Keyboard")) {
+  } else if (name == QObject::tr("Keyboard")) {
     QPixmap pixmap = QPixmap(":/icons/Keyboard.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Keyboard"));
-  } else if (name == tr("Label")) {
+  } else if (name == QObject::tr("Label")) {
     QPixmap pixmap = QPixmap(":/icons/Label.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Label"));
-  } else if (name == tr("LED")) {
+  } else if (name == QObject::tr("LED")) {
     QPixmap pixmap = QPixmap(":/icons/LED.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("LED"));
-  } else if (name == tr("Line meter")) {
+  } else if (name == QObject::tr("Line meter")) {
     QPixmap pixmap = QPixmap(":/icons/Line meter.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Line meter"));
-  } else if (name == tr("Line")) {
+  } else if (name == QObject::tr("Line")) {
     QPixmap pixmap = QPixmap(":/icons/Line.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Line"));
-  } else if (name == tr("List")) {
+  } else if (name == QObject::tr("List")) {
     QPixmap pixmap = QPixmap(":/icons/List.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("List"));
-  } else if (name == tr("Message box")) {
+  } else if (name == QObject::tr("Message box")) {
     QPixmap pixmap = QPixmap(":/icons/Message box.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Message box"));
-  } else if (name == tr("ObjectMask")) {
+  } else if (name == QObject::tr("ObjectMask")) {
     QPixmap pixmap = QPixmap(":/icons/ObjectMask.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("ObjectMask"));
-  } else if (name == tr("Page")) {
+  } else if (name == QObject::tr("Page")) {
     QPixmap pixmap = QPixmap(":/icons/Page.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Page"));
-  } else if (name == tr("Roller")) {
+  } else if (name == QObject::tr("Roller")) {
     QPixmap pixmap = QPixmap(":/icons/Roller.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Roller"));
-  } else if (name == tr("Slider")) {
+  } else if (name == QObject::tr("Slider")) {
     QPixmap pixmap = QPixmap(":/icons/Slider.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Slider"));
-  } else if (name == tr("Spinbox")) {
+  } else if (name == QObject::tr("Spinbox")) {
     QPixmap pixmap = QPixmap(":/icons/Spinbox.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Spinbox"));
-  } else if (name == tr("Spinner")) {
+  } else if (name == QObject::tr("Spinner")) {
     QPixmap pixmap = QPixmap(":/icons/Spinner.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Spinner"));
-  } else if (name == tr("Switch")) {
+  } else if (name == QObject::tr("Switch")) {
     QPixmap pixmap = QPixmap(":/icons/Switch.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Switch"));
-  } else if (name == tr("Table")) {
+  } else if (name == QObject::tr("Table")) {
     QPixmap pixmap = QPixmap(":/icons/Table.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Table"));
-  } else if (name == tr("Tabview")) {
+  } else if (name == QObject::tr("Tabview")) {
     QPixmap pixmap = QPixmap(":/icons/Tabview.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Tabview"));
-  } else if (name == tr("Text area")) {
+  } else if (name == QObject::tr("Text area")) {
     QPixmap pixmap = QPixmap(":/icons/Text area.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Text area"));
-  } else if (name == tr("TileView")) {
+  } else if (name == QObject::tr("TileView")) {
     QPixmap pixmap = QPixmap(":/icons/TileView.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("TileView"));
-  } else if (name == tr("Window")) {
+  } else if (name == QObject::tr("Window")) {
     QPixmap pixmap = QPixmap(":/icons/Window.png");
     painter->drawPixmap(rec, pixmap);
-    painter->drawText(rec2, tr("Window"));
   }
+
+  painter->drawText(rec2, name);
 }

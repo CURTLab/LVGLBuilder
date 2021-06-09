@@ -5,7 +5,7 @@
 
 class LVGLPropertyDate : public LVGLProperty {
  public:
-  LVGLPropertyDate(QString title, QString functionName,
+  LVGLPropertyDate(QString title, QString trtitle, QString functionName,
                    std::function<void(lv_obj_t *, lv_calendar_date_t *)> setter,
                    std::function<lv_calendar_date_t *(lv_obj_t *)> getter,
                    LVGLProperty *parent = nullptr);
@@ -19,6 +19,7 @@ class LVGLPropertyDate : public LVGLProperty {
   void setValue(LVGLObject *obj, QVariant value) override;
 
   QString name() const override;
+  QString codename() const override;
   QStringList function(LVGLObject *obj) const override;
 
  protected:
@@ -27,6 +28,7 @@ class LVGLPropertyDate : public LVGLProperty {
 
   class QDateTimeEdit *m_widget;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, lv_calendar_date_t *)> m_setter;
   std::function<lv_calendar_date_t *(lv_obj_t *)> m_getter;

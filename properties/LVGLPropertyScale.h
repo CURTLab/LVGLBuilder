@@ -8,6 +8,7 @@ class LVGLPropertyScale : public LVGLProperty {
   LVGLPropertyScale(LVGLProperty *parent = nullptr);
 
   QString name() const override;
+  QString codename() const override;
   QVariant value(LVGLObject *obj) const override;
   void setValue(LVGLObject *obj, QVariant value) override;
 

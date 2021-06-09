@@ -286,7 +286,7 @@ bool LVGLProject::exportCode(const QString &path) const {
              << "lv_style_init(&" << o->styleCodeName(index) << ");\n";
       auto codemap = LVGLHelper::getInstance().getMainW()->getCodeMap();
       for (int i = 0; i < lvglStateType; ++i) {
-        if (o->widgetClass()->name() == "Dropdown") {
+        if (o->widgetClass()->className() == "lv_dropdown") {
           lv_dropdown_open(o->obj());
           lv_dropdown_open(codemap[o->widgetClass()->type()]);
         }
@@ -295,7 +295,8 @@ bool LVGLProject::exportCode(const QString &path) const {
                          codemap[o->widgetClass()->type()], index, i);
         for (const QString &s : styleset) stream << "\t" << s << "\n";
       }
-      if (o->widgetClass()->name() == "Dropdown") lv_dropdown_close(o->obj());
+      if (o->widgetClass()->className() == "lv_dropdown")
+        lv_dropdown_close(o->obj());
     }
 
     QString parent = "parent";

@@ -11,7 +11,8 @@ class LVGLPropertyGaugeCriticalValue : public LVGLPropertyInt {
   inline LVGLPropertyGaugeCriticalValue()
       : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
 
-  inline QString name() const override { return "Critical value"; }
+  inline QString name() const override { return QObject::tr("Critical value"); }
+  inline QString codename() const override { return "Critical value"; }
 
   inline QStringList function(LVGLObject *obj) const override {
     return {QString("lv_gauge_set_critical_value(%1, %2);")
@@ -32,7 +33,8 @@ class LVGLPropertyGaugeVal : public LVGLPropertyInt {
  public:
   inline LVGLPropertyGaugeVal() : LVGLPropertyInt(INT16_MIN, INT16_MAX) {}
 
-  inline QString name() const override { return "Value"; }
+  inline QString name() const override { return QObject::tr("Value"); }
+  inline QString codename() const override { return "Value"; }
 
   inline QStringList function(LVGLObject *obj) const override {
     return {QString("lv_gauge_set_value(%1, 0, %2);")
@@ -54,12 +56,13 @@ LVGLGauge::LVGLGauge() {
   m_parts << LV_GAUGE_PART_MAIN << LV_GAUGE_PART_MAJOR << LV_GAUGE_PART_NEEDLE;
   m_properties << new LVGLPropertyScale;
   m_properties << new LVGLPropertyValInt16(
-      INT16_MIN, INT16_MAX, "Critical value", "lv_gauge_set_critical_value",
-      lv_gauge_set_critical_value, lv_gauge_get_critical_value);
+      INT16_MIN, INT16_MAX, "Critical value", QObject::tr("Critical value"),
+      "lv_gauge_set_critical_value", lv_gauge_set_critical_value,
+      lv_gauge_get_critical_value);
   m_properties << new LVGLPropertyVal2Int16(
       INT16_MIN, INT16_MAX, "Min", lv_gauge_get_min_value, INT16_MIN, INT16_MAX,
       "Max", lv_gauge_get_max_value, "lv_gauge_set_range", lv_gauge_set_range,
-      "Range");
+      "Range", QObject::tr("Range"));
   m_properties << new LVGLPropertyGaugeVal;
 
   m_editableStyles << LVGL::GaugeMAIN;    // GAUGE_PART_MAIN
@@ -67,7 +70,7 @@ LVGLGauge::LVGLGauge() {
   m_editableStyles << LVGL::GaugeNEEDLE;  // GAUGE_PART_NEEDLE
 }
 
-QString LVGLGauge::name() const { return "Gauge"; }
+QString LVGLGauge::name() const { return QObject::tr("Gauge"); }
 
 QString LVGLGauge::className() const { return "lv_gauge"; }
 

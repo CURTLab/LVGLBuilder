@@ -12,7 +12,7 @@ LVGLSpinbox::LVGLSpinbox() {
   m_editableStyles << LVGL::SpinboxCURSOR;  // LV_SPINBOX_PART_CURSOR
 }
 
-QString LVGLSpinbox::name() const { return "Spinbox"; }
+QString LVGLSpinbox::name() const { return QObject::tr("Spinbox"); }
 
 QString LVGLSpinbox::className() const { return "lv_spinbox"; }
 

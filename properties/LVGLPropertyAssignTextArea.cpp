@@ -8,7 +8,13 @@
 LVGLPropertyAssignTextArea::LVGLPropertyAssignTextArea(LVGLProperty *parent)
     : LVGLProperty(parent) {}
 
-QString LVGLPropertyAssignTextArea::name() const { return "Assign text area"; }
+QString LVGLPropertyAssignTextArea::name() const {
+  return QObject::tr("Assign text area");
+}
+
+QString LVGLPropertyAssignTextArea::codename() const {
+  return "Assign text area";
+}
 
 bool LVGLPropertyAssignTextArea::hasEditor() const { return true; }
 

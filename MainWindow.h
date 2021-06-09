@@ -25,6 +25,8 @@ class LVGLTabWidget;
 class LVGLProcessBar;
 class LVGLExportThread;
 class LVGLAutoSaveThread;
+class QTranslator;
+class LVGLConfig;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -45,6 +47,8 @@ class MainWindow : public QMainWindow {
   QHash<QString, const LVGLWidget *> &getWIP() { return m_widgetsInputW; }
   QMap<int, lv_obj_t *> &getCodeMap() { return m_codemap; }
   QTabWidget *getTabW();
+  inline void settranslator(QTranslator *t) { m_translator = t; }
+  void setconfig(LVGLConfig *config);
 
  signals:
   void startExport(const QStringList &list);
@@ -101,6 +105,10 @@ class MainWindow : public QMainWindow {
 
   void on_actionHomologous_export_triggered();
 
+  void on_actionEnglish_triggered();
+
+  void on_actionSimplified_Chinese_triggered();
+
  protected:
   void showEvent(QShowEvent *event) override;
   void keyPressEvent(QKeyEvent *e) override;
@@ -133,6 +141,7 @@ class MainWindow : public QMainWindow {
   void setUndoStack();
   void setAllModelNull();
   void setAutoSaveChecked(int state);
+  void setSelectLanguage(int index);
 
  private:
   Ui::MainWindow *m_ui;
@@ -174,5 +183,7 @@ class MainWindow : public QMainWindow {
   QThread *m_etThread;
   LVGLAutoSaveThread *m_autosaveThread;
   QThread *m_asThread;
+  QTranslator *m_translator;
+  LVGLConfig *m_config;
 };
 #endif  // MAINWINDOW_H

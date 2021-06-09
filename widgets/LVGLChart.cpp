@@ -13,11 +13,13 @@
 class LVGLPropertyChartType : public LVGLPropertyEnum {
  public:
   LVGLPropertyChartType()
-      : LVGLPropertyEnum({"None", "Line", "Columns"}),
+      : LVGLPropertyEnum(
+            {QObject::tr("None"), QObject::tr("Line"), QObject::tr("Columns")}),
         m_valus({"LV_CHART_TYPE_NONE", "LV_CHART_TYPE_LINE",
                  "LV_CHART_TYPE_COLUMN"}) {}
 
-  QString name() const { return "Type"; }
+  QString name() const { return QObject::tr("Type"); }
+  QString codename() const { return "Type"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_chart_set_type(%1, %2);")
@@ -35,7 +37,8 @@ class LVGLPropertyChartType : public LVGLPropertyEnum {
 
 class LVGLPropertyChartRange : public LVGLPropertyRange {
  public:
-  QString name() const override { return "Y range"; }
+  QString name() const override { return QObject::tr("Y range"); }
+  QString codename() const override { return "Y range"; }
 
   QStringList function(LVGLObject *obj) const override {
     return QStringList() << QString("lv_chart_set_range(%1, %2, %3);")
@@ -63,7 +66,8 @@ class LVGLPropertyChartXDiv : public LVGLPropertyInt {
  public:
   LVGLPropertyChartXDiv() : LVGLPropertyInt(0, 255) {}
 
-  QString name() const override { return "X division lines"; }
+  QString name() const override { return QObject::tr("X division lines"); }
+  QString codename() const override { return "X division lines"; }
 
  protected:
   virtual int get(LVGLObject *obj) const override {
@@ -82,7 +86,8 @@ class LVGLPropertyChartYDiv : public LVGLPropertyInt {
  public:
   LVGLPropertyChartYDiv() : LVGLPropertyInt(0, 255) {}
 
-  QString name() const override { return "Y division lines"; }
+  QString name() const override { return QObject::tr("Y division lines"); }
+  QString codename() const override { return "Y division lines"; }
 
  protected:
   virtual int get(LVGLObject *obj) const override {
@@ -101,7 +106,8 @@ class LVGLPropertyChartSeries : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyChartSeries(const AnyFuncColType arr[], int size)
       : LVGLPropertyAnyFunc(arr, size) {}
-  QString name() const { return "Add Series"; }
+  QString name() const { return QObject::tr("Add Series"); }
+  QString codename() const { return "Add Series"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -188,7 +194,7 @@ LVGLChart::LVGLChart() {
   m_editableStyles << LVGL::ChartCURSOR;    // LV_CHART_PART_CURSOR
 }
 
-QString LVGLChart::name() const { return "Chart"; }
+QString LVGLChart::name() const { return QObject::tr("Chart"); }
 
 QString LVGLChart::className() const { return "lv_chart"; }
 

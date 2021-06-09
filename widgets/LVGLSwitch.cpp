@@ -6,7 +6,8 @@
 
 class LVGLPropertyState : public LVGLPropertyBool {
  public:
-  QString name() const { return "State"; }
+  QString name() const { return QObject::tr("State"); }
+  QString codename() const { return "State"; }
 
  protected:
   bool get(LVGLObject *obj) const { return lv_switch_get_state(obj->obj()); }
@@ -21,10 +22,14 @@ class LVGLPropertyState : public LVGLPropertyBool {
 class LVGLPropertySwitchStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertySwitchStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6", "Style7"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6"), QObject::tr("Style7")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -171,7 +176,7 @@ LVGLSwitch::LVGLSwitch() {
   m_editableStyles << LVGL::SliderKNOB;   // LV_SWITCH_PART_KNOB
 }
 
-QString LVGLSwitch::name() const { return "Switch"; }
+QString LVGLSwitch::name() const { return QObject::tr("Switch"); }
 
 QString LVGLSwitch::className() const { return "lv_switch"; }
 

@@ -5,7 +5,8 @@
 class LVGLPropertyAngle : public LVGLPropertyInt {
  public:
   inline LVGLPropertyAngle(LVGLProperty *p) : LVGLPropertyInt(0, 360, p) {}
-  inline QString name() const override { return "Angle"; }
+  inline QString name() const override { return QObject::tr("Angle"); }
+  inline QString codename() const override { return "Angle"; }
 
   inline int get(LVGLObject *obj) const override {
     return lv_gauge_get_scale_angle(obj->obj());
@@ -20,7 +21,8 @@ class LVGLPropertyAngle : public LVGLPropertyInt {
 class LVGLPropertyLines : public LVGLPropertyInt {
  public:
   inline LVGLPropertyLines(LVGLProperty *p) : LVGLPropertyInt(0, 255, p) {}
-  inline QString name() const override { return "Lines"; }
+  inline QString name() const override { return QObject::tr("Lines"); }
+  inline QString codename() const override { return "Lines"; }
 
   inline int get(LVGLObject *obj) const override {
     return lv_gauge_get_line_count(obj->obj());
@@ -36,7 +38,8 @@ class LVGLPropertyLines : public LVGLPropertyInt {
 class LVGLPropertyLabels : public LVGLPropertyInt {
  public:
   inline LVGLPropertyLabels(LVGLProperty *p) : LVGLPropertyInt(0, 255, p) {}
-  inline QString name() const override { return "Labels"; }
+  inline QString name() const override { return QObject::tr("Labels"); }
+  inline QString codename() const override { return "Labels"; }
 
   inline int get(LVGLObject *obj) const override {
     return lv_gauge_get_label_count(obj->obj());
@@ -59,7 +62,9 @@ LVGLPropertyScale::LVGLPropertyScale(LVGLProperty *parent)
   m_childs << m_label;
 }
 
-QString LVGLPropertyScale::name() const { return "Scale"; }
+QString LVGLPropertyScale::name() const { return QObject::tr("Scale"); }
+
+QString LVGLPropertyScale::codename() const { return "Scale"; }
 
 QVariant LVGLPropertyScale::value(LVGLObject *obj) const {
   return QString("(%1,%2,%3)")

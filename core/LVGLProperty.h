@@ -21,6 +21,7 @@ class LVGLProperty {
   virtual ~LVGLProperty();
 
   virtual QString name() const = 0;
+  virtual QString codename() const = 0;
 
   virtual bool hasEditor() const;
   virtual QWidget *editor(QWidget *parent);
@@ -154,7 +155,8 @@ class LVGLPropertyFont : public LVGLProperty {
 template <class T>
 class LVGLPropertyValT : public LVGLPropertyType<T> {
  public:
-  LVGLPropertyValT(T min, T max, QString title, QString functionName,
+  LVGLPropertyValT(T min, T max, QString title, QString trtitle,
+                   QString functionName,
                    std::function<void(lv_obj_t *, T)> setter,
                    std::function<T(lv_obj_t *)> getter,
                    LVGLProperty *parent = nullptr);
@@ -164,6 +166,7 @@ class LVGLPropertyValT : public LVGLPropertyType<T> {
   void updateWidget(LVGLObject *obj) override;
 
   QString name() const override;
+  QString codename() const override;
 
   QStringList function(LVGLObject *obj) const override;
 
@@ -175,6 +178,7 @@ class LVGLPropertyValT : public LVGLPropertyType<T> {
   T m_min;
   T m_max;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, T)> m_setter;
   std::function<T(lv_obj_t *)> m_getter;
@@ -182,7 +186,7 @@ class LVGLPropertyValT : public LVGLPropertyType<T> {
 
 class LVGLPropertyValInt16 : public LVGLPropertyValT<int16_t> {
  public:
-  LVGLPropertyValInt16(int16_t min, int16_t max, QString title,
+  LVGLPropertyValInt16(int16_t min, int16_t max, QString title, QString trtitle,
                        QString functionName,
                        std::function<void(lv_obj_t *, int16_t)> setter,
                        std::function<int16_t(lv_obj_t *)> getter,
@@ -192,7 +196,7 @@ class LVGLPropertyValInt16 : public LVGLPropertyValT<int16_t> {
 class LVGLPropertyValUInt16 : public LVGLPropertyValT<uint16_t> {
  public:
   LVGLPropertyValUInt16(uint16_t min, uint16_t max, QString title,
-                        QString functionName,
+                        QString trtitle, QString functionName,
                         std::function<void(lv_obj_t *, uint16_t)> setter,
                         std::function<uint16_t(lv_obj_t *)> getter,
                         LVGLProperty *parent = nullptr);
@@ -200,9 +204,9 @@ class LVGLPropertyValUInt16 : public LVGLPropertyValT<uint16_t> {
 
 class LVGLPropertyBool : public LVGLPropertyType<bool> {
  public:
-  LVGLPropertyBool(QString title = "", QString functionName = "",
-                   LVGLProperty *parent = nullptr);
-  LVGLPropertyBool(QString title, QString functionName,
+  LVGLPropertyBool(QString title = "", QString trtitle = "",
+                   QString functionName = "", LVGLProperty *parent = nullptr);
+  LVGLPropertyBool(QString title, QString trtitle, QString functionName,
                    std::function<void(lv_obj_t *, bool)> setter,
                    std::function<bool(lv_obj_t *)> getter,
                    LVGLProperty *parent = nullptr);
@@ -212,6 +216,7 @@ class LVGLPropertyBool : public LVGLPropertyType<bool> {
   void updateWidget(LVGLObject *obj) override;
 
   QString name() const override;
+  QString codename() const override;
 
   QStringList function(LVGLObject *obj) const override;
 
@@ -221,6 +226,7 @@ class LVGLPropertyBool : public LVGLPropertyType<bool> {
 
   QComboBox *m_widget;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, bool)> m_setter;
   std::function<bool(lv_obj_t *)> m_getter;
@@ -228,15 +234,16 @@ class LVGLPropertyBool : public LVGLPropertyType<bool> {
 
 class LVGLPropertyString : public LVGLPropertyType<QString> {
  public:
-  LVGLPropertyString(QString title = "", QString functionName = "",
-                     LVGLProperty *parent = nullptr);
-  LVGLPropertyString(QString title, QString functionName,
+  LVGLPropertyString(QString title = "", QString trtitle = "",
+                     QString functionName = "", LVGLProperty *parent = nullptr);
+  LVGLPropertyString(QString title, QString trtitle, QString functionName,
                      std::function<void(lv_obj_t *, const char *)> setter,
                      std::function<const char *(lv_obj_t *)> getter,
                      LVGLProperty *parent = nullptr);
   LVGLPropertyString(bool b = true, LVGLProperty *parent = nullptr);
 
   QString name() const override;
+  QString codename() const override;
 
   QWidget *editor(QWidget *parent) override;
   void updateEditor(LVGLObject *obj) override;
@@ -250,6 +257,7 @@ class LVGLPropertyString : public LVGLPropertyType<QString> {
 
   QLineEdit *m_widget;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, const char *)> m_setter;
   std::function<const char *(lv_obj_t *)> m_getter;
@@ -258,14 +266,16 @@ class LVGLPropertyString : public LVGLPropertyType<QString> {
 
 class LVGLPropertyStringPlus : public LVGLPropertyType<QString> {
  public:
-  LVGLPropertyStringPlus(QString title = "", QString functionName = "",
+  LVGLPropertyStringPlus(QString title = "", QString trtitle = "",
+                         QString functionName = "",
                          LVGLProperty *parent = nullptr);
-  LVGLPropertyStringPlus(QString title, QString functionName,
+  LVGLPropertyStringPlus(QString title, QString trtitle, QString functionName,
                          std::function<void(lv_obj_t *, const char *)> setter,
                          std::function<const char *(lv_obj_t *)> getter,
                          LVGLProperty *parent = nullptr);
 
   QString name() const override;
+  QString codename() const override;
 
   QWidget *editor(QWidget *parent) override;
   void updateEditor(LVGLObject *obj) override;
@@ -279,6 +289,7 @@ class LVGLPropertyStringPlus : public LVGLPropertyType<QString> {
 
   QTextEdit *m_widget;
   QString m_title;
+  QString m_trtitle;
   QString m_functionName;
   std::function<void(lv_obj_t *, const char *)> m_setter;
   std::function<const char *(lv_obj_t *)> m_getter;

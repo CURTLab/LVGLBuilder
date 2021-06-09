@@ -140,7 +140,9 @@ QList<LVGLListItem> LVGLPropertyListDialog::listItems() const {
 LVGLPropertyList::LVGLPropertyList(LVGLProperty *parent)
     : LVGLProperty(parent) {}
 
-QString LVGLPropertyList::name() const { return "Items"; }
+QString LVGLPropertyList::name() const { return QObject::tr("Items"); }
+
+QString LVGLPropertyList::codename() const { return "Items"; }
 
 bool LVGLPropertyList::hasEditor() const { return true; }
 

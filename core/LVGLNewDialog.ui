@@ -29,7 +29,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>新建项目</string>
+   <string/>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <property name="spacing">

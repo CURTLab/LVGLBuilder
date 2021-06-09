@@ -8,13 +8,14 @@
 class LVGLPropertySliderType : public LVGLPropertyEnum {
  public:
   LVGLPropertySliderType()
-      : LVGLPropertyEnum(QStringList() << "Normal"
-                                       << "SYMMETRICAL"
-                                       << "CUSTOM"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Normal") << QObject::tr("SYMMETRICAL")
+                         << QObject::tr("CUSTOM")),
         m_values({"LV_SLIDER_TYPE_NORMAL", "LV_SLIDER_TYPE_SYMMETRICAL",
                   "LV_SLIDER_TYPE_RANGE"}) {}
 
-  QString name() const { return "Type"; }
+  QString name() const { return QObject::tr("Type"); }
+  QString codename() const { return "Type"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == 0) return QStringList();
@@ -35,10 +36,11 @@ class LVGLPropertySliderType : public LVGLPropertyEnum {
 class LVGLPropertySliderAnimalState : public LVGLPropertyEnum {
  public:
   LVGLPropertySliderAnimalState()
-      : LVGLPropertyEnum(QStringList() << "On"
-                                       << "Off") {}
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("On") << QObject::tr("Off")) {}
 
-  QString name() const { return "Animation state"; }
+  QString name() const { return QObject::tr("Animation state"); }
+  QString codename() const { return "Animation state"; }
 
   int getIndex() { return m_index; }
 
@@ -60,7 +62,8 @@ class LVGLPropertySliderValue : public LVGLPropertyInt {
   LVGLPropertySliderValue(LVGLPropertySliderAnimalState *lpsas)
       : LVGLPropertyInt(INT16_MIN, INT16_MAX), m_lpsas(lpsas) {}
 
-  QString name() const { return "Value"; }
+  QString name() const { return QObject::tr("Value"); }
+  QString codename() const { return "Value"; }
 
   QStringList function(LVGLObject *obj) const {
     if (0 == m_lpsas->getIndex())
@@ -113,9 +116,10 @@ class LVGLPropertySliderRange : public LVGLPropertyRange {
 class LVGLPropertySliderAnimationTime : public LVGLPropertyInt {
  public:
   LVGLPropertySliderAnimationTime()
-      : LVGLPropertyInt(0, UINT16_MAX, " ms"), m_value(200) {}
+      : LVGLPropertyInt(0, UINT16_MAX, QObject::tr(" ms")), m_value(200) {}
 
-  QString name() const { return "Animation time"; }
+  QString name() const { return QObject::tr("Animation time"); }
+  QString codename() const { return "Animation time"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_slider_set_anim_time(%1,%2);")
@@ -135,11 +139,15 @@ class LVGLPropertySliderAnimationTime : public LVGLPropertyInt {
 class LVGLPropertySliderStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertySliderStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6", "Style7",
-                          "Style8"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6"), QObject::tr("Style7"),
+                          QObject::tr("Style8")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -356,7 +364,7 @@ LVGLSlider::LVGLSlider() {
   m_editableStyles << LVGL::SliderKNOB;   // LV_SLIDER_PART_KNOB
 }
 
-QString LVGLSlider::name() const { return "Slider"; }
+QString LVGLSlider::name() const { return QObject::tr("Slider"); }
 
 QString LVGLSlider::className() const { return "lv_slider"; }
 

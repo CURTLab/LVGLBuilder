@@ -10,7 +10,7 @@ LVGLObjectMask::LVGLObjectMask() {
   m_editableStyles << LVGL::Body;
 }
 
-QString LVGLObjectMask::name() const { return "ObjectMask"; }
+QString LVGLObjectMask::name() const { return QObject::tr("ObjectMask"); }
 
 QString LVGLObjectMask::className() const { return "lv_objmask"; }
 

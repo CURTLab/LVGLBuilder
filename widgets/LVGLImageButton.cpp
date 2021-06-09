@@ -15,13 +15,20 @@ class LVGLPropertyImgBtnSrc : public LVGLPropertyImage {
       : LVGLPropertyImage(parent),
         m_values({"Released", "Pressed", "Disabled", "Checked released",
                   "Checked pressed", "Checked Disabled"}),
+        m_trvalues({QObject::tr("Released"), QObject::tr("Pressed"),
+                    QObject::tr("Disabled"), QObject::tr("Checked released"),
+                    QObject::tr("Checked pressed"),
+                    QObject::tr("Checked Disabled")}),
         m_types({"LV_BTN_STATE_RELEASED", "LV_BTN_STATE_PRESSED",
                  "LV_BTN_STATE_DISABLED", "LV_BTN_STATE_CHECKED_RELEASED",
                  "LV_BTN_STATE_CHECKED_PRESSED",
                  "LV_BTN_STATE_CHECKED_DISABLED"}),
         m_state(state) {}
 
-  QString name() const override { return "Source " + m_values.at(m_state); }
+  QString name() const override {
+    return QObject::tr("Source ") + m_trvalues.at(m_state);
+  }
+  QString codename() const override { return "Source " + m_values.at(m_state); }
 
   QStringList function(LVGLObject *obj) const override {
     LVGLImageData *img = lvgl.imageByDesc(get(obj));
@@ -33,6 +40,7 @@ class LVGLPropertyImgBtnSrc : public LVGLPropertyImage {
   }
 
  protected:
+  QStringList m_trvalues;
   QStringList m_values;
   QStringList m_types;
   lv_btn_state_t m_state;
@@ -49,18 +57,19 @@ class LVGLPropertyImgBtnSrc : public LVGLPropertyImage {
 class LVGLPropertyImgBtnState : public LVGLPropertyEnum {
  public:
   LVGLPropertyImgBtnState()
-      : LVGLPropertyEnum(QStringList() << "Released"
-                                       << "Pressed"
-                                       << "Disabled"
-                                       << "Checked released"
-                                       << "Checked pressed"
-                                       << "Check disabled"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Released") << QObject::tr("Pressed")
+                         << QObject::tr("Disabled")
+                         << QObject::tr("Checked released")
+                         << QObject::tr("Checked pressed")
+                         << QObject::tr("Check disabled")),
         m_values({"LV_BTN_STATE_RELEASED", "LV_BTN_STATE_PRESSED",
                   "LV_BTN_STATE_DISABLED", "LV_BTN_STATE_CHECKED_RELEASED",
                   "LV_BTN_STATE_CHECKED_PRESSED",
                   "LV_BTN_STATE_CHECKED_DISABLED"}) {}
 
-  QString name() const { return "State"; }
+  QString name() const { return QObject::tr("State"); }
+  QString codename() const { return "State"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_imgbtn_set_state(%1, %2);")
@@ -81,9 +90,9 @@ LVGLImageButton::LVGLImageButton() {
   initStateStyles();
   m_parts << LV_IMGBTN_PART_MAIN;
   m_properties << new LVGLPropertyImgBtnState;
-  m_properties << new LVGLPropertyBool("checkable", "lv_imgbtn_set_checkable",
-                                       lv_imgbtn_set_checkable,
-                                       lv_imgbtn_get_checkable);
+  m_properties << new LVGLPropertyBool(
+      "checkable", QObject::tr("checkable"), "lv_imgbtn_set_checkable",
+      lv_imgbtn_set_checkable, lv_imgbtn_get_checkable);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_RELEASED);
   m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_PRESSED);
   // m_properties << new LVGLPropertyImgBtnSrc(LV_BTN_STATE_DISABLED);
@@ -93,7 +102,7 @@ LVGLImageButton::LVGLImageButton() {
   m_editableStyles << LVGL::ImgMAIN;  // LV_IMGBTN_PART_MAIN
 }
 
-QString LVGLImageButton::name() const { return "Image button"; }
+QString LVGLImageButton::name() const { return QObject::tr("Image button"); }
 
 QString LVGLImageButton::className() const { return "lv_imgbtn"; }
 

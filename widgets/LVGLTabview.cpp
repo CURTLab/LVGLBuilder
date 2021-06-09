@@ -10,12 +10,15 @@
 class LVGLPropertyTabBtnPos : public LVGLPropertyEnum {
  public:
   LVGLPropertyTabBtnPos()
-      : LVGLPropertyEnum({"None", "Top", "Bottom", "Left", "Right"}),
+      : LVGLPropertyEnum({QObject::tr("None"), QObject::tr("Top"),
+                          QObject::tr("Bottom"), QObject::tr("Left"),
+                          QObject::tr("Right")}),
         m_values({"LV_TABVIEW_TAB_POS_NONE", "LV_TABVIEW_TAB_POS_TOP",
                   "LV_TABVIEW_TAB_POS_BOTTOM", "LV_TABVIEW_TAB_POS_LEFT",
                   "LV_TABVIEW_TAB_POS_RIGHT"}) {}
 
-  QString name() const { return "Tab position"; }
+  QString name() const { return QObject::tr("Tab position"); }
+  QString codename() const { return "Tab position"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) != LV_TABVIEW_TAB_POS_TOP)
@@ -38,7 +41,8 @@ class LVGLPropertyTabs : public LVGLPropertyAnyFunc {
  public:
   LVGLPropertyTabs(const AnyFuncColType arr[], int size)
       : LVGLPropertyAnyFunc(arr, size) {}
-  QString name() const { return "Add Tabs"; }
+  QString name() const { return QObject::tr("Add Tabs"); }
+  QString codename() const { return "Add Tabs"; }
 
  protected:
   QStringList get(LVGLObject *obj) const {
@@ -87,7 +91,8 @@ class LVGLPropertyTabCurrent : public LVGLPropertyInt {
  public:
   LVGLPropertyTabCurrent() : LVGLPropertyInt(0, UINT16_MAX) {}
 
-  QString name() const { return "Current tab"; }
+  QString name() const { return QObject::tr("Current tab"); }
+  QString codename() const { return "Current tab"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString(
@@ -108,7 +113,8 @@ class LVGLPropertyTabAnimTime : public LVGLPropertyInt {
  public:
   LVGLPropertyTabAnimTime() : LVGLPropertyInt(0, UINT16_MAX) {}
 
-  QString name() const { return "Animation time"; }
+  QString name() const { return QObject::tr("Animation time"); }
+  QString codename() const { return "Animation time"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_tabview_set_anim_time(%1, %2);")
@@ -128,14 +134,14 @@ class LVGLPropertyTabAnimTime : public LVGLPropertyInt {
 class LVGLPropertyTabScrollbars : public LVGLPropertyEnum {
  public:
   LVGLPropertyTabScrollbars()
-      : LVGLPropertyEnum(QStringList() << "Off"
-                                       << "On"
-                                       << "Drag"
-                                       << "Auto"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Off") << QObject::tr("On")
+                         << QObject::tr("Drag") << QObject::tr("Auto")),
         m_values({"LV_SB_MODE_OFF", "LV_SB_MODE_ON", "LV_SB_MODE_DRAG",
                   "LV_SB_MODE_AUTO"}) {}
 
-  QString name() const { return "Scrollbars"; }
+  QString name() const { return QObject::tr("Scrollbars"); }
+  QString codename() const { return "Scrollbars"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -160,7 +166,8 @@ class LVGLPropertyTabWidthZoom : public LVGLPropertyInt {
  public:
   LVGLPropertyTabWidthZoom() : LVGLPropertyInt(0, UINT16_MAX) {}
 
-  QString name() const { return "Tab Width Zoom"; }
+  QString name() const { return QObject::tr("Tab Width Zoom"); }
+  QString codename() const { return "Tab Width Zoom"; }
 
   QStringList function(LVGLObject *obj) const { return QStringList(); }
 
@@ -176,10 +183,14 @@ class LVGLPropertyTabWidthZoom : public LVGLPropertyInt {
 class LVGLPropertyTabViewStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertyTabViewStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -426,7 +437,7 @@ LVGLTabview::LVGLTabview() {
   m_editableStyles << LVGL::TabINDIC;   // LV_TABVIEW_PART_INDIC
 }
 
-QString LVGLTabview::name() const { return "Tabview"; }
+QString LVGLTabview::name() const { return QObject::tr("Tabview"); }
 
 QString LVGLTabview::className() const { return "lv_tabview"; }
 

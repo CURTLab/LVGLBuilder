@@ -8,10 +8,11 @@
 class LVGLPropertyCPickerType : public LVGLPropertyEnum {
  public:
   LVGLPropertyCPickerType()
-      : LVGLPropertyEnum(QStringList() << "Rectange"
-                                       << "Disc") {}
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Rectange") << QObject::tr("Disc")) {}
 
-  QString name() const { return "Type"; }
+  QString name() const { return QObject::tr("Type"); }
+  QString codename() const { return "Type"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -28,7 +29,8 @@ class LVGLPropertyCPickerHue : public LVGLPropertyInt {
  public:
   LVGLPropertyCPickerHue() : LVGLPropertyInt(0, 360) {}
 
-  QString name() const { return "Hue"; }
+  QString name() const { return QObject::tr("Hue"); }
+  QString codename() const { return "Hue"; }
 
  protected:
   int get(LVGLObject *obj) const { return lv_cpicker_get_hue(obj->obj()); }
@@ -41,7 +43,8 @@ class LVGLPropertyCPickerSaturation : public LVGLPropertyInt {
  public:
   LVGLPropertyCPickerSaturation() : LVGLPropertyInt(0, 100) {}
 
-  QString name() const { return "Saturation"; }
+  QString name() const { return QObject::tr("Saturation"); }
+  QString codename() const { return "Saturation"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -56,7 +59,8 @@ class LVGLPropertyCPickerValue : public LVGLPropertyInt {
  public:
   LVGLPropertyCPickerValue() : LVGLPropertyInt(0, 100) {}
 
-  QString name() const { return "Value"; }
+  QString name() const { return QObject::tr("Value"); }
+  QString codename() const { return "Value"; }
 
  protected:
   int get(LVGLObject *obj) const { return lv_cpicker_get_value(obj->obj()); }
@@ -72,7 +76,8 @@ class LVGLPropertyCPickerMode : public LVGLPropertyEnum {
                                        << "Saturation"
                                        << "Value") {}
 
-  QString name() const { return "Color mode"; }
+  QString name() const { return QObject::tr("Color mode"); }
+  QString codename() const { return "Color mode"; }
 
  protected:
   int get(LVGLObject *obj) const {
@@ -85,7 +90,8 @@ class LVGLPropertyCPickerMode : public LVGLPropertyEnum {
 
 class LVGLPropertyCPickerColor : public LVGLPropertyColor {
  public:
-  QString name() const { return "Color"; }
+  QString name() const { return QObject::tr("Color"); }
+  QString codename() const { return "Color"; }
 
  protected:
   lv_color_t get(LVGLObject *obj) const {
@@ -105,18 +111,19 @@ LVGLColorPicker::LVGLColorPicker() {
   m_properties << new LVGLPropertyCPickerValue;
   m_properties << new LVGLPropertyCPickerMode;
   m_properties << new LVGLPropertyBool(
-      "Knob Colored", "lv_cpicker_set_knob_colored",
-      lv_cpicker_set_knob_colored, lv_cpicker_get_knob_colored);
-  m_properties << new LVGLPropertyBool("Value", "lv_cpicker_set_value",
-                                       lv_cpicker_set_value,
-                                       lv_cpicker_get_value);
+      "Knob Colored", QObject::tr("Knob Colored"),
+      "lv_cpicker_set_knob_colored", lv_cpicker_set_knob_colored,
+      lv_cpicker_get_knob_colored);
+  m_properties << new LVGLPropertyBool(
+      "Value", QObject::tr("Value"), "lv_cpicker_set_value",
+      lv_cpicker_set_value, lv_cpicker_get_value);
   m_properties << new LVGLPropertyCPickerColor;
 
   m_editableStyles << LVGL::CPickerBG;    // LV_CPICKER_PART_MAIN
   m_editableStyles << LVGL::CpickerKNOB;  // LV_CPICKER_PART_KNOB
 }
 
-QString LVGLColorPicker::name() const { return "Color picker"; }
+QString LVGLColorPicker::name() const { return QObject::tr("Color picker"); }
 
 QString LVGLColorPicker::className() const { return "lv_cpicker"; }
 

@@ -9,13 +9,14 @@
 class LVGLPropertyLabelAlign : public LVGLPropertyEnum {
  public:
   LVGLPropertyLabelAlign()
-      : LVGLPropertyEnum(QStringList() << "Left"
-                                       << "Center"
-                                       << "Right"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Left") << QObject::tr("Center")
+                         << QObject::tr("Right")),
         m_values({"LV_LABEL_ALIGN_LEFT", "LV_LABEL_ALIGN_CENTER",
                   "LV_LABEL_ALIGN_RIGHT"}) {}
 
-  QString name() const { return "Align"; }
+  QString name() const { return QObject::tr("Align"); }
+  QString codename() const { return "Align"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
@@ -36,17 +37,17 @@ class LVGLPropertyLabelAlign : public LVGLPropertyEnum {
 class LVGLPropertyLabelLongMode : public LVGLPropertyEnum {
  public:
   LVGLPropertyLabelLongMode()
-      : LVGLPropertyEnum(QStringList() << "Expand"
-                                       << "Break"
-                                       << "Dot"
-                                       << "Scroll"
-                                       << "Circular scroll"
-                                       << "Corp"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Expand") << QObject::tr("Break")
+                         << QObject::tr("Dot") << QObject::tr("Scroll")
+                         << QObject::tr("Circular scroll")
+                         << QObject::tr("Corp")),
         m_values({"LV_LABEL_LONG_EXPAND", "LV_LABEL_LONG_BREAK",
                   "LV_LABEL_LONG_DOT", "LV_LABEL_LONG_SROLL",
                   "LV_LABEL_LONG_SROLL_CIRC", "LV_LABEL_LONG_CROP"}) {}
 
-  QString name() const { return "Long mode"; }
+  QString name() const { return QObject::tr("Long mode"); }
+  QString codename() const { return "Long mode"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == LV_LABEL_LONG_EXPAND) return QStringList();
@@ -66,7 +67,8 @@ class LVGLPropertyLabelLongMode : public LVGLPropertyEnum {
 
 class LVGLPropertyLabelRecolor : public LVGLPropertyBool {
  public:
-  QString name() const { return "Recolor"; }
+  QString name() const { return QObject::tr("Recolor"); }
+  QString codename() const { return "Recolor"; }
 
   QStringList function(LVGLObject *obj) const {
     if (!get(obj)) return QStringList();
@@ -84,7 +86,8 @@ class LVGLPropertyLabelRecolor : public LVGLPropertyBool {
 
 class LVGLPropertyLabelText : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Text"; }
+  QString name() const { return QObject::tr("Text"); }
+  QString codename() const { return "Text"; }
 
   QStringList function(LVGLObject *obj) const {
     QString tmp = get(obj);
@@ -144,7 +147,7 @@ LVGLLabel::LVGLLabel() {
   m_editableStyles << LVGL::Label;  // LV_LABEL_PART_MAIN
 }
 
-QString LVGLLabel::name() const { return "Label"; }
+QString LVGLLabel::name() const { return QObject::tr("Label"); }
 
 QString LVGLLabel::className() const { return "lv_label"; }
 

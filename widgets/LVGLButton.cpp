@@ -11,14 +11,17 @@
 class LVGLPropertyButtonState : public LVGLPropertyEnum {
  public:
   LVGLPropertyButtonState()
-      : LVGLPropertyEnum({"Released", "Pressed", "Disabled", "Checked released",
-                          "Checked pressed", "Checked Disabled"}),
+      : LVGLPropertyEnum(
+            {QObject::tr("Released"), QObject::tr("Pressed"),
+             QObject::tr("Disabled"), QObject::tr("Checked released"),
+             QObject::tr("Checked pressed"), QObject::tr("Checked Disabled")}),
         m_values({"LV_BTN_STATE_RELEASED", "LV_BTN_STATE_PRESSED",
                   "LV_BTN_STATE_DISABLED", "LV_BTN_STATE_CHECKED_RELEASED",
                   "LV_BTN_STATE_CHECKED_PRESSED",
                   "LV_BTN_STATE_CHECKED_DISABLED"}) {}
 
-  QString name() const { return "State"; }
+  QString name() const { return QObject::tr("State"); }
+  QString codename() const { return "State"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) != LV_BTN_STATE_RELEASED)
@@ -41,17 +44,22 @@ class LVGLPropertyButtonLayout : public LVGLPropertyEnum {
  public:
   LVGLPropertyButtonLayout()
       : LVGLPropertyEnum(
-            {"Off", "Center", "Column left align", "Column middle align",
-             "Column right align", "Row top align", "Row middle align",
-             "Row bottom align", "Pretty top align", "Pretty middle align",
-             "Pretty bottom align", "Grid"}),
+            {QObject::tr("Off"), QObject::tr("Center"),
+             QObject::tr("Column left align"),
+             QObject::tr("Column middle align"),
+             QObject::tr("Column right align"), QObject::tr("Row top align"),
+             QObject::tr("Row middle align"), QObject::tr("Row bottom align"),
+             QObject::tr("Pretty top align"),
+             QObject::tr("Pretty middle align"),
+             QObject::tr("Pretty bottom align"), QObject::tr("Grid")}),
         m_values({"LV_LAYOUT_OFF", "LV_LAYOUT_CENTER", "LV_LAYOUT_COL_L",
                   "LV_LAYOUT_COL_M", "LV_LAYOUT_COL_R", "LV_LAYOUT_ROW_T",
                   "LV_LAYOUT_ROW_M", "LV_LAYOUT_ROW_B", "LV_LAYOUT_PRETTY_T",
                   "LV_LAYOUT_PRETTY_M", "LV_LAYOUT_PRETTY_B",
                   "LV_LAYOUT_GRID"}) {}
 
-  QString name() const { return "Layout"; }
+  QString name() const { return QObject::tr("Layout"); }
+  QString codename() const { return "Layout"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) != LV_LAYOUT_CENTER)
@@ -73,12 +81,14 @@ class LVGLPropertyButtonLayout : public LVGLPropertyEnum {
 class LVGLPropertyButtonFit : public LVGLPropertyEnum {
  public:
   LVGLPropertyButtonFit()
-      : LVGLPropertyEnum({"None", "Tight", "Parent", "Max"}),
+      : LVGLPropertyEnum({QObject::tr("None"), QObject::tr("Tight"),
+                          QObject::tr("Parent"), QObject::tr("Max")}),
         m_values(
             {"LV_FIT_NONE", "LV_FIT_TIGHT", "LV_FIT_PARENT", "LV_FIT_MAX"}),
         m_index(0) {}
 
-  QString name() const { return "Fit"; }
+  QString name() const { return QObject::tr("Fit"); }
+  QString codename() const { return "Fit"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_btn_set_fit(%1, %2);")
@@ -104,10 +114,14 @@ class LVGLPropertyButtonFit : public LVGLPropertyEnum {
 class LVGLPropertyButtonStyle : public LVGLPropertyEnum {
  public:
   LVGLPropertyButtonStyle()
-      : LVGLPropertyEnum({"Custome Style", "Default Style", "Style1", "Style2",
-                          "Style3", "Style4", "Style5", "Style6"}) {}
+      : LVGLPropertyEnum({QObject::tr("Custome Style"),
+                          QObject::tr("Default Style"), QObject::tr("Style1"),
+                          QObject::tr("Style2"), QObject::tr("Style3"),
+                          QObject::tr("Style4"), QObject::tr("Style5"),
+                          QObject::tr("Style6")}) {}
 
-  QString name() const { return "Style"; }
+  QString name() const { return QObject::tr("Style"); }
+  QString codename() const { return "Style"; }
 
   QStringList function(LVGLObject *obj) const {
     Q_UNUSED(obj)
@@ -321,9 +335,9 @@ LVGLButton::LVGLButton() {
   initStateStyles();
   m_parts << LV_BTN_PART_MAIN;
   m_properties << new LVGLPropertyButtonState;
-  m_properties << new LVGLPropertyBool("Checkable", "lv_btn_set_checkable",
-                                       lv_btn_set_checkable,
-                                       lv_btn_get_checkable);
+  m_properties << new LVGLPropertyBool(
+      "Checkable", QObject::tr("Checkable"), "lv_btn_set_checkable",
+      lv_btn_set_checkable, lv_btn_get_checkable);
 
   m_properties << new LVGLPropertyButtonLayout;
   m_properties << new LVGLPropertyButtonFit;
@@ -332,7 +346,7 @@ LVGLButton::LVGLButton() {
   m_editableStyles << LVGL::Button;  // LV_BTN_PART_MAIN
 }
 
-QString LVGLButton::name() const { return "Button"; }
+QString LVGLButton::name() const { return QObject::tr("Button"); }
 
 QString LVGLButton::className() const { return "lv_btn"; }
 

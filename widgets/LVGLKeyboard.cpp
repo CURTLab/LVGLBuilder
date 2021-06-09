@@ -8,11 +8,13 @@
 class LVGLPropertyKBMode : public LVGLPropertyEnum {
  public:
   LVGLPropertyKBMode()
-      : LVGLPropertyEnum({"Text", "Number", "Text Upper"}),
+      : LVGLPropertyEnum({QObject::tr("Text"), QObject::tr("Number"),
+                          QObject::tr("Text Upper")}),
         m_values(
             {"LV_KB_MODE_TEXT", "LV_KB_MODE_NUM", "LV_KB_MODE_TEXT_UPPER"}) {}
 
-  QString name() const { return "Mode"; }
+  QString name() const { return QObject::tr("Mode"); }
+  QString codename() const { return "Mode"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_kb_set_mode(%1, %2);")
@@ -31,7 +33,8 @@ class LVGLPropertyKBMode : public LVGLPropertyEnum {
 
 class LVGLPropertyLBCursorManager : public LVGLPropertyBool {
  public:
-  QString name() const { return "Cursor Manager"; }
+  QString name() const { return QObject::tr("Cursor Manager"); }
+  QString codename() const { return "Cursor Manager"; }
 
   QStringList function(LVGLObject *obj) const {
     return QStringList() << QString("lv_kb_set_cursor_manage(%1, %2);")
@@ -59,7 +62,7 @@ LVGLKeyboard::LVGLKeyboard() {
   m_editableStyles << LVGL::KeyboardBTN;  // LV_KEYBOARD_PART_BTN
 }
 
-QString LVGLKeyboard::name() const { return "Keyboard"; }
+QString LVGLKeyboard::name() const { return QObject::tr("Keyboard"); }
 
 QString LVGLKeyboard::className() const { return "lv_kb"; }
 

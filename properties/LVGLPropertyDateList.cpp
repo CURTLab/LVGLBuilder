@@ -114,13 +114,14 @@ class LVGLPropertyDateListDialog : public QDialog {
 };
 
 LVGLPropertyDateList::LVGLPropertyDateList(
-    QString title, QString functionName,
+    QString title, QString trtitle, QString functionName,
     std::function<void(lv_obj_t *, lv_calendar_date_t *, uint16_t)> setter,
     std::function<lv_calendar_date_t *(lv_obj_t *)> getter,
     std::function<uint16_t(lv_obj_t *)> count, LVGLProperty *parent)
     : LVGLProperty(parent),
       m_widget(nullptr),
       m_title(title),
+      m_trtitle(trtitle),
       m_functionName(functionName),
       m_setter(setter),
       m_getter(getter),
@@ -191,7 +192,9 @@ QJsonValue LVGLPropertyDateList::toJson(LVGLObject *obj) const {
   return ret;
 }
 
-QString LVGLPropertyDateList::name() const { return m_title; }
+QString LVGLPropertyDateList::name() const { return m_trtitle; }
+
+QString LVGLPropertyDateList::codename() const { return m_title; }
 
 QStringList LVGLPropertyDateList::function(LVGLObject *obj) const {
   const uint16_t num = count(obj);

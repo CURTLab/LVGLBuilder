@@ -27,6 +27,7 @@ class LVGLPropertyList : public LVGLProperty {
   LVGLPropertyList(LVGLProperty *parent = nullptr);
 
   QString name() const;
+  QString codename() const;
 
   bool hasEditor() const;
   QWidget *editor(QWidget *parent);

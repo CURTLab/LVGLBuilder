@@ -8,6 +8,7 @@ class LVGLPropertyAssignTextArea : public LVGLProperty {
   LVGLPropertyAssignTextArea(LVGLProperty *parent = nullptr);
 
   QString name() const;
+  QString codename() const;
 
   bool hasEditor() const;
   QWidget *editor(QWidget *parent);

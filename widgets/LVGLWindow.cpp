@@ -15,7 +15,7 @@ LVGLWindow::LVGLWindow() {
   m_editableStyles << LVGL::PageSCRL;    // LV_WIN_PART_SCROLLBAR
 }
 
-QString LVGLWindow::name() const { return "Window"; }
+QString LVGLWindow::name() const { return QObject::tr("Window"); }
 
 QString LVGLWindow::className() const { return "lv_win"; }
 

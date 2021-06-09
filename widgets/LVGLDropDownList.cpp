@@ -8,14 +8,14 @@
 class LVGLPropertyDropdownDir : public LVGLPropertyEnum {
  public:
   LVGLPropertyDropdownDir()
-      : LVGLPropertyEnum(QStringList() << "Down"
-                                       << "Up"
-                                       << "Left"
-                                       << "Right"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Down") << QObject::tr("Up")
+                         << QObject::tr("Left") << QObject::tr("Right")),
         m_values({"LV_DROPDOWN_DIR_DOWN", "LV_DROPDOWN_DIR_UP",
                   "LV_DROPDOWN_DIR_LEFT", "LV_DROPDOWN_DIR_RIGHT"}) {}
 
-  QString name() const { return "Dir"; }
+  QString name() const { return QObject::tr("Dir"); }
+  QString codename() const { return "Dir"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == LV_LABEL_ALIGN_LEFT) return QStringList();
@@ -35,7 +35,8 @@ class LVGLPropertyDropdownDir : public LVGLPropertyEnum {
 
 class LVGLPropertyDropdownOptions : public LVGLPropertyStringPlus {
  public:
-  QString name() const { return "Options"; }
+  QString name() const { return QObject::tr("Options"); }
+  QString codename() const { return "Options"; }
 
   QStringList function(LVGLObject *obj) const {
     QString tmp = get(obj);
@@ -67,15 +68,15 @@ class LVGLPropertyDropdownOptions : public LVGLPropertyStringPlus {
 class LVGLPropertyDropdownArrow : public LVGLPropertyEnum {
  public:
   LVGLPropertyDropdownArrow()
-      : LVGLPropertyEnum(QStringList() << "Down"
-                                       << "Up"
-                                       << "Left"
-                                       << "Right"
-                                       << "None"),
+      : LVGLPropertyEnum(QStringList()
+                         << QObject::tr("Down") << QObject::tr("Up")
+                         << QObject::tr("Left") << QObject::tr("Right")
+                         << QObject::tr("None")),
         m_values({"LV_SYMBOL_DOWN", "LV_SYMBOL_UP", "LV_SYMBOL_LEFT",
                   "LV_SYMBOL_RIGHT"}) {}
 
-  QString name() const { return "Arrow"; }
+  QString name() const { return QObject::tr("Arrow"); }
+  QString codename() const { return "Arrow"; }
 
   QStringList function(LVGLObject *obj) const {
     if (get(obj) == 0) return QStringList();
@@ -136,7 +137,8 @@ class LVGLPropertyDropdownMaxHeight : public LVGLPropertyInt {
  public:
   LVGLPropertyDropdownMaxHeight() : LVGLPropertyInt(0, UINT16_MAX, "") {}
 
-  QString name() const { return "Max height"; }
+  QString name() const { return QObject::tr("Max height"); }
+  QString codename() const { return "Max height"; }
 
   QStringList function(LVGLObject *obj) const {
     lv_dropdown_open(obj->obj());
@@ -163,7 +165,8 @@ class LVGLPropertyDPOpen : public LVGLPropertyBool {
  public:
   LVGLPropertyDPOpen() : m_bool(false) {}
 
-  QString name() const { return "Open"; }
+  QString name() const { return QObject::tr("Open"); }
+  QString codename() const { return "Open"; }
 
   QStringList function(LVGLObject *obj) const {
     QStringList list;
@@ -207,7 +210,7 @@ LVGLDropDownList::LVGLDropDownList() {
   m_editableStyles << LVGL::DropdownSELECTED;  // LV_DROPDOWN_PART_SELECTED
 }
 
-QString LVGLDropDownList::name() const { return "Dropdown"; }
+QString LVGLDropDownList::name() const { return QObject::tr("Dropdown"); }
 
 QString LVGLDropDownList::className() const { return "lv_dropdown"; }
 

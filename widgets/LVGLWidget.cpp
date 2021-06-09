@@ -63,7 +63,8 @@ static void obj_events(lv_obj_t *obj, lv_event_t event) {
 class LVGLPropertyName : public LVGLPropertyString {
  public:
   LVGLPropertyName() : LVGLPropertyString(false) {}
-  inline QString name() const override { return "Name"; }
+  inline QString name() const override { return QObject::tr("Name"); }
+  inline QString codename() const override { return "Name"; }
 
  protected:
   inline QString get(LVGLObject *obj) const override { return obj->name(); }
@@ -74,7 +75,8 @@ class LVGLPropertyName : public LVGLPropertyString {
 
 class LVGLPropertyAccessible : public LVGLPropertyBool {
  public:
-  inline LVGLPropertyAccessible() : LVGLPropertyBool("Accessible") {}
+  inline LVGLPropertyAccessible()
+      : LVGLPropertyBool("Accessible", QObject::tr("Accessible")) {}
 
  protected:
   inline bool get(LVGLObject *obj) const override {
@@ -87,7 +89,8 @@ class LVGLPropertyAccessible : public LVGLPropertyBool {
 
 class LVGLPropertyLocked : public LVGLPropertyBool {
  public:
-  inline LVGLPropertyLocked() : LVGLPropertyBool("Locked") {}
+  inline LVGLPropertyLocked()
+      : LVGLPropertyBool("Locked", QObject::tr("Locked")) {}
 
  protected:
   inline bool get(LVGLObject *obj) const override { return obj->isLocked(); }
@@ -136,7 +139,8 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
  public:
   inline LVGLPropertySetEvent(LVGLWidget *w)
       : LVGLPropertyEvent(w), m_firstRun(true) {}
-  inline QString name() const override { return "Set Event"; }
+  inline QString name() const override { return QObject::tr("Set Event"); }
+  inline QString codename() const override { return "Set Event"; }
 
  protected:
   inline QStringList get(LVGLObject *obj) const override {
@@ -197,13 +201,6 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
                QStringList strlist, LVGLObject *obj) {
     if (objevlists.contains(obj->obj())) {
       QList<LVGLEvent *> &listev = objevlists[obj->obj()];
-      // maybe need it
-      //          for (auto s : listev)
-      //            if (s->getResult().at(4) == strlist[4]) {
-      //              listev.removeOne(s);
-      //              delete s;
-      //              break;
-      //            }
       LVGLEvent *ev = getWidgetEvent(strlist[3]);
       ev->setResule(strlist);
       listev.push_back(ev);
@@ -241,12 +238,15 @@ class LVGLPropertySetEvent : public LVGLPropertyEvent {
 LVGLWidget::LVGLWidget() {
   m_geometryProp = new LVGLPropertyGeometry;
   m_properties << new LVGLPropertyName;
-  m_properties << new LVGLPropertyBool("Hidden", "lv_obj_set_hidden",
-                                       lv_obj_set_hidden, lv_obj_get_hidden);
-  m_properties << new LVGLPropertyBool("Click", "lv_obj_set_click",
-                                       lv_obj_set_click, lv_obj_get_click);
-  m_properties << new LVGLPropertyBool("Drag", "lv_obj_set_drag",
-                                       lv_obj_set_drag, lv_obj_get_drag);
+  m_properties << new LVGLPropertyBool("Hidden", QObject::tr("Hidden"),
+                                       "lv_obj_set_hidden", lv_obj_set_hidden,
+                                       lv_obj_get_hidden);
+  m_properties << new LVGLPropertyBool("Click", QObject::tr("Click"),
+                                       "lv_obj_set_click", lv_obj_set_click,
+                                       lv_obj_get_click);
+  m_properties << new LVGLPropertyBool("Drag", QObject::tr("Drag"),
+                                       "lv_obj_set_drag", lv_obj_set_drag,
+                                       lv_obj_get_drag);
 
   // m_properties << new LVGLPropertyAccessible;
   m_properties << new LVGLPropertyLocked;
@@ -254,9 +254,7 @@ LVGLWidget::LVGLWidget() {
   m_properties << new LVGLPropertySetEvent(this);
 }
 
-LVGLWidget::~LVGLWidget() {
-  qDeleteAll(m_properties);
-}
+LVGLWidget::~LVGLWidget() { qDeleteAll(m_properties); }
 
 QPixmap LVGLWidget::preview() const { return m_preview; }
 

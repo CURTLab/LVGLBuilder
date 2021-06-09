@@ -7,8 +7,10 @@
 #include <QSettings>
 #include <QSortFilterProxyModel>
 #include <QThread>
+#include <QTranslator>
 #include <QUndoGroup>
 
+#include "core/LVGLConfig.h"
 #include "core/LVGLDialog.h"
 #include "core/LVGLFontData.h"
 #include "core/LVGLFontDialog.h"
@@ -114,6 +116,12 @@ MainWindow::~MainWindow() {
 LVGLSimulator *MainWindow::simulator() const { return m_curSimulation; }
 
 QTabWidget *MainWindow::getTabW() { return m_ui->tabWidget; }
+
+void MainWindow::setconfig(LVGLConfig *config) {
+  m_config = config;
+  int index = m_config->getVar("Language", "index").toInt();
+  setSelectLanguage(index);
+}
 
 void MainWindow::onETSuccessful() {
   emit stopExport();
@@ -291,18 +299,20 @@ void MainWindow::adjustForCurrentFile(const QString &fileName) {
 }
 
 void MainWindow::loadProject(const QString &fileName) {
-  m_curSimulation->setSelectedObject(nullptr);
   delete m_project;
   m_project = nullptr;
+  m_curSimulation->setSelectedObject(nullptr);
   LVGLHelper::getInstance().updatetabDate();
-  int index = m_ui->tabWidget->currentIndex();
-  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
-  tabw->clean();
   auto objs = lvgl.allObjects();
   for (int i = 0; i < objs.count(); ++i) {
     m_objectModel->beginRemoveObject(objs[i]);
     m_objectModel->endRemoveObject();
   }
+
+  int index = m_ui->tabWidget->currentIndex();
+  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  tabw->clean();
+
   lvgl.removeAllImages();
   lvgl.removeAllObjects();
 
@@ -324,10 +334,12 @@ void MainWindow::loadProject(const QString &fileName) {
   updateImages();
   updateFonts();
   LVGLHelper::getInstance().updatetabDate();
+  objs = lvgl.allObjects();
   for (int i = 0; i < objs.count(); ++i) {
     m_objectModel->beginInsertObject(objs[i]);
     m_objectModel->endInsertObject();
   }
+  m_curSimulation->setSelectedObject(nullptr);
 }
 
 void MainWindow::setEnableBuilder(bool enable) {
@@ -412,6 +424,60 @@ void MainWindow::setAutoSaveChecked(int state) {
     emit startAutoSave(state);
   else
     emit stopAutoSave();
+}
+
+void MainWindow::setSelectLanguage(int index) {
+  m_ui->actionArabic->setChecked(false);
+  m_ui->actionEnglish->setChecked(false);
+  m_ui->actionEnglish->setChecked(false);
+  m_ui->actionItalian->setChecked(false);
+  m_ui->actionHindi->setChecked(false);
+  m_ui->actionJapanese->setChecked(false);
+  m_ui->actionKorean->setChecked(false);
+  m_ui->actionRussian->setChecked(false);
+  m_ui->actionSimplified_Chinese->setChecked(false);
+  m_ui->actionSpanish->setChecked(false);
+  m_ui->actionPortuguese->setChecked(false);
+  m_ui->actionTraditional_Chinese->setChecked(false);
+
+  switch (index) {
+    case 0:
+      m_ui->actionArabic->setChecked(true);
+      break;
+    case 1:
+      m_ui->actionEnglish->setChecked(true);
+      break;
+    case 2:
+      m_ui->actionEnglish->setChecked(true);
+      break;
+    case 3:
+      m_ui->actionItalian->setChecked(true);
+      break;
+    case 4:
+      m_ui->actionHindi->setChecked(true);
+      break;
+    case 5:
+      m_ui->actionJapanese->setChecked(true);
+      break;
+    case 6:
+      m_ui->actionKorean->setChecked(true);
+      break;
+    case 7:
+      m_ui->actionRussian->setChecked(true);
+      break;
+    case 8:
+      m_ui->actionSimplified_Chinese->setChecked(true);
+      break;
+    case 9:
+      m_ui->actionSpanish->setChecked(true);
+      break;
+    case 10:
+      m_ui->actionPortuguese->setChecked(true);
+      break;
+    case 11:
+      m_ui->actionTraditional_Chinese->setChecked(true);
+      break;
+  }
 }
 
 void MainWindow::on_action_load_triggered() {
@@ -874,6 +940,7 @@ void MainWindow::initProp() {
   m_ui->list_images->setMovement(QListWidget::Snap);
   m_ui->list_images->setIconSize(QSize(60, 60));
   setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
+  m_ui->actionEnglish->setChecked(true);
 }
 
 void MainWindow::initStyle() {
@@ -1166,4 +1233,28 @@ void MainWindow::on_actionHierarchical_export_triggered() {
   m_ui->actionHomologous_export->setChecked(false);
   m_ui->actionHierarchical_export->setChecked(true);
   LVGLHelper::getInstance().setExportMethod(1);
+}
+
+void MainWindow::on_actionEnglish_triggered() {
+  setSelectLanguage(1);
+  if (m_translator->load(qApp->applicationDirPath() + "/translations/en.qm"))
+    qApp->installTranslator(m_translator);
+  m_ui->list_widgets->settoolbtnText(tr("Button"));
+  m_ui->list_widgets_2->settoolbtnText(tr("DisplayWidgets"));
+  m_ui->list_widgets_3->settoolbtnText(tr("InputWidgts"));
+  m_ui->retranslateUi(this);
+  m_config->setVar("Language", "name", "en.qm");
+  m_config->setVar("Language", "index", 1);
+}
+
+void MainWindow::on_actionSimplified_Chinese_triggered() {
+  setSelectLanguage(8);
+  if (m_translator->load(qApp->applicationDirPath() + "/translations/sc_zh.qm"))
+    qApp->installTranslator(m_translator);
+  m_ui->list_widgets->settoolbtnText(tr("Button"));
+  m_ui->list_widgets_2->settoolbtnText(tr("DisplayWidgets"));
+  m_ui->list_widgets_3->settoolbtnText(tr("InputWidgts"));
+  m_ui->retranslateUi(this);
+  m_config->setVar("Language", "name", "sc_zh");
+  m_config->setVar("Language", "index", 8);
 }

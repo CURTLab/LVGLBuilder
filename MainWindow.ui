@@ -115,10 +115,27 @@
     <addaction name="actionHomologous_export"/>
     <addaction name="actionHierarchical_export"/>
    </widget>
+   <widget class="QMenu" name="menuLanguage">
+    <property name="title">
+     <string>Language</string>
+    </property>
+    <addaction name="actionArabic"/>
+    <addaction name="actionEnglish"/>
+    <addaction name="actionItalian"/>
+    <addaction name="actionHindi"/>
+    <addaction name="actionJapanese"/>
+    <addaction name="actionKorean"/>
+    <addaction name="actionRussian"/>
+    <addaction name="actionSimplified_Chinese"/>
+    <addaction name="actionSpanish"/>
+    <addaction name="actionPortuguese"/>
+    <addaction name="actionTraditional_Chinese"/>
+   </widget>
    <addaction name="menuLittlevGL_Builder"/>
    <addaction name="menuAutoSave"/>
    <addaction name="menuLoadMode"/>
    <addaction name="menuExport_Method"/>
+   <addaction name="menuLanguage"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <widget class="QToolBar" name="toolBar">
@@ -927,6 +944,94 @@
    </property>
    <property name="text">
     <string>Hierarchical Export</string>
+   </property>
+  </action>
+  <action name="actionEnglish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>English</string>
+   </property>
+  </action>
+  <action name="actionSimplified_Chinese">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Simplified Chinese</string>
+   </property>
+  </action>
+  <action name="actionTraditional_Chinese">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Traditional Chinese</string>
+   </property>
+  </action>
+  <action name="actionJapanese">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Japanese</string>
+   </property>
+  </action>
+  <action name="actionItalian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Italian</string>
+   </property>
+  </action>
+  <action name="actionSpanish">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Spanish</string>
+   </property>
+  </action>
+  <action name="actionPortuguese">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Portuguese</string>
+   </property>
+  </action>
+  <action name="actionKorean">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Korean</string>
+   </property>
+  </action>
+  <action name="actionArabic">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Arabic</string>
+   </property>
+  </action>
+  <action name="actionRussian">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Russian</string>
+   </property>
+  </action>
+  <action name="actionHindi">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Hindi</string>
    </property>
   </action>
  </widget>
