@@ -91,8 +91,6 @@ contains(TARGET_ARCH, x86_64){
     }
 }
 
-TRANSLATIONS += en.ts sc_zh.ts jp.ts tc_zh.ts
-
 #CONFIG(debug,debug|release){
 #    INCLUDEPATH += C:/vld/include
 #    DEPENDPATH += C:/vld/include
