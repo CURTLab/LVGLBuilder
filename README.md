@@ -1,18 +1,70 @@
-# Google Breakpad
+# 1.0.4 preview
+
+## Complete testing process
+
+- Many test cases will be added under the test file, and **the program will be released after all passed**
+
+## Support multiple language
+
+![setlanguage](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/language.gif)
+
+- Now supports Chinese and English
+
+- Automatically save language settings, no need to set the next restart
+
+- **Switch language first, then drag widgets**
+
+- **The name translation of the style needs to restart the client**
+
+- **Only projects of the same language can be loaded, so projects of versions before 1.0.4 are only applicable to English.**
+
+  Because the original design needs to be changed a lot, this will cause a lot of problems.
+
+- Support customization, you can add languages according to the following pictures
+
+- ![setlanguage](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/setlanguage.gif)
+
+  
+
+## Google Breakpad
 The next version 1.0.4 version starts to support google breakpad
 - Currently only used for window
-- If the program crashes, please check whether the dmp file is generated. If it exists, you can send it to me for debugging and tracking
+- **If the program crashes, please check whether the dmp file is generated. If it exists, you can send it to me for debugging and tracking**
 - If the release version is to generate a pdb file, please uncomment these two lines of code in the pro file
   QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
   QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
-  
-![breakpad](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/breakpad.gif)
 
+# New features
+The pre-release of v1.0.3 has been released. 
+Changelog.md under the dev-v7 branch records the changes of the previous version.
 
-# Fixed crash bugs
+## 1.0.3
+
+- LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
+  ![SupportSyb](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/supportsyb.png)
+
+- Some widgets have new functions, such as animation switch and type selection
+
+- Fixed the issue of compiling errors caused by using a custom page name
+
+- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
+
+  ![epway](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/epway.gif)
+
+- Improve the naming logic when creating a new page or event
+
+- Optimize the export logic, will not copy the same font file repeatedly
+
+- Fix that the image event function fails to compile when the image name contains uppercase letters
+
+## Fixed crash bugs
 These bugs exist in release versions before 1.0.3
 - If the value_str attribute of the button is set or a configuration file containing this attribute is loaded, it will sometimes cause the program to crash.
 - If the current page contains a page switching event, and the target page of the page switching event is closed, exporting the code at this time will cause the program to crash.
+
+### Old Version
+
+- The **changlog.md** of the dev-v7 branch records all the new features 
 
 # New Test Tool
 
@@ -24,7 +76,7 @@ These bugs exist in release versions before 1.0.3
 
 program: https://github.com/mrQzs/LCBuild
 
-![lbcode](https://github.com/mrQzs/LCBuild/blob/main/lbcode.gif)
+![lbcode](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/lbcode.gif)
 
 ## Create LVGL LIB
 
@@ -36,37 +88,11 @@ program: https://github.com/mrQzs/LCBuild
 
   This project modified the source code of lvgl to achieve some functions (such as tabwidth adjustment), so the official lvgl can be replaced by the lvgl of this project.
 
-  ![tabwidth](https://github.com/mrQzs/CreateLvglLib/blob/main/tabwidth.gif)
+  ![tabwidth](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/tabwidth.gif)
 
 program: https://github.com/mrQzs/CreateLvglLib
 
-![createlib](https://github.com/mrQzs/CreateLvglLib/blob/main/createlib.gif)
-
-# New features
-The pre-release of v1.0.3 has been released. 
-Changelog.md under the dev-v7 branch records the changes of the previous version.
-
-## 1.0.3
-
-- LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
-  ![SupportSyb](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/supportsyb.png)
-
-- Some widgets have new functions, such as animation switch and type selection
-
-- Fixed the issue of compiling errors caused by using a custom page name
-
-- New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
-
-  ![epway](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/epway.gif)
-
-- Improve the naming logic when creating a new page or event
-
-- Optimize the export logic, will not copy the same font file repeatedly
-
-- Fix that the image event function fails to compile when the image name contains uppercase letters
-  
-  ![ev2](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event2.gif)
-  ![ev3](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/Event3.gif)
+![createlib](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/createlib.gif)
 
 ## LVGL Simulator
 
@@ -75,19 +101,7 @@ program: https://github.com/mrQzs/Lvgl_Simulator
 * Put the code file generated by lvglbuilder in the testcode folder
 * Just load the source code and modify the resolution in the lvconf.h
 
-  ![lvglsim](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/lvglsim.gif)
-
-# Move Animation
-
-* If the value is empty, its value is not changed
-  ![animdemo](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/animdemo.gif)
-
-# Event&Style select
-
-* arc bar slider switch screen
-
-  ![evandstyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/event_style1.gif)
-
+  ![lvglsim](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/lvglsim.gif)
 
 # LVGLBuilder
  GUI Builder for littlevgl release 6.0+ written in C++ and using LVGL for preview of the created GUI and Qt for the higher-level user interface for drag and drop of widgets as well as editing of properties and styles. 
