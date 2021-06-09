@@ -28,25 +28,36 @@
 - [ ] Encapsulate log operation API
 - [ ] Dialog for changing keyboard layout
 
+# Move Animation
+
+* If the value is empty, its value is not changed
+  ![animdemo](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/animdemo.gif)
+
+# Event&Style select
+
+* arc bar slider switch screen
+
+  ![evandstyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/event_style1.gif)
+
 
 
 # Widget Style Select
 
 * Switch & slider Style
 
-![swsldsyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/sw_sld_style.gif)
+![swsldsyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/sw_sld_style.gif)
 
 
 * Arc Style
 
-  ![arcStyle](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/arcstyle.gif)
+  ![arcStyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/arcstyle.gif)
 
 # Event System
 
 * support sceen screen
 * support arc event
 
-![event1](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/event1.gif)
+![event1](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/event1.gif)
 
 
 

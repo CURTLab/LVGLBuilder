@@ -1,12 +1,15 @@
 # Change Log
 
 ## 1.0.3
-
 - LABEL/TEXTAREA support LVGL's SYMBOL,just enter (LV_S_XXX) in the text box, such as (LV_S_WIFI) 
-![SupportSyb](https://raw.githubusercontent.com/CURTLab/LVGLBuilder/master/doc/supportsyb.png)
+  ![SupportSyb](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/supportsyb.png)
+
 - Some widgets have new functions, such as animation switch and type selection
 - Fixed the issue of compiling errors caused by using a custom page name
 - New export method, hierarchical export will classify pictures, fonts and c codes, and then classify them into different page folders 【**Experimental features**】
+
+  ![epway](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/epway.gif)
+
 - Improve the naming logic when creating a new page or event
 - Optimize the export logic, will not copy the same font file repeatedly
 - Fix that the image event function fails to compile when the image name contains uppercase letters
@@ -18,6 +21,9 @@
  - Completed all event functions
  - Add test cases for all events
  - Support for reading relative path files (The configuration file and the picture need to be in the same directory)
+ 
+  ![ev2](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/Event2.gif)
+  ![ev3](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/Event3.gif)
 
 ## 1.0.1
  - Added auto save file function
