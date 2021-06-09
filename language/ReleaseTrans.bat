@@ -14,13 +14,9 @@ lrelease jp.ts -qm jp.qm
 lrelease sc_zh.ts -qm sc_zh.qm
 lrelease tc_zh.ts -qm tc_zh.qm
 
-copy /y en.qm %w32debug%
-copy /y en.qm %w32release%
-copy /y en.qm %x64debug%
-copy /y en.qm %x64release%
+copy /y *.qm %w32debug%
+copy /y *.qm %w32release%
+copy /y *.qm %x64debug%
+copy /y *.qm %x64release%
 
-copy /y sc_zh.qm %w32debug%
-copy /y sc_zh.qm %w32release%
-copy /y sc_zh.qm %x64debug%
-copy /y sc_zh.qm %x64release%
 pause

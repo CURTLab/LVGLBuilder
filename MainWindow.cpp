@@ -1255,6 +1255,6 @@ void MainWindow::on_actionSimplified_Chinese_triggered() {
   m_ui->list_widgets_2->settoolbtnText(tr("DisplayWidgets"));
   m_ui->list_widgets_3->settoolbtnText(tr("InputWidgts"));
   m_ui->retranslateUi(this);
-  m_config->setVar("Language", "name", "sc_zh");
+  m_config->setVar("Language", "name", "sc_zh.qm");
   m_config->setVar("Language", "index", 8);
 }

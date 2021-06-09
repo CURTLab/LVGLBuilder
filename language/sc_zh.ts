@@ -1102,6 +1102,8 @@
         <translation>样式</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="461"/>
+        <location filename="../core/LVGLStyle.cpp" line="467"/>
         <location filename="../widgets/LVGLBar.cpp" line="39"/>
         <location filename="../widgets/LVGLSlider.cpp" line="12"/>
         <source>Normal</source>
@@ -1259,6 +1261,9 @@
         <translation>布局</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="427"/>
+        <location filename="../core/LVGLStyle.cpp" line="474"/>
+        <location filename="../core/LVGLStyle.cpp" line="480"/>
         <location filename="../widgets/LVGLButton.cpp" line="84"/>
         <location filename="../widgets/LVGLChart.cpp" line="17"/>
         <location filename="../widgets/LVGLDropDownList.cpp" line="74"/>
@@ -1292,6 +1297,547 @@
         <translation>按钮文本</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="74"/>
+        <source>mixed</source>
+        <translation>混合属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="75"/>
+        <source>radius</source>
+        <translation>圆角</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="77"/>
+        <source>clip_corner</source>
+        <translation>夹角</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="80"/>
+        <source>size</source>
+        <translation>内组大小</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="82"/>
+        <source>transform_width</source>
+        <translation>扩展宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="85"/>
+        <source>transform_height</source>
+        <translation>扩展高度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="88"/>
+        <source>transform_angle</source>
+        <translation>扩展角度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="91"/>
+        <source>transform_zoom</source>
+        <translation>扩展比例</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="94"/>
+        <source>opa_scale</source>
+        <translation>透明的缩放</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="97"/>
+        <source>padding</source>
+        <translation>内边距属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="98"/>
+        <source>pad_top</source>
+        <translation>上内边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="101"/>
+        <source>pad_bottom</source>
+        <translation>下内边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="104"/>
+        <source>pad_left</source>
+        <translation>左内边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="107"/>
+        <source>pad_right</source>
+        <translation>右内边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="110"/>
+        <source>pad_inner</source>
+        <translation>内内边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="114"/>
+        <source>margin</source>
+        <translation>外边距属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="115"/>
+        <source>margin_top</source>
+        <translation>上外边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="118"/>
+        <source>margin_bottom</source>
+        <translation>下上边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="121"/>
+        <source>margin_left</source>
+        <translation>左上边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="124"/>
+        <source>margin_right</source>
+        <translation>右上边距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="129"/>
+        <source>background</source>
+        <translation>背景属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="130"/>
+        <source>bg_color</source>
+        <translation>背景颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="133"/>
+        <source>bg_opa</source>
+        <translation>背景透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="136"/>
+        <source>bg_grad_color</source>
+        <translation>背景渐变颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="139"/>
+        <source>bg_main_stop</source>
+        <translation>渐变始位</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="142"/>
+        <source>bg_grad_stop</source>
+        <translation>渐变末位</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="145"/>
+        <source>bg_grad_dir</source>
+        <translation>渐变方向</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="148"/>
+        <source>bg_blend_mode</source>
+        <translation>背景混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="152"/>
+        <source>border</source>
+        <translation>边框属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="153"/>
+        <source>border_color</source>
+        <translation>边框颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="156"/>
+        <source>border_opa</source>
+        <translation>边框透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="159"/>
+        <source>border_width</source>
+        <translation>边框宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="162"/>
+        <source>border_side</source>
+        <translation>边框位置</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="165"/>
+        <source>border_post</source>
+        <translation>边框延后</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="168"/>
+        <source>border_blend_mode</source>
+        <translation>边框混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="172"/>
+        <source>outline</source>
+        <translation>轮廓属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="173"/>
+        <source>outline_color</source>
+        <translation>轮廓颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="176"/>
+        <source>outline_opa</source>
+        <translation>轮廓透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="179"/>
+        <source>outline_width</source>
+        <translation>轮廓宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="182"/>
+        <source>outline_pad</source>
+        <translation>轮廓填充</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="185"/>
+        <source>outline_blend_mode</source>
+        <translation>轮廓混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="189"/>
+        <source>shadow</source>
+        <translation>阴影</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="190"/>
+        <source>shadow_color</source>
+        <translation>阴影颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="193"/>
+        <source>shadow_opa</source>
+        <translation>阴影透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="196"/>
+        <source>shadow_width</source>
+        <translation>阴影宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="199"/>
+        <source>shadow_ofs_x</source>
+        <translation>阴影X偏移</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="202"/>
+        <source>shadow_ofs_y</source>
+        <translation>阴影Y偏移</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="205"/>
+        <source>shadow_spread</source>
+        <translation>阴影扩散</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="208"/>
+        <source>shadow_blend_mode</source>
+        <translation>阴影混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="212"/>
+        <source>pattern</source>
+        <translation>图案属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="213"/>
+        <source>pattern_image</source>
+        <translation>图案图像</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="216"/>
+        <source>pattern_opa</source>
+        <translation>图潘透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="219"/>
+        <source>pattern_recolor</source>
+        <translation>图案重绘</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="222"/>
+        <source>pattern_recolor_opa</source>
+        <translation>图案重绘透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="225"/>
+        <source>pattern_repeat</source>
+        <translation>图案重复</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="228"/>
+        <source>pattern_blend_mode</source>
+        <translation>图案混合属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="232"/>
+        <source>value</source>
+        <translation>文本属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="233"/>
+        <source>value_str</source>
+        <translation>文本内容</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="236"/>
+        <source>value_color</source>
+        <translation>文本颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="239"/>
+        <source>value_opa</source>
+        <translation>文本透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="242"/>
+        <source>value_font</source>
+        <translation>文本字体</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="245"/>
+        <source>value_letter_space</source>
+        <translation>文本字间距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="248"/>
+        <source>value_line_space</source>
+        <translation>文本行间距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="251"/>
+        <source>value_align</source>
+        <translation>文本对齐</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="254"/>
+        <source>value_ofs_x</source>
+        <translation>文本x偏移</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="257"/>
+        <source>value_ofs_y</source>
+        <translation>文本y偏移</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="260"/>
+        <source>value_blend_mode</source>
+        <translation>文本混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="264"/>
+        <source>text</source>
+        <translation>文字</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="265"/>
+        <source>text_color</source>
+        <translation>文字颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="267"/>
+        <source>text_opa</source>
+        <translation>文字透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="269"/>
+        <source>text_font</source>
+        <translation>文字字体</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="271"/>
+        <source>text_letter_space</source>
+        <translation>文字字间距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="274"/>
+        <source>text_line_space</source>
+        <translation>文本行间距</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="277"/>
+        <source>text_decor</source>
+        <translation>文本装饰</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="279"/>
+        <source>text_sel_color</source>
+        <translation>文字选中颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="282"/>
+        <source>text_sel_bg_color</source>
+        <translation>文字选中背景色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="285"/>
+        <source>text_blend_mode</source>
+        <translation>文字混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="289"/>
+        <source>line</source>
+        <translation>线</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="290"/>
+        <source>line_color</source>
+        <translation>线颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="292"/>
+        <source>line_width</source>
+        <translation>线宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="294"/>
+        <source>line_opa</source>
+        <translation>线透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="296"/>
+        <source>line_dash_width</source>
+        <translation>线破折宽</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="299"/>
+        <source>line_dash_gap</source>
+        <translation>线破折间隙</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="302"/>
+        <source>line_rounded</source>
+        <translation>线圆角</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="305"/>
+        <source>line_blend_mode</source>
+        <translation>线混合模式</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="309"/>
+        <source>image</source>
+        <translation>图片属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="310"/>
+        <source>image_recolor</source>
+        <translation>图片重绘色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="313"/>
+        <source>image_recolor_opa</source>
+        <translation>图片重绘透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="316"/>
+        <source>image_opa</source>
+        <translation>图片透明度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="319"/>
+        <source>image_blend_mode</source>
+        <translation>图片混合属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="324"/>
+        <source>transition</source>
+        <translation>过渡</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="325"/>
+        <source>transition_time</source>
+        <translation>过渡时间</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="328"/>
+        <source>transition_delay</source>
+        <translation>过渡延迟</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="331"/>
+        <source>transition_prop_1</source>
+        <translation>过渡属性1</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="334"/>
+        <source>transition_prop_2</source>
+        <translation>过渡属性2</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="337"/>
+        <source>transition_prop_3</source>
+        <translation>过渡属性3</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="340"/>
+        <source>transition_prop_4</source>
+        <translation>过渡属性4</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="343"/>
+        <source>transition_prop_5</source>
+        <translation>过渡属性5</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="346"/>
+        <source>transition_prop_6</source>
+        <translation>过渡属性6</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="350"/>
+        <source>scale</source>
+        <translation>级别属性</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="351"/>
+        <source>scale_grad_color</source>
+        <translation>级别渐变颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="354"/>
+        <source>scale_end_color</source>
+        <translation>级别末端颜色</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="357"/>
+        <source>scale_width</source>
+        <translation>级别宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="360"/>
+        <source>scale_border_width</source>
+        <translation>级别框宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="363"/>
+        <source>scale_end_border_width</source>
+        <translation>级别末框宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="366"/>
+        <source>scale_end_line_width</source>
+        <translation>级别末线宽度</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="429"/>
+        <source>Full</source>
+        <translation>完全</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="431"/>
+        <source>Internal</source>
+        <translation>内部</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="435"/>
         <location filename="../widgets/LVGLButtonMatrix.cpp" line="79"/>
         <location filename="../widgets/LVGLDropDownList.cpp" line="13"/>
         <location filename="../widgets/LVGLDropDownList.cpp" line="73"/>
@@ -1303,6 +1849,7 @@
         <translation>左</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="436"/>
         <location filename="../widgets/LVGLButtonMatrix.cpp" line="79"/>
         <location filename="../widgets/LVGLDropDownList.cpp" line="13"/>
         <location filename="../widgets/LVGLDropDownList.cpp" line="73"/>
@@ -1312,6 +1859,26 @@
         <location filename="../widgets/LVGLTextArea.cpp" line="177"/>
         <source>Right</source>
         <translation>右</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="463"/>
+        <source>Additive</source>
+        <translation>附加</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="465"/>
+        <source>SubtrActive</source>
+        <translation>被动</translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="476"/>
+        <source>Vertical </source>
+        <translation>垂直 </translation>
+    </message>
+    <message>
+        <location filename="../core/LVGLStyle.cpp" line="478"/>
+        <source>Horizontal </source>
+        <translation>水平 </translation>
     </message>
     <message>
         <location filename="../widgets/LVGLButtonMatrix.cpp" line="80"/>
@@ -1736,11 +2303,13 @@
         <translation>样式8</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="434"/>
         <location filename="../widgets/LVGLTabview.cpp" line="13"/>
         <source>Top</source>
         <translation>顶部</translation>
     </message>
     <message>
+        <location filename="../core/LVGLStyle.cpp" line="433"/>
         <location filename="../widgets/LVGLTabview.cpp" line="14"/>
         <source>Bottom</source>
         <translation>尾部</translation>
