@@ -1,5 +1,13 @@
 # 1.0.4 preview
 
+## Support different themes
+
+- Dark theme
+
+  ![newstyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/newstyle.png)
+
+- The theme is realized by loading the configuration file, so **you can create your favorite style themes.**
+
 ## Complete testing process
 
 - Many test cases will be added under the test file, and **the program will be released after all passed**
