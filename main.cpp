@@ -1,8 +1,11 @@
 #include <QApplication>
 #include <QTranslator>
+#include <QVBoxLayout>
+#include <QWidget>
 
 #include "MainWindow.h"
 #include "core/LVGLConfig.h"
+#include "core/MainwindoTitle.h"
 
 //#include "vld.h"
 #ifdef Q_OS_WIN
@@ -36,11 +39,21 @@ int main(int argc, char *argv[]) {
   if (qtTranslator.load(a.applicationDirPath() + "/translations/" + lgfile))
     a.installTranslator(&qtTranslator);
 
-  MainWindow w;
+  QWidget parent;
+  parent.setWindowFlags(Qt::FramelessWindowHint | parent.windowFlags());
+  QVBoxLayout *ly = new QVBoxLayout(&parent);
+  ly->setContentsMargins(0, 0, 0, 0);
+  ly->setSpacing(0);
+
+  MainwindoTitle wt(&parent);
+  MainWindow w(&parent);
   w.settranslator(&qtTranslator);
   w.setconfig(&config);
 
-  w.showMaximized();
+  ly->insertWidget(0, &wt);
+  ly->insertWidget(1, &w);
+  parent.setLayout(ly);
+  parent.showMaximized();
 
   return a.exec();
 }

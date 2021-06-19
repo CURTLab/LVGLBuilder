@@ -129,6 +129,7 @@ SOURCES += \
     core/LVGLWorker.cpp \
     core/ListDelegate.cpp \
     core/ListViewItem.cpp \
+    core/MainwindoTitle.cpp \
     events/EventSelectWIdget.cpp \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
@@ -236,6 +237,7 @@ HEADERS += \
     core/LVGLWorker.h \
     core/ListDelegate.h \
     core/ListViewItem.h \
+    core/MainwindoTitle.h \
     events/EventSelectWIdget.h \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \
@@ -320,6 +322,7 @@ FORMS += \
     core/LVGLNewDialog.ui \
     core/LVGLProcessBar.ui \
     core/ListViewItem.ui \
+    core/MainwindoTitle.ui \
     events/EventSelectWIdget.ui \
     events/EventSettingWidgeet.ui \
     events/EventsListWIdget.ui

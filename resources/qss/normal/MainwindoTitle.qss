@@ -1,0 +1,55 @@
+QPushButton#pushButton{
+border-image:url(:/btnicon/max_normal.png);
+background-color:transparent;
+border: none;
+width:16px;
+height:16px;
+}
+QPushButton#pushButton:hover{
+border-image:url(:/btnicon/max_press.png);
+background-color:transparent;
+}
+QPushButton#pushButton:pressed{
+border-image:url(:/btnicon/max_press.png);
+background-color:transparent;
+}
+
+QPushButton#pushButton_2{
+border-image:url(:/btnicon/min_normal.png);
+background-color:transparent;
+border: none;
+width:16px;
+height:16px;
+}
+QPushButton#pushButton_2:hover{
+border-image:url(:/btnicon/min_press.png);
+background-color:transparent;
+}
+QPushButton#pushButton_2:pressed{
+border-image:url(:/btnicon/min_press.png);
+background-color:transparent;
+}
+
+QPushButton#pushButton_3{
+border-image:url(:/btnicon/close_normal.png);
+background-color:transparent;
+border: none;
+width:16px;
+height:16px;
+}
+QPushButton#pushButton_3:hover{
+border-image:url(:/btnicon/close_press.png);
+background-color:transparent;
+}
+QPushButton#pushButton_3:pressed{
+border-image:url(:/btnicon/close_press.png);
+background-color:transparent;
+}
+
+QPushButton#pushButton_4{
+border-image:url(:/btnicon/cuslogo.png);
+background-color:transparent;
+border: none;
+width:20px;
+height:20px;
+}

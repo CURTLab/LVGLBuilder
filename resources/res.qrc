@@ -57,4 +57,14 @@
         <file>redo.png</file>
         <file>undo.png</file>
     </qresource>
+    <qresource prefix="/">
+        <file>btnicon/close_normal.png</file>
+        <file>btnicon/close_press.png</file>
+        <file>btnicon/max_normal.png</file>
+        <file>btnicon/max_press.png</file>
+        <file>btnicon/min_normal.png</file>
+        <file>btnicon/min_press.png</file>
+        <file>btnicon/cuslogo.png</file>
+        <file>qss/normal/MainwindoTitle.qss</file>
+    </qresource>
 </RCC>

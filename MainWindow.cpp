@@ -62,6 +62,7 @@ MainWindow::MainWindow(QWidget *parent)
       m_etThread(new QThread(this)),
       m_autosaveThread(new LVGLAutoSaveThread),
       m_asThread(new QThread(this)) {
+  this->setWindowFlags(Qt::Widget);
   m_ui->setupUi(this);
   lvgl.init(320, 480);
 
@@ -239,7 +240,6 @@ void MainWindow::addImage(LVGLImageData *img, QString name) {
 
 void MainWindow::updateImages() {
   m_ui->list_images->clear();
-  auto imgs = lvgl.images();
   for (LVGLImageData *i : lvgl.images()) {
     if (i->fileName().isEmpty()) continue;
     QString name = QFileInfo(i->fileName()).baseName() +
@@ -1129,8 +1129,7 @@ void MainWindow::tabChanged(int index) {
   setAllModelNull();
 
   if (m_lastindex != -1) {
-    auto oldtabw =
-        static_cast<LVGLTab *>(m_ui->tabWidget->widget(m_lastindex));
+    auto oldtabw = static_cast<LVGLTab *>(m_ui->tabWidget->widget(m_lastindex));
     auto objs = lvgl.allObjects();
     oldtabw->setAllObjects(lvgl.allObjects());
     oldtabw->setAllImages(lvgl.allImages());

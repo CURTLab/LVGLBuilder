@@ -1,0 +1,32 @@
+QWidget#MainwindoTitle{
+background-color:#323232;
+}
+
+QLabel#label{
+color:white;
+}
+
+QToolButton#toolButton{
+border:0 px;
+}
+QToolButton#toolButton:hover{
+background:#010101;
+}
+
+QToolButton#toolButton_2{
+border:0 px;
+}
+QToolButton#toolButton_2:hover{
+background:#010101;
+}
+
+QToolButton#toolButton_3{
+border:0 px
+}
+QToolButton#toolButton_3:hover{
+background:#010101;
+}
+
+QToolButton#toolButton_4{
+border:0 px;
+}
