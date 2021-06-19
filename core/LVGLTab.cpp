@@ -1,4 +1,4 @@
-#include "LVGLTabWidget.h"
+#include "LVGLTab.h"
 
 #include <QGridLayout>
 #include <QUndoStack>
@@ -6,24 +6,25 @@
 #include "LVGLObject.h"
 #include "LVGLSimulator.h"
 
-LVGLTabWidget::LVGLTabWidget(QWidget *parent)
+LVGLTab::LVGLTab(QWidget *parent)
     : QWidget(parent),
       m_parent(lv_obj_create(NULL, NULL)),
       m_undoStack(new QUndoStack(this)) {}
 
-void LVGLTabWidget::setSimulator(LVGLSimulator *sim) {
+void LVGLTab::setSimulator(LVGLSimulator *sim) {
   delete this->layout();
   QGridLayout *glayout = new QGridLayout(this);
   glayout->addWidget(sim, 0, 0, 1, 1);
+  glayout->setContentsMargins(0, 0, 0, 0);
 }
 
-void LVGLTabWidget::removeAll() {
+void LVGLTab::removeAll() {
   removeAllObjects();
   removeAllImages();
   // qDeleteAll(m_fonts);
 }
 
-void LVGLTabWidget::removeObject(LVGLObject *object) {
+void LVGLTab::removeObject(LVGLObject *object) {
   auto childs = object->childs();
   while (!childs.isEmpty()) {
     removeObject(childs.at(0));
@@ -35,7 +36,7 @@ void LVGLTabWidget::removeObject(LVGLObject *object) {
   object = nullptr;
 }
 
-void LVGLTabWidget::removeAllObjects() {
+void LVGLTab::removeAllObjects() {
   auto objs = m_objects;
   while (!objs.isEmpty()) {
     if (objs.at(0) && !objs.at(0)->parent()) removeObject(m_objects.at(0));
@@ -44,9 +45,9 @@ void LVGLTabWidget::removeAllObjects() {
   m_objects.clear();
 }
 
-void LVGLTabWidget::removeAllImages() { qDeleteAll(m_images); }
+void LVGLTab::removeAllImages() { qDeleteAll(m_images); }
 
-void LVGLTabWidget::clean() {
+void LVGLTab::clean() {
   m_objects.clear();
   m_images.clear();
 }

@@ -1,7 +1,6 @@
 #include "LVGLStyle.h"
 
 #include <QColor>
-#include <QDebug>
 
 #include "LVGLCore.h"
 #include "LVGLObject.h"

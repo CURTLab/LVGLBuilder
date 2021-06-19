@@ -15,7 +15,7 @@
 #include "LVGLFontData.h"
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
-#include "LVGLTabWidget.h"
+#include "LVGLTab.h"
 #include "MainWindow.h"
 #include "events/LVGLEvent.h"
 
@@ -426,12 +426,12 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   QMap<lv_obj_t *, QList<LVGLEvent *>> &objevs =
       LVGLHelper::getInstance().getObjEvents();
 
-  auto curtab = static_cast<LVGLTabWidget *>(tabw->widget(tabindex));
+  auto curtab = static_cast<LVGLTab *>(tabw->widget(tabindex));
   curtab->setAllObjects(lvgl.allObjects());
   curtab->setAllImages(lvgl.allImages());
 
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     auto os = tab->allObject();
     for (auto o : os) {
       if (objevs.contains(o->obj())) {
@@ -468,7 +468,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     if (1 == exportmethod)
       stream << QString("#include \"%1/%1.h\"\n")
                     .arg(tab->getfilename().toLower().replace(" ", "_"));
@@ -479,7 +479,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     stream << QString("static lv_obj_t *%1;\n")
                   .arg(tab->getfilename().toLower().replace(" ", "_"));
   }
@@ -487,7 +487,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
 
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     auto os = tab->allObject();
     for (auto o : os) {
       if (objevs.contains(o->obj())) {
@@ -513,7 +513,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "void app(){\n";
 
   for (int i = 0; i < tabW->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     stream << "\t"
            << QString("%1 = %2_create();\n")
                   .arg(tab->getfilename().toLower().replace(" ", "_"))
@@ -523,7 +523,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   stream << "\n";
   stream << "\t"
          << QString("lv_scr_load(%1);\n")
-                .arg(static_cast<LVGLTabWidget *>(tabw->widget(0))
+                .arg(static_cast<LVGLTab *>(tabw->widget(0))
                          ->getfilename()
                          .toLower()
                          .replace(" ", "_"));
@@ -645,7 +645,7 @@ bool LVGLProject::exportMakeFile(const QString &path) const {
 
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     stream << QString("include $(LVGL_DIR)/%1/%1.mk\n")
                   .arg(tab->getfilename().toLower());
   }

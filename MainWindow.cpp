@@ -24,7 +24,7 @@
 #include "core/LVGLPropertyModel.h"
 #include "core/LVGLSimulator.h"
 #include "core/LVGLStyleModel.h"
-#include "core/LVGLTabWidget.h"
+#include "core/LVGLTab.h"
 #include "core/LVGLThreads.h"
 #include "core/LVGLWidgetListView.h"
 #include "core/LVGLWidgetModel.h"
@@ -81,7 +81,7 @@ MainWindow::~MainWindow() {
   m_ui->tabWidget->setCurrentIndex(0);
   for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
     if (index != m_ui->tabWidget->currentIndex()) {
-      auto w = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+      auto w = static_cast<LVGLTab *>(m_ui->tabWidget->widget(index));
       w->removeAll();
     }
   }
@@ -191,7 +191,7 @@ void MainWindow::openNewProject() {
     dialog.setoptenable(false);
   m_isrun = true;
   if (dialog.exec() == QDialog::Accepted) {
-    LVGLTabWidget *tabW = new LVGLTabWidget(this);
+    LVGLTab *tabW = new LVGLTab(this);
     if (m_frun) {
       m_frun = false;
       initNewWidgets();
@@ -310,7 +310,7 @@ void MainWindow::loadProject(const QString &fileName) {
   }
 
   int index = m_ui->tabWidget->currentIndex();
-  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  auto tabw = static_cast<LVGLTab *>(m_ui->tabWidget->widget(index));
   tabw->clean();
 
   lvgl.removeAllImages();
@@ -487,14 +487,14 @@ void MainWindow::on_action_load_triggered() {
       QFileDialog::getOpenFileName(this, "Load lvgl", path, "LVGL (*.lvgl)");
   if (fileName.isEmpty()) return;
   loadProject(fileName);
-  auto tab = static_cast<LVGLTabWidget *>(m_ui->tabWidget->currentWidget());
+  auto tab = static_cast<LVGLTab *>(m_ui->tabWidget->currentWidget());
   m_tabFile[tab] = fileName;
 }
 
 void MainWindow::on_action_save_triggered() {
   QString path;
   if (m_project != nullptr) path = m_project->fileName();
-  auto tab = static_cast<LVGLTabWidget *>(m_ui->tabWidget->currentWidget());
+  auto tab = static_cast<LVGLTab *>(m_ui->tabWidget->currentWidget());
   path = m_tabFile[tab];
   QString fileName =
       QFileDialog::getSaveFileName(this, "Save lvgl", path, "LVGL (*.lvgl)");
@@ -1130,7 +1130,7 @@ void MainWindow::tabChanged(int index) {
 
   if (m_lastindex != -1) {
     auto oldtabw =
-        static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(m_lastindex));
+        static_cast<LVGLTab *>(m_ui->tabWidget->widget(m_lastindex));
     auto objs = lvgl.allObjects();
     oldtabw->setAllObjects(lvgl.allObjects());
     oldtabw->setAllImages(lvgl.allImages());
@@ -1144,7 +1144,7 @@ void MainWindow::tabChanged(int index) {
   }
 
   m_lastindex = index;
-  auto tabw = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+  auto tabw = static_cast<LVGLTab *>(m_ui->tabWidget->widget(index));
   m_curSimulation->setobjParent(tabw->getparent());
   tabw->setSimulator(m_curSimulation);
   auto objs = tabw->allObject();
@@ -1172,7 +1172,7 @@ void MainWindow::ontabclose(int index) {
   int count = m_ui->tabWidget->count();
   if (count > 1) {
     LVGLHelper::getInstance().updatetabDate();
-    auto w = static_cast<LVGLTabWidget *>(m_ui->tabWidget->widget(index));
+    auto w = static_cast<LVGLTab *>(m_ui->tabWidget->widget(index));
     int curindex = m_ui->tabWidget->currentIndex();
     setAllModelNull();
     if (index == curindex) {

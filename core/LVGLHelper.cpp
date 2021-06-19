@@ -1,7 +1,7 @@
 #include "LVGLHelper.h"
 
 #include "LVGLCore.h"
-#include "LVGLTabWidget.h"
+#include "LVGLTab.h"
 #include "MainWindow.h"
 #include "events/LVGLEvent.h"
 
@@ -74,7 +74,7 @@ QString LVGLHelper::getStringWithSymbol(const QString &s) {
 void LVGLHelper::updatetabDate() {
   auto tabw = m_pMainW->getTabW();
   int curindex = tabw->currentIndex();
-  auto tab = static_cast<LVGLTabWidget *>(tabw->widget(curindex));
+  auto tab = static_cast<LVGLTab *>(tabw->widget(curindex));
 
   tab->setAllObjects(lvgl.allObjects());
   tab->setAllImages(lvgl.allImages());
@@ -91,7 +91,7 @@ QString LVGLHelper::newProjectName() {
   auto tabw = m_pMainW->getTabW();
   QSet<int> set;
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     QString name = tab->getfilename();
     if (name.size() > 5) {
       set.insert(name.mid(5, name.size() - 5).toUInt());

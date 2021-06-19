@@ -1,5 +1,5 @@
-#ifndef LVGLTABWIDGET_H
-#define LVGLTABWIDGET_H
+#ifndef LVGLTAB_H
+#define LVGLTAB_H
 
 #include <QWidget>
 
@@ -11,10 +11,10 @@ class LVGLFontData;
 class LVGLSimulator;
 class QUndoStack;
 
-class LVGLTabWidget : public QWidget {
+class LVGLTab : public QWidget {
   Q_OBJECT
  public:
-  LVGLTabWidget(QWidget *parent = nullptr);
+  LVGLTab(QWidget *parent = nullptr);
   lv_obj_t *getparent() { return m_parent; }
   void setSimulator(LVGLSimulator *sim);
 
@@ -50,4 +50,4 @@ class LVGLTabWidget : public QWidget {
   QUndoStack *m_undoStack;
 };
 
-#endif  // LVGLTABWIDGET_H
+#endif  // LVGLTAB_H

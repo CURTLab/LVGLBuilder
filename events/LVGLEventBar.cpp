@@ -5,7 +5,7 @@
 #include "core/LVGLCore.h"
 #include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
-#include "core/LVGLTabWidget.h"
+#include "core/LVGLTab.h"
 #include "lvgl/lvgl.h"
 
 LVGLEventBar::LVGLEventBar() {}
@@ -17,7 +17,7 @@ void LVGLEventBar::eventRun(lv_obj_t *obj) {
   QList<LVGLObject *> objs;
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     auto os = tab->allObject();
     for (auto o : os) {
       if (o->obj() == obj) {
@@ -115,7 +115,7 @@ QStringList LVGLEventBar::eventCode() {
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   int tabindex = tabw->currentIndex();
   auto objs = lvgl.allObjects();
-  auto nowtab = static_cast<LVGLTabWidget *>(tabw->widget(tabindex));
+  auto nowtab = static_cast<LVGLTab *>(tabw->widget(tabindex));
   LVGLWidget::Type type;
   QString codename;
   int nameindex = tabindex;
@@ -138,7 +138,7 @@ QStringList LVGLEventBar::eventCode() {
   }
 
   for (int i = 0; i < tabw->count(); ++i) {
-    auto tb = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tb = static_cast<LVGLTab *>(tabw->widget(i));
     auto os = tb->allObject();
     for (auto o : os) {
       if (obb == o->obj()) {
@@ -150,7 +150,7 @@ QStringList LVGLEventBar::eventCode() {
     }
   }
 
-  auto tb = static_cast<LVGLTabWidget *>(tabw->widget(nameindex));
+  auto tb = static_cast<LVGLTab *>(tabw->widget(nameindex));
   auto os = tb->allObject();
   for (auto o : os)
     if (o->name() == m_result[4]) name = o->codeName();

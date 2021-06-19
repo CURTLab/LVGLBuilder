@@ -3,7 +3,7 @@
 #include "MainWindow.h"
 #include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
-#include "core/LVGLTabWidget.h"
+#include "core/LVGLTab.h"
 #include "events/EventSelectWIdget.h"
 #include "events/LVGLEventAnim.h"
 #include "events/LVGLEventScreen.h"

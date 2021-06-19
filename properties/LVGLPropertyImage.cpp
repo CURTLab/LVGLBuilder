@@ -6,7 +6,7 @@
 #include "core/LVGLCore.h"
 #include "core/LVGLHelper.h"
 #include "core/LVGLObject.h"
-#include "core/LVGLTabWidget.h"
+#include "core/LVGLTab.h"
 
 LVGLPropertyImage::LVGLPropertyImage(LVGLProperty *parent)
     : LVGLProperty(parent) {}
@@ -37,7 +37,7 @@ QVariant LVGLPropertyImage::value(LVGLObject *obj) const {
       auto curindex = tabw->currentIndex();
       for (int i = 0; i < tabw->count(); ++i) {
         if (i != curindex) {
-          auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+          auto tab = static_cast<LVGLTab *>(tabw->widget(i));
           auto imgs = tab->allImages();
           for (LVGLImageData *img : imgs) {
             if (img->img_des() == dsc) return img->name();

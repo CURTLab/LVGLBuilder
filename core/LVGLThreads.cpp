@@ -13,7 +13,7 @@
 #include "LVGLHelper.h"
 #include "LVGLObject.h"
 #include "LVGLProject.h"
-#include "LVGLTabWidget.h"
+#include "LVGLTab.h"
 #include "MainWindow.h"
 
 LVGLExportThread::LVGLExportThread() : m_project(nullptr) {}
@@ -62,7 +62,7 @@ void LVGLAutoSaveThread::saveFile() {
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   for (int i = 0; i < tabw->count(); ++i) {
     if (stopped) return;
-    auto tab = static_cast<LVGLTabWidget *>(tabw->widget(i));
+    auto tab = static_cast<LVGLTab *>(tabw->widget(i));
     QString name = tab->getfilename();
     QString timestr = QDateTime::currentDateTime().toString("yyMMdd");
     QString fileName = QString("%1/%2_%3_%4.lvgl")

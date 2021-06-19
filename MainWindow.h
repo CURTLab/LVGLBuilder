@@ -21,7 +21,7 @@ class LVGLCore;
 class ListDelegate;
 class LVGLWidget;
 class QUndoGroup;
-class LVGLTabWidget;
+class LVGLTab;
 class LVGLProcessBar;
 class LVGLExportThread;
 class LVGLAutoSaveThread;
@@ -177,7 +177,7 @@ class MainWindow : public QMainWindow {
   bool m_isrun;
   QUndoGroup *m_undoGroup;
   int m_lastindex;
-  QMap<LVGLTabWidget *, QString> m_tabFile;
+  QMap<LVGLTab *, QString> m_tabFile;
   LVGLProcessBar *m_pcBar;
   LVGLExportThread *m_exportThread;
   QThread *m_etThread;

@@ -40,12 +40,15 @@
        <widget class="QTabWidget" name="tabWidget">
         <property name="minimumSize">
          <size>
-          <width>1310</width>
+          <width>0</width>
           <height>0</height>
          </size>
         </property>
         <property name="currentIndex">
          <number>-1</number>
+        </property>
+        <property name="documentMode">
+         <bool>true</bool>
         </property>
        </widget>
       </item>
@@ -217,7 +220,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>335</width>
+     <width>70</width>
      <height>89</height>
     </size>
    </property>
@@ -254,7 +257,7 @@
       <widget class="QTreeView" name="property_tree">
        <property name="minimumSize">
         <size>
-         <width>335</width>
+         <width>0</width>
          <height>0</height>
         </size>
        </property>
@@ -275,7 +278,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>180</width>
+     <width>70</width>
      <height>89</height>
     </size>
    </property>
@@ -318,7 +321,7 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>243</width>
+          <width>254</width>
           <height>396</height>
          </rect>
         </property>

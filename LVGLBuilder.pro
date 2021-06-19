@@ -120,7 +120,7 @@ SOURCES += \
     core/LVGLSimulator.cpp \
     core/LVGLStyle.cpp \
     core/LVGLStyleModel.cpp \
-    core/LVGLTabWidget.cpp \
+    core/LVGLTab.cpp \
     core/LVGLThreads.cpp \
     core/LVGLWidgetListView.cpp \
     core/LVGLWidgetModel.cpp \
@@ -227,7 +227,7 @@ HEADERS += \
     core/LVGLSimulator.h \
     core/LVGLStyle.h \
     core/LVGLStyleModel.h \
-    core/LVGLTabWidget.h \
+    core/LVGLTab.h \
     core/LVGLThreads.h \
     core/LVGLWidgetListView.h \
     core/LVGLWidgetModel.h \

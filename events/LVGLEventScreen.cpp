@@ -2,7 +2,7 @@
 
 #include "MainWindow.h"
 #include "core/LVGLHelper.h"
-#include "core/LVGLTabWidget.h"
+#include "core/LVGLTab.h"
 
 LVGLEventScreen::LVGLEventScreen() {}
 
@@ -12,7 +12,7 @@ void LVGLEventScreen::eventRun(lv_obj_t *obj) {
   int index = 0;
   for (; index < tab->count(); ++index)
     if (name == tab->tabText(index)) break;
-  auto tabw = static_cast<LVGLTabWidget *>(tab->widget(index));
+  auto tabw = static_cast<LVGLTab *>(tab->widget(index));
   lv_obj_t *screen = tabw->getparent();
   lv_scr_load_anim_t t = LV_SCR_LOAD_ANIM_NONE;
 
