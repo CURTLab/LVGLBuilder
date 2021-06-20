@@ -178,6 +178,12 @@
      <height>300</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="windowTitle">
     <string>Object Inspector</string>
    </property>
@@ -229,6 +235,12 @@
      <width>330</width>
      <height>300</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="windowTitle">
     <string>Property Editor</string>
@@ -287,6 +299,12 @@
      <width>330</width>
      <height>0</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="windowTitle">
     <string>Widget Box</string>
@@ -427,6 +445,12 @@
      <height>122</height>
     </size>
    </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
    <property name="windowTitle">
     <string>Image Editor</string>
    </property>
@@ -536,8 +560,14 @@
    <property name="minimumSize">
     <size>
      <width>72</width>
-     <height>133</height>
+     <height>141</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="windowTitle">
     <string>Style Editor</string>
@@ -586,6 +616,12 @@
      <width>180</width>
      <height>122</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="windowTitle">
     <string>Font Editor</string>
@@ -674,9 +710,15 @@
   <widget class="QDockWidget" name="UndoEditor">
    <property name="minimumSize">
     <size>
-     <width>118</width>
-     <height>122</height>
+     <width>125</width>
+     <height>125</height>
     </size>
+   </property>
+   <property name="font">
+    <font>
+     <family>Microsoft YaHei</family>
+     <pointsize>10</pointsize>
+    </font>
    </property>
    <property name="windowTitle">
     <string>Undo Stack</string>

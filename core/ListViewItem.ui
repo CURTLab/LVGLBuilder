@@ -43,6 +43,11 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei</family>
+      </font>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -53,7 +58,13 @@
     </widget>
    </item>
    <item>
-    <widget class="LVGLWidgetListView" name="list_widgets"/>
+    <widget class="LVGLWidgetListView" name="list_widgets">
+     <property name="font">
+      <font>
+       <family>Microsoft YaHei</family>
+      </font>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

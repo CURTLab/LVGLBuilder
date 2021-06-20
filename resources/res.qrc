@@ -66,5 +66,6 @@
         <file>btnicon/min_press.png</file>
         <file>btnicon/cuslogo.png</file>
         <file>qss/normal/MainwindoTitle.qss</file>
+        <file>qss/normal/LVGLNewDialog.qss</file>
     </qresource>
 </RCC>

@@ -79,7 +79,7 @@
       <widget class="QLabel" name="label">
        <property name="font">
         <font>
-         <family>微软雅黑</family>
+         <family>Microsoft YaHei</family>
          <pointsize>12</pointsize>
         </font>
        </property>
@@ -107,7 +107,7 @@
     <widget class="QLabel" name="label_2">
      <property name="font">
       <font>
-       <family>微软雅黑</family>
+       <family>Microsoft YaHei</family>
        <pointsize>12</pointsize>
       </font>
      </property>

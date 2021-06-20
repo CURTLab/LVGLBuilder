@@ -2,6 +2,8 @@
 
 #include <QDebug>
 #include <QMessageBox>
+#include <QPainter>
+#include <QPainterPath>
 #include <QPixmap>
 #include <QSettings>
 
@@ -11,6 +13,11 @@
 LVGLNewDialog::LVGLNewDialog(QWidget *parent)
     : QDialog(parent), m_ui(new Ui::LVGLNewDialog) {
   m_ui->setupUi(this);
+  setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
+  setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
+  setAttribute(Qt::WA_StyledBackground);
+  setAttribute(Qt::WA_TranslucentBackground);
+
   m_ui->title->setText(tr("New Project"));
   m_ui->filename->setText(tr("File Name:"));
   m_ui->res->setText(tr("Resolution:"));
@@ -20,14 +27,7 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
   m_ui->pushButton_2->setText("Cancel");
   m_ui->combo_resolution->addItem(tr("Costume"));
   m_ui->lineEdit->setText(LVGLHelper::getInstance().newProjectName());
-  setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
-  setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
-  m_ui->close->setStyleSheet(
-      "QPushButton{background-color: #D8D8D8;border:0px;}QPushButton:hover "
-      "{background-color:#D8D8D8;border:2px solid #979797;}");
 
-  m_ui->frame->setStyleSheet(
-      "QFrame#frame{background:#D8D8D8;border:1px solid #979797;}");
   m_resolutions << qMakePair(480, 320);
   m_resolutions << qMakePair(320, 240);
   m_resolutions << qMakePair(160, 120);
@@ -52,48 +52,23 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
           &LVGLNewDialog::accept);
   connect(m_ui->pushButton_2, &QPushButton::clicked, this,
           &LVGLNewDialog::reject);
-  m_ui->lineEdit->setStyleSheet(
-      "QLineEdit#lineEdit{border:0px;background:#F8F8F8;}");
-  m_ui->spin_width->setStyleSheet(
-      "QSpinBox{border: 1px solid gray;"
-      "border-radius: 3px;"
-      "padding: 1px 18px 1px 13px;};");
-  m_ui->spin_height->setStyleSheet(
-      "QSpinBox{border: 1px solid gray;"
-      "border-radius: 3px;"
-      "padding: 1px 18px 1px 13px;};");
-  m_ui->combo_resolution->setStyleSheet(
-      "QComboBox#combo_resolution{ border: 1px solid gray;"
-      "border-radius: 3px;"
-      "padding: 1px 18px 1px 13px; "
-      "color: #000000;"
-      "background:#ffffff;}"
-      "QComboBox::down-arrow#combo_resolution {"
-      "image: url(:/icons/arrows.png);}"
-      "QComboBox::drop-down {"
-      "subcontrol-origin: padding;"
-      "subcontrol-position: top right;"
-      "width: 30px;"
-      "border-left-width: 0px;"
-      "border-left-color: gray;"
-      "border-left-style: solid;"
-      "border-top-right-radius: 3px;"
-      "border-bottom-right-radius: 3px;}");
 
-  setStyleSheet("QDialog#LVGLNewDialog{border:0px;background:#F8F8F8;}");
   //#1473e6
-  m_ui->pushButton->setStyleSheet(
-      "QPushButton{color: white;border-radius: "
-      "12px;background-color: #1473e6;min-width: "
-      "80px;min-height:26px;}QPushButton:pressed {background-color: "
-      "#0F64D2;}QPushButton:hover {background-color:#0F64D2;} ");
-  m_ui->pushButton_2->setStyleSheet(
-      "QPushButton{color: black;border:2px solid #979797;border-radius: "
-      "12px;background-color: #F8F8F8;min-width: "
-      "76px;min-height:22px;}QPushButton:pressed {background-color: "
-      "#D8D8D8;}QPushButton:hover {background-color:#D8D8D8;} ");
   auto ms = m_ui->spin_width->contentsMargins();
   m_ui->spin_width->setContentsMargins(1000, ms.top(), ms.right(), ms.bottom());
+
+  QFile file(":/qss/normal/LVGLNewDialog.qss");
+  file.open(QFile::ReadOnly);
+  QTextStream filetext(&file);
+  QString stylesheet = filetext.readAll().replace("\r\n", "");
+  this->setStyleSheet(stylesheet);
+  file.close();
+
+  int index = stylesheet.indexOf("QDialog#LVGLNewDialog{");
+  QString str = stylesheet.mid(index);
+  index = str.indexOf("background");
+  m_bgcolor = str.mid(index + 11, 7);
+  if (m_bgcolor.isEmpty()) m_bgcolor = "#e8e8e8";
 }
 
 LVGLNewDialog::~LVGLNewDialog() { delete m_ui; }
@@ -151,6 +126,27 @@ void LVGLNewDialog::keyPressEvent(QKeyEvent *e) {
   if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) accept();
 
   QDialog::keyPressEvent(e);
+}
+
+void LVGLNewDialog::paintEvent(QPaintEvent *event) {
+  QPainterPath path;
+  path.setFillRule(Qt::WindingFill);
+  path.addRect(10, 10, this->width() - 20, this->height() - 20);
+
+  QPainter painter(this);
+  painter.setRenderHint(QPainter::Antialiasing, true);
+  painter.fillPath(path, QBrush(QColor(m_bgcolor)));
+
+  QColor color(0, 0, 0, 50);
+  for (int i = 0; i < 10; i++) {
+    QPainterPath path;
+    path.setFillRule(Qt::WindingFill);
+    path.addRect(10 - i, 10 - i, this->width() - (10 - i) * 2,
+                 this->height() - (10 - i) * 2);
+    color.setAlpha(150 - sqrt(i) * 50);
+    painter.setPen(color);
+    painter.drawPath(path);
+  }
 }
 
 void LVGLNewDialog::resolutionChanged(int index) {

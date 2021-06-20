@@ -184,7 +184,7 @@ void MainWindow::loadRecent() {
 }
 
 void MainWindow::openNewProject() {
-  LVGLNewDialog dialog(this);
+  LVGLNewDialog dialog(this->parentWidget());
   dialog.setFocus();
   if (m_ui->tabWidget->count() < 1)
     dialog.setoptenable(true);
