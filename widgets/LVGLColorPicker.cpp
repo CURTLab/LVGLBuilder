@@ -125,6 +125,8 @@ LVGLColorPicker::LVGLColorPicker() {
 
 QString LVGLColorPicker::name() const { return QObject::tr("Color picker"); }
 
+QString LVGLColorPicker::codename() const { return "Color picker"; }
+
 QString LVGLColorPicker::className() const { return "lv_cpicker"; }
 
 LVGLWidget::Type LVGLColorPicker::type() const { return ColorPicker; }

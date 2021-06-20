@@ -13,6 +13,8 @@ LVGLSpinner::LVGLSpinner() {
 
 QString LVGLSpinner::name() const { return QObject::tr("Spinner"); }
 
+QString LVGLSpinner::codename() const { return "Spinner"; }
+
 QString LVGLSpinner::className() const { return "lv_spinner"; }
 
 LVGLWidget::Type LVGLSpinner::type() const { return Spinner; }

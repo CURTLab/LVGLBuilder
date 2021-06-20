@@ -12,6 +12,8 @@ LVGLCanvas::LVGLCanvas() {
 
 QString LVGLCanvas::name() const { return QObject::tr("Canvas"); }
 
+QString LVGLCanvas::codename() const { return "Canvas"; }
+
 QString LVGLCanvas::className() const { return "lv_canvas"; }
 
 LVGLWidget::Type LVGLCanvas::type() const { return Canvas; }

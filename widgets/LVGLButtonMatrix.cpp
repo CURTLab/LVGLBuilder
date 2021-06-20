@@ -302,6 +302,8 @@ LVGLButtonMatrix::LVGLButtonMatrix() {
 
 QString LVGLButtonMatrix::name() const { return QObject::tr("Button Matrix"); }
 
+QString LVGLButtonMatrix::codename() const { return "Button Matrix"; }
+
 QString LVGLButtonMatrix::className() const { return "lv_btnmatrix"; }
 
 LVGLWidget::Type LVGLButtonMatrix::type() const { return ButtonMatrix; }

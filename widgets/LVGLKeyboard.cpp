@@ -64,6 +64,8 @@ LVGLKeyboard::LVGLKeyboard() {
 
 QString LVGLKeyboard::name() const { return QObject::tr("Keyboard"); }
 
+QString LVGLKeyboard::codename() const { return "Keyboard"; }
+
 QString LVGLKeyboard::className() const { return "lv_kb"; }
 
 LVGLWidget::Type LVGLKeyboard::type() const { return Keyboard; }

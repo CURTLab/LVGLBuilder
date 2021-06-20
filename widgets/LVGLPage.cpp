@@ -124,6 +124,8 @@ LVGLPage::LVGLPage() {
 
 QString LVGLPage::name() const { return QObject::tr("Page"); }
 
+QString LVGLPage::codename() const { return "Page"; }
+
 QString LVGLPage::className() const { return "lv_page"; }
 
 LVGLWidget::Type LVGLPage::type() const { return Page; }

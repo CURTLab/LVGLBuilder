@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>ListViewItem</class>
- <widget class="QWidget" name="ListViewItem">
+ <class>LVGLListViewItem</class>
+ <widget class="QWidget" name="LVGLListViewItem">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>ListViewItem</string>
+   <string>LVGLListViewItem</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <property name="spacing">
@@ -51,10 +51,6 @@
      <property name="text">
       <string/>
      </property>
-     <property name="icon">
-      <iconset resource="../resources/res.qrc">
-       <normaloff>:/icons/Widget Box_arrow_0.png</normaloff>:/icons/Widget Box_arrow_0.png</iconset>
-     </property>
     </widget>
    </item>
    <item>
@@ -75,8 +71,6 @@
    <header>core/LVGLWidgetListView.h</header>
   </customwidget>
  </customwidgets>
- <resources>
-  <include location="../resources/res.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>

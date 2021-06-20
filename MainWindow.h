@@ -18,7 +18,6 @@ class LVGLWidgetModelDisplay;
 class LVGLWidgetModelInput;
 class LVGLKeyPressEventFilter;
 class LVGLCore;
-class ListDelegate;
 class LVGLWidget;
 class QUndoGroup;
 class LVGLTab;
@@ -163,9 +162,6 @@ class MainWindow : public QMainWindow {
   LVGLWidgetModelDisplay *m_widgetModelDPW;
   LVGLWidgetModelInput *m_widgetModelIPW;
   LVGLKeyPressEventFilter *m_filter;
-  ListDelegate *m_ld1;
-  ListDelegate *m_ld2;
-  ListDelegate *m_ld3;
 
   int m_curTabWIndex;
   bool m_frun;

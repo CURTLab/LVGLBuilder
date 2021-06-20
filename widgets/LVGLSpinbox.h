@@ -8,6 +8,7 @@ class LVGLSpinbox : public LVGLWidget {
   LVGLSpinbox();
 
   virtual QString name() const;
+  virtual QString codename() const;
   virtual QString className() const;
   virtual Type type() const;
   virtual QIcon icon() const;

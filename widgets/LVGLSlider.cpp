@@ -366,6 +366,8 @@ LVGLSlider::LVGLSlider() {
 
 QString LVGLSlider::name() const { return QObject::tr("Slider"); }
 
+QString LVGLSlider::codename() const { return "Slider"; }
+
 QString LVGLSlider::className() const { return "lv_slider"; }
 
 LVGLWidget::Type LVGLSlider::type() const { return Slider; }

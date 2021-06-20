@@ -51,6 +51,7 @@ class LVGLWidget {
   };
 
   virtual QString name() const = 0;
+  virtual QString codename() const = 0;
   virtual QString className() const = 0;
   virtual Type type() const = 0;
   virtual QIcon icon() const = 0;

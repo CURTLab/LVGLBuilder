@@ -84,6 +84,8 @@ LVGLLine::LVGLLine() {
 
 QString LVGLLine::name() const { return QObject::tr("Line"); }
 
+QString LVGLLine::codename() const { return "Line"; }
+
 QString LVGLLine::className() const { return "lv_line"; }
 
 LVGLWidget::Type LVGLLine::type() const { return Line; }

@@ -72,6 +72,8 @@ LVGLGauge::LVGLGauge() {
 
 QString LVGLGauge::name() const { return QObject::tr("Gauge"); }
 
+QString LVGLGauge::codename() const { return "Gauge"; }
+
 QString LVGLGauge::className() const { return "lv_gauge"; }
 
 LVGLWidget::Type LVGLGauge::type() const { return Gauge; }

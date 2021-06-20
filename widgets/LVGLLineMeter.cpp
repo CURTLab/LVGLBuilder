@@ -49,6 +49,8 @@ LVGLLineMeter::LVGLLineMeter() {
 
 QString LVGLLineMeter::name() const { return QObject::tr("Line meter"); }
 
+QString LVGLLineMeter::codename() const { return "Line meter"; }
+
 QString LVGLLineMeter::className() const { return "lv_lmeter"; }
 
 LVGLWidget::Type LVGLLineMeter::type() const { return LineMeter; }

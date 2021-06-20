@@ -196,6 +196,8 @@ LVGLChart::LVGLChart() {
 
 QString LVGLChart::name() const { return QObject::tr("Chart"); }
 
+QString LVGLChart::codename() const { return "Chart"; }
+
 QString LVGLChart::className() const { return "lv_chart"; }
 
 LVGLWidget::Type LVGLChart::type() const { return Chart; }

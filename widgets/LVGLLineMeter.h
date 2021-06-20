@@ -8,6 +8,7 @@ class LVGLLineMeter : public LVGLWidget {
   LVGLLineMeter();
 
   virtual QString name() const;
+  virtual QString codename() const;
   virtual QString className() const;
   virtual Type type() const;
   virtual QIcon icon() const;

@@ -104,6 +104,8 @@ LVGLImageButton::LVGLImageButton() {
 
 QString LVGLImageButton::name() const { return QObject::tr("Image button"); }
 
+QString LVGLImageButton::codename() const { return "Image button"; }
+
 QString LVGLImageButton::className() const { return "lv_imgbtn"; }
 
 LVGLWidget::Type LVGLImageButton::type() const { return ImageButton; }

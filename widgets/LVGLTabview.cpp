@@ -439,6 +439,8 @@ LVGLTabview::LVGLTabview() {
 
 QString LVGLTabview::name() const { return QObject::tr("Tabview"); }
 
+QString LVGLTabview::codename() const { return "Tabview"; }
+
 QString LVGLTabview::className() const { return "lv_tabview"; }
 
 LVGLWidget::Type LVGLTabview::type() const { return TabView; }

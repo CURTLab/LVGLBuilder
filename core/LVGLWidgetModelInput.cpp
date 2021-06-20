@@ -17,6 +17,10 @@ int LVGLWidgetModelInput::rowCount(const QModelIndex &parent) const {
 QVariant LVGLWidgetModelInput::data(const QModelIndex &index, int role) const {
   if (role == Qt::DisplayRole)
     return lvgl.widgetsInputW().at(index.row())->name();
+  else if (Qt::DecorationRole == role) {
+    auto name = lvgl.widgetsInputW().at(index.row())->codename();
+    return QIcon(QString(":/icons/%1.png").arg(name));
+  }
   return QVariant();
 }
 
@@ -41,8 +45,7 @@ QMimeData *LVGLWidgetModelInput::mimeData(
   QDataStream stream(&encodedData, QIODevice::WriteOnly);
   for (const QModelIndex &index : indexes) {
     if (index.isValid() && index.column() == 0) {
-      cast.ptr =
-          const_cast<LVGLWidget *>(lvgl.widgetsInputW().at(index.row()));
+      cast.ptr = const_cast<LVGLWidget *>(lvgl.widgetsInputW().at(index.row()));
       stream << cast.i;
     }
   }

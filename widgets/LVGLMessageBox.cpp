@@ -109,6 +109,8 @@ LVGLMessageBox::LVGLMessageBox() : havebtn(false) {
 
 QString LVGLMessageBox::name() const { return QObject::tr("Message box"); }
 
+QString LVGLMessageBox::codename() const { return "Message box"; }
+
 QString LVGLMessageBox::className() const { return "lv_msgbox"; }
 
 LVGLWidget::Type LVGLMessageBox::type() const { return MessageBox; }

@@ -69,6 +69,8 @@ LVGLLED::LVGLLED() {
 
 QString LVGLLED::name() const { return QObject::tr("LED"); }
 
+QString LVGLLED::codename() const { return "LED"; }
+
 QString LVGLLED::className() const { return "lv_led"; }
 
 LVGLWidget::Type LVGLLED::type() const { return LED; }

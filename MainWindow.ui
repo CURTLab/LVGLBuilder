@@ -378,7 +378,7 @@
             <number>0</number>
            </property>
            <item>
-            <widget class="ListViewItem" name="list_widgets" native="true">
+            <widget class="LVGLListViewItem" name="list_widgets" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
                <horstretch>0</horstretch>
@@ -388,7 +388,7 @@
             </widget>
            </item>
            <item>
-            <widget class="ListViewItem" name="list_widgets_2" native="true">
+            <widget class="LVGLListViewItem" name="list_widgets_2" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -398,7 +398,7 @@
             </widget>
            </item>
            <item>
-            <widget class="ListViewItem" name="list_widgets_3" native="true">
+            <widget class="LVGLListViewItem" name="list_widgets_3" native="true">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
                <horstretch>0</horstretch>
@@ -1082,9 +1082,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>ListViewItem</class>
+   <class>LVGLListViewItem</class>
    <extends>QWidget</extends>
-   <header>core/ListViewItem.h</header>
+   <header>core/LVGLListViewItem.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

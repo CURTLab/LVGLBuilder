@@ -109,6 +109,7 @@ SOURCES += \
     core/LVGLHelper.cpp \
     core/LVGLImageData.cpp \
     core/LVGLItem.cpp \
+    core/LVGLListViewItem.cpp \
     core/LVGLLog.cpp \
     core/LVGLNewDialog.cpp \
     core/LVGLObject.cpp \
@@ -128,7 +129,6 @@ SOURCES += \
     core/LVGLWidgetModelInput.cpp \
     core/LVGLWorker.cpp \
     core/ListDelegate.cpp \
-    core/ListViewItem.cpp \
     core/MainwindoTitle.cpp \
     events/EventSelectWIdget.cpp \
     events/EventSettingWidgeet.cpp \
@@ -217,6 +217,7 @@ HEADERS += \
     core/LVGLHelper.h \
     core/LVGLImageData.h \
     core/LVGLItem.h \
+    core/LVGLListViewItem.h \
     core/LVGLLog.h \
     core/LVGLNewDialog.h \
     core/LVGLObject.h \
@@ -236,7 +237,6 @@ HEADERS += \
     core/LVGLWidgetModelInput.h \
     core/LVGLWorker.h \
     core/ListDelegate.h \
-    core/ListViewItem.h \
     core/MainwindoTitle.h \
     events/EventSelectWIdget.h \
     events/EventSettingWidgeet.h \
@@ -319,9 +319,10 @@ FORMS += \
     MainWindow.ui \
     core/ColorPick.ui \
     core/LVGLFontDialog.ui \
+    core/LVGLListViewItem.ui \
+    core/LVGLListViewItem.ui \
     core/LVGLNewDialog.ui \
     core/LVGLProcessBar.ui \
-    core/ListViewItem.ui \
     core/MainwindoTitle.ui \
     events/EventSelectWIdget.ui \
     events/EventSettingWidgeet.ui \

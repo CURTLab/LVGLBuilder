@@ -52,6 +52,8 @@ LVGLCheckBox::LVGLCheckBox() {
 
 QString LVGLCheckBox::name() const { return QObject::tr("Check box"); }
 
+QString LVGLCheckBox::codename() const { return "Check box"; }
+
 QString LVGLCheckBox::className() const { return "lv_checkbox"; }
 
 LVGLWidget::Type LVGLCheckBox::type() const { return CheckBox; }

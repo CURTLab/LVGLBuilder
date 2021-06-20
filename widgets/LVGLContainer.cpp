@@ -49,6 +49,8 @@ LVGLContainer::LVGLContainer() {
 
 QString LVGLContainer::name() const { return QObject::tr("Container"); }
 
+QString LVGLContainer::codename() const { return "Container"; }
+
 QString LVGLContainer::className() const { return "lv_cont"; }
 
 LVGLWidget::Type LVGLContainer::type() const { return Container; }

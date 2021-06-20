@@ -212,6 +212,8 @@ LVGLDropDownList::LVGLDropDownList() {
 
 QString LVGLDropDownList::name() const { return QObject::tr("Dropdown"); }
 
+QString LVGLDropDownList::codename() const { return "Dropdown"; }
+
 QString LVGLDropDownList::className() const { return "lv_dropdown"; }
 
 LVGLWidget::Type LVGLDropDownList::type() const { return DropDownList; }

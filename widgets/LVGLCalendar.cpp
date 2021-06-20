@@ -170,6 +170,8 @@ LVGLCalendar::LVGLCalendar() {
 
 QString LVGLCalendar::name() const { return QObject::tr("Calendar"); }
 
+QString LVGLCalendar::codename() const { return "Calendar"; }
+
 QString LVGLCalendar::className() const { return "lv_calendar"; }
 
 LVGLWidget::Type LVGLCalendar::type() const { return Calendar; }

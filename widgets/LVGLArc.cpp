@@ -281,6 +281,8 @@ LVGLArc::LVGLArc() {
 
 QString LVGLArc::name() const { return QObject::tr("Arc"); }
 
+QString LVGLArc::codename() const { return "Arc"; }
+
 QString LVGLArc::className() const { return "lv_arc"; }
 
 LVGLWidget::Type LVGLArc::type() const { return Arc; }

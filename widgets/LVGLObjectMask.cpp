@@ -12,6 +12,8 @@ LVGLObjectMask::LVGLObjectMask() {
 
 QString LVGLObjectMask::name() const { return QObject::tr("ObjectMask"); }
 
+QString LVGLObjectMask::codename() const { return "ObjectMask"; }
+
 QString LVGLObjectMask::className() const { return "lv_objmask"; }
 
 LVGLWidget::Type LVGLObjectMask::type() const { return ObjectMask; }

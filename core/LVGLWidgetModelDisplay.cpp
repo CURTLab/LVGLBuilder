@@ -18,6 +18,10 @@ QVariant LVGLWidgetModelDisplay::data(const QModelIndex &index,
                                       int role) const {
   if (role == Qt::DisplayRole)
     return lvgl.widgetsDisplayW().at(index.row())->name();
+  else if (Qt::DecorationRole == role) {
+    auto name = lvgl.widgetsDisplayW().at(index.row())->codename();
+    return QIcon(QString(":/icons/%1.png").arg(name));
+  }
   return QVariant();
 }
 

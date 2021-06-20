@@ -18,6 +18,8 @@ LVGLTable::LVGLTable() {
 
 QString LVGLTable::name() const { return QObject::tr("Table"); }
 
+QString LVGLTable::codename() const { return "Table"; }
+
 QString LVGLTable::className() const { return "lv_table"; }
 
 LVGLWidget::Type LVGLTable::type() const { return Table; }

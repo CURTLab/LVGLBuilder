@@ -348,6 +348,8 @@ LVGLButton::LVGLButton() {
 
 QString LVGLButton::name() const { return QObject::tr("Button"); }
 
+QString LVGLButton::codename() const { return "Button"; }
+
 QString LVGLButton::className() const { return "lv_btn"; }
 
 LVGLWidget::Type LVGLButton::type() const { return Button; }

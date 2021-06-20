@@ -16,6 +16,8 @@ LVGLTileView::LVGLTileView() {
 
 QString LVGLTileView::name() const { return QObject::tr("TileView"); }
 
+QString LVGLTileView::codename() const { return "TileView"; }
+
 QString LVGLTileView::className() const { return "lv_tileview"; }
 
 LVGLWidget::Type LVGLTileView::type() const { return TileView; }

@@ -31,7 +31,7 @@
 #include "core/LVGLWidgetModelDisplay.h"
 #include "core/LVGLWidgetModelInput.h"
 #include "core/ListDelegate.h"
-#include "core/ListViewItem.h"
+#include "core/LVGLListViewItem.h"
 #include "events/LVGLEventStateResume.h"
 #include "lvgl/lvgl.h"
 #include "ui_MainWindow.h"
@@ -67,9 +67,6 @@ MainWindow::MainWindow(QWidget *parent)
   lvgl.init(320, 480);
 
   m_propertyModel = new LVGLPropertyModel(this);
-  m_ld1 = new ListDelegate(m_ui->list_widgets->getlistview());
-  m_ld2 = new ListDelegate(m_ui->list_widgets_2->getlistview());
-  m_ld3 = new ListDelegate(m_ui->list_widgets_3->getlistview());
   m_styleModel = new LVGLStyleModel(this);
 
   initConnect();
@@ -108,9 +105,6 @@ MainWindow::~MainWindow() {
   qDeleteAll(m_widgetsInputW);
   for (int i = 0; i < 35; ++i)
     if (m_codemap.contains(i)) lv_obj_del(m_codemap[i]);
-  delete m_ld1;
-  delete m_ld2;
-  delete m_ld3;
   delete m_project;
 }
 
@@ -1051,10 +1045,6 @@ void MainWindow::initlvglConnect() {
   m_proxyModelIPW->setSourceModel(m_widgetModelIPW);
   m_proxyModelIPW->sort(0);
 
-  m_ui->list_widgets->getlistview()->setItemDelegate(m_ld1);
-  m_ui->list_widgets_2->getlistview()->setItemDelegate(m_ld2);
-  m_ui->list_widgets_3->getlistview()->setItemDelegate(m_ld3);
-
   m_ui->list_widgets->getlistview()->setModel(m_proxyModel);
   m_ui->list_widgets_2->getlistview()->setModel(m_proxyModelDPW);
   m_ui->list_widgets_3->getlistview()->setModel(m_proxyModelIPW);
@@ -1086,11 +1076,11 @@ void MainWindow::initlvglConnect() {
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_proxyModelIPW,
           &QSortFilterProxyModel::setFilterWildcard);
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets,
-          &ListViewItem::slot_toshowtab);
+          &LVGLListViewItem::slot_toshowtab);
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_2,
-          &ListViewItem::slot_toshowtab);
+          &LVGLListViewItem::slot_toshowtab);
   connect(m_ui->edit_filter, &QLineEdit::textChanged, m_ui->list_widgets_3,
-          &ListViewItem::slot_toshowtab);
+          &LVGLListViewItem::slot_toshowtab);
   connect(m_curSimulation, &LVGLSimulator::objPressed, this,
           &MainWindow::onObjPressed);
 

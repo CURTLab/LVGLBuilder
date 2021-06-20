@@ -149,6 +149,8 @@ LVGLLabel::LVGLLabel() {
 
 QString LVGLLabel::name() const { return QObject::tr("Label"); }
 
+QString LVGLLabel::codename() const { return "Label"; }
+
 QString LVGLLabel::className() const { return "lv_label"; }
 
 LVGLWidget::Type LVGLLabel::type() const { return Label; }

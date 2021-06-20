@@ -275,6 +275,8 @@ LVGLTextArea::LVGLTextArea() {
 
 QString LVGLTextArea::name() const { return QObject::tr("Text area"); }
 
+QString LVGLTextArea::codename() const { return "Text area"; }
+
 QString LVGLTextArea::className() const { return "lv_textarea"; }
 
 LVGLWidget::Type LVGLTextArea::type() const { return TextArea; }

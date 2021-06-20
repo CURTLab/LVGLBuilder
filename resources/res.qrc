@@ -67,5 +67,7 @@
         <file>btnicon/cuslogo.png</file>
         <file>qss/normal/MainwindoTitle.qss</file>
         <file>qss/normal/LVGLNewDialog.qss</file>
+        <file>qss/normal/LVGLListViewItem_1.qss</file>
+        <file>qss/normal/LVGLListViewItem_2.qss</file>
     </qresource>
 </RCC>

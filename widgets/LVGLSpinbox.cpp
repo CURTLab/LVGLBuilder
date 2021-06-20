@@ -14,6 +14,8 @@ LVGLSpinbox::LVGLSpinbox() {
 
 QString LVGLSpinbox::name() const { return QObject::tr("Spinbox"); }
 
+QString LVGLSpinbox::codename() const { return "Spinbox"; }
+
 QString LVGLSpinbox::className() const { return "lv_spinbox"; }
 
 LVGLWidget::Type LVGLSpinbox::type() const { return SpinBox; }

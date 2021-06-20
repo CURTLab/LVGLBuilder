@@ -15,7 +15,12 @@ int LVGLWidgetModel::rowCount(const QModelIndex &parent) const {
 }
 
 QVariant LVGLWidgetModel::data(const QModelIndex &index, int role) const {
-  if (role == Qt::DisplayRole) return lvgl.widgets().at(index.row())->name();
+  if (role == Qt::DisplayRole)
+    return lvgl.widgets().at(index.row())->name();
+  else if (Qt::DecorationRole == role) {
+    auto name = lvgl.widgets().at(index.row())->codename();
+    return QIcon(QString(":/icons/%1.png").arg(name));
+  }
   return QVariant();
 }
 

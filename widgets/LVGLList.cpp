@@ -61,6 +61,8 @@ LVGLList::LVGLList() {
 
 QString LVGLList::name() const { return QObject::tr("List"); }
 
+QString LVGLList::codename() const { return "List"; }
+
 QString LVGLList::className() const { return "lv_list"; }
 
 LVGLWidget::Type LVGLList::type() const { return List; }

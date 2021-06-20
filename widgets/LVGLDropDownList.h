@@ -8,6 +8,7 @@ class LVGLDropDownList : public LVGLWidget {
   LVGLDropDownList();
 
   virtual QString name() const;
+  virtual QString codename() const;
   virtual QString className() const;
   virtual Type type() const;
   virtual QIcon icon() const;

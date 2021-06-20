@@ -141,6 +141,8 @@ LVGLImage::LVGLImage() {
 
 QString LVGLImage::name() const { return QObject::tr("Image"); }
 
+QString LVGLImage::codename() const { return "Image"; }
+
 QString LVGLImage::className() const { return "lv_img"; }
 
 LVGLWidget::Type LVGLImage::type() const { return Image; }

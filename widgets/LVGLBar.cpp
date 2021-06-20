@@ -274,6 +274,8 @@ LVGLBar::LVGLBar() {
 
 QString LVGLBar::name() const { return QObject::tr("Bar"); }
 
+QString LVGLBar::codename() const { return "Bar"; }
+
 QString LVGLBar::className() const { return "lv_bar"; }
 
 LVGLWidget::Type LVGLBar::type() const { return Bar; }

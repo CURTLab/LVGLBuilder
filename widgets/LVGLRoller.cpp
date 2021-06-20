@@ -138,6 +138,8 @@ LVGLRoller::LVGLRoller() {
 
 QString LVGLRoller::name() const { return QObject::tr("Roller"); }
 
+QString LVGLRoller::codename() const { return "Roller"; }
+
 QString LVGLRoller::className() const { return "lv_roller"; }
 
 LVGLWidget::Type LVGLRoller::type() const { return Roller; }

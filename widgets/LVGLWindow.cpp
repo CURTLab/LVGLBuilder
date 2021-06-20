@@ -17,6 +17,8 @@ LVGLWindow::LVGLWindow() {
 
 QString LVGLWindow::name() const { return QObject::tr("Window"); }
 
+QString LVGLWindow::codename() const { return "Window"; }
+
 QString LVGLWindow::className() const { return "lv_win"; }
 
 LVGLWidget::Type LVGLWindow::type() const { return Window; }
