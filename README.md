@@ -2,6 +2,10 @@
 
 ## Support different themes
 
+- Colorful style（LOL）：**You can quickly modify the style of the specified part according to these different colors**
+
+  ![badstyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/newstyle2.gif)
+
 - Dark theme
 
   ![newstyle](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/newstyle.png)
