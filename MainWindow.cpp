@@ -4,6 +4,7 @@
 #include <QFileDialog>
 #include <QInputDialog>
 #include <QMessageBox>
+#include <QPushButton>
 #include <QSettings>
 #include <QSortFilterProxyModel>
 #include <QThread>
@@ -16,6 +17,7 @@
 #include "core/LVGLFontDialog.h"
 #include "core/LVGLHelper.h"
 #include "core/LVGLItem.h"
+#include "core/LVGLListViewItem.h"
 #include "core/LVGLLog.h"
 #include "core/LVGLNewDialog.h"
 #include "core/LVGLObjectModel.h"
@@ -31,7 +33,6 @@
 #include "core/LVGLWidgetModelDisplay.h"
 #include "core/LVGLWidgetModelInput.h"
 #include "core/ListDelegate.h"
-#include "core/LVGLListViewItem.h"
 #include "events/LVGLEventStateResume.h"
 #include "lvgl/lvgl.h"
 #include "ui_MainWindow.h"
@@ -42,6 +43,8 @@ MainWindow::MainWindow(QWidget *parent)
       m_ui(new Ui::MainWindow),
       m_zoom_slider(new QSlider(Qt::Horizontal)),
       m_project(nullptr),
+      m_propertyModel(new LVGLPropertyModel(this)),
+      m_styleModel(new LVGLStyleModel(this)),
       m_objectModel(nullptr),
       m_maxFileNr(5),
       m_curSimulation(new LVGLSimulator(this)),
@@ -61,17 +64,16 @@ MainWindow::MainWindow(QWidget *parent)
       m_exportThread(new LVGLExportThread),
       m_etThread(new QThread(this)),
       m_autosaveThread(new LVGLAutoSaveThread),
-      m_asThread(new QThread(this)) {
+      m_asThread(new QThread(this)),
+      m_plusico(new QPushButton(this)),
+      m_minico(new QPushButton(this)) {
   this->setWindowFlags(Qt::Widget);
   m_ui->setupUi(this);
   lvgl.init(320, 480);
 
-  m_propertyModel = new LVGLPropertyModel(this);
-  m_styleModel = new LVGLStyleModel(this);
-
+  initStyle();
   initConnect();
   initProp();
-  initStyle();
   initThreads();
 }
 
@@ -887,7 +889,10 @@ void MainWindow::initProp() {
   m_ui->property_tree->setColumnWidth(0, 150);
   m_ui->object_tree->setColumnWidth(0, 80);
   m_zoom_slider->setRange(-10, 40);
-  m_ui->statusbar->addPermanentWidget(m_zoom_slider);
+
+  m_ui->statusbar->addPermanentWidget(m_minico, 0);
+  m_ui->statusbar->addPermanentWidget(m_zoom_slider, 1);
+  m_ui->statusbar->addPermanentWidget(m_plusico, 0);
 
   m_ui->style_tree->setModel(m_styleModel);
   m_ui->style_tree->setItemDelegate(
@@ -932,27 +937,39 @@ void MainWindow::initProp() {
   m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
                                     QAbstractItemView::CurrentChanged);
   m_ui->list_images->setMovement(QListWidget::Snap);
-  m_ui->list_images->setIconSize(QSize(60, 60));
   setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
   m_ui->actionEnglish->setChecked(true);
+
+  //  QImage image;
+  //  image.load(":/icons/searchico.png");
+  //  QPixmap pix = QPixmap::fromImage(image);
+  //  QPixmap fitp =
+  //      pix.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
+  //  m_ui->labelsearch->setPixmap(fitp);
 }
 
 void MainWindow::initStyle() {
-  m_ui->style_tree->setStyleSheet(
-      "QTreeView::item{border:1px solid "
-      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
-      "border:1px solid #567dbc;color:black;}");
-  m_ui->property_tree->setStyleSheet(
-      "QTreeView::item{border:1px solid "
-      "#f2f2f2;}QTreeView::item::hover{color:black;}QTreeView::item:selected{"
-      "border:1px solid #567dbc;color:black;}");
-  QString styless =
-      "QListWidget{background-color:#F2F2F2;}"
-      "QListWidget::Item{background-color:#ffffff;}"
-      "QListWidget::Item:hover,"
-      "QListWidget::Item:selected{background-color:#CEE3F6;}";
-  m_ui->list_images->setStyleSheet(styless);
-  m_ui->list_fonts->setStyleSheet("background-color:#F2F2F2;");
+  m_ui->style_tree->header()->setObjectName("stylehead");
+  m_ui->property_tree->header()->setObjectName("prophead");
+  m_ui->object_tree->header()->setObjectName("objhead");
+  m_zoom_slider->setObjectName("zoom_slider");
+  m_plusico->setObjectName("plusico");
+  m_minico->setObjectName("minico");
+
+  QFile file(":/qss/normal/MainWindow.qss");
+  file.open(QFile::ReadOnly);
+  QTextStream filetext(&file);
+  QString stylesheet = filetext.readAll().replace("\r\n", "");
+  this->setStyleSheet(stylesheet);
+  file.close();
+
+  m_ui->ObjecInspector->update();
+  m_ui->PropertyEditor->update();
+  m_ui->WidgeBox->update();
+  m_ui->ImageEditor->update();
+  m_ui->StyleEditor->update();
+  m_ui->FontEditor->update();
+  m_ui->UndoEditor->update();
 }
 
 void MainWindow::initThreads() {

@@ -26,6 +26,7 @@ class LVGLExportThread;
 class LVGLAutoSaveThread;
 class QTranslator;
 class LVGLConfig;
+class QPushButton;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -181,5 +182,7 @@ class MainWindow : public QMainWindow {
   QThread *m_asThread;
   QTranslator *m_translator;
   LVGLConfig *m_config;
+  QPushButton *m_plusico;
+  QPushButton *m_minico;
 };
 #endif  // MAINWINDOW_H

@@ -69,5 +69,13 @@
         <file>qss/normal/LVGLListViewItem_2.qss</file>
         <file>qss/normal/arrow_down.png</file>
         <file>qss/normal/arrow_right.png</file>
+        <file>qss/dark/MainwindoTitle.qss</file>
+        <file>qss/normal/MainWindow.qss</file>
+        <file>btnicon/blank.png</file>
+        <file>qss/normal/arrow_left.png</file>
+        <file>qss/normal/arrow_up.png</file>
+        <file>qss/normal/minus.png</file>
+        <file>qss/normal/plus.png</file>
+        <file>qss/normal/searchico.png</file>
     </qresource>
 </RCC>

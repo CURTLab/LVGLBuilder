@@ -1,8 +1,8 @@
 QToolButton{
 background:white;
-color:black;
+color:#293047;
 qproperty-icon:url(:/qss/normal/arrow_right.png);
-qproperty-iconSize:20px 20px;
+qproperty-iconSize:14px 14px;
 border-right:1px solid #bfbfbf;
 border-bottom:1px solid #bfbfbf;
 }
