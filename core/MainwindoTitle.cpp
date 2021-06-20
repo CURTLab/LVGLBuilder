@@ -48,12 +48,14 @@ void MainwindoTitle::mouseMoveEvent(QMouseEvent *event) {
 
 void MainwindoTitle::mouseDoubleClickEvent(QMouseEvent *event) {
   auto parent = this->parentWidget();
+
   if (parent->isMaximized())
     parent->showNormal();
-  else {
-    parent->move(0, 0);
+  else
     parent->showMaximized();
-  }
+
+  parent->move(0, 0);
+
   QWidget::mouseDoubleClickEvent(event);
 }
 

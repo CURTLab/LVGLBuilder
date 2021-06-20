@@ -13,8 +13,6 @@
         <file>start.png</file>
         <file>Landscape.png</file>
         <file>Portrait.png</file>
-        <file>Widget Box_arrow_0.png</file>
-        <file>Widget Box_arrow_90.png</file>
         <file>Widget Box_background_cli.png</file>
         <file>Widget Box_background_nor.png</file>
         <file>Switch.png</file>
@@ -69,5 +67,7 @@
         <file>qss/normal/LVGLNewDialog.qss</file>
         <file>qss/normal/LVGLListViewItem_1.qss</file>
         <file>qss/normal/LVGLListViewItem_2.qss</file>
+        <file>qss/normal/arrow_down.png</file>
+        <file>qss/normal/arrow_right.png</file>
     </qresource>
 </RCC>

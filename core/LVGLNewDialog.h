@@ -38,7 +38,7 @@ class LVGLNewDialog : public QDialog {
   Ui::LVGLNewDialog *m_ui;
   QVector<QPair<lv_coord_t, lv_coord_t>> m_resolutions;
   QPoint m_curPos;
-  QString m_bgcolor;
+  QColor m_bgcolor;
 };
 
 #endif  // LVGLNEWDIALOG_H

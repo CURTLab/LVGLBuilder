@@ -67,8 +67,7 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
   int index = stylesheet.indexOf("QDialog#LVGLNewDialog{");
   QString str = stylesheet.mid(index);
   index = str.indexOf("background");
-  m_bgcolor = str.mid(index + 11, 7);
-  if (m_bgcolor.isEmpty()) m_bgcolor = "#e8e8e8";
+  m_bgcolor = QColor(str.mid(index + 11, 7));
 }
 
 LVGLNewDialog::~LVGLNewDialog() { delete m_ui; }
@@ -135,16 +134,22 @@ void LVGLNewDialog::paintEvent(QPaintEvent *event) {
 
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing, true);
-  painter.fillPath(path, QBrush(QColor(m_bgcolor)));
+  painter.fillPath(path, QBrush(m_bgcolor));
 
-  QColor color(0, 0, 0, 50);
+  int r = m_bgcolor.red() - 50;
+  int g = m_bgcolor.green() - 50;
+  int b = m_bgcolor.blue() - 50;
+  r = r < 0 ? 0 : r;
+  g = g < 0 ? 0 : g;
+  b = b < 0 ? 0 : b;
+  QColor shadowcolor(r, g, b, 50);
   for (int i = 0; i < 10; i++) {
     QPainterPath path;
     path.setFillRule(Qt::WindingFill);
     path.addRect(10 - i, 10 - i, this->width() - (10 - i) * 2,
                  this->height() - (10 - i) * 2);
-    color.setAlpha(150 - sqrt(i) * 50);
-    painter.setPen(color);
+    shadowcolor.setAlpha(150 - sqrt(i) * 50);
+    painter.setPen(shadowcolor);
     painter.drawPath(path);
   }
 }
