@@ -25,6 +25,7 @@ int main(int argc, char *argv[]) {
       google_breakpad::ExceptionHandler::HANDLER_ALL);
 #endif
   QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+  QCoreApplication::setAttribute(Qt::AA_UseHighDpiPixmaps);
   QApplication a(argc, argv);
   LVGLConfig config;
 
