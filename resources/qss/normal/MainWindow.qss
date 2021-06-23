@@ -78,7 +78,8 @@ background:#afb4db;
 color:#8a8c8e;
 }
 QTabBar::tab:hover{
-background:#bfbfbf;
+background:#411445;
+color:#deab8a;
 }
 QTabBar::close-button {
 image:url(:/btnicon/close_normal.png);
@@ -243,10 +244,12 @@ color:white;
 }
 QComboBox::down-arrow {
 image: url(:/qss/normal/arrow_down.png);
-width:10px;height:10px;
+width:10px;
+height:10px;
 }
 QComboBox:!editable:on, QComboBox::drop-down:editable:on {
-background:#d64f44;color:white;
+background:#d64f44;
+color:white;
 }
 QComboBox:on {
 padding-top: 3px;padding-left: 4px;
@@ -254,23 +257,26 @@ padding-top: 3px;padding-left: 4px;
 QComboBox::drop-down {
 subcontrol-origin: padding;
 subcontrol-position: top right;
-width: 15px;border-left-width: 1px;
+width: 15px;
+border-left-width: 1px;
 border-left-color: #474747;
 border-left-style: solid;
 border-top-right-radius: 3px;
 border-bottom-right-radius: 3px;
 }
 QComboBox::down-arrow:on {
-top: 1px;left: 1px;
+top: 1px;
+left: 1px;
 }
 QComboBox QAbstractItemView {
-background:#f15b6c;color:white;
+background:#f15b6c;
+color:white;
 }
 
 
 QUndoView{
-background:#323232;
-color:white;
+background:#afdfe4;
+color:#54211d;
 }
 
 QSlider#zoom_slider::groove:horizontal {
@@ -312,24 +318,16 @@ border: 0px
 
 
 QListWidget{
-background-color:#F2F2F2;
+background-color:#fdb933;
 }
 QListWidget::Item{
-background-color:#ffffff;
+padding:9px;
+background-color:#e0861a;
+color:#8f4b4a;
 }
 QListWidget::Item:hover,
 QListWidget::Item:selected{
-background-color:#CEE3F6;
-}
-
-QListView{
-background:#ae5039;
-border:none;
-}
-QListView::Item{
-border-bottom:1px solid #010101;
-border-right:1px solid #010101;
-color:#281f1d;
+background-color:#7c8577;
 }
 
 

@@ -62,25 +62,25 @@ LVGLProject *LVGLProject::load(const QString &fileName) {
       QString picpath = object["fileName"].toString();
       QString dir, fname;
       int index = 0;
-      for (int i = fileName.size() - 1; i >= 0; --i) {
-        if (fileName[i] == '/') {
-          index = i;
+      for (int j = fileName.size() - 1; j >= 0; --j) {
+        if (fileName[j] == '/') {
+          index = j;
           break;
         }
-        if (fileName[i] == '\\') {
-          index = i;
+        if (fileName[j] == '\\') {
+          index = j;
           break;
         }
       }
       dir = fileName.mid(0, index);
       index = 0;
-      for (int i = picpath.size() - 1; i >= 0; --i) {
-        if (picpath[i] == '/') {
-          index = i;
+      for (int k = picpath.size() - 1; k >= 0; --k) {
+        if (picpath[k] == '/') {
+          index = k;
           break;
         }
-        if (picpath[i] == '\\') {
-          index = i;
+        if (picpath[k] == '\\') {
+          index = k;
           break;
         }
       }

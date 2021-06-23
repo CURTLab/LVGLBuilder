@@ -228,8 +228,16 @@ void MainWindow::addImage(LVGLImageData *img, QString name) {
   cast.ptr = img;
   for (int i = 0; i < m_ui->list_images->count(); ++i)
     if (m_ui->list_images->item(i)->text() == name) return;
+  double scaled = m_ui->list_images->width() / 238.0;
+  if (m_ui->list_images->width() < 195) scaled *= 0.81;
+  m_listimagesize.setWidth(scaled * 174);
+  QImage image;
+  image.load(img->fileName());
+  QPixmap pix = QPixmap::fromImage(image);
+  QPixmap fitp = pix.scaled(m_listimagesize.width(), m_listimagesize.height(),
+                            Qt::IgnoreAspectRatio);
 
-  QListWidgetItem *item = new QListWidgetItem(img->icon(), name);
+  QListWidgetItem *item = new QListWidgetItem(fitp, name);
   item->setData(Qt::UserRole + 3, cast.i);
   m_ui->list_images->addItem(item);
 }
@@ -238,8 +246,9 @@ void MainWindow::updateImages() {
   m_ui->list_images->clear();
   for (LVGLImageData *i : lvgl.images()) {
     if (i->fileName().isEmpty()) continue;
-    QString name = QFileInfo(i->fileName()).baseName() +
-                   QString(" [%1x%2]").arg(i->width()).arg(i->height());
+    QString fname = QFileInfo(i->fileName()).baseName();
+    QString sizename = QString("%1x%2").arg(i->width()).arg(i->height());
+    QString name = getimgfilename(fname, sizename);
     addImage(i, name);
   }
 }
@@ -476,6 +485,25 @@ void MainWindow::setSelectLanguage(int index) {
   }
 }
 
+QString MainWindow::getimgfilename(QString fname, const QString &sizename) {
+  qDebug() << "###" << m_ui->list_images->width();
+  int width = m_ui->list_images->width();
+  double scaled = width / 238.0;
+  if (width < 200) scaled *= 0.65;
+  if (fname.size() > 12 * scaled)
+    fname = fname.mid(0, 12 * scaled) + "...";
+  else {
+    int adds = 18 * scaled - fname.size();
+    for (int index = 0; index < adds; ++index) fname += " ";
+  }
+
+  int adds = -2 * (sizename.size() - 7);
+  QString space = "";
+  for (int index = 0; index < 7 * scaled + adds; ++index) space += " ";
+  QString name = fname + space + sizename;
+  return name;
+}
+
 void MainWindow::on_action_load_triggered() {
   QString path;
   if (m_project != nullptr) path = m_project->fileName();
@@ -550,9 +578,10 @@ void MainWindow::on_button_add_image_clicked() {
       continue;
     }
 
-    QString name = QFileInfo(fileName).baseName();
-    LVGLImageData *i = lvgl.addImage(fileName, name);
-    name += QString(" [%1x%2]").arg(i->width()).arg(i->height());
+    QString fname = QFileInfo(fileName).baseName();
+    LVGLImageData *i = lvgl.addImage(fileName, fname);
+    QString sizename = QString("%1x%2").arg(i->width()).arg(i->height());
+    QString name = getimgfilename(fname, sizename);
     addImage(i, name);
   }
 }
@@ -936,7 +965,10 @@ void MainWindow::initProp() {
                                      QAbstractItemView::CurrentChanged);
   m_ui->style_tree->setEditTriggers(QAbstractItemView::DoubleClicked |
                                     QAbstractItemView::CurrentChanged);
-  m_ui->list_images->setMovement(QListWidget::Snap);
+  m_ui->list_images->setMovement(QListWidget::Static);
+  m_listimagesize = QSize(174, 100);
+  m_ui->list_images->setIconSize(m_listimagesize);
+  m_ui->list_images->setSpacing(10);
   setTabPosition(Qt::AllDockWidgetAreas, QTabWidget::North);
   m_ui->actionEnglish->setChecked(true);
 

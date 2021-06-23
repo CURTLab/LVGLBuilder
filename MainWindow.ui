@@ -339,8 +339,8 @@
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>254</width>
-          <height>396</height>
+          <width>236</width>
+          <height>479</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -441,8 +441,14 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>180</width>
+     <width>78</width>
      <height>122</height>
+    </size>
+   </property>
+   <property name="maximumSize">
+    <size>
+     <width>238</width>
+     <height>524287</height>
     </size>
    </property>
    <property name="font">
@@ -559,7 +565,7 @@
    </property>
    <property name="minimumSize">
     <size>
-     <width>72</width>
+     <width>79</width>
      <height>141</height>
     </size>
    </property>

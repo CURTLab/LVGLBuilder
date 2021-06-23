@@ -142,6 +142,7 @@ class MainWindow : public QMainWindow {
   void setAllModelNull();
   void setAutoSaveChecked(int state);
   void setSelectLanguage(int index);
+  QString getimgfilename(QString fname, const QString &sizename);
 
  private:
   Ui::MainWindow *m_ui;
@@ -184,5 +185,6 @@ class MainWindow : public QMainWindow {
   LVGLConfig *m_config;
   QPushButton *m_plusico;
   QPushButton *m_minico;
+  QSize m_listimagesize;
 };
 #endif  // MAINWINDOW_H

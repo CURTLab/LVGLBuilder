@@ -1,13 +1,13 @@
 QToolButton{
-background:white;
-color:#293047;
+background:#2570a1;
+color:#afdfe4;
 qproperty-icon:url(:/qss/normal/arrow_right.png);
 qproperty-iconSize:14px 14px;
 border-right:1px solid #bfbfbf;
 border-bottom:1px solid #bfbfbf;
 }
 QToolButton:hover{
-background:#bfbfbf;
+background:#11264f;
 }
 
 QListView{
