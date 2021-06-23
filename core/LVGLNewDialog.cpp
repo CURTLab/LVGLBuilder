@@ -6,6 +6,7 @@
 #include <QPainterPath>
 #include <QPixmap>
 #include <QSettings>
+#include <cmath>
 
 #include "LVGLHelper.h"
 #include "ui_LVGLNewDialog.h"
