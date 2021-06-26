@@ -328,6 +328,7 @@ void MainWindow::loadProject(const QString &fileName) {
     if (m_ui->tabWidget->count() == 0) setEnableBuilder(false);
   } else {
     m_ui->tabWidget->setTabText(index, m_project->getProjectName());
+    tabw->setfilename(m_project->getProjectName());
 
     adjustForCurrentFile(fileName);
 
