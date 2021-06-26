@@ -486,7 +486,6 @@ void MainWindow::setSelectLanguage(int index) {
 }
 
 QString MainWindow::getimgfilename(QString fname, const QString &sizename) {
-  qDebug() << "###" << m_ui->list_images->width();
   int width = m_ui->list_images->width();
   double scaled = width / 238.0;
   if (width < 200) scaled *= 0.65;

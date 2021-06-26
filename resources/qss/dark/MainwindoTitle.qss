@@ -55,9 +55,13 @@ height:20px;
 }
 
 QLabel#label{
-color:white;
+color:#1b315e;
+}
+
+QLabel#label_2{
+color:#525f42;
 }
 
 QWidget#MainwindoTitle{
-background-color:#323232;
+background-color:#feeeed;
 }

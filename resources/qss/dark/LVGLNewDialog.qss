@@ -1,0 +1,151 @@
+QPushButton#close{
+border-image:url(:/btnicon/close_normal.png);
+background-color:transparent;
+border:0px;
+width:16px;
+height:16px;
+}
+QPushButton#close:hover{
+border-image:url(:/btnicon/close_press.png);
+background-color:transparent;
+}
+QPushButton#close:pressed{
+border-image:url(:/btnicon/close_press.png);
+background-color:transparent;
+}
+
+QLabel#title{
+background:#f58f98;
+color:#411445;
+}
+
+QFrame#frame{
+background:#f58f98;
+border:0px;
+}
+
+
+
+
+QLabel#filename{
+background:#feeeed;
+color:#f15b6c;
+}
+
+QLabel#res{
+background:#feeeed;
+color:#8a2e3b;
+}
+
+QLabel#width{
+background:#feeeed;
+color:#33a3dc;
+}
+
+QLabel#height{
+background:#feeeed;
+color:#7fb80e;
+}
+
+
+QLineEdit#lineEdit{
+border:0px;
+background:#f9f8f4;
+color:#121a2a;
+}
+
+
+QSpinBox{
+background:#826858;
+color:#fffef9;
+border: 1px solid gray;
+border-radius: 3px;
+padding: 1px 18px 1px 13px;
+}
+QSpinBox:disabled{
+background:#78cdd1;
+color:#a1a3a6;
+}
+
+
+QComboBox{
+border: 1px solid #474747;
+border-radius: 3px;
+padding: 1px 18px 1px 12px;
+color: #6b473c;
+background:#f391a9;
+}
+QComboBox:editable {
+background:#f15b6c;
+color:white;
+}
+QComboBox::down-arrow {
+image: url(:/qss/normal/arrow_down.png);
+width:10px;height:10px;
+}
+QComboBox:!editable:on,
+QComboBox::drop-down:editable:on {
+background:#d64f44;
+color:white;
+}
+QComboBox:on {
+padding-top: 3px;padding-left: 4px;
+}
+QComboBox::drop-down {
+subcontrol-origin: padding;
+subcontrol-position: top right;
+width: 15px;
+border-left-width: 1px;
+border-left-color: #474747;
+border-left-style: solid;
+border-top-right-radius: 3px;
+border-bottom-right-radius: 3px;
+}
+QComboBox::down-arrow:on {
+top: 1px;
+left: 1px;
+}
+QComboBox  QAbstractItemView {
+background:#f15b6c;
+color:white;
+}
+QComboBox:disabled {
+color:#8a8c8e;
+}
+
+
+QPushButton#pushButton{
+color: white;
+border-radius: 12px;
+background-color: #1473e6;
+min-width: 80px;
+min-height:26px;
+}
+QPushButton#pushButton:pressed {
+background-color: 
+#0F64D2;
+}
+QPushButton#pushButton:hover {
+background-color:#0F64D2;
+}
+
+QPushButton#pushButton_2{
+color: black;
+border:2px solid #979797;
+border-radius: 12px;
+background-color: #F8F8F8;
+min-width: 76px;
+min-height:22px;
+}
+QPushButton#pushButton_2:pressed {
+background-color: #D8D8D8;
+}
+QPushButton#pushButton_2:hover 
+{background-color:#D8D8D8;
+} 
+
+
+QDialog#LVGLNewDialog{
+background:#feeeed;
+border:0px;
+}

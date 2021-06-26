@@ -1,0 +1,27 @@
+QToolButton{
+background:#2570a1;
+color:#afdfe4;
+qproperty-icon:url(:/qss/normal/arrow_right.png);
+qproperty-iconSize:14px 14px;
+border-right:1px solid #bfbfbf;
+border-bottom:1px solid #bfbfbf;
+}
+QToolButton:hover{
+background:#11264f;
+}
+
+QListView{
+background:#f2f2f2;
+show-decoration-selected: 1;
+}
+QListView::Item{
+background:white;
+height:26px;
+border-bottom:1px solid #bfbfbf;
+border-right:1px solid #bfbfbf;
+border-left:1px solid #bfbfbf;
+color:black;
+}
+QListView::Item:hover{
+background:#bfbfbf;
+}
