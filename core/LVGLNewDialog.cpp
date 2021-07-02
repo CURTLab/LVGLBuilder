@@ -21,14 +21,13 @@ LVGLNewDialog::LVGLNewDialog(QWidget *parent)
 
   m_ui->lineEdit->setText(LVGLHelper::getInstance().newProjectName());
 
-  m_colorDepth << "32 bit"
-               << "24 bit"
-               << "16 bit"
-               << "8 bit"
-               << "32 bit with alpha"
-               << "24 bit with alpha"
-               << "16 bit with alpha"
-               << "8 bit with alpha";
+  m_colorDepth << "RGB888"
+               << "RGB565"
+               << "BGR565(swapped)"
+               << "RGB332"
+               << "ARGB8888"
+               << "ARGB8565"
+               << "ARGB8332";
 
   m_ui->combo_resolution->addItems(m_colorDepth);
 
