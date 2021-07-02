@@ -893,6 +893,13 @@ QJsonArray LVGLObject::jsonStyles() const {
               LV_STYLE_SCALE_BORDER_WIDTH | (state << LV_STYLE_STATE_POS));
           scale.insert("scale_end_border_width", c);
         }
+        if (!scale_end_line_width(obj1, obj2, part,
+                                  LVGLCore::LVGL_STATE[stateindex])) {
+          auto c = _lv_obj_get_style_int(
+              s1, part,
+              LV_STYLE_SCALE_END_LINE_WIDTH | (state << LV_STYLE_STATE_POS));
+          scale.insert("scale_end_line_width", c);
+        }
         if (scale.size() > 0) style.insert("Scale", scale);
       }
       QString TypeName = QString("PSS%1%2").arg(i).arg(j);
