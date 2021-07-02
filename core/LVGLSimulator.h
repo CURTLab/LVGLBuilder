@@ -47,7 +47,7 @@ class LVGLSimulator : public QGraphicsView {
   LVGLItem *item() const;
 
   void moveObject(LVGLObject *obj, int dx, int dy);
-  void addObject(LVGLObject *obj);
+  void addObject(LVGLObject *obj, bool needaddtolvgl = true);
   void removeObject(LVGLObject *obj);
   LVGLObject *findObject(const QString &objname);
 

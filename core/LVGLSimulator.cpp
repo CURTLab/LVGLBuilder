@@ -376,14 +376,16 @@ void LVGLSimulator::moveObject(LVGLObject *obj, int dx, int dy) {
   }
 }
 
-void LVGLSimulator::addObject(LVGLObject *obj) {
+void LVGLSimulator::addObject(LVGLObject *obj, bool needaddtolvgl) {
   connect(obj, &LVGLObject::positionChanged, m_item, &LVGLItem::updateGeometry);
 
   // add to object viewer
   if (m_objectModel) m_objectModel->beginInsertObject(obj);
 
-  // add object to interal list
-  lvgl.addObject(obj);
+  if (needaddtolvgl) {
+    // add object to interal list
+    lvgl.addObject(obj);
+  }
 
   if (m_objectModel) m_objectModel->endInsertObject();
 
@@ -431,8 +433,8 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
     if (obj) {
       if (obj->parent() && obj->parent()->widgetType() == LVGLWidget::TabView)
         return false;
-      m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
       m_sim->setSelectedObject(nullptr);
+      m_sim->undoStack()->push(new RemoveWidgetCommand(m_sim, obj));
     }
     return true;
   } else if (keyEvent->key() == Qt::Key_Left) {
@@ -476,8 +478,7 @@ bool LVGLKeyPressEventFilter::eventFilter(QObject *obj, QEvent *event) {
         connect(child, &LVGLObject::positionChanged, m_sim->item(),
                 &LVGLItem::updateGeometry);
       m_sim->undoStack()->push(new AddWidgetCommand(m_sim, newObj));
-      m_sim->setSelectedObject(newObj);
-      m_sim->setFocus();
+      m_sim->addObject(newObj, false);
     }
     return true;
   }
