@@ -1,5 +1,21 @@
 # 1.0.4 preview
 
+**Version 1.0.4 is expected to be released in late July.**
+
+## Support exporting all pages
+
+![savebehavior](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/savebehavior.png)
+
+## Support a single file to save all pages
+
+![exportbehavior](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/exportbehavior.png)
+
+## Added Color format option
+
+* The loaded picture does not need to manually set the conversion format  **(PS: The loading of gif images will be supported in the future)**
+* ![colordepth1](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/colordepth1.png)
+* ![colordepth2](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/colordepth2.png)
+
 ## Support different themes
 
 - Colorful style（LOL）：**You can quickly modify the style of the specified part according to these different colors**
