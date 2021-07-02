@@ -28,11 +28,29 @@ void LVGLExportThread::startrun(const QStringList &list) {
   if (list.isEmpty() || list.count() != 2) {
     if (!stopped) emit failed();
   } else {
-    m_project->setProjeName(list[0]);
-    if (m_project->exportCode(list[1])) {
+    if (LVGLHelper::getInstance().getIsExportAll()) {
+      QStringList screens;
+      auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
+      for (int i = 0; i < tabw->count(); ++i)
+        screens << tabw->tabText(i).toLower().replace(" ", "_");
+
+      for (auto s : qAsConst(screens)) {
+        if (!stopped) {
+          m_project->setProjeName(s);
+          m_project->exportCode(list[1]);
+        } else {
+          return;
+        }
+      }
+
       if (!stopped) emit successful();
     } else {
-      if (!stopped) emit failed();
+      m_project->setProjeName(list[0]);
+      if (m_project->exportCode(list[1])) {
+        if (!stopped) emit successful();
+      } else {
+        if (!stopped) emit failed();
+      }
     }
   }
 }

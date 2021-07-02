@@ -978,6 +978,9 @@ void MainWindow::initProp() {
   //  QPixmap fitp =
   //      pix.scaled(16, 16, Qt::IgnoreAspectRatio, Qt::SmoothTransformation);
   //  m_ui->labelsearch->setPixmap(fitp);
+
+  m_ui->actionExport_All->setChecked(true);
+  m_ui->actionSave_ALl->setChecked(true);
 }
 
 void MainWindow::initStyle() {
@@ -1295,4 +1298,28 @@ void MainWindow::on_actionSimplified_Chinese_triggered() {
   m_ui->retranslateUi(this);
   m_config->setVar("Language", "name", "sc_zh.qm");
   m_config->setVar("Language", "index", 8);
+}
+
+void MainWindow::on_actionExport_All_triggered() {
+  m_ui->actionExport_All->setChecked(true);
+  m_ui->actionExport_One->setChecked(false);
+  LVGLHelper::getInstance().setExportAll(true);
+}
+
+void MainWindow::on_actionExport_One_triggered() {
+  m_ui->actionExport_All->setChecked(false);
+  m_ui->actionExport_One->setChecked(true);
+  LVGLHelper::getInstance().setExportAll(false);
+}
+
+void MainWindow::on_actionSave_ALl_triggered() {
+  m_ui->actionSave_ALl->setChecked(true);
+  m_ui->actionSave_One->setChecked(false);
+  LVGLHelper::getInstance().setSaveAll(true);
+}
+
+void MainWindow::on_actionSave_One_triggered() {
+  m_ui->actionSave_ALl->setChecked(false);
+  m_ui->actionSave_One->setChecked(true);
+  LVGLHelper::getInstance().setSaveAll(false);
 }

@@ -134,10 +134,26 @@
     <addaction name="actionPortuguese"/>
     <addaction name="actionTraditional_Chinese"/>
    </widget>
+   <widget class="QMenu" name="menuExport_behavior">
+    <property name="title">
+     <string>Export Behavior</string>
+    </property>
+    <addaction name="actionExport_All"/>
+    <addaction name="actionExport_One"/>
+   </widget>
+   <widget class="QMenu" name="menuSave_Behavior">
+    <property name="title">
+     <string>Save Behavior</string>
+    </property>
+    <addaction name="actionSave_ALl"/>
+    <addaction name="actionSave_One"/>
+   </widget>
    <addaction name="menuLittlevGL_Builder"/>
    <addaction name="menuAutoSave"/>
    <addaction name="menuLoadMode"/>
    <addaction name="menuExport_Method"/>
+   <addaction name="menuExport_behavior"/>
+   <addaction name="menuSave_Behavior"/>
    <addaction name="menuLanguage"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
@@ -1083,6 +1099,38 @@
    </property>
    <property name="text">
     <string>Hindi</string>
+   </property>
+  </action>
+  <action name="actionExport_All">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Export All</string>
+   </property>
+  </action>
+  <action name="actionExport_One">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Export One</string>
+   </property>
+  </action>
+  <action name="actionSave_ALl">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Save All</string>
+   </property>
+  </action>
+  <action name="actionSave_One">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Save One</string>
    </property>
   </action>
  </widget>

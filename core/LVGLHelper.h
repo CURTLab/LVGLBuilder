@@ -22,6 +22,8 @@ class LVGLHelper {
 
   // get
   bool getNeedSetTime() { return m_needSetTime; }
+  bool getIsExportAll() { return m_exportAll; }
+  bool getIsSaveAll() { return m_saveAll; }
   int getLoadMethod() { return m_loadMethod; }
   int getExportMethod() { return m_exportMethod; }
 
@@ -41,6 +43,8 @@ class LVGLHelper {
   void setExportMethod(int method) { m_exportMethod = method; }
   void setMainW(MainWindow* m) { m_pMainW = m; }
   void setSaveFontNmae(const QString& name);
+  void setExportAll(bool b) { m_exportAll = b; }
+  void setSaveAll(bool b) { m_saveAll = b; }
 
   // other
   void updatetabDate();
@@ -56,7 +60,8 @@ class LVGLHelper {
       : m_pMainW(nullptr),
         m_needSetTime(false),
         m_loadMethod(0),
-        m_exportMethod(0) {
+        m_exportMethod(0),
+        m_exportAll(true) {
     m_saveFontN.push_back("lv_font_123abc_16");
   }
 
@@ -71,5 +76,7 @@ class LVGLHelper {
   int m_exportMethod;
   QStringList m_eventName;
   QList<char*> m_needDelCharPoint;
+  bool m_exportAll;
+  bool m_saveAll;
 };
 #endif

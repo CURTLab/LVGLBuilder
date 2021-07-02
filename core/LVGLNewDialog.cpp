@@ -12,35 +12,31 @@
 #include "ui_LVGLNewDialog.h"
 
 LVGLNewDialog::LVGLNewDialog(QWidget *parent)
-    : QDialog(parent), m_ui(new Ui::LVGLNewDialog) {
+    : QDialog(parent), m_ui(new Ui::LVGLNewDialog), m_clicked(false) {
   m_ui->setupUi(this);
   setWindowFlags(Qt::Dialog | Qt::FramelessWindowHint);
   setWindowFlags(windowFlags() & ~Qt::WindowMaximizeButtonHint);
   setAttribute(Qt::WA_StyledBackground);
   setAttribute(Qt::WA_TranslucentBackground);
 
-  m_ui->title->setText(tr("New Project"));
-  m_ui->filename->setText(tr("File Name:"));
-  m_ui->res->setText(tr("Resolution:"));
-  m_ui->width->setText(tr("Width:"));
-  m_ui->height->setText(tr("Height:"));
-  m_ui->pushButton->setText("Ok");
-  m_ui->pushButton_2->setText("Cancel");
-  m_ui->combo_resolution->addItem(tr("Costume"));
   m_ui->lineEdit->setText(LVGLHelper::getInstance().newProjectName());
 
-  m_resolutions << qMakePair(480, 320);
-  m_resolutions << qMakePair(320, 240);
-  m_resolutions << qMakePair(160, 120);
+  m_colorDepth << "32 bit"
+               << "24 bit"
+               << "16 bit"
+               << "8 bit"
+               << "32 bit with alpha"
+               << "24 bit with alpha"
+               << "16 bit with alpha"
+               << "8 bit with alpha";
 
-  for (const auto &r : m_resolutions)
-    m_ui->combo_resolution->addItem(
-        QString("%1 x %2").arg(r.first).arg(r.second));
+  m_ui->combo_resolution->addItems(m_colorDepth);
 
-  connect(
-      m_ui->combo_resolution,
-      static_cast<void (QComboBox::*)(int)>(&QComboBox::currentIndexChanged),
-      this, &LVGLNewDialog::resolutionChanged);
+  //  connect(
+  //      m_ui->combo_resolution,
+  //      static_cast<void
+  //      (QComboBox::*)(int)>(&QComboBox::currentIndexChanged), this,
+  //      &LVGLNewDialog::resolutionChanged);
 
   QSettings settings("at.fhooe.lvgl", "LVGL Builder");
 
@@ -110,17 +106,22 @@ void LVGLNewDialog::accept() {
 }
 
 void LVGLNewDialog::mousePressEvent(QMouseEvent *e) {
-  if (e->button() & Qt::LeftButton)
+  if (e->button() & Qt::LeftButton) {
     m_curPos = e->globalPos() - frameGeometry().topLeft();
+    m_clicked = true;
+  }
 
   QDialog::mousePressEvent(e);
 }
 
 void LVGLNewDialog::mouseMoveEvent(QMouseEvent *e) {
-  if (e->buttons() & Qt::LeftButton) move(e->globalPos() - m_curPos);
+  if (e->buttons() & Qt::LeftButton && m_clicked)
+    move(e->globalPos() - m_curPos);
 
   QDialog::mouseMoveEvent(e);
 }
+
+void LVGLNewDialog::mouseReleaseEvent(QMouseEvent *e) { m_clicked = false; }
 
 void LVGLNewDialog::keyPressEvent(QKeyEvent *e) {
   if (e->key() == Qt::Key_Enter || e->key() == Qt::Key_Return) accept();

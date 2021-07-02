@@ -109,6 +109,14 @@ class MainWindow : public QMainWindow {
 
   void on_actionSimplified_Chinese_triggered();
 
+  void on_actionExport_All_triggered();
+
+  void on_actionExport_One_triggered();
+
+  void on_actionSave_ALl_triggered();
+
+  void on_actionSave_One_triggered();
+
  protected:
   void showEvent(QShowEvent *event) override;
   void keyPressEvent(QKeyEvent *e) override;
