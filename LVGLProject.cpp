@@ -41,9 +41,9 @@ LVGLProject *LVGLProject::load(const QString &fileName)
 	QFile file(fileName);
 	if (!file.open(QIODevice::ReadOnly))
 		return nullptr;
-	QJsonDocument doc = QJsonDocument::fromJson(file.readAll());
+	QJsonObject doc = QJsonDocument::fromJson(file.readAll()).object();
 	file.close();
-	if (!doc.object().contains("lvgl"))
+	if (!doc.contains("lvgl"))
 		return nullptr;
 
 	QJsonObject lvglObj = doc["lvgl"].toObject();
