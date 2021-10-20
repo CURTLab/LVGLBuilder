@@ -2,6 +2,7 @@
 #define LVGLFONTDIALOG_H
 
 #include <QDialog>
+#include <QHash>
 
 namespace Ui {
 class LVGLFontDialog;

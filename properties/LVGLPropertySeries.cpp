@@ -234,7 +234,7 @@ void LVGLPropertySeries::updateWidget(LVGLObject *obj)
 
 	lv_chart_ext_t *ext = reinterpret_cast<lv_chart_ext_t*>(lv_obj_get_ext_attr(chart));
 
-	int maxPoints = 0;
+    long long maxPoints = 0;
 	for (const auto &s:m_widget->m_series)
 		maxPoints = std::max(maxPoints, s.points.size());
 
@@ -317,7 +317,7 @@ void LVGLPropertySeries::setValue(LVGLObject *obj, QVariant value)
 	if (value.type() == QVariant::List) {
 		QVariantList series = value.toList();
 		QVector<LVGLChartSeries> seriesList;
-		int maxPoints = 0;
+        long long maxPoints = 0;
 		for (const QVariant &s:series) {
 			QVariantMap map = s.toMap();
 			if (!map.contains("color") || !map.contains("values"))

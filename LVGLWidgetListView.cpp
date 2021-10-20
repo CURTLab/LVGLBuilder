@@ -24,7 +24,7 @@ void LVGLWidgetListView::startDrag(Qt::DropActions supportedActions)
 	LVGLWidgetCast cast;
 
 	QByteArray encoded = mimeData->data("application/x-widget");
-	QDataStream stream(&encoded, QIODevice::ReadOnly);
+    QDataStream stream(&encoded, QIODeviceBase::ReadOnly);
 	stream >> cast.i;
 	LVGLWidget *widgetClass = cast.ptr;
 	QPixmap preview = widgetClass->preview();
