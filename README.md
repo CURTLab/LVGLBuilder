@@ -1,3 +1,11 @@
+# I'm Back
+- First, I'll remove the code for unfinished functionality. 
+- Second, I will solve the program crash problem, the problem lies in the model part, I need to rewrite. 
+- Third, I would design a project as a whole object, rather than each page as a whole object. 
+- Fourth, the new page will take a tree structure instead of a row of tab pages.
+## Plus
+Now, I have ported the project to the Qt6 platform, which means that it is no longer compatible with the Qt5 platform. (Because people can't stand still and stay where they are)
+
 # 1.0.4 preview
 
 **Version 1.0.4 is expected to be released in late July.**
