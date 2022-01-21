@@ -23,7 +23,7 @@ void ListDelegate::paint(QPainter *painter, const QStyleOptionViewItem &option,
   seletrec.adjust(2, 2, -2, -2);
   if (option.state & QStyle::State_Selected) {
     painter->setBrush(QColor(0xd1, 0xe5, 0xca));
-    painter->drawRoundRect(seletrec, 2, 2);
+    painter->drawRoundedRect(seletrec, 2, 2);
     painter->setBrush(Qt::NoBrush);
   }
 

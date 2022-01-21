@@ -8,7 +8,6 @@
 #include <QJsonDocument>
 #include <QJsonObject>
 #include <QMessageBox>
-#include <QTextCodec>
 #include <QTextStream>
 
 #include "LVGLCore.h"
@@ -158,7 +157,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   QDir dir(path);
   QFile file;
   QTextStream stream;
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   const QString name = m_name.toLower();
   const QString codeName = m_name.toLower().replace(" ", "_");
   const QString defName = m_name.toUpper().replace(" ", "_");
@@ -217,7 +216,7 @@ bool LVGLProject::exportCode(const QString &path) const {
   file.setFileName(dir.path() + "/" + codeName + ".c");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   stream << "#include \"" << codeName << ".h\"\n";
   stream << "#include \"app.h\"\n\n";
 
@@ -409,7 +408,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   if (!file.open(QIODevice::WriteOnly)) return false;
 
   QTextStream stream;
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   stream.setDevice(&file);
   auto tabw = LVGLHelper::getInstance().getMainW()->getTabW();
   int tabindex = tabw->currentIndex();
@@ -458,7 +457,7 @@ bool LVGLProject::exportCodePlus(const QString &path) const {
   file.setFileName(dir.path() + "/" + name + ".c");
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
 
   auto tabW = LVGLHelper::getInstance().getMainW()->getTabW();
   stream << "#include \"app.h\"\n\n";
@@ -549,7 +548,7 @@ bool LVGLProject::exportPageMK(const QString &path) const {
   QDir dir(path);
   QFile file;
   QTextStream stream;
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   const QString name = m_name.toLower().replace(" ", "_");
   file.setFileName(dir.path() + "/" + name + ".mk");
   if (!file.open(QIODevice::WriteOnly)) return false;
@@ -573,7 +572,7 @@ bool LVGLProject::exportPageMK(const QString &path) const {
   file.setFileName(imagemk);
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
 
   auto images = lvgl.images();
   for (LVGLImageData *img : images) {
@@ -593,7 +592,7 @@ bool LVGLProject::exportPageMK(const QString &path) const {
   file.setFileName(fontsmk);
   if (!file.open(QIODevice::WriteOnly)) return false;
   stream.setDevice(&file);
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
 
   auto fonts = lvgl.customFonts();
   for (const LVGLFontData *f : fonts) {
@@ -620,7 +619,7 @@ bool LVGLProject::exportMakeFile(const QString &path) const {
   QDir dir(path);
   QFile file;
   QTextStream stream;
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   file.setFileName(dir.path() + "/Makefile");
 
   if (!file.open(QIODevice::WriteOnly)) return false;

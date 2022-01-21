@@ -1,7 +1,9 @@
 #include "LVGLNewDialog.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QMessageBox>
+#include <QMouseEvent>
 #include <QPainter>
 #include <QPainterPath>
 #include <QPixmap>

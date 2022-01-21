@@ -1,5 +1,6 @@
 #include "MainwindoTitle.h"
 
+#include <QFile>
 #include <QMouseEvent>
 #include <QPainter>
 #include <QStyleOption>

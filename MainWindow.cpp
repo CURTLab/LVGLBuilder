@@ -3,6 +3,7 @@
 #include <QDebug>
 #include <QFileDialog>
 #include <QInputDialog>
+#include <QKeyEvent>
 #include <QMessageBox>
 #include <QPushButton>
 #include <QSettings>

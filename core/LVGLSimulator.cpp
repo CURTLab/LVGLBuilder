@@ -265,7 +265,7 @@ void LVGLSimulator::dropEvent(QDropEvent *event) {
   const QMimeData *mimeData = event->mimeData();
   if (mimeData->hasFormat("application/x-widget")) {
     QByteArray encoded = mimeData->data("application/x-widget");
-    QDataStream stream(&encoded, QIODevice::ReadOnly);
+    QDataStream stream(&encoded, QIODeviceBase::ReadOnly);
     stream >> cast.i;
     LVGLWidget *widgetClass = cast.ptr;
     auto wclass = lvgl.widget(widgetClass->className());

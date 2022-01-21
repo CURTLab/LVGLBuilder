@@ -42,7 +42,7 @@ QMimeData *LVGLWidgetModelInput::mimeData(
   QByteArray encodedData;
 
   LVGLWidgetCast cast;
-  QDataStream stream(&encodedData, QIODevice::WriteOnly);
+  QDataStream stream(&encodedData, QIODeviceBase::WriteOnly);
   for (const QModelIndex &index : indexes) {
     if (index.isValid() && index.column() == 0) {
       cast.ptr = const_cast<LVGLWidget *>(lvgl.widgetsInputW().at(index.row()));

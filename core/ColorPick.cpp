@@ -24,8 +24,8 @@ ColorPick::~ColorPick() {
 }
 
 QString ColorPick::colorString() {
-  return QString().sprintf("#%02X%02X%02X", m_curColor.red(),
-                           m_curColor.green(), m_curColor.blue());
+  return QString().asprintf("#%02X%02X%02X", m_curColor.red(),
+                            m_curColor.green(), m_curColor.blue());
 }
 
 void ColorPick::setColor(const QColor &col) {

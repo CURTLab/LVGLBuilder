@@ -4,7 +4,6 @@
 #include <QDateTime>
 #include <QDir>
 #include <QFile>
-#include <QTextCodec>
 #include <QTextStream>
 
 LVGLLog::eLogType LogType = LVGLLog::eLogType::LOG_LEVEL_INFO;
@@ -67,7 +66,7 @@ void LVGLLog::logToFile(const QString &logStr, const char *file, int line,
   QFile logFile(path + logFileName);
   QTextStream stream;
   stream.setDevice(&logFile);
-  stream.setCodec(QTextCodec::codecForName("UTF-8"));
+  stream.setEncoding(QStringConverter::Utf8);
   QString message = QString("Date:%1  File:%2  Line:%3  Func:%4  Msg:%5\n")
                         .arg(dateAllStr)
                         .arg(file)
@@ -75,7 +74,7 @@ void LVGLLog::logToFile(const QString &logStr, const char *file, int line,
                         .arg(func)
                         .arg(logStr);
 
-  logFile.open(QIODevice::WriteOnly | QIODevice::Append);
+  logFile.open(QIODevice::WriteOnly | QIODeviceBase::Append);
   stream << message;
   logFile.close();
 }

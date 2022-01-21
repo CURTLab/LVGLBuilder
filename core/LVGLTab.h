@@ -1,6 +1,8 @@
 #ifndef LVGLTAB_H
 #define LVGLTAB_H
 
+#include <QHash>
+#include <QString>
 #include <QWidget>
 
 #include "lvgl/lvgl.h"
