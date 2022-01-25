@@ -26,7 +26,6 @@ class LVGLNewDialog : public QDialog {
  protected:
   void mousePressEvent(QMouseEvent *e) override;
   void mouseMoveEvent(QMouseEvent *e) override;
-  void mouseReleaseEvent(QMouseEvent *e) override;
   void keyPressEvent(QKeyEvent *e) override;
   void paintEvent(QPaintEvent *event) override;
 
@@ -40,8 +39,6 @@ class LVGLNewDialog : public QDialog {
   QVector<QPair<lv_coord_t, lv_coord_t>> m_resolutions;
   QPoint m_curPos;
   QColor m_bgcolor;
-  QStringList m_colorDepth;
-  bool m_clicked;
 };
 
 #endif  // LVGLNEWDIALOG_H
