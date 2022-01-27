@@ -852,11 +852,6 @@ QRect LVGLCore::get_object_rect(const lv_obj_t *lv_obj) const {
 void LVGLCore::addObject(LVGLObject *object) { m_objects << object; }
 
 void LVGLCore::removeObject(LVGLObject *object) {
-  auto childs = object->childs();
-  while (!childs.isEmpty()) {
-    removeObject(childs.at(0));
-    childs = object->childs();
-  }
   if (object->parent()) object->parent()->removeChild(object);
   m_objects.removeOne(object);
   delete object;

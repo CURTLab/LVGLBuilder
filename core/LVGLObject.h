@@ -92,6 +92,8 @@ class LVGLObject : public QObject {
 
   LVGLObject *findChildByIndex(int index) const;
 
+  int row() const;
+
  signals:
   void positionChanged();
 

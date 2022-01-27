@@ -29,18 +29,15 @@ QModelIndex LVGLObjectModel::index(int row, int column,
   return createIndex(row, column, lvgl.topLevelObjects().at(row));
 }
 
-QModelIndex LVGLObjectModel::parent(const QModelIndex &index) const {
-  if (!index.isValid()) return QModelIndex();
+QModelIndex LVGLObjectModel::parent(const QModelIndex &child) const {
+  if (!child.isValid()) return QModelIndex();
 
-  LVGLObject *o = static_cast<LVGLObject *>(index.internalPointer());
+  LVGLObject *o = static_cast<LVGLObject *>(child.internalPointer());
   LVGLObject *p = o->parent();
 
   if (p == nullptr) return QModelIndex();
-  if (!p->childs().isEmpty()) {
-    const int row = p->childs().indexOf(o);
-    if (row >= 0 || row < p->childs().size()) return createIndex(row, 0, p);
-  }
-  return QModelIndex();
+
+  return createIndex(p->row(), 0, p);
 }
 
 int LVGLObjectModel::rowCount(const QModelIndex &parent) const {

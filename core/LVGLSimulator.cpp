@@ -384,7 +384,7 @@ void LVGLSimulator::addObject(LVGLObject *obj, bool needaddtolvgl) {
 
   if (needaddtolvgl) {
     // add object to interal list
-    lvgl.addObject(obj);
+    if (nullptr == obj->parent()) lvgl.addObject(obj);
   }
 
   if (m_objectModel) m_objectModel->endInsertObject();

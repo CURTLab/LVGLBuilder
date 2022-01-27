@@ -62,9 +62,10 @@ LVGLObject::LVGLObject(lv_obj_t *obj, const LVGLWidget *widgetClass,
 }
 
 LVGLObject::~LVGLObject() {
-  lv_obj_del(m_obj);
+  for (auto o : m_childs) delete o;
   delete m_widgetClass;
   for (auto s : m_liststyles) delete s;
+  lv_obj_del(m_obj);
 }
 
 lv_obj_t *LVGLObject::obj() const { return m_obj; }
@@ -3237,4 +3238,9 @@ LVGLObject *LVGLObject::findChildByIndex(int index) const {
     if (child->index() == index) return child;
   }
   return nullptr;
+}
+
+int LVGLObject::row() const {
+  if (m_parent) return m_parent->childs().indexOf(this);
+  return 0;
 }
