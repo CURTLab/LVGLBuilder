@@ -1,3 +1,12 @@
+# 1.0.4 Test Version
+1. Removed the color depth selection
+2. Fixed the program crash problem
+3. Support multi-language style
+4. Redesigned the new UI style
+5. With the addition of gogleBreakpad, if the program crashes, a dmp file will be generated under the program path, and with the pdb file under the program path, you can use vs for debug tracing.
+6. Because the use of msvc2019, so only support 64-bit system
+
+
 # I'm Back
 - First, I'll remove the code for unfinished functionality. 
 - Second, I will solve the program crash problem, the problem lies in the model part, I need to rewrite. 
@@ -17,12 +26,6 @@ Now, I have ported the project to the Qt6 platform, which means that it is no lo
 ## Support a single file to save all pages
 
 ![exportbehavior](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/exportbehavior.png)
-
-## Added Color format option
-
-* The loaded picture does not need to manually set the conversion format  **(PS: The loading of gif images will be supported in the future)**
-* ![colordepth1](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/colordepth1.png)
-* ![colordepth2](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/colordepth2.png)
 
 ## Support different themes
 
