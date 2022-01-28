@@ -3241,6 +3241,6 @@ LVGLObject *LVGLObject::findChildByIndex(int index) const {
 }
 
 int LVGLObject::row() const {
-  if (m_parent) return m_parent->childs().indexOf(this);
+  if (m_parent) return m_parent->childs().indexOf(const_cast<LVGLObject*const>(this));
   return 0;
 }
