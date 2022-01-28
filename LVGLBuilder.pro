@@ -21,6 +21,14 @@
 #
 # Copyright (C) 2006-2019 by David Turner, Robert Wilhelm, and Werner Lemberg.
 # See freetype/docs/LICENSE.TXT for the freetype licence
+#
+# ------------------------------------------------------------
+#
+# Farm Fresh Icons by Fatcow Web Hosting (3000 icons)
+#
+# https://iconarchive.com/show/farm-fresh-icons-by-fatcow.html
+# License: CC Attribution 4.0
+# Artist: Fatcow Web Hosting
 
 QT       += core gui
 

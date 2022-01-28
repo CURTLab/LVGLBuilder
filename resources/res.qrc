@@ -54,6 +54,7 @@
         <file>ok.png</file>
         <file>redo.png</file>
         <file>undo.png</file>
+        <file>document_export.png</file>
     </qresource>
     <qresource prefix="/">
         <file>btnicon/close_normal.png</file>
