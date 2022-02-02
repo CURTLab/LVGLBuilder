@@ -44,8 +44,8 @@ DEFINES += QT_DEPRECATED_WARNINGS
 include(lvgl/lvgl.pri)
 include(freetype/freetype.pri)
 
-#QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
-#QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_CXXFLAGS_RELEASE += $$QMAKE_CFLAGS_RELEASE_WITH_DEBUGINFO
+QMAKE_LFLAGS_RELEASE += $$QMAKE_LFLAGS_RELEASE_WITH_DEBUGINFO
 win32{
     include(breakpad/breakpad.pri)
 }
@@ -130,6 +130,9 @@ SOURCES += \
     core/LVGLWorker.cpp \
     core/ListDelegate.cpp \
     core/MainwindoTitle.cpp \
+    core/Page.cpp \
+    core/PageModel.cpp \
+    core/PageView.cpp \
     events/EventSelectWIdget.cpp \
     events/EventSettingWidgeet.cpp \
     events/EventsListWIdget.cpp \
@@ -238,6 +241,9 @@ HEADERS += \
     core/LVGLWorker.h \
     core/ListDelegate.h \
     core/MainwindoTitle.h \
+    core/Page.h \
+    core/PageModel.h \
+    core/PageView.h \
     events/EventSelectWIdget.h \
     events/EventSettingWidgeet.h \
     events/EventsListWIdget.h \

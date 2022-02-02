@@ -101,7 +101,7 @@ LVGLSimulator::LVGLSimulator(QWidget *parent)
   QObject::connect(this, &LVGLSimulator::stopPaint, m_paintTime,
                    &LVGLPaintTimer::stop);
   m_patintThread->start();
-  setStyleSheet("QGraphicsView{background:#eaeff3;}");
+  setStyleSheet("QGraphicsView{background:#accdac;}");
   setCacheMode(QGraphicsView::CacheBackground);
 }
 

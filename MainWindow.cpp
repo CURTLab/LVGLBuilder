@@ -34,6 +34,8 @@
 #include "core/LVGLWidgetModelDisplay.h"
 #include "core/LVGLWidgetModelInput.h"
 #include "core/ListDelegate.h"
+#include "core/Page.h"
+#include "core/PageModel.h"
 #include "events/LVGLEventStateResume.h"
 #include "lvgl/lvgl.h"
 #include "ui_MainWindow.h"
@@ -67,7 +69,11 @@ MainWindow::MainWindow(QWidget *parent)
       m_autosaveThread(new LVGLAutoSaveThread),
       m_asThread(new QThread(this)),
       m_plusico(new QPushButton(this)),
-      m_minico(new QPushButton(this)) {
+      m_minico(new QPushButton(this)),
+      m_pageRoot{new Page(MainWindow::tr("Page Lists"), nullptr)},
+      m_pageModel{new PageModel(m_pageRoot, this)},
+      m_pageMainMenu{new QMenu(this)},
+      m_pageSubMenu{new QMenu(this)} {
   this->setWindowFlags(Qt::Widget);
   m_ui->setupUi(this);
   lvgl.init(320, 480);
@@ -76,6 +82,7 @@ MainWindow::MainWindow(QWidget *parent)
   initConnect();
   initProp();
   initThreads();
+  initPageView();
 }
 
 MainWindow::~MainWindow() {
@@ -255,26 +262,28 @@ void MainWindow::updateImages() {
 }
 
 void MainWindow::addFont(LVGLFontData *font, QString name) {
-  LVGLFontDataCast cast;
-  cast.ptr = font;
-  for (int i = 0; i < m_ui->list_fonts->count(); ++i)
-    if (m_ui->list_fonts->item(i)->text() == name) return;
-  QListWidgetItem *item = new QListWidgetItem(name);
-  item->setData(Qt::UserRole + 3, cast.i);
-  m_ui->list_fonts->addItem(item);
+  (void)font;
+  (void)name;
+  //  LVGLFontDataCast cast;
+  //  cast.ptr = font;
+  //  for (int i = 0; i < m_ui->list_fonts->count(); ++i)
+  //    if (m_ui->list_fonts->item(i)->text() == name) return;
+  //  QListWidgetItem *item = new QListWidgetItem(name);
+  //  item->setData(Qt::UserRole + 3, cast.i);
+  //  m_ui->list_fonts->addItem(item);
 }
 
 void MainWindow::updateFonts() {
-  m_ui->list_fonts->clear();
-  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
-    for (const LVGLFontData *f : lvgl.customFonts())
-      addFont(const_cast<LVGLFontData *>(f), f->name());
-  }
+  //  m_ui->list_fonts->clear();
+  //  for (int index = 0; index < m_ui->tabWidget->count(); ++index) {
+  //    for (const LVGLFontData *f : lvgl.customFonts())
+  //      addFont(const_cast<LVGLFontData *>(f), f->name());
+  //  }
 }
 
 void MainWindow::updateRecentActionList() {
   QSettings settings("at.fhooe.lvgl", "LVGL Builder");
-  QStringList recentFilePaths;
+  QVector<QString> recentFilePaths;
   for (const QString &f : settings.value("recentFiles").toStringList()) {
     if (QFile(f).exists()) recentFilePaths.push_back(f);
   }
@@ -357,7 +366,7 @@ void MainWindow::setEnableBuilder(bool enable) {
 
   m_ui->WidgeBox->setEnabled(enable);
   m_ui->ImageEditor->setEnabled(enable);
-  m_ui->FontEditor->setEnabled(enable);
+  // m_ui->FontEditor->setEnabled(enable);
   m_ui->eaction_export->setEnabled(enable);
 }
 
@@ -657,47 +666,50 @@ void MainWindow::on_button_add_font_clicked() {
 }
 
 void MainWindow::on_button_remove_font_clicked() {
-  QListWidgetItem *item = m_ui->list_fonts->currentItem();
-  if (item == nullptr) return;
-  const int row = m_ui->list_fonts->currentRow();
+  //  QListWidgetItem *item = m_ui->list_fonts->currentItem();
+  //  if (item == nullptr) return;
+  //  const int row = m_ui->list_fonts->currentRow();
 
-  LVGLFontDataCast cast;
-  cast.i = item->data(Qt::UserRole + 3).toLongLong();
+  //  LVGLFontDataCast cast;
+  //  cast.i = item->data(Qt::UserRole + 3).toLongLong();
 
-  if (lvgl.removeFont(cast.ptr)) m_ui->list_fonts->takeItem(row);
+  //  if (lvgl.removeFont(cast.ptr)) m_ui->list_fonts->takeItem(row);
 }
 
 void MainWindow::on_list_fonts_customContextMenuRequested(const QPoint &pos) {
-  QPoint item = m_ui->list_fonts->mapToGlobal(pos);
-  QListWidgetItem *listItem = m_ui->list_fonts->itemAt(pos);
-  if (listItem == nullptr) return;
+  Q_UNUSED(pos);
+  //  QPoint item = m_ui->list_fonts->mapToGlobal(pos);
+  //  QListWidgetItem *listItem = m_ui->list_fonts->itemAt(pos);
+  //  if (listItem == nullptr) return;
 
-  QMenu menu;
-  QAction *save = menu.addAction("Save as ...");
-  QAction *sel = menu.exec(item);
-  if (sel == save) {
-    LVGLFontDataCast cast;
-    cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
+  //  QMenu menu;
+  //  QAction *save = menu.addAction("Save as ...");
+  //  QAction *sel = menu.exec(item);
+  //  if (sel == save) {
+  //    LVGLFontDataCast cast;
+  //    cast.i = listItem->data(Qt::UserRole + 3).toLongLong();
 
-    QStringList options({"C Code (*.c)", "Binary (*.bin)"});
-    QString selected;
-    QString fileName = QFileDialog::getSaveFileName(
-        this, "Save font as c file", cast.ptr->codeName(), options.join(";;"),
-        &selected);
-    if (fileName.isEmpty()) return;
-    bool ok = false;
-    if (selected == options.at(0)) ok = cast.ptr->saveAsCode(fileName);
-    if (!ok) {
-      QMessageBox::critical(this, "Error",
-                            tr("Could not save font '%1'").arg(fileName));
-    }
-  }
+  //    QStringList options({"C Code (*.c)", "Binary (*.bin)"});
+  //    QString selected;
+  //    QString fileName = QFileDialog::getSaveFileName(
+  //        this, "Save font as c file", cast.ptr->codeName(),
+  //        options.join(";;"), &selected);
+  //    if (fileName.isEmpty()) return;
+  //    bool ok = false;
+  //    if (selected == options.at(0)) ok = cast.ptr->saveAsCode(fileName);
+  //    if (!ok) {
+  //      QMessageBox::critical(this, "Error",
+  //                            tr("Could not save font '%1'").arg(fileName));
+  //    }
+  //  }
 }
 
 void MainWindow::on_list_fonts_currentItemChanged(QListWidgetItem *current,
                                                   QListWidgetItem *previous) {
-  Q_UNUSED(previous)
-  m_ui->button_remove_font->setEnabled(current != nullptr);
+  (void)current;
+  (void)previous;
+  //  Q_UNUSED(previous)
+  //  m_ui->button_remove_font->setEnabled(current != nullptr);
 }
 
 void MainWindow::on_action_run_toggled(bool run) {
@@ -914,7 +926,7 @@ void MainWindow::initProp() {
   m_ui->property_tree->setModel(m_propertyModel);
   m_ui->property_tree->setItemDelegate(new LVGLPropertyDelegate(this));
   m_ui->button_remove_image->setEnabled(false);
-  m_ui->button_remove_font->setEnabled(false);
+  // m_ui->button_remove_font->setEnabled(false);
   m_ui->style_tree->setColumnWidth(0, 150);
   m_ui->property_tree->setColumnWidth(0, 150);
   m_ui->object_tree->setColumnWidth(0, 80);
@@ -935,7 +947,8 @@ void MainWindow::initProp() {
   m_ui->PropertyEditor->raise();
   m_ui->StyleEditor->raise();
   // add font editor dock to image dock and show the image dock
-  tabifyDockWidget(m_ui->ImageEditor, m_ui->FontEditor);
+  // tabifyDockWidget(m_ui->ImageEditor, m_ui->FontEditor);
+  tabifyDockWidget(m_ui->WidgeBox, m_ui->PageWidget);
   m_ui->ImageEditor->raise();
   LVGLHelper::getInstance().setMainW(this);
   m_ui->tabWidget->setTabsClosable(true);
@@ -1004,7 +1017,7 @@ void MainWindow::initStyle() {
   m_ui->WidgeBox->update();
   m_ui->ImageEditor->update();
   m_ui->StyleEditor->update();
-  m_ui->FontEditor->update();
+  // m_ui->FontEditor->update();
   m_ui->UndoEditor->update();
 }
 
@@ -1026,6 +1039,53 @@ void MainWindow::initThreads() {
   connect(this, &MainWindow::stopAutoSave, m_autosaveThread,
           &LVGLAutoSaveThread::stop);
   m_asThread->start();
+}
+
+void MainWindow::initPageView() {
+  m_ui->pageViewWidget->setStyleSheet(
+      "QWidget#pageViewWidget{background:#efefef;}");
+  initPageViewMenu();
+  auto t = m_ui->treeView;
+
+  t->setItemDelegate(new PageDeletegate(t));
+
+  // tree
+  t->setEditTriggers(QTreeView::DoubleClicked);
+  t->setSelectionBehavior(QTreeView::SelectRows);
+  t->setSelectionMode(QTreeView::SingleSelection);
+  t->setAlternatingRowColors(true);
+  t->setFocusPolicy(Qt::NoFocus);
+
+  // tree head
+  t->header()->setHighlightSections(true);
+  t->header()->setDefaultAlignment(Qt::AlignCenter);
+  t->header()->setDefaultSectionSize(100);
+  t->header()->setStretchLastSection(true);
+  t->header()->setSortIndicator(0, Qt::AscendingOrder);
+
+  // tree model
+  t->setModel(m_pageModel);
+
+  t->setContextMenuPolicy(Qt::CustomContextMenu);
+  connect(t, &QTreeView::customContextMenuRequested, this,
+          &MainWindow::slotPageViewMenu);
+
+  connect(m_ui->treeView, &QTreeView::clicked, this,
+          &MainWindow::slotPageItemClick);
+  connect(m_ui->treeView, &QTreeView::doubleClicked, this,
+          &MainWindow::slotPageItemDoubleClick);
+}
+
+void MainWindow::initPageViewMenu() {
+  m_pageMainMenu->addAction(QIcon(":/icons/add.png"),
+                            MainWindow::tr("New Page"), this,
+                            SLOT(slotAddPage(bool)));
+
+  m_pageSubMenu->addAction(QIcon(":/icons/delete.png"),
+                           MainWindow::tr("Delete Page"), this,
+                           SLOT(slotRemovePage(bool)));
+  m_pageSubMenu->addAction(QIcon(":/icons/edit.png"), MainWindow::tr("Rename"),
+                           this, SLOT(slotEditPageName(bool)));
 }
 
 void MainWindow::initNewWidgets() {
@@ -1324,3 +1384,46 @@ void MainWindow::on_actionSave_One_triggered() {
   m_ui->actionSave_One->setChecked(true);
   LVGLHelper::getInstance().setSaveAll(false);
 }
+
+void MainWindow::slotPageViewMenu(const QPoint &pos) {
+  QModelIndex curIndex = m_ui->treeView->indexAt(pos);
+  const Page *o = reinterpret_cast<Page *>(curIndex.internalPointer());
+  if (nullptr == o)
+    m_pageMainMenu->exec(QCursor::pos());
+  else {
+    m_curPageIndex = curIndex;
+    m_pageSubMenu->exec(QCursor::pos());
+  }
+}
+
+void MainWindow::slotAddPage(bool) {
+  int row = m_pageModel->rowCount(QModelIndex());
+  m_curPageIndex = m_pageModel->index(row, 0, QModelIndex());
+  QString pageName = LVGLHelper::getInstance().newProjectName();
+  m_pageModel->addTree(pageName, m_curPageIndex);
+  m_ui->treeView->expand(m_curPageIndex);
+}
+
+void MainWindow::slotRemovePage(bool) {
+  m_pageModel->removeTree(m_curPageIndex);
+  m_curPageIndex = QModelIndex();
+  m_ui->treeView->setCurrentIndex(m_curPageIndex);
+}
+
+void MainWindow::slotEditPageName(bool) {
+  m_ui->treeView->setEdit(m_curPageIndex);
+}
+
+void MainWindow::slotPageItemClick(const QModelIndex &index) {
+  m_curPageIndex = index;
+}
+
+void MainWindow::slotPageItemDoubleClick(const QModelIndex &index) {}
+
+void MainWindow::on_addPage_clicked() {
+  QString pageName = LVGLHelper::getInstance().newProjectName();
+  m_pageModel->addTree(pageName, m_curPageIndex);
+  m_ui->treeView->expand(m_curPageIndex);
+}
+
+void MainWindow::on_delPage_clicked() { slotRemovePage(true); }

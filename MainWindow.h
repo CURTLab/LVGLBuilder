@@ -27,6 +27,8 @@ class LVGLAutoSaveThread;
 class QTranslator;
 class LVGLConfig;
 class QPushButton;
+class Page;
+class PageModel;
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -117,6 +119,22 @@ class MainWindow : public QMainWindow {
 
   void on_actionSave_One_triggered();
 
+  void slotPageViewMenu(const QPoint &pos);
+
+  void slotAddPage(bool);
+
+  void slotRemovePage(bool);
+
+  void slotEditPageName(bool);
+
+  void slotPageItemClick(const QModelIndex &index);
+
+  void slotPageItemDoubleClick(const QModelIndex &index);
+
+  void on_addPage_clicked();
+
+  void on_delPage_clicked();
+
  protected:
   void showEvent(QShowEvent *event) override;
   void keyPressEvent(QKeyEvent *e) override;
@@ -129,6 +147,8 @@ class MainWindow : public QMainWindow {
   void initProp();
   void initStyle();
   void initThreads();
+  void initPageView();
+  void initPageViewMenu();
   void addWidget(LVGLWidget *w);
   void addWidgetDisplayW(LVGLWidget *w);
   void addWidgetInputW(LVGLWidget *w);
@@ -194,5 +214,10 @@ class MainWindow : public QMainWindow {
   QPushButton *m_plusico;
   QPushButton *m_minico;
   QSize m_listimagesize;
+  Page *m_pageRoot;
+  PageModel *m_pageModel;
+  QMenu *m_pageMainMenu;
+  QMenu *m_pageSubMenu;
+  QModelIndex m_curPageIndex;
 };
 #endif  // MAINWINDOW_H
