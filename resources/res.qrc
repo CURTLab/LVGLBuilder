@@ -57,6 +57,7 @@
         <file>mainPage.png</file>
         <file>subPage.png</file>
         <file>edit.png</file>
+        <file>document_export.png</file>
     </qresource>
     <qresource prefix="/">
         <file>btnicon/close_normal.png</file>

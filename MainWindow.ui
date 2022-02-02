@@ -856,7 +856,7 @@
   <action name="eaction_export">
    <property name="icon">
     <iconset resource="resources/res.qrc">
-     <normaloff>:/icons/export.jpg</normaloff>:/icons/export.jpg</iconset>
+     <normaloff>:/icons/document_export.png</normaloff>:/icons/document_export.png</iconset>
    </property>
    <property name="text">
     <string>Export</string>
