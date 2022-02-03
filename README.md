@@ -1,3 +1,10 @@
+# 1.0.4 PageTree [unfinish] 2022/02/02
+* A tree structure is adopted for the project, and each sub-item is a page.
+* The current optimal solution is to use LVGLSimulator as a member of the Page class, but the memory will increase and the slot function needs to be rewritten.
+* It's just that this refactoring involves a lot of functionality, so it takes a lot of time to test and refine. But my vacation is almost over, so it would be nice if someone could help.
+![pagetree](https://raw.githubusercontent.com/mrQzs/PICSTORE/main/doc/pagetree.gif)
+
+
 # 1.0.4 Test Version
 1. Removed the color depth selection
 2. Fixed the program crash problem
