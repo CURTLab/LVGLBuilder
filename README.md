@@ -1,3 +1,11 @@
+# Future plan
+Due to the lack of free time, the subsequent code will not be submitted immediately, and will only be submitted after the function is completed.
+* Improve the page management module of the tree structure
+* Support the latest version of LVGL8
+* The widget will be in the form of a plug-in, which is convenient for users to add custom widgets
+* Refactor the font conversion function, adopt the font conversion style of lvlg official website.
+* Refactoring the image conversion function, using the official lvgl image conversion style
+
 # 1.0.4 PageTree [unfinish] 2022/02/02
 * A tree structure is adopted for the project, and each sub-item is a page.
 * The current optimal solution is to use LVGLSimulator as a member of the Page class, but the memory will increase and the slot function needs to be rewritten.
